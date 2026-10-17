@@ -3007,8 +3007,15 @@ body {
     <button id="adminBtn" class="btn btn-primary" onclick="handleAdminClick()" title="Login as Admin">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
     </button>
-  </div>
 </header>
+
+<div id="cloudAlertBanner" style="display:none;background:#fef2f2;border-bottom:1px solid #fecaca;padding:9px 16px;color:#991b1b;font-size:12.5px;font-weight:600;align-items:center;justify-content:space-between;z-index:999;position:sticky;top:54px;box-shadow:0 2px 8px rgba(220,38,38,0.1)">
+  <div style="display:flex;align-items:center;gap:8px">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+    <span id="cloudAlertText">Neon Cloud Database Offline</span>
+  </div>
+  <button onclick="fetchCloudData(true)" style="background:#fee2e2;border:1px solid #fca5a5;color:#991b1b;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">Retry Sync</button>
+</div>
 
 <div class="nav-tabs" id="navTabs">
   <div class="nav-tab active" onclick="switchMainTab('stock')" data-tab="stock">
@@ -4182,7 +4189,7 @@ function loadData(){
         hasUpdates = true;
       }
     }
-    if (hasUpdates) saveData();
+    if (hasUpdates) saveData(false);
   }
   for (var i = 0; i < items.length; i++) delete items[i].icon;
   try { var sf = localStorage.getItem(FAC_KEY); if (sf){ var pf = JSON.parse(sf); if (Array.isArray(pf) && pf.length > 0) faculties = pf; } } catch(e){}
@@ -4190,7 +4197,6 @@ function loadData(){
     faculties = SEED_FACULTY.map(function(f, i){ return { id: i + 1, name: f.name, dept: f.dept }; });
     try { localStorage.setItem(FAC_KEY, JSON.stringify(faculties)); } catch(e){}
   }
-  ensureTodayTransactions();
 }
 
 function ensureTodayTransactions(){
@@ -4567,25 +4573,38 @@ function openItemFromBreakdown(){
 var cloudSyncTimer = null;
 var isCloudSyncing = false;
 
+function showCloudAlertBanner(msg){
+  var b = document.getElementById('cloudAlertBanner');
+  var t = document.getElementById('cloudAlertText');
+  if (b && t){
+    t.textContent = msg || 'Neon Cloud Database Offline';
+    b.style.display = 'flex';
+  }
+}
+function hideCloudAlertBanner(){
+  var b = document.getElementById('cloudAlertBanner');
+  if (b) b.style.display = 'none';
+}
+
 function updateCloudBadge(status, label){
   var el = document.getElementById('cloudSyncBadge');
   if (!el) return;
   el.className = 'cloud-badge ' + status;
   if (status === 'syncing'){
-    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg> <span class="badge-txt">' + esc(label || 'Syncing...') + '</span>';
+    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg> <span class="badge-txt">' + esc(label || 'Saving Online...') + '</span>';
   } else if (status === 'synced'){
-    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><polyline points="9 13 11 15 15 11"/></svg> <span class="badge-txt">' + esc(label || 'Neon DB') + '</span>';
+    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><polyline points="9 13 11 15 15 11"/></svg> <span class="badge-txt">' + esc(label || 'Neon DB Synced') + '</span>';
   } else if (status === 'offline'){
-    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="2" x2="22" y2="22"></line><path d="M9.9 9.9A7 7 0 0 0 2 15a7 7 0 0 0 7 7h10a4.5 4.5 0 0 0 2.2-8.4"></path></svg> <span class="badge-txt">' + esc(label || 'Offline (Local)') + '</span>';
+    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="2" x2="22" y2="22"></line><path d="M9.9 9.9A7 7 0 0 0 2 15a7 7 0 0 0 7 7h10a4.5 4.5 0 0 0 2.2-8.4"></path></svg> <span class="badge-txt">' + esc(label || 'Cloud Offline') + '</span>';
   } else if (status === 'error'){
-    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> <span class="badge-txt">' + esc(label || 'Sync Error') + '</span>';
+    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> <span class="badge-txt">' + esc(label || 'Cloud Error') + '</span>';
   }
 }
 
 function triggerCloudSync(immediate){
   if (cloudSyncTimer) clearTimeout(cloudSyncTimer);
-  updateCloudBadge('syncing', 'Saving...');
-  var delay = immediate ? 0 : 500;
+  updateCloudBadge('syncing', 'Saving Online...');
+  var delay = immediate ? 50 : 300;
   cloudSyncTimer = setTimeout(async function(){
     try {
       isCloudSyncing = true;
@@ -4594,30 +4613,35 @@ function triggerCloudSync(immediate){
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ items: items, faculties: faculties })
       });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
+      if (!res.ok) {
+        var errJson = await res.json().catch(function(){ return {}; });
+        throw new Error(errJson.error || ('HTTP ' + res.status));
+      }
       var json = await res.json();
       if (json.success){
         updateCloudBadge('synced', 'Neon DB Synced');
+        hideCloudAlertBanner();
       } else {
         throw new Error(json.error || 'Sync failed');
       }
     } catch(err){
-      console.warn('Neon DB Sync:', err);
-      updateCloudBadge('offline', 'Local Cache');
+      console.error('Neon DB Cloud Sync Error:', err);
+      updateCloudBadge('error', 'Sync Failed');
+      showCloudAlertBanner('Online Save Failed: ' + (err.message || 'Check database connection / Vercel DATABASE_URL.'));
     } finally {
       isCloudSyncing = false;
     }
   }, delay);
 }
 
-function saveData(){
+function saveData(immediateCloud){
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch(e){}
-  triggerCloudSync(false);
+  triggerCloudSync(immediateCloud !== false);
 }
 
-function saveFaculties(){
+function saveFaculties(immediateCloud){
   try { localStorage.setItem(FAC_KEY, JSON.stringify(faculties)); } catch(e){}
-  triggerCloudSync(false);
+  triggerCloudSync(immediateCloud !== false);
 }
 
 // COLOR PALETTE & VISUAL SWATCH HELPERS
@@ -6584,7 +6608,14 @@ function init(){
   });
   updateAdminUI();
   render();
-  fetchCloudData();
+  fetchCloudData(true);
+
+  // Background auto-sync every 25 seconds for multi-user collaboration
+  setInterval(function(){
+    if (!isCloudSyncing && document.visibilityState !== 'hidden') {
+      fetchCloudData(false);
+    }
+  }, 25000);
 }
 
 // PWA INSTALLATION SUPPORT
@@ -6619,11 +6650,15 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-async function fetchCloudData(){
-  updateCloudBadge('syncing', 'Connecting...');
+async function fetchCloudData(isManual){
+  if (isCloudSyncing) return;
+  if (isManual) updateCloudBadge('syncing', 'Connecting DB...');
   try {
     var res = await fetch('/api/data');
-    if (!res.ok) throw new Error('HTTP ' + res.status);
+    if (!res.ok) {
+      var errData = await res.json().catch(function(){ return {}; });
+      throw new Error(errData.error || ('HTTP ' + res.status));
+    }
     var json = await res.json();
     if (json.success){
       var updated = false;
@@ -6633,7 +6668,13 @@ async function fetchCloudData(){
         updated = true;
       } else {
         // Cloud database is empty, seed it with initial data!
+        items = buildSeedItems();
+        faculties = SEED_FACULTY.map(function(f, i){ return { id: i + 1, name: f.name, dept: f.dept }; });
+        ensureTodayTransactions();
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch(e){}
+        try { localStorage.setItem(FAC_KEY, JSON.stringify(faculties)); } catch(e){}
         triggerCloudSync(true);
+        updated = true;
       }
       if (json.faculties && Array.isArray(json.faculties) && json.faculties.length > 0){
         faculties = json.faculties;
@@ -6641,17 +6682,18 @@ async function fetchCloudData(){
         updated = true;
       }
       if (updated) {
-        ensureTodayTransactions();
         render();
         if (typeof renderFaculty === 'function') renderFaculty();
         if (typeof renderBills === 'function') renderBills();
         if (typeof renderReports === 'function') renderReports();
       }
       updateCloudBadge('synced', 'Neon DB Synced');
+      hideCloudAlertBanner();
     }
   } catch(err){
-    console.warn('Could not fetch cloud data, using local storage:', err);
-    updateCloudBadge('offline', 'Local Cache');
+    console.warn('Could not fetch cloud data:', err);
+    updateCloudBadge('error', 'Cloud Disconnected');
+    showCloudAlertBanner('Could not connect to online Neon Database: ' + (err.message || 'Network error') + '. Please check Vercel DATABASE_URL / internet.');
   }
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

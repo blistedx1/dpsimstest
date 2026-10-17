@@ -53,6 +53,13 @@ module.exports = async (req, res) => {
     return res.status(200).end();
   }
 
+  if (!connectionString) {
+    return res.status(500).json({
+      success: false,
+      error: 'DATABASE_URL environment variable is missing. Please add DATABASE_URL in Vercel Project Settings (Settings > Environment Variables) or local .env file.'
+    });
+  }
+
   const p = getPool();
 
   try {
