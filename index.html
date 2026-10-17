@@ -18,66 +18,61 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Plus Jakarta Sans',Arial,sans-serif;-webkit-tap-highlight-color:transparent}
 
 :root {
-  --green: #124f32;            /* Delhi Public School Deep Forest Green */
-  --green-dark: #09331e;       /* Deep Evergreen */
-  --green-deep: #062314;       /* Night Forest */
-  --green-light: #e8f5ec;      /* Soft Mint Surface */
-  --green-subtle: #f2f9f4;     /* Ultra-light Mint Tint */
-  --green-border: #b9e0c5;     /* Refined Green Outline */
-  --green-glow: rgba(18, 79, 50, 0.16);
-  --green-glow-lg: rgba(18, 79, 50, 0.28);
+  --green: #15803d;            /* Clean vibrant emerald DPS green */
+  --green-dark: #0f5128;       /* Deep evergreen */
+  --green-deep: #052e16;       /* Night Forest */
+  --green-light: #f0fdf4;      /* Modern Vercel Mint Surface */
+  --green-subtle: #f8fdf9;     /* Ultra-light Mint Tint */
+  --green-border: #bbf7d0;     /* Refined Green Outline */
+  --green-glow: rgba(22, 163, 74, 0.14);
+  --green-glow-lg: rgba(22, 163, 74, 0.24);
   
   --red: #dc2626;
   --red-dark: #991b1b;
-  --red-light: #fee2e2;
+  --red-light: #fef2f2;
   --red-border: #fecaca;
   
-  --blue: #1d4ed8;
-  --blue-light: #dbeafe;
+  --blue: #2563eb;
+  --blue-light: #eff6ff;
   --blue-border: #bfdbfe;
   
   --amber: #d97706;
-  --amber-light: #fef3c7;
+  --amber-light: #fffbeb;
   --amber-border: #fde68a;
   
-  --bg: #f6f9f7;               /* Clean Layered Canvas */
-  --bg-subtle: #edf4ef;
+  --bg: #f8fafc;               /* Modern clean SaaS background (White & Green Theme) */
+  --bg-subtle: #f1f5f9;
   --card: #ffffff;
-  --card-hover: #fafcfb;
+  --card-hover: #ffffff;
   --card-elevated: #ffffff;
   
-  --text: #0e1e15;             /* Deep Charcoal-Green */
-  --text-secondary: #354a3d;
-  --muted: #567061;
-  --muted-light: #7e988a;
+  --text: #0f172a;             /* High clarity dark slate */
+  --text-secondary: #334155;
+  --muted: #64748b;
+  --muted-light: #94a3b8;
   
-  --border: #dce7e0;           /* Clean Hairline Border */
-  --border-hover: #b2cfbd;
-  --border-focus: #124f32;
+  --border: #e2e8f0;           /* Ultra clean hairline border */
+  --border-hover: #cbd5e1;
+  --border-focus: #16a34a;
   
-  --shadow-xs: 0 1px 2px rgba(18, 79, 50, 0.04);
-  --shadow-sm: 0 2px 6px rgba(18, 79, 50, 0.05);
-  --shadow-md: 0 6px 18px rgba(18, 79, 50, 0.07);
-  --shadow-lg: 0 14px 34px rgba(18, 79, 50, 0.11);
-  --shadow-xl: 0 24px 50px rgba(18, 79, 50, 0.16);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 20px 35px rgba(0, 0, 0, 0.12);
   
-  --glass-header: rgba(255, 255, 255, 0.94);
-  --glass-nav: rgba(255, 255, 255, 0.96);
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 22px;
+  --glass-header: rgba(255, 255, 255, 0.98);
+  --glass-nav: rgba(255, 255, 255, 0.98);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
 }
 
 body {
   background-color: var(--bg);
-  background-image: 
-    radial-gradient(1200px 700px at 85% 8%, rgba(18, 79, 50, 0.045) 0%, rgba(246, 249, 247, 0) 70%),
-    radial-gradient(900px 500px at 15% 92%, rgba(18, 79, 50, 0.04) 0%, rgba(246, 249, 247, 0) 70%);
-  background-attachment: fixed;
   color: var(--text);
   overflow-x: hidden;
-  padding-bottom: 78px;
   min-height: 100vh;
 }
 
@@ -204,6 +199,657 @@ body {
 @keyframes bounceDot {
   0%, 80%, 100% { transform: scale(0.5); opacity: 0.3; }
   40% { transform: scale(1); opacity: 1; }
+}
+
+/* ============================================= */
+/* VERCEL APP LAYOUT (WHITE & GREEN THEME)       */
+/* ============================================= */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  background: var(--bg);
+}
+
+/* SIDEBAR OVERLAY FOR MOBILE */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  z-index: 240;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.sidebar-overlay.open {
+  display: block;
+  opacity: 1;
+}
+
+/* VERCEL SIDEBAR */
+.app-sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 250;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.app-sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+.app-sidebar::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 4px;
+}
+
+.sidebar-top {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 8px;
+  transition: background 0.15s ease;
+}
+.sidebar-user:hover {
+  background: #f8fafc;
+}
+.sidebar-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--green-light);
+  border: 1px solid var(--green-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.sidebar-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.sidebar-avatar-fallback {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--green);
+}
+.sidebar-user-info {
+  flex: 1;
+  min-width: 0;
+}
+.sidebar-user-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.sidebar-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: var(--green-light);
+  color: var(--green);
+  border: 1px solid var(--green-border);
+}
+.sidebar-user-role {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sidebar-user-chevron {
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+}
+
+/* Sidebar Quick Find (Vercel Style) */
+.sidebar-search {
+  margin: 12px 14px 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.sidebar-search:hover {
+  border-color: var(--green);
+  background: #ffffff;
+  color: var(--text);
+}
+.sidebar-search kbd {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--muted);
+}
+
+/* Sidebar Navigation Items */
+.sidebar-nav {
+  padding: 8px 10px 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.sidebar-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: var(--muted);
+  padding: 12px 10px 4px;
+  text-transform: uppercase;
+}
+.sidebar-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 10px 8px;
+}
+.sidebar-nav-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+.sidebar-nav-item:hover {
+  background: #f1f5f9;
+  color: var(--text);
+}
+.sidebar-nav-item.active {
+  background: var(--green-light);
+  color: var(--green);
+  font-weight: 700;
+}
+.sidebar-nav-item svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  flex-shrink: 0;
+}
+.sidebar-nav-item.active svg {
+  stroke: var(--green);
+}
+.sidebar-item-pill {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  color: var(--muted);
+}
+.sidebar-nav-item.active .sidebar-item-pill {
+  background: #dcfce7;
+  color: var(--green);
+}
+.sidebar-item-pill.status-synced {
+  background: #dcfce7;
+  color: #166534;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  padding: 12px 14px;
+  border-top: 1px solid var(--border);
+  background: #ffffff;
+}
+.sidebar-storage-box {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.sidebar-storage-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.sidebar-storage-header span:last-child {
+  color: var(--green);
+  font-weight: 700;
+}
+.sidebar-storage-bar {
+  width: 100%;
+  height: 5px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.sidebar-storage-bar-fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: 3px;
+}
+.sidebar-brand-note {
+  font-size: 10.5px;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+/* APP MAIN WRAPPER */
+.app-main-wrapper {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* APP HEADER (Vercel Style) */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  height: 54px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+.sidebar-toggle-btn {
+  display: none;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px;
+  cursor: pointer;
+  color: var(--text);
+  align-items: center;
+  justify-content: center;
+}
+.header-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+.hb-org {
+  color: var(--text-secondary);
+}
+.hb-sep {
+  color: var(--muted-light);
+}
+.hb-project {
+  color: var(--text);
+  font-weight: 700;
+}
+.hb-caret {
+  color: var(--muted);
+}
+.header-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 12px;
+  height: 54px;
+}
+.htab {
+  background: transparent;
+  border: none;
+  padding: 0 12px;
+  height: 54px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  position: relative;
+  transition: color 0.15s ease;
+  font-family: inherit;
+}
+.htab:hover {
+  color: var(--text);
+}
+.htab.active {
+  color: var(--green);
+  font-weight: 700;
+}
+.htab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+  height: 2px;
+  background: var(--green);
+  border-radius: 2px 2px 0 0;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.btn-create-new {
+  background: #16a34a;
+  color: #ffffff;
+  border: 1px solid #15803d;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 7px 13px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(22, 163, 74, 0.2);
+  font-family: inherit;
+}
+.btn-create-new:hover {
+  background: #15803d;
+  box-shadow: 0 2px 6px rgba(22, 163, 74, 0.3);
+}
+
+/* CONTENT CANVAS */
+.app-main {
+  flex: 1;
+  padding: 24px 32px 60px;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* VERCEL-STYLE TOP WIDGETS ROW */
+.vercel-widgets-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+@media (max-width: 900px) {
+  .vercel-widgets-row {
+    grid-template-columns: 1fr;
+  }
+}
+.vwidget-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.vwidget-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.vwidget-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.vwidget-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: #f1f5f9;
+  color: var(--muted);
+}
+.vwidget-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.vwidget-metric-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12.5px;
+}
+.vwidget-metric-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+}
+.vwidget-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.vwidget-metric-value {
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text);
+}
+.vwidget-action-btn {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 11px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+.vwidget-action-btn:hover {
+  background: #ffffff;
+  border-color: var(--green);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.vact-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.vact-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+}
+.vact-sub {
+  font-size: 10.5px;
+  color: var(--muted);
+}
+
+/* VERCEL CARD STYLING */
+.card-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+.card-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #16a34a;
+  flex-shrink: 0;
+}
+.card-title-group {
+  min-width: 0;
+  flex: 1;
+}
+.card-subtitle {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+.card-stats-line {
+  margin: 10px 0 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.card-stock-num {
+  font-size: 26px;
+  font-weight: 800;
+  font-family: 'JetBrains Mono', monospace;
+  color: #15803d;
+  line-height: 1;
+}
+.card-stock-num.low {
+  color: #dc2626;
+}
+.card-stock-label {
+  font-size: 11.5px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.card-actions {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-card-issue {
+  flex: 1;
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+.btn-card-issue:hover {
+  background: #16a34a;
+  color: #ffffff;
+  border-color: #16a34a;
+}
+.btn-card-inward {
+  background: #f8fafc;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+.btn-card-inward:hover {
+  background: #ffffff;
+  border-color: var(--green);
+  color: var(--green);
+}
+
+@media (max-width: 992px) {
+  .app-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+    box-shadow: 0 0 30px rgba(0,0,0,0.15);
+  }
+  .app-sidebar.open {
+    transform: translateX(0);
+  }
+  .sidebar-toggle-btn {
+    display: inline-flex;
+  }
+  .app-main {
+    padding: 16px 16px 80px;
+  }
+  .header-tabs {
+    display: none;
+  }
+  .app-header {
+    padding: 0 16px;
+  }
 }
 
 /* ============================================= */
@@ -2978,131 +3624,270 @@ body {
   <div class="splash-loading"><span></span><span></span><span></span></div>
 </div>
 
-<header>
-  <div class="h-left" onclick="goToDashboard()" title="DPS Amarpali - Click to open Dashboard">
-    <img src="logo.png" alt="DPS" class="h-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-    <div style="width:38px;height:38px;background:var(--green);border-radius:10px;display:none;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:17px;flex-shrink:0">D</div>
-    <div class="h-title">DPS AMARPALI<span>Inventory Portal</span></div>
-  </div>
-  <div class="h-right">
-    <button class="btn btn-primary btn-add-header" onclick="openAddChoice()" style="display:inline-flex;align-items:center;gap:6px" title="Add New Item, Bill, or Faculty">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-      <span>Add</span>
-    </button>
-    <button id="pwaInstallBtn" class="btn-pwa-install" onclick="installPWA()" style="display:none;align-items:center;gap:6px" title="Install DPS IMS App on your device">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
-      <span>Install App</span>
-    </button>
-    <span id="cloudSyncBadge" class="cloud-badge syncing" onclick="fetchCloudData()" title="Click to refresh from Neon Cloud DB">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
-      <span class="badge-txt">Connecting...</span>
-    </span>
-    <span id="authBadge"></span>
-    <button class="btn btn-icon" onclick="openGlobalSearch()" title="Global Search (Items, Bills, Faculty...)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-    </button>
-    <button class="btn btn-icon header-export-btn" onclick="exportCSV()" title="Export CSV">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-    </button>
-    <button id="adminBtn" class="btn btn-primary" onclick="handleAdminClick()" title="Login as Admin">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-    </button>
-</header>
+<!-- SIDEBAR OVERLAY (Mobile) -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebarDrawer()"></div>
 
-<div id="cloudAlertBanner" style="display:none;background:#fef2f2;border-bottom:1px solid #fecaca;padding:9px 16px;color:#991b1b;font-size:12.5px;font-weight:600;align-items:center;justify-content:space-between;z-index:999;position:sticky;top:54px;box-shadow:0 2px 8px rgba(220,38,38,0.1)">
-  <div style="display:flex;align-items:center;gap:8px">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-    <span id="cloudAlertText">Neon Cloud Database Offline</span>
-  </div>
-  <button onclick="fetchCloudData(true)" style="background:#fee2e2;border:1px solid #fca5a5;color:#991b1b;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">Retry Sync</button>
-</div>
+<div class="app-layout">
+  <!-- LEFT SIDEBAR (Vercel Style) -->
+  <aside class="app-sidebar" id="appSidebar">
+    <div class="sidebar-top">
+      <div class="sidebar-user" onclick="goToDashboard()" title="DPS Amarpali - Dashboard">
+        <div class="sidebar-avatar">
+          <img src="logo.png" alt="DPS" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="sidebar-avatar-fallback">DPS</div>
+        </div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name">DPS AMARPALI <span class="sidebar-badge">Hobby</span></div>
+          <div class="sidebar-user-role">Inventory Management</div>
+        </div>
+        <div class="sidebar-user-chevron">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+        </div>
+      </div>
+    </div>
 
-<div class="nav-tabs" id="navTabs">
-  <div class="nav-tab active" onclick="switchMainTab('stock')" data-tab="stock">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
-    <span>Stock</span>
-  </div>
-  <div class="nav-tab" onclick="switchMainTab('bills')" data-tab="bills">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
-    <span>Bills</span>
-  </div>
-  <div class="nav-tab" onclick="switchMainTab('faculty')" data-tab="faculty">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-    <span>Faculty</span>
-  </div>
-  <div class="nav-tab" onclick="switchMainTab('report')" data-tab="report">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
-    <span>Reports</span>
-  </div>
-</div>
+    <!-- Quick Search Box inside Sidebar (like Vercel Find [F]) -->
+    <div class="sidebar-search" onclick="openGlobalSearch()" title="Find item, bill or faculty (Shortcut: F)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span>Find item or bill...</span>
+      <kbd>F</kbd>
+    </div>
 
-<div class="mobile-nav">
-  <div class="mobile-nav-inner">
-    <button class="mob-tab active" onclick="switchMainTab('stock')" data-tab="stock" title="Stock">
-      <span class="micon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
-          <path d="m3.3 7 8.7 5 8.7-5"/>
-          <path d="M12 22V12"/>
-        </svg>
-      </span>
-      <span class="mlabel">Stock</span>
-    </button>
-    <button class="mob-tab" onclick="switchMainTab('bills')" data-tab="bills" title="Bills">
-      <span class="micon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-          <polyline points="14 2 14 8 20 8"/>
-          <line x1="16" y1="13" x2="8" y2="13"/>
-          <line x1="16" y1="17" x2="8" y2="17"/>
-          <line x1="10" y1="9" x2="8" y2="9"/>
-        </svg>
-      </span>
-      <span class="mlabel">Bills</span>
-    </button>
-    <button class="mob-tab" onclick="switchMainTab('faculty')" data-tab="faculty" title="Faculty">
-      <span class="micon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-          <circle cx="9" cy="7" r="4"/>
-          <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-        </svg>
-      </span>
-      <span class="mlabel">Faculty</span>
-    </button>
-    <button class="mob-tab" onclick="switchMainTab('report')" data-tab="report" title="Reports">
-      <span class="micon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="20" x2="18" y2="10"/>
-          <line x1="12" y1="20" x2="12" y2="4"/>
-          <line x1="6" y1="20" x2="6" y2="14"/>
-          <line x1="2" y1="20" x2="22" y2="20"/>
-        </svg>
-      </span>
-      <span class="mlabel">Reports</span>
-    </button>
-    <button class="mob-tab mob-tab-add" onclick="openAddChoice()" title="Add New Item / Bill">
-      <span class="micon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="9"/>
-          <line x1="12" y1="8" x2="12" y2="16"/>
-          <line x1="8" y1="12" x2="16" y2="12"/>
-        </svg>
-      </span>
-      <span class="mlabel">Add</span>
-    </button>
-  </div>
-</div>
+    <div class="sidebar-nav">
+      <div class="sidebar-section-label">PROJECTS & TABS</div>
+      <button class="sidebar-nav-item active" data-tab="stock" onclick="switchMainTab('stock')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+        <span>Inventory Items</span>
+        <span class="sidebar-item-pill" id="sb-stock-count">0</span>
+      </button>
 
-<!-- STOCK TAB -->
-<div class="container" id="tab-stock">
-  <div class="top-stats">
-    <div class="stat"><div class="stat-label">Total Items</div><div class="stat-value" id="st-total">0</div></div>
-    <div class="stat"><div class="stat-label">Current Stock</div><div class="stat-value" id="st-stock">0</div></div>
-    <div class="stat"><div class="stat-label">Low Stock</div><div class="stat-value low" id="st-low">0</div></div>
-    <div class="stat"><div class="stat-label">Total Bills</div><div class="stat-value" id="st-bills">0</div></div>
-  </div>
+      <button class="sidebar-nav-item" data-tab="bills" onclick="switchMainTab('bills')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+        <span>Bills & Invoices</span>
+        <span class="sidebar-item-pill" id="sb-bills-count">0</span>
+      </button>
+
+      <button class="sidebar-nav-item" data-tab="faculty" onclick="switchMainTab('faculty')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>Faculty & Staff</span>
+        <span class="sidebar-item-pill" id="sb-fac-count">0</span>
+      </button>
+
+      <button class="sidebar-nav-item" data-tab="report" onclick="switchMainTab('report')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+        <span>Reports & Analytics</span>
+      </button>
+
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section-label">QUICK ACTIONS</div>
+
+      <button class="sidebar-nav-item" onclick="openIssueSlip()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span>Issue to Faculty</span>
+      </button>
+
+      <button class="sidebar-nav-item" onclick="openAddBill()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <span>Create Inward Bill</span>
+      </button>
+
+      <button class="sidebar-nav-item" onclick="openInlineItem()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <span>Add Catalog Item</span>
+      </button>
+
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section-label">SYSTEM & CLOUD</div>
+
+      <button class="sidebar-nav-item" onclick="fetchCloudData(true)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+        <span>Neon Cloud DB</span>
+        <span class="sidebar-item-pill status-synced" id="sb-cloud-pill">Live</span>
+      </button>
+
+      <button class="sidebar-nav-item" onclick="handleAdminClick()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span>Admin Mode</span>
+        <span class="sidebar-item-pill" id="sb-admin-pill">PIN</span>
+      </button>
+
+      <button class="sidebar-nav-item" onclick="exportCSV()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span>Export CSV</span>
+      </button>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-storage-box">
+        <div class="sidebar-storage-header">
+          <span>Neon Database Sync</span>
+          <span id="sb-storage-pct">Active</span>
+        </div>
+        <div class="sidebar-storage-bar">
+          <div class="sidebar-storage-bar-fill" style="width: 100%;"></div>
+        </div>
+      </div>
+      <div class="sidebar-brand-note">
+        <span>DPS AMARPALI IMS • Vercel Edition</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN WRAPPER -->
+  <div class="app-main-wrapper">
+    <!-- TOP APP HEADER (Vercel Style) -->
+    <header class="app-header">
+      <div class="header-left">
+        <button class="sidebar-toggle-btn" onclick="toggleSidebarDrawer()" title="Toggle Navigation Sidebar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+
+        <div class="header-breadcrumb" onclick="goToDashboard()">
+          <span class="hb-org">DPS AMARPALI</span>
+          <span class="hb-sep">/</span>
+          <span class="hb-project" id="hbCurrentSection">Inventory</span>
+          <svg class="hb-caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+
+        <div class="header-tabs">
+          <button class="htab active" data-tab="stock" onclick="switchMainTab('stock')">Overview</button>
+          <button class="htab" data-tab="bills" onclick="switchMainTab('bills')">Bills</button>
+          <button class="htab" data-tab="faculty" onclick="switchMainTab('faculty')">Faculty</button>
+          <button class="htab" data-tab="report" onclick="switchMainTab('report')">Reports</button>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <button class="btn-create-new" onclick="openAddChoice()" title="Create New Item, Bill or Faculty">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>Create New</span>
+        </button>
+
+        <button id="pwaInstallBtn" class="btn-pwa-install" onclick="installPWA()" style="display:none;align-items:center;gap:6px" title="Install DPS IMS App on your device">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          <span>Install App</span>
+        </button>
+
+        <span id="cloudSyncBadge" class="cloud-badge syncing" onclick="fetchCloudData(true)" title="Neon PostgreSQL Cloud Sync">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          <span class="badge-txt">Connecting...</span>
+        </span>
+
+        <span id="authBadge"></span>
+
+        <button class="btn btn-icon" onclick="openGlobalSearch()" title="Search All (Shortcut: F or /)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+
+        <button class="btn btn-icon header-export-btn" onclick="exportCSV()" title="Export CSV">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </button>
+
+        <button id="adminBtn" class="btn btn-primary" onclick="handleAdminClick()" title="Login as Admin">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div id="cloudAlertBanner" style="display:none;background:#fef2f2;border-bottom:1px solid #fecaca;padding:9px 16px;color:#991b1b;font-size:12.5px;font-weight:600;align-items:center;justify-content:space-between;z-index:999;position:sticky;top:54px;box-shadow:0 2px 8px rgba(220,38,38,0.1)">
+      <div style="display:flex;align-items:center;gap:8px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        <span id="cloudAlertText">Neon Cloud Database Offline</span>
+      </div>
+      <button onclick="fetchCloudData(true)" style="background:#fee2e2;border:1px solid #fca5a5;color:#991b1b;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">Retry Sync</button>
+    </div>
+
+    <!-- MAIN CONTENT CANVAS -->
+    <main class="app-main">
+
+      <!-- STOCK TAB -->
+      <div class="container" id="tab-stock">
+        <div class="vercel-widgets-row">
+          <!-- WIDGET 1: Inventory & Stock Usage -->
+          <div class="vwidget-card">
+            <div class="vwidget-header">
+              <div class="vwidget-title">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/></svg>
+                <span>Inventory Usage</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <span class="vwidget-badge">Live System</span>
+                <button class="btn btn-sm btn-primary" onclick="openIssueSlip()" style="padding:4px 10px;font-size:11px;font-weight:700">⚡ Issue Slip</button>
+              </div>
+            </div>
+            <div class="vwidget-rows">
+              <div class="vwidget-metric-row">
+                <span class="vwidget-metric-left">
+                  <span class="vwidget-dot" style="background:#16a34a"></span>
+                  <span>Total Catalog Items</span>
+                </span>
+                <span class="vwidget-metric-value" id="st-total">0</span>
+              </div>
+              <div class="vwidget-metric-row">
+                <span class="vwidget-metric-left">
+                  <span class="vwidget-dot" style="background:#2563eb"></span>
+                  <span>Current Stock on Hand</span>
+                </span>
+                <span class="vwidget-metric-value" id="st-stock">0</span>
+              </div>
+              <div class="vwidget-metric-row">
+                <span class="vwidget-metric-left">
+                  <span class="vwidget-dot" style="background:#dc2626"></span>
+                  <span>Low Stock Items (&lt; 15)</span>
+                </span>
+                <span class="vwidget-metric-value low" id="st-low" style="color:#dc2626">0</span>
+              </div>
+              <div class="vwidget-metric-row">
+                <span class="vwidget-metric-left">
+                  <span class="vwidget-dot" style="background:#d97706"></span>
+                  <span>Inward Invoices / Bills</span>
+                </span>
+                <span class="vwidget-metric-value" id="st-bills">0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- WIDGET 2: System Status & Quick Actions -->
+          <div class="vwidget-card">
+            <div class="vwidget-header">
+              <div class="vwidget-title">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+                <span>System & Quick Actions</span>
+              </div>
+              <span class="vwidget-badge" id="vwidget-cloud-status" style="background:#dcfce7;color:#15803d;border:1px solid #bbf7d0">● Neon Connected</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px">
+              <button class="vwidget-action-btn" onclick="openIssueSlip()">
+                <span class="vact-icon" style="background:#f0fdf4;color:#16a34a">⚡</span>
+                <div class="vact-text">
+                  <div class="vact-title">Issue to Faculty</div>
+                  <div class="vact-sub">Multi-item dispatch</div>
+                </div>
+              </button>
+              <button class="vwidget-action-btn" onclick="openAddBill()">
+                <span class="vact-icon" style="background:#eff6ff;color:#2563eb">🧾</span>
+                <div class="vact-text">
+                  <div class="vact-title">Add Inward Bill</div>
+                  <div class="vact-sub">Record invoice & stock</div>
+                </div>
+              </button>
+              <button class="vwidget-action-btn" onclick="openInlineItem()">
+                <span class="vact-icon" style="background:#fef3c7;color:#d97706">📦</span>
+                <div class="vact-text">
+                  <div class="vact-title">Add New Item</div>
+                  <div class="vact-sub">Create item catalog</div>
+                </div>
+              </button>
+              <button class="vwidget-action-btn" onclick="openAddFacultyMaster()">
+                <span class="vact-icon" style="background:#fdf4ff;color:#9333ea">👥</span>
+                <div class="vact-text">
+                  <div class="vact-title">Add Faculty</div>
+                  <div class="vact-sub">Register staff/dept</div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
   <div class="search-row">
     <div class="search-box">
       <span class="search-box-icon">
@@ -3423,6 +4208,9 @@ body {
     <div class="report-list" id="rep-recent"></div>
   </div>
 </div>
+    </main>
+  </div>
+</div>
 
 <!-- ADMIN LOGIN -->
 <div class="modal-overlay" id="modal-login">
@@ -3476,29 +4264,29 @@ body {
     </div>
     <div class="tab-content" style="padding:14px">
       <div class="choice-grid">
+        <button class="choice-btn" onclick="closeAddChoice();openAddBill()">
+          <span class="choice-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </span>
+          <div class="choice-info"><div class="choice-title">Bill (Add Inward Stock)</div><div class="choice-desc">Add bill to automatically update stock for all items</div></div>
+        </button>
+        <button class="choice-btn" onclick="closeAddChoice();openIssueSlip()">
+          <span class="choice-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </span>
+          <div class="choice-info"><div class="choice-title">Issue to Faculty</div><div class="choice-desc">Issue multiple items to a faculty member in one slip</div></div>
+        </button>
         <button class="choice-btn" onclick="closeAddChoice();openAddItem()">
           <span class="choice-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
           </span>
-          <div class="choice-info"><div class="choice-title">Item</div><div class="choice-desc">Add a new item or variant to stock</div></div>
+          <div class="choice-info"><div class="choice-title">New Item</div><div class="choice-desc">Register a brand new item in inventory catalog</div></div>
         </button>
         <button class="choice-btn" onclick="closeAddChoice();openAddFacultyMaster()">
           <span class="choice-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </span>
           <div class="choice-info"><div class="choice-title">Faculty</div><div class="choice-desc">Add a new faculty name and department</div></div>
-        </button>
-        <button class="choice-btn" onclick="closeAddChoice();openAddBill()">
-          <span class="choice-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          </span>
-          <div class="choice-info"><div class="choice-title">Bill</div><div class="choice-desc">Create a new bill — multiple items at once</div></div>
-        </button>
-        <button class="choice-btn" onclick="closeAddChoice();openIssueSlip()">
-          <span class="choice-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-          </span>
-          <div class="choice-info"><div class="choice-title">Issue to Faculty</div><div class="choice-desc">Issue multiple items to a faculty in one slip</div></div>
         </button>
       </div>
     </div>
@@ -3580,13 +4368,16 @@ body {
     <div class="modal-head">
       <h3>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        <span>Add New Bill</span>
+        <span>Add Bill (Inward Stock Update)</span>
       </h3>
       <button class="btn" onclick="closeAddBill()" title="Close">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>
     </div>
     <div class="tab-content">
+      <div style="font-size:12px;color:var(--text-secondary);margin:-4px 0 14px 0;line-height:1.4;background:var(--bg-subtle);padding:8px 12px;border-radius:8px;border:1px solid var(--border)">
+        💡 <b>Stock Auto-Update:</b> Adding this bill will automatically update the current stock and add official inward logs for all selected items.
+      </div>
       <div class="form-grid">
         <div class="form-group"><label>Bill No.</label><input id="bill-no-input" placeholder="347"></div>
         <div class="form-group"><label>Year</label><input id="bill-year-input" placeholder="2026" value="2026"></div>
@@ -4010,16 +4801,6 @@ body {
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           <span>Issue from Stock</span>
         </button>
-      </div>
-        <div class="form-grid">
-          <div class="form-group full"><label>Faculty</label>
-            <select id="out-faculty-select"><option value="">-- Choose faculty --</option></select>
-          </div>
-          <div class="form-group"><label>Quantity</label><input id="out-qty" type="number" placeholder="5"></div>
-          <div class="form-group"><label>Date</label><input id="out-date" type="date"></div>
-          <div class="form-group full"><label>Purpose / Remark</label><input id="out-remark" placeholder="For exams"></div>
-        </div>
-        <button class="btn btn-primary" id="out-submit-btn" style="margin-top:12px;width:100%;padding:13px;font-size:14px" onclick="addOutward()">− Issue from Stock</button>
       </div>
       <div id="pane-log" style="display:none">
         <div class="log-filters">
@@ -4588,16 +5369,41 @@ function hideCloudAlertBanner(){
 
 function updateCloudBadge(status, label){
   var el = document.getElementById('cloudSyncBadge');
-  if (!el) return;
-  el.className = 'cloud-badge ' + status;
-  if (status === 'syncing'){
-    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg> <span class="badge-txt">' + esc(label || 'Saving Online...') + '</span>';
-  } else if (status === 'synced'){
-    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><polyline points="9 13 11 15 15 11"/></svg> <span class="badge-txt">' + esc(label || 'Neon DB Synced') + '</span>';
-  } else if (status === 'offline'){
-    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="2" x2="22" y2="22"></line><path d="M9.9 9.9A7 7 0 0 0 2 15a7 7 0 0 0 7 7h10a4.5 4.5 0 0 0 2.2-8.4"></path></svg> <span class="badge-txt">' + esc(label || 'Cloud Offline') + '</span>';
-  } else if (status === 'error'){
-    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> <span class="badge-txt">' + esc(label || 'Cloud Error') + '</span>';
+  if (el){
+    el.className = 'cloud-badge ' + status;
+    if (status === 'syncing'){
+      el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg> <span class="badge-txt">' + esc(label || 'Saving Online...') + '</span>';
+    } else if (status === 'synced'){
+      el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><polyline points="9 13 11 15 15 11"/></svg> <span class="badge-txt">' + esc(label || 'Neon DB Synced') + '</span>';
+    } else if (status === 'offline'){
+      el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="2" x2="22" y2="22"></line><path d="M9.9 9.9A7 7 0 0 0 2 15a7 7 0 0 0 7 7h10a4.5 4.5 0 0 0 2.2-8.4"></path></svg> <span class="badge-txt">' + esc(label || 'Cloud Offline') + '</span>';
+    } else if (status === 'error'){
+      el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> <span class="badge-txt">' + esc(label || 'Cloud Error') + '</span>';
+    }
+  }
+  var sbPill = document.getElementById('sb-cloud-pill');
+  if (sbPill){
+    sbPill.textContent = (status === 'synced') ? 'Live' : (status === 'syncing' ? 'Sync...' : 'Offline');
+    sbPill.className = 'sidebar-item-pill ' + (status === 'synced' ? 'status-synced' : '');
+  }
+  var vwCloud = document.getElementById('vwidget-cloud-status');
+  if (vwCloud){
+    if (status === 'synced'){
+      vwCloud.textContent = '● Neon Connected';
+      vwCloud.style.background = '#dcfce7';
+      vwCloud.style.color = '#15803d';
+      vwCloud.style.borderColor = '#bbf7d0';
+    } else if (status === 'syncing'){
+      vwCloud.textContent = '◌ Syncing Neon...';
+      vwCloud.style.background = '#eff6ff';
+      vwCloud.style.color = '#2563eb';
+      vwCloud.style.borderColor = '#bfdbfe';
+    } else {
+      vwCloud.textContent = '✕ Neon Offline';
+      vwCloud.style.background = '#fef2f2';
+      vwCloud.style.color = '#dc2626';
+      vwCloud.style.borderColor = '#fecaca';
+    }
   }
 }
 
@@ -4856,8 +5662,8 @@ function saveNewVariant(){
   alert('✅ Successfully added color "' + name + '" to ' + it.name + '!');
 }
 
-function getItem(id){ for (var i = 0; i < items.length; i++) if (items[i].id === id) return items[i]; return null; }
-function getVariant(it, vid){ if (!it) return null; for (var i = 0; i < it.variants.length; i++) if (it.variants[i].id === vid) return it.variants[i]; return null; }
+function getItem(id){ if (id === null || id === undefined || id === '') return null; for (var i = 0; i < items.length; i++) if (items[i].id == id || String(items[i].id) === String(id)) return items[i]; return null; }
+function getVariant(it, vid){ if (!it || !it.variants || vid === null || vid === undefined || vid === '') return null; for (var i = 0; i < it.variants.length; i++) if (it.variants[i].id == vid || String(it.variants[i].id) === String(vid)) return it.variants[i]; return null; }
 function variantIn(v){ if (!v || !v.logs) return 0; var s = 0; for (var i = 0; i < v.logs.length; i++) if (v.logs[i].type === 'INWARD') s += v.logs[i].qty; return s; }
 function variantOut(v){ if (!v || !v.logs) return 0; var s = 0; for (var i = 0; i < v.logs.length; i++) if (v.logs[i].type === 'OUTWARD') s += v.logs[i].qty; return s; }
 function itemCurrent(it){ if (!it) return 0; var s = 0; for (var i = 0; i < it.variants.length; i++) s += it.variants[i].current || 0; return s; }
@@ -4955,27 +5761,51 @@ function verifyPin(){
   }
 }
 
+function toggleSidebarDrawer(){
+  var sb = document.getElementById('appSidebar');
+  var ov = document.getElementById('sidebarOverlay');
+  if (sb) sb.classList.toggle('open');
+  if (ov) ov.classList.toggle('open');
+}
+function closeSidebarDrawer(){
+  var sb = document.getElementById('appSidebar');
+  var ov = document.getElementById('sidebarOverlay');
+  if (sb) sb.classList.remove('open');
+  if (ov) ov.classList.remove('open');
+}
+
 function switchMainTab(tab){
   document.querySelectorAll('.nav-tab').forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-tab') === tab); });
   document.querySelectorAll('.mob-tab').forEach(function(t){ var dt = t.getAttribute('data-tab'); if (dt) t.classList.toggle('active', dt === tab); });
+  document.querySelectorAll('.sidebar-nav-item').forEach(function(t){ var dt = t.getAttribute('data-tab'); if (dt) t.classList.toggle('active', dt === tab); });
+  document.querySelectorAll('.htab').forEach(function(t){ var dt = t.getAttribute('data-tab'); if (dt) t.classList.toggle('active', dt === tab); });
+  
+  var titleMap = { stock: 'Inventory', bills: 'Bills & Invoices', faculty: 'Faculty & Staff', report: 'Analytics & Reports' };
+  var hb = document.getElementById('hbCurrentSection');
+  if (hb && titleMap[tab]) hb.textContent = titleMap[tab];
+
+  closeSidebarDrawer();
+
   var tabs = ['stock','bills','faculty','report'];
   for(var i=0;i<tabs.length;i++){
     (function(tabName){
       var el = document.getElementById('tab-'+tabName);
-      if(tabName===tab){
-        el.style.display='block';
-        el.style.opacity='0';
-        el.style.transform='translateY(8px)';
-        requestAnimationFrame(function(){
+      if (el){
+        if(tabName===tab){
+          el.style.display='block';
+          el.style.opacity='0';
+          el.style.transform='translateY(8px)';
           requestAnimationFrame(function(){
-            el.style.transition='opacity 0.25s ease, transform 0.25s ease';
-            el.style.opacity='1';
-            el.style.transform='translateY(0)';
-            setTimeout(function(){el.style.transition='';},300);
+            requestAnimationFrame(function(){
+              el.style.transition='opacity 0.25s ease, transform 0.25s ease';
+              el.style.opacity='1';
+              el.style.transform='translateY(0)';
+              setTimeout(function(){el.style.transition='';},300);
+            });
           });
-        });
-      } else {
-        el.style.display='none';
+        } else {
+          el.style.display='none';
+        }
       }
     })(tabs[i]);
   }
@@ -5060,7 +5890,28 @@ function render(){
           colorDots += renderColorDot(it.variants[d].name, 8);
         }
       }
-      html += '<div class="list-item ' + (low ? 'low' : '') + '" onclick="openItem(' + it.id + ')"><div class="list-info"><div class="list-name">' + esc(it.name) + '</div><div class="list-meta" style="display:flex;align-items:center">' + (multi ? it.variants.length + ' variants' + (colorDots ? ' <span style="display:inline-flex;align-items:center;margin-left:6px">' + colorDots + '</span>' : '') : 'Single item') + '</div></div><div class="list-stock"><div class="list-stock-label">Stock</div><div class="list-stock-value ' + (low ? 'low' : '') + '">' + cur + '</div><div class="list-badge ' + bc + '">' + lb + '</div></div><button class="card-del-btn" title="Delete ' + esc(it.name) + '" onclick="event.stopPropagation(); deleteItemById(' + it.id + ')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button></div>';
+      html += '<div class="list-item ' + (low ? 'low' : '') + '" onclick="openItem(' + it.id + ')">' +
+        '<div class="list-info">' +
+          '<div class="list-name">' + esc(it.name) + '</div>' +
+          '<div class="list-meta" style="display:flex;align-items:center">' +
+            (multi ? it.variants.length + ' variants' + (colorDots ? ' <span style="display:inline-flex;align-items:center;margin-left:6px">' + colorDots + '</span>' : '') : 'Single item') +
+          '</div>' +
+        '</div>' +
+        '<div class="list-stock">' +
+          '<div class="list-stock-label">Stock</div>' +
+          '<div class="list-stock-value ' + (low ? 'low' : '') + '">' + cur + '</div>' +
+          '<div class="list-badge ' + bc + '">' + lb + '</div>' +
+        '</div>' +
+        '<div style="display:flex;align-items:center;gap:6px" onclick="event.stopPropagation()">' +
+          '<button class="btn-card-issue" style="padding:6px 12px;font-size:11.5px" onclick="openIssueItem(' + it.id + ', event)" title="Direct Issue to Faculty">' +
+            '<span>⚡ Issue</span>' +
+          '</button>' +
+          '<button class="btn-card-inward" style="padding:6px 10px;font-size:11.5px" onclick="openInwardItem(' + it.id + ', event)" title="Add Stock">' +
+            '<span>+ Stock</span>' +
+          '</button>' +
+          '<button class="card-del-btn" title="Delete ' + esc(it.name) + '" onclick="deleteItemById(' + it.id + ')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button>' +
+        '</div>' +
+      '</div>';
     } else {
       var chips = '';
       if (multi){
@@ -5072,7 +5923,38 @@ function render(){
         }
         if (it.variants.length > 6) chips += '<span class="vchip">+' + (it.variants.length - 6) + '</span>';
       }
-      html += '<div class="card ' + (low ? 'low' : '') + '" onclick="openItem(' + it.id + ')"><div class="card-top"><div class="card-badge ' + bc + '">' + bt + '</div><button class="card-del-btn" title="Delete ' + esc(it.name) + '" onclick="event.stopPropagation(); deleteItemById(' + it.id + ')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button></div><div class="card-name">' + esc(it.name) + '</div><div class="big-stock ' + (low ? 'low' : '') + '"><div class="big-stock-label">Current Stock</div><div class="big-stock-value">' + cur + '</div><div class="big-stock-unit">' + (multi ? 'across ' + it.variants.length + ' variants' : 'units') + '</div></div>' + (multi ? '<div class="variant-chips">' + chips + '</div>' : '') + '</div>';
+      html += '<div class="card ' + (low ? 'low' : '') + '" onclick="openItem(' + it.id + ')">' +
+        '<div class="card-top">' +
+          '<div class="card-brand">' +
+            '<div class="card-avatar">' +
+              '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/></svg>' +
+            '</div>' +
+            '<div class="card-title-group">' +
+              '<div class="card-name" title="' + esc(it.name) + '">' + esc(it.name) + '</div>' +
+              '<div class="card-subtitle">' + (multi ? it.variants.length + ' variants registered' : 'General Inventory Item') + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="card-badge ' + bc + '">' + bt + '</div>' +
+        '</div>' +
+        '<div class="card-stats-line">' +
+          '<div class="card-stock-num ' + (low ? 'low' : '') + '">' + cur + '</div>' +
+          '<div class="card-stock-label">' + (multi ? 'total units available' : 'units in stock') + '</div>' +
+        '</div>' +
+        (multi ? '<div class="variant-chips">' + chips + '</div>' : '') +
+        '<div class="card-actions">' +
+          '<button class="btn-card-issue" onclick="openIssueItem(' + it.id + ', event)" title="Direct Issue to Faculty">' +
+            '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>' +
+            '<span>⚡ Issue</span>' +
+          '</button>' +
+          '<button class="btn-card-inward" onclick="openInwardItem(' + it.id + ', event)" title="Add inward stock">' +
+            '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>' +
+            '<span>+ Stock</span>' +
+          '</button>' +
+          '<button class="card-del-btn" title="Delete ' + esc(it.name) + '" onclick="event.stopPropagation(); deleteItemById(' + it.id + ')">' +
+            '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>' +
+          '</button>' +
+        '</div>' +
+      '</div>';
     }
   }
   grid.innerHTML = html;
@@ -5083,10 +5965,21 @@ function updateStats(){
   var grand = 0, lowV = 0;
   for (var i = 0; i < items.length; i++){ grand += itemCurrent(items[i]); lowV += itemLowCount(items[i]); }
   var bills = collectAllBills();
-  document.getElementById('st-total').textContent = items.length;
-  document.getElementById('st-stock').textContent = grand;
-  document.getElementById('st-low').textContent = lowV;
-  document.getElementById('st-bills').textContent = bills.length;
+  var stTotal = document.getElementById('st-total');
+  var stStock = document.getElementById('st-stock');
+  var stLow = document.getElementById('st-low');
+  var stBills = document.getElementById('st-bills');
+  if (stTotal) stTotal.textContent = items.length;
+  if (stStock) stStock.textContent = grand;
+  if (stLow) stLow.textContent = lowV;
+  if (stBills) stBills.textContent = bills.length;
+
+  var sbStock = document.getElementById('sb-stock-count');
+  var sbBills = document.getElementById('sb-bills-count');
+  var sbFac = document.getElementById('sb-fac-count');
+  if (sbStock) sbStock.textContent = items.length;
+  if (sbBills) sbBills.textContent = bills.length;
+  if (sbFac) sbFac.textContent = faculties ? faculties.length : 0;
 }
 
 function collectAllBills(){
@@ -5685,22 +6578,67 @@ function buildFacList(arr, max, colorClass, top3){
   return html;
 }
 
+var currentPickerPreferredTab = 'in';
+
+function ensureFacultiesLoaded(){
+  if (!faculties || faculties.length === 0){
+    try {
+      var sf = localStorage.getItem(FAC_KEY);
+      if (sf){
+        var pf = JSON.parse(sf);
+        if (Array.isArray(pf) && pf.length > 0) faculties = pf;
+      }
+    } catch(e){}
+  }
+  if (!faculties || faculties.length === 0){
+    if (typeof SEED_FACULTY !== 'undefined' && SEED_FACULTY.length > 0){
+      faculties = SEED_FACULTY.map(function(f, i){ return { id: i + 1, name: f.name, dept: f.dept }; });
+      try { localStorage.setItem(FAC_KEY, JSON.stringify(faculties)); } catch(e){}
+    }
+  }
+  return faculties;
+}
+
+function openIssueItem(id, event){
+  if (event) event.stopPropagation();
+  var it = getItem(id);
+  if (!it) return;
+  if (it.variants.length === 1){
+    openVariant(it.id, it.variants[0].id, 'out');
+  } else {
+    showPicker(it, 'out');
+  }
+}
+
+function openInwardItem(id, event){
+  if (event) event.stopPropagation();
+  var it = getItem(id);
+  if (!it) return;
+  if (it.variants.length === 1){
+    openVariant(it.id, it.variants[0].id, 'in');
+  } else {
+    showPicker(it, 'in');
+  }
+}
+
 function openItem(id){
   var it = getItem(id);
   if (!it) return;
-  if (it.variants.length === 1) openVariant(it.id, it.variants[0].id);
-  else showPicker(it);
+  if (it.variants.length === 1) openVariant(it.id, it.variants[0].id, 'in');
+  else showPicker(it, 'in');
 }
-function showPicker(it){
+
+function showPicker(it, preferredTab){
   currentPickerItemId = it.id;
+  currentPickerPreferredTab = preferredTab || 'in';
   document.getElementById('pick-title').textContent = it.name;
-  document.getElementById('pick-hint').textContent = 'Please select a sub-category / color';
+  document.getElementById('pick-hint').textContent = (preferredTab === 'out') ? 'Select sub-category/color to issue' : 'Please select a sub-category / color';
   var html = '';
   for (var i = 0; i < it.variants.length; i++){
     var v = it.variants[i];
     var vl = v.current < 15 && v.current > 0;
     var colorPreview = renderColorSwatchCard(v, 22);
-    html += '<div class="subcat ' + (vl ? 'low' : '') + '" onclick="openVariant(' + it.id + ',\'' + v.id + '\')">' +
+    html += '<div class="subcat ' + (vl ? 'low' : '') + '" onclick="openVariant(' + it.id + ',\'' + v.id + '\',\'' + currentPickerPreferredTab + '\')">' +
       '<div class="subcat-name">' +
         '<div style="display:flex;align-items:center;gap:8px;min-width:0;flex:1">' +
           colorPreview +
@@ -5720,7 +6658,7 @@ function showPicker(it){
 }
 function closePick(){ document.getElementById('modal-pick').classList.remove('open'); }
 
-function openVariant(itemId, variantId){
+function openVariant(itemId, variantId, preferredTab){
   activeItemId = itemId; activeVariantId = variantId;
   var it = getItem(itemId); var v = getVariant(it, variantId);
   if (!it || !v) return;
@@ -5735,7 +6673,7 @@ function openVariant(itemId, variantId){
   updateModalReadonlyState();
   closePick();
   document.getElementById('modal').classList.add('open');
-  switchTab('in');
+  switchTab(preferredTab || 'in');
   renderLog();
 }
 function updateModalReadonlyState(){
@@ -5747,9 +6685,17 @@ function updateModalReadonlyState(){
   else { inNote.style.display = 'block'; outNote.style.display = 'block'; inBtn.disabled = true; outBtn.disabled = true; inBtn.style.opacity = '0.5'; outBtn.style.opacity = '0.5'; }
 }
 function populateOutwardFacultyDropdown(){
+  ensureFacultiesLoaded();
   var sel = document.getElementById('out-faculty-select');
-  sel.innerHTML = '<option value="">-- Choose faculty --</option>';
-  for (var i = 0; i < faculties.length; i++) sel.innerHTML += '<option value="' + faculties[i].id + '">' + esc(faculties[i].name) + ' (' + esc(faculties[i].dept) + ')</option>';
+  if (!sel) return;
+  sel.innerHTML = '<option value="">-- Choose faculty member --</option>';
+  for (var i = 0; i < faculties.length; i++){
+    var f = faculties[i];
+    if (!f) continue;
+    var name = f.name || ('Faculty #' + f.id);
+    var dept = f.dept ? (' (' + f.dept + ')') : '';
+    sel.innerHTML += '<option value="' + f.id + '">' + esc(name) + esc(dept) + '</option>';
+  }
 }
 function refreshModalHeader(){
   var it = getItem(activeItemId); var v = getVariant(it, activeVariantId);
@@ -5782,34 +6728,45 @@ function switchTab(t){
   document.getElementById('pane-in').style.display = t === 'in' ? 'block' : 'none';
   document.getElementById('pane-out').style.display = t === 'out' ? 'block' : 'none';
   document.getElementById('pane-log').style.display = t === 'log' ? 'block' : 'none';
+  if (t === 'out') populateOutwardFacultyDropdown();
   if (t === 'log') renderLog();
 }
 function addInward(){
-  if (!requireAdmin()) return;
+  if (!requireAdmin(addInward)) return;
   var bill = document.getElementById('in-bill').value.trim();
   var year = document.getElementById('in-year').value.trim();
   var pass = document.getElementById('in-pass').value.trim();
   var qty = parseInt(document.getElementById('in-qty').value);
   var remark = document.getElementById('in-remark').value.trim();
-  var date = document.getElementById('in-date').value;
+  var date = document.getElementById('in-date').value || todayStr();
   if (!qty || qty <= 0) return alert('Please enter a valid quantity');
   if (!bill) return alert('Please enter the Bill No.');
   if (!year) year = String(new Date().getFullYear());
   if (!pass) pass = 'INP-' + Math.floor(Math.random() * 900 + 100);
   var it = getItem(activeItemId); var v = getVariant(it, activeVariantId);
   if (!it || !v) return;
-  v.current += qty;
-  v.logs.unshift({ date: date || todayStr(), type: 'INWARD', qty: qty, detail: remark || 'Stock added', ref: bill + ' / ' + year + ' / ' + pass });
-  saveData(); render(); renderLog(); switchTab('log'); refreshModalHeader();
+  v.current = (Number(v.current) || 0) + qty;
+  if (!v.logs) v.logs = [];
+  v.logs.unshift({ date: date, type: 'INWARD', qty: qty, detail: remark || 'Stock added', ref: bill + ' / ' + year + ' / ' + pass });
+  saveData(true); 
+  render(); 
+  if (typeof renderBills === 'function') renderBills();
+  if (typeof renderReports === 'function') renderReports();
+  if (typeof populateBillVendorFilter === 'function') populateBillVendorFilter();
+  updateStats();
+  renderLog(); 
+  switchTab('log'); 
+  refreshModalHeader();
   document.getElementById('in-bill').value = ''; document.getElementById('in-qty').value = '';
   document.getElementById('in-pass').value = ''; document.getElementById('in-remark').value = '';
+  alert('✅ Added ' + qty + ' unit(s) to ' + it.name + ' under Bill #' + bill);
 }
 function addOutward(){
-  if (!requireAdmin()) return;
+  if (!requireAdmin(addOutward)) return;
   var facId = document.getElementById('out-faculty-select').value;
   var qty = parseInt(document.getElementById('out-qty').value);
   var remark = document.getElementById('out-remark').value.trim();
-  var date = document.getElementById('out-date').value;
+  var date = document.getElementById('out-date').value || todayStr();
   if (!facId) return alert('Please select a faculty member');
   if (!qty || qty <= 0) return alert('Please enter a valid quantity');
   var fac = null;
@@ -5818,9 +6775,17 @@ function addOutward(){
   var it = getItem(activeItemId); var v = getVariant(it, activeVariantId);
   if (!it || !v) return;
   if (qty > v.current) return alert('Insufficient stock! Available: ' + v.current);
-  v.current -= qty;
-  v.logs.unshift({ date: date || todayStr(), type: 'OUTWARD', qty: qty, detail: fac.name + ' (' + fac.dept + ') - ' + (remark || ''), ref: fac.name });
-  saveData(); render(); renderLog(); switchTab('log'); refreshModalHeader();
+  v.current = (Number(v.current) || 0) - qty;
+  if (!v.logs) v.logs = [];
+  v.logs.unshift({ date: date, type: 'OUTWARD', qty: qty, detail: fac.name + ' (' + fac.dept + ') - ' + (remark || ''), ref: fac.name });
+  saveData(true); 
+  render(); 
+  if (typeof renderFaculty === 'function') renderFaculty();
+  if (typeof renderReports === 'function') renderReports();
+  updateStats();
+  renderLog(); 
+  switchTab('log'); 
+  refreshModalHeader();
   document.getElementById('out-qty').value = ''; document.getElementById('out-remark').value = '';
 }
 function renderLog(){
@@ -5874,10 +6839,14 @@ function addVariantRow(){
   list.appendChild(row);
 }
 function saveItem(){
-  if (!requireAdmin()) return;
+  if (!requireAdmin(saveItem)) return;
   var name = document.getElementById('new-name').value.trim();
   var type = document.getElementById('new-type').value;
   if (!name) return alert('Please enter an item name');
+  var existing = items.find(function(it){ return it.name.toLowerCase() === name.toLowerCase(); });
+  if (existing){
+    return alert('⚠️ Item "' + name + '" already exists in stock!\n\nTo add stock to this item, please use "Bill (Add Inward Stock)" which automatically updates the stock.');
+  }
   var variants = [];
   if (type === 'single'){
     var stock = parseInt(document.getElementById('new-stock').value) || 0;
@@ -5893,7 +6862,12 @@ function saveItem(){
   }
   items.push({ id: Date.now(), name: name, type: type, variants: variants });
   items.sort(function(a, b){ return a.name.localeCompare(b.name); });
-  saveData(); render(); closeAdd();
+  saveData(true); 
+  render(); 
+  if (typeof renderBills === 'function') renderBills();
+  if (typeof renderReports === 'function') renderReports();
+  closeAdd();
+  alert('✅ New item "' + name + '" registered in catalog.');
 }
 
 function deleteItemById(id){
@@ -6006,92 +6980,161 @@ function openAddBill(){
   document.getElementById('bill-vendor-input').value = '';
   document.getElementById('bill-items-list').innerHTML = '';
   addBillItemRow();
+  updateBillSummary();
   var vl = document.getElementById('vendor-list'); vl.innerHTML = '';
-  for (var i = 0; i < VENDORS.length; i++) vl.innerHTML += '<option value="' + VENDORS[i] + '">';
+  var allBills = collectAllBills();
+  var vMap = {};
+  for (var i = 0; i < VENDORS.length; i++) vMap[VENDORS[i]] = true;
+  for (var i = 0; i < allBills.length; i++) if (allBills[i].vendor) vMap[allBills[i].vendor] = true;
+  Object.keys(vMap).sort().forEach(function(vn){
+    vl.innerHTML += '<option value="' + esc(vn) + '">';
+  });
   document.getElementById('modal-addbill').classList.add('open');
 }
 function closeAddBill(){ document.getElementById('modal-addbill').classList.remove('open'); }
+
 function getItemOptionsHtml(selectedId){
   var html = '<option value="">-- Select Item --</option>';
   for (var i = 0; i < items.length; i++){
-    var sel = (items[i].id === selectedId) ? ' selected' : '';
-    html += '<option value="' + items[i].id + '"' + sel + '>' + esc(items[i].name) + '</option>';
+    var it = items[i];
+    var sel = (String(it.id) === String(selectedId)) ? ' selected' : '';
+    var stock = itemCurrent(it);
+    html += '<option value="' + it.id + '"' + sel + '>' + esc(it.name) + ' (Stock: ' + stock + ')' + '</option>';
   }
-  html += '<option value="__NEW__" style="color:#0f7a3d;font-weight:700">➕ Add New Item...</option>';
+  html += '<option value="__NEW__" style="color:#0f7a3d;font-weight:700">➕ Add New Item to Catalog...</option>';
   return html;
 }
+
 function addBillItemRow(){
   var container = document.getElementById('bill-items-list');
   var div = document.createElement('div'); div.className = 'bill-item-block';
-  div.innerHTML = '<div class="bill-item-row-edit"><select class="bi-item" onchange="onBillItemChange(this)">' + getItemOptionsHtml(0) + '</select><input type="number" class="bi-qty" placeholder="Qty" min="1" oninput="updateBillSummary()"><button class="icon-btn" type="button" onclick="this.closest(\'.bill-item-block\').remove();updateBillSummary()">✕</button></div><div class="bill-subcat-row" style="display:none"><select class="bi-subcat"></select></div>';
+  div.innerHTML = '<div class="bill-item-row-edit">' +
+    '<select class="bi-item" onchange="onBillItemChange(this)">' + getItemOptionsHtml(0) + '</select>' +
+    '<input type="number" class="bi-qty" placeholder="Qty" min="1" oninput="updateBillSummary()">' +
+    '<button class="icon-btn" type="button" onclick="this.closest(\'.bill-item-block\').remove();updateBillSummary()" title="Remove item">✕</button>' +
+    '</div>' +
+    '<div class="bill-subcat-row" style="display:none">' +
+    '<select class="bi-subcat" onchange="updateBillSummary()"></select>' +
+    '</div>';
   container.appendChild(div);
+  updateBillSummary();
 }
+
 function onBillItemChange(sel){
   var val = sel.value; var block = sel.closest('.bill-item-block');
   if (val === '__NEW__'){
     sel.value = '';
-    inlineItemCallback = function(newItem){ sel.innerHTML = getItemOptionsHtml(newItem.id); sel.value = newItem.id; onBillItemChange(sel); };
+    inlineItemCallback = function(newItem){
+      // Refresh all item dropdowns in the bill form so newly created item appears in all rows
+      document.querySelectorAll('#bill-items-list .bi-item').forEach(function(s){
+        var curVal = (s === sel) ? String(newItem.id) : s.value;
+        s.innerHTML = getItemOptionsHtml(curVal);
+        if (curVal) s.value = curVal;
+      });
+      onBillItemChange(sel);
+    };
     openInlineItem(); return;
   }
   var subWrap = block.querySelector('.bill-subcat-row'); var subSel = block.querySelector('.bi-subcat');
-  if (!val){ subWrap.style.display = 'none'; return; }
-  var it = getItem(parseInt(val));
-  if (!it || it.variants.length <= 1){ subWrap.style.display = 'none'; return; }
+  if (!val){ subWrap.style.display = 'none'; updateBillSummary(); return; }
+  var it = getItem(val);
+  if (!it || it.variants.length <= 1){ subWrap.style.display = 'none'; updateBillSummary(); return; }
   subSel.innerHTML = '';
   for (var i = 0; i < it.variants.length; i++){
     var v = it.variants[i];
-    subSel.innerHTML += '<option value="' + v.id + '">' + esc(v.name) + ' (Current: ' + v.current + ')</option>';
+    subSel.innerHTML += '<option value="' + v.id + '">' + esc(v.name) + ' (Current Stock: ' + (v.current || 0) + ')</option>';
   }
   subWrap.style.display = 'block';
+  updateBillSummary();
 }
+
 function updateBillSummary(){
   var rows = document.querySelectorAll('#bill-items-list .bill-item-block');
   var count = 0, qty = 0;
   for (var i = 0; i < rows.length; i++){
     var sel = rows[i].querySelector('.bi-item');
     var q = parseInt(rows[i].querySelector('.bi-qty').value) || 0;
-    if (sel.value && q > 0){ count++; qty += q; }
+    if (sel && sel.value && sel.value !== '__NEW__' && q > 0){ count++; qty += q; }
   }
-  document.getElementById('bill-sum-items').textContent = count;
-  document.getElementById('bill-sum-qty').textContent = qty;
+  var sumItems = document.getElementById('bill-sum-items');
+  var sumQty = document.getElementById('bill-sum-qty');
+  if (sumItems) sumItems.textContent = count;
+  if (sumQty) sumQty.textContent = qty;
 }
+
 function saveBill(){
-  if (!requireAdmin()) return;
+  if (!requireAdmin(saveBill)) return;
   var billNo = document.getElementById('bill-no-input').value.trim();
   var year = document.getElementById('bill-year-input').value.trim();
   var inPass = document.getElementById('bill-inpass-input').value.trim();
-  var date = document.getElementById('bill-date-input').value;
+  var date = document.getElementById('bill-date-input').value || todayStr();
   var vendor = document.getElementById('bill-vendor-input').value.trim();
   if (!billNo) return alert('Please enter a Bill No.');
   if (!year) year = String(new Date().getFullYear());
   if (!inPass) inPass = 'INP-' + Math.floor(Math.random() * 900 + 100);
   if (!vendor) return alert('Please enter a vendor name');
+
   var blocks = document.querySelectorAll('#bill-items-list .bill-item-block');
   var toAdd = [];
   for (var i = 0; i < blocks.length; i++){
-    var itemId = parseInt(blocks[i].querySelector('.bi-item').value);
+    var itemVal = blocks[i].querySelector('.bi-item').value;
     var qty = parseInt(blocks[i].querySelector('.bi-qty').value);
-    if (!itemId || !qty || qty <= 0) continue;
-    var it = getItem(itemId);
+    if (!itemVal || itemVal === '__NEW__' || isNaN(qty) || qty <= 0) continue;
+    var it = getItem(itemVal);
     if (!it) continue;
-    var vid = it.variants.length === 1 ? it.variants[0].id : blocks[i].querySelector('.bi-subcat').value;
+    var subSel = blocks[i].querySelector('.bi-subcat');
+    var vid;
+    if (it.variants.length === 1){
+      vid = it.variants[0].id;
+    } else {
+      vid = (subSel && subSel.value) ? subSel.value : (it.variants[0] ? it.variants[0].id : null);
+    }
     if (!vid) continue;
-    toAdd.push({ itemId: itemId, variantId: vid, qty: qty });
+    toAdd.push({ itemId: it.id, variantId: vid, qty: qty, itemName: it.name });
   }
-  if (toAdd.length === 0) return alert('Please add at least one item with quantity');
+
+  if (toAdd.length === 0) return alert('Please select at least one item and enter a quantity greater than 0.');
+
+  var totalQtyAdded = 0;
   for (var i = 0; i < toAdd.length; i++){
     var t = toAdd[i];
     var it = getItem(t.itemId);
     var v = getVariant(it, t.variantId);
     if (!v) continue;
-    v.current += t.qty;
-    v.logs.unshift({ date: date || todayStr(), type: 'INWARD', qty: t.qty, detail: 'From ' + vendor, ref: billNo + ' / ' + year + ' / ' + inPass });
+    v.current = (Number(v.current) || 0) + t.qty;
+    if (!v.logs) v.logs = [];
+    v.logs.unshift({
+      date: date,
+      type: 'INWARD',
+      qty: t.qty,
+      detail: 'From ' + vendor,
+      ref: billNo + ' / ' + year + ' / ' + inPass
+    });
+    totalQtyAdded += t.qty;
   }
-  saveData(); render(); closeAddBill();
-  alert('✅ Bill #' + billNo + ' saved with ' + toAdd.length + ' item(s)');
+
+  saveData(true);
+  render();
+  if (typeof renderBills === 'function') renderBills();
+  if (typeof renderReports === 'function') renderReports();
+  if (typeof renderFaculty === 'function') renderFaculty();
+  if (typeof populateBillVendorFilter === 'function') populateBillVendorFilter();
+  updateStats();
+
+  if (typeof activeItemId !== 'undefined' && activeItemId){
+    if (typeof refreshModalHeader === 'function') refreshModalHeader();
+    if (typeof renderLog === 'function') renderLog();
+  }
+
+  closeAddBill();
+  alert('✅ Bill #' + billNo + ' saved!\n' + toAdd.length + ' item(s) (' + totalQtyAdded + ' total qty) stock automatically updated.');
 }
+
 function openInlineItem(){
-  if (!isAdmin){ requireAdmin(); return; }
+  if (!isAdmin){
+    requireAdmin(function(){ openInlineItem(); });
+    return;
+  }
   document.getElementById('inline-name').value = '';
   document.getElementById('inline-type').value = 'single';
   document.getElementById('inline-stock').value = '';
@@ -6099,23 +7142,33 @@ function openInlineItem(){
   addInlineVariantRow(); toggleInlineVariant();
   document.getElementById('modal-inline-item').classList.add('open');
 }
+
 function closeInlineItem(){ document.getElementById('modal-inline-item').classList.remove('open'); inlineItemCallback = null; }
+
 function toggleInlineVariant(){
   var m = document.getElementById('inline-type').value;
   document.getElementById('inline-single').style.display = m === 'single' ? 'block' : 'none';
   document.getElementById('inline-variant').style.display = m === 'variant' ? 'block' : 'none';
 }
+
 function addInlineVariantRow(){
   var list = document.getElementById('inline-variant-list');
   var row = document.createElement('div'); row.className = 'variant-row';
   row.innerHTML = '<input type="text" placeholder="Name" class="v-name"><input type="number" placeholder="Stock" class="v-stock"><input type="number" placeholder="Total" class="v-total"><button class="icon-btn" type="button" onclick="this.parentNode.remove()">✕</button>';
   list.appendChild(row);
 }
+
 function saveInlineItem(){
-  if (!requireAdmin()) return;
+  if (!requireAdmin(saveInlineItem)) return;
   var name = document.getElementById('inline-name').value.trim();
   var type = document.getElementById('inline-type').value;
   if (!name) return alert('Please enter an item name');
+  var existing = items.find(function(it){ return it.name.toLowerCase() === name.toLowerCase(); });
+  if (existing){
+    closeInlineItem();
+    if (inlineItemCallback) inlineItemCallback(existing);
+    return;
+  }
   var variants = [];
   if (type === 'single'){
     var stock = parseInt(document.getElementById('inline-stock').value) || 0;
@@ -6131,7 +7184,19 @@ function saveInlineItem(){
   }
   var newItem = { id: Date.now(), name: name, type: type, variants: variants };
   items.push(newItem); items.sort(function(a, b){ return a.name.localeCompare(b.name); });
-  saveData(); render(); closeInlineItem();
+  saveData(true); 
+  render();
+  if (typeof renderBills === 'function') renderBills();
+  if (typeof renderReports === 'function') renderReports();
+
+  // Refresh all bill item dropdowns
+  document.querySelectorAll('#bill-items-list .bi-item').forEach(function(s){
+    var curV = s.value;
+    s.innerHTML = getItemOptionsHtml(curV);
+    if (curV && curV !== '__NEW__') s.value = curV;
+  });
+
+  closeInlineItem();
   if (inlineItemCallback) inlineItemCallback(newItem);
 }
 
@@ -6143,13 +7208,16 @@ function openIssueSlip(){
     requireAdmin(function(){ openIssueSlip(); });
     return;
   }
+  ensureFacultiesLoaded();
   document.getElementById('slip-date').value = todayStr();
   document.getElementById('slip-remark').value = '';
   // Populate faculty dropdown
   var fsel = document.getElementById('slip-faculty');
-  fsel.innerHTML = '<option value="">-- Choose faculty --</option>';
-  for (var i = 0; i < faculties.length; i++){
-    fsel.innerHTML += '<option value="' + faculties[i].id + '">' + esc(faculties[i].name) + ' (' + esc(faculties[i].dept) + ')</option>';
+  if (fsel){
+    fsel.innerHTML = '<option value="">-- Choose faculty --</option>';
+    for (var i = 0; i < faculties.length; i++){
+      fsel.innerHTML += '<option value="' + faculties[i].id + '">' + esc(faculties[i].name) + (faculties[i].dept ? ' (' + esc(faculties[i].dept) + ')' : '') + '</option>';
+    }
   }
   // Reset items list
   document.getElementById('slip-items-list').innerHTML = '';
@@ -6250,7 +7318,7 @@ function updateSlipSummary(){
 }
 
 function saveIssueSlip(){
-  if (!requireAdmin()) return;
+  if (!requireAdmin(saveIssueSlip)) return;
   var facId = document.getElementById('slip-faculty').value;
   if (!facId) return alert('Please select a faculty member');
   var date = document.getElementById('slip-date').value || todayStr();
@@ -6269,11 +7337,14 @@ function saveIssueSlip(){
     var q = parseInt(rows[i].querySelector('.slip-qty').value) || 0;
     if (!sel.value || sel.value === '__NEW__') continue;
     if (q <= 0) continue;
-    var it = getItem(parseInt(sel.value));
+    var it = getItem(sel.value);
     if (!it) continue;
     var vid;
     if (it.variants.length === 1) vid = it.variants[0].id;
-    else vid = rows[i].querySelector('.slip-subcat').value;
+    else {
+      var subSel = rows[i].querySelector('.slip-subcat');
+      vid = (subSel && subSel.value) ? subSel.value : (it.variants[0] ? it.variants[0].id : null);
+    }
     var v = getVariant(it, vid);
     if (!v) continue;
     if (q > v.current){
@@ -6293,6 +7364,7 @@ function saveIssueSlip(){
   for (var i = 0; i < toIssue.length; i++){
     var t = toIssue[i];
     t.variant.current -= t.qty;
+    if (!t.variant.logs) t.variant.logs = [];
     t.variant.logs.unshift({
       date: date,
       type: 'OUTWARD',
@@ -6302,7 +7374,12 @@ function saveIssueSlip(){
     });
   }
 
-  saveData(); render(); renderFaculty();
+  saveData(true); 
+  render(); 
+  if (typeof renderFaculty === 'function') renderFaculty();
+  if (typeof renderReports === 'function') renderReports();
+  if (typeof renderBills === 'function') renderBills();
+  updateStats();
   closeIssueSlip();
   alert('✅ Issued ' + toIssue.length + ' item(s) to ' + fac.name + ' (Total ' + toIssue.reduce(function(s,x){ return s + x.qty; }, 0) + ' pcs)');
 }
@@ -6578,18 +7655,18 @@ function init(){
   ['search', 'rep-search'].forEach(function(sId){
     var el = document.getElementById(sId);
     if (el) {
-      if (el.value.toLowerCase().trim() === 'admin') el.value = '';
+      if (el.value && el.value.toLowerCase().trim() === 'admin') el.value = '';
       var clearBtn = document.getElementById(sId === 'search' ? 'search-clear-btn' : 'rep-search-clear');
       if (clearBtn) clearBtn.style.display = el.value ? (sId === 'search' ? 'flex' : 'inline-block') : 'none';
       setTimeout(function(){
-        if (el.value.toLowerCase().trim() === 'admin') {
+        if (el && el.value && el.value.toLowerCase().trim() === 'admin') {
           el.value = '';
           if (sId === 'search') render();
           if (sId === 'rep-search') renderReports();
         }
       }, 200);
       setTimeout(function(){
-        if (el.value.toLowerCase().trim() === 'admin') {
+        if (el && el.value && el.value.toLowerCase().trim() === 'admin') {
           el.value = '';
           if (sId === 'search') render();
           if (sId === 'rep-search') renderReports();
@@ -6683,9 +7760,11 @@ async function fetchCloudData(isManual){
       }
       if (updated) {
         render();
+        populateOutwardFacultyDropdown();
         if (typeof renderFaculty === 'function') renderFaculty();
         if (typeof renderBills === 'function') renderBills();
         if (typeof renderReports === 'function') renderReports();
+        updateStats();
       }
       updateCloudBadge('synced', 'Neon DB Synced');
       hideCloudAlertBanner();
@@ -6696,6 +7775,16 @@ async function fetchCloudData(isManual){
     showCloudAlertBanner('Could not connect to online Neon Database: ' + (err.message || 'Network error') + '. Please check Vercel DATABASE_URL / internet.');
   }
 }
+
+document.addEventListener('keydown', function(e){
+  var tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+  if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+  if (e.key === '/' || e.key === 'f' || e.key === 'F'){
+    e.preventDefault();
+    openGlobalSearch();
+  }
+});
+
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
 else init();
 </script>
