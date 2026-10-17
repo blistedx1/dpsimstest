@@ -266,24 +266,29 @@ header {
   flex-shrink: 0;
 }
 .admin-badge, .readonly-badge, .cloud-badge {
+  width: 36px;
   height: 36px;
-  box-sizing: border-box;
-  font-size: 11px;
-  font-weight: 800;
-  padding: 0 11px;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0;
   border-radius: 10px;
   letter-spacing: 0.2px;
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
   box-shadow: var(--shadow-xs);
   transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+}
+.admin-badge .badge-txt,
+.readonly-badge .badge-txt,
+.cloud-badge .badge-txt {
+  display: none !important;
 }
 .admin-badge svg, .readonly-badge svg, .cloud-badge svg {
-  width: 15px;
-  height: 15px;
+  width: 16px;
+  height: 16px;
   display: block;
   flex-shrink: 0;
   stroke: currentColor;
@@ -361,26 +366,47 @@ header {
   transform: scale(0.98);
 }
 
-/* PWA INSTALL BUTTON */
+/* PWA INSTALL BUTTON & ADD HEADER BUTTON - ICON ONLY */
 .btn-pwa-install {
   background: var(--green);
   color: #ffffff;
   border: 1px solid var(--green-border);
-  border-radius: 20px;
-  padding: 5px 12px;
-  font-size: 11px;
-  font-weight: 800;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0;
+  border-radius: 10px;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: var(--shadow-sm);
-  white-space: nowrap;
+  box-sizing: border-box;
 }
 .btn-pwa-install:hover {
   background: var(--green-dark);
   transform: translateY(-1px);
+}
+.btn-pwa-install span {
+  display: none !important;
+}
+
+.btn-add-header {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+.btn-add-header span {
+  display: none !important;
 }
 
 /* SEARCH CLEAR BUTTON */
@@ -1093,11 +1119,15 @@ header {
   border: 1px dashed var(--border);
 }
 .grid.empty::before {
-  content: "📦";
+  content: "";
   display: block;
-  font-size: 46px;
-  margin-bottom: 10px;
-  opacity: 0.55;
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 12px;
+  background-color: var(--muted-light);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z'/%3E%3Cpath d='m3.3 7 8.7 5 8.7-5'/%3E%3Cpath d='M12 22V12'/%3E%3C/svg%3E") no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z'/%3E%3Cpath d='m3.3 7 8.7 5 8.7-5'/%3E%3Cpath d='M12 22V12'/%3E%3C/svg%3E") no-repeat center / contain;
+  opacity: 0.7;
 }
 .card {
   background: #ffffff;
@@ -1247,9 +1277,16 @@ header {
   gap: 12px;
   box-shadow: var(--shadow-xs);
 }
-.list-item:hover {
+.grid.list-view .list-item:nth-child(odd) {
+  background-color: #f0f7f2;
+}
+.grid.list-view .list-item:nth-child(even) {
+  background-color: #ffffff;
+}
+.list-item:hover,
+.grid.list-view .list-item:hover {
   border-color: var(--green-border);
-  background: var(--card-hover);
+  background-color: #e2f2e7 !important;
   transform: translateX(2px);
 }
 .list-item:active {
@@ -1647,8 +1684,115 @@ td {
   white-space: nowrap;
   color: var(--text);
 }
-tr:hover td {
-  background: #f8faf8;
+
+/* UNIVERSAL ZEBRA STRIPING: 1 green then 1 white row */
+table tbody tr:nth-child(odd) td,
+.table-wrap tbody tr:nth-child(odd) td,
+.rep-table tbody tr:nth-child(odd) td,
+.bill-doc-table tbody tr:nth-child(odd) td {
+  background-color: #f0f7f2;
+}
+table tbody tr:nth-child(even) td,
+.table-wrap tbody tr:nth-child(even) td,
+.rep-table tbody tr:nth-child(even) td,
+.bill-doc-table tbody tr:nth-child(even) td {
+  background-color: #ffffff;
+}
+table tbody tr:hover td,
+.table-wrap tbody tr:hover td,
+.rep-table tbody tr:hover td,
+.bill-doc-table tbody tr:hover td {
+  background-color: #e2f2e7 !important;
+}
+
+/* CRISP BORDERED REPORT TABLES (WITH CLEAN VISIBLE CELL BORDERS & ZEBRA ROWS) */
+.bordered-report-table,
+table.bordered-report-table,
+.rep-table.bordered-report-table {
+  width: 100%;
+  border-collapse: collapse !important;
+  border: 1.5px solid #94a3b8 !important;
+}
+.bordered-report-table th,
+table.bordered-report-table th,
+.rep-table.bordered-report-table th {
+  border: 1px solid #94a3b8 !important;
+  background: #e8f5ec !important;
+  color: #124f32 !important;
+  font-weight: 800 !important;
+  padding: 10px 12px !important;
+  letter-spacing: 0.4px;
+}
+.bordered-report-table td,
+table.bordered-report-table td,
+.rep-table.bordered-report-table td {
+  border: 1px solid #cbd5e1 !important;
+  padding: 10px 12px !important;
+}
+.bordered-report-table tbody tr:nth-child(odd) td,
+table.bordered-report-table tbody tr:nth-child(odd) td,
+.rep-table.bordered-report-table tbody tr:nth-child(odd) td {
+  background-color: #f0f7f2 !important;
+}
+.bordered-report-table tbody tr:nth-child(even) td,
+table.bordered-report-table tbody tr:nth-child(even) td,
+.rep-table.bordered-report-table tbody tr:nth-child(even) td {
+  background-color: #ffffff !important;
+}
+.bordered-report-table tbody tr:hover td,
+table.bordered-report-table tbody tr:hover td,
+.rep-table.bordered-report-table tbody tr:hover td {
+  background-color: #e2f2e7 !important;
+}
+.bordered-report-table tfoot td,
+table.bordered-report-table tfoot td,
+.rep-table.bordered-report-table tfoot td {
+  border: 1px solid #94a3b8 !important;
+  background: #e8f5ec !important;
+  font-weight: 800 !important;
+}
+
+/* OFFICIAL PRINT DOCUMENT STYLES - CLEAN REPORT PDF (NO WEBPAGE SCREENSHOT) */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm 12mm 14mm 12mm;
+  }
+  body.dps-printing-official-doc {
+    background: #ffffff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    color: #000000 !important;
+  }
+  body.dps-printing-official-doc header,
+  body.dps-printing-official-doc .nav-tabs,
+  body.dps-printing-official-doc .mobile-nav,
+  body.dps-printing-official-doc .container,
+  body.dps-printing-official-doc .modal-overlay,
+  body.dps-printing-official-doc .dps-watermark,
+  body.dps-printing-official-doc #splash,
+  body.dps-printing-official-doc .btn,
+  body.dps-printing-official-doc button,
+  body.dps-printing-official-doc .search-row,
+  body.dps-printing-official-doc .filter-panel,
+  body.dps-printing-official-doc .report-section,
+  body.dps-printing-official-doc .cloud-alert-banner,
+  body.dps-printing-official-doc #cloudAlertBanner {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  body.dps-printing-official-doc #dps-official-printable-area {
+    display: block !important;
+    visibility: visible !important;
+    position: static !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+  body.dps-printing-official-doc #dps-official-printable-area * {
+    visibility: visible !important;
+  }
 }
 .tag {
   padding: 3px 9px;
@@ -1697,6 +1841,8 @@ tr:hover td {
   margin-top: 5px;
   color: var(--green);
   font-family: 'JetBrains Mono', monospace;
+}
+
 /* REPORT DATE BAR & QUICK CHIPS */
 .rep-date-bar {
   background: #ffffff;
@@ -1890,6 +2036,9 @@ tr:hover td {
   color: var(--text-secondary);
   cursor: pointer;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   transition: all 0.15s ease;
 }
 .rep-subfilter-btn:hover {
@@ -2045,8 +2194,15 @@ tr:hover td {
   gap: 12px;
   transition: background 0.15s ease;
 }
-.report-item:hover {
-  background: #f9fbf9;
+.report-list .report-item:nth-child(odd) {
+  background-color: #f0f7f2;
+}
+.report-list .report-item:nth-child(even) {
+  background-color: #ffffff;
+}
+.report-item:hover,
+.report-list .report-item:hover {
+  background-color: #e2f2e7 !important;
 }
 .report-item:last-child {
   border-bottom: none;
@@ -2225,26 +2381,39 @@ tr:hover td {
   color: var(--text);
   box-shadow: 0 0 0 3px var(--green-light);
 }
+#bill-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+@media (max-width: 640px) {
+  #bill-list {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
 .bill-card {
   background: #ffffff;
   border: 1px solid var(--border);
   border-radius: 16px;
   overflow: hidden;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
-  margin-bottom: 14px;
   box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
 }
 .bill-card:hover {
   border-color: var(--green-border);
   box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 .bill-card:active {
   transform: scale(0.99);
 }
 .bill-card-head {
-  background: linear-gradient(135deg, #124f32 0%, #09331e 100%);
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
   color: #ffffff;
   padding: 13px 16px;
   display: flex;
@@ -2254,16 +2423,21 @@ tr:hover td {
   flex-wrap: wrap;
 }
 .bill-card-title {
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 800;
   letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 .bill-card-inpass {
   font-size: 11px;
   font-weight: 700;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 3px 10px;
   border-radius: 20px;
+  letter-spacing: 0.3px;
 }
 .bill-card-body {
   padding: 13px 16px;
@@ -2279,7 +2453,7 @@ tr:hover td {
   text-transform: uppercase;
 }
 .bill-meta-value {
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 700;
   margin-top: 2px;
   word-break: break-word;
@@ -2287,6 +2461,7 @@ tr:hover td {
 }
 .bill-card-items {
   padding: 0 16px 14px;
+  flex: 1;
 }
 .bill-items-title {
   font-size: 10px;
@@ -2297,19 +2472,26 @@ tr:hover td {
   margin-bottom: 7px;
 }
 .bill-items-list {
-  background: #f9fbf9;
+  background: var(--bg-subtle);
   border-radius: 12px;
   padding: 9px 12px;
-  border: 1px solid #edf4ef;
+  border: 1px solid var(--border);
 }
 .bill-item-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6px 0;
+  padding: 6px 8px;
   border-bottom: 1px dashed var(--border);
   font-size: 12.5px;
   gap: 8px;
+  border-radius: 6px;
+}
+.bill-item-row:nth-child(odd) {
+  background-color: #f0f7f2;
+}
+.bill-item-row:nth-child(even) {
+  background-color: #ffffff;
 }
 .bill-item-row:last-child {
   border-bottom: none;
@@ -2324,20 +2506,24 @@ tr:hover td {
   font-weight: 800;
   color: var(--green);
   white-space: nowrap;
+  font-family: 'JetBrains Mono', monospace;
 }
 .bill-card-foot {
   padding: 11px 16px;
-  background: #f8faf8;
+  background: var(--bg-subtle);
   border-top: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 700;
+  color: var(--text-secondary);
 }
 .bill-card-foot .total {
   color: var(--green);
   font-weight: 800;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
 }
 
 /* BILL DOC PRINT MODAL (Delhi Public School Stationery) */
@@ -2559,12 +2745,26 @@ tr:hover td {
   background: #ffffff;
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 11px;
-  margin-bottom: 9px;
-  display: grid;
-  grid-template-columns: 1fr 95px 36px;
+  padding: 12px;
+  margin-bottom: 10px;
+  display: block;
+  transition: all 0.15s ease;
+}
+.slip-row-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.slip-row-main-inputs {
+  display: flex;
   gap: 8px;
-  align-items: start;
+  align-items: center;
+  width: 100%;
+}
+.slip-single-qty-wrap {
+  width: 100px;
+  flex-shrink: 0;
 }
 .slip-item-row select,
 .slip-item-row input {
@@ -2582,20 +2782,128 @@ tr:hover td {
 .slip-item-row input:focus {
   border-color: var(--green);
 }
-.slip-item-subcat {
-  margin-top: 6px;
-  grid-column: 1 / -1;
-}
-.slip-item-subcat select {
-  padding: 8px 11px;
-  border-radius: 8px;
+.slip-var-summary-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  background: var(--bg-subtle);
   border: 1px solid var(--border);
-  font-size: 12px;
-  outline: none;
-  width: 100%;
-  font-family: inherit;
+  border-radius: 12px;
+  padding: 2px 9px;
+  transition: all 0.15s ease;
+}
+.slip-var-summary-badge.active {
+  color: var(--green);
+  background: var(--green-light);
+  border-color: var(--green-border);
+  font-weight: 800;
+}
+.slip-variants-container {
+  margin-top: 10px;
+  border-top: 1px dashed var(--border);
+  padding-top: 10px;
+}
+.slip-colors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+  gap: 8px;
+  max-height: 290px;
+  overflow-y: auto;
+  padding: 4px 2px;
+}
+.slip-color-card {
   background: #ffffff;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+.slip-color-card:hover {
+  border-color: #cbd5e1;
+}
+.slip-color-card.has-qty {
+  background: #f0fdf4;
+  border-color: var(--green);
+  box-shadow: 0 1px 4px rgba(18, 79, 50, 0.15);
+}
+.slip-color-card.over-max {
+  background: #fef2f2;
+  border-color: var(--red);
+}
+.slip-color-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.slip-color-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
   color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.stock-badge {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  background: var(--bg-subtle);
+  padding: 2px 6px;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.stock-badge.low {
+  color: var(--red);
+  background: var(--red-light);
+  border: 1px solid var(--red-border);
+}
+.stock-badge.zero {
+  color: #6b7280;
+  background: #f3f4f6;
+}
+.slip-color-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.slip-color-input-row .lbl {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.slip-var-qty {
+  flex: 1;
+  padding: 5px 8px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  border-radius: 6px !important;
+  border: 1px solid var(--border) !important;
+  background: #ffffff !important;
+  outline: none;
+  text-align: right;
+}
+.slip-var-qty:focus {
+  border-color: var(--green) !important;
+}
+.slip-color-card.has-qty .slip-var-qty {
+  border-color: var(--green) !important;
+  color: var(--green-dark) !important;
+  font-weight: 800 !important;
+}
+.slip-color-card.over-max .slip-var-qty {
+  border-color: var(--red) !important;
+  color: var(--red) !important;
+}
+#modal-add-variant {
+  z-index: 600;
 }
 .slip-add-btn {
   margin-top: 10px;
@@ -3155,9 +3463,14 @@ body {
     gap: 6px;
   }
   .slip-item-row {
-    grid-template-columns: 1fr 65px 36px;
+    padding: 10px 8px;
+  }
+  .slip-single-qty-wrap {
+    width: 75px;
+  }
+  .slip-colors-grid {
+    grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
     gap: 6px;
-    padding: 9px;
   }
 
   /* FACULTY TABLE */
@@ -3308,25 +3621,33 @@ body {
 /* PRINT STYLES                                  */
 /* ============================================= */
 @media print {
-  body {
+  body:not(.dps-printing-official-doc) {
     background: #ffffff !important;
     padding: 0 !important;
     color: #000000 !important;
   }
-  header, .nav-tabs, .mobile-nav, .search-row, .top-stats, .filter-panel, .btn, #splash {
+  body:not(.dps-printing-official-doc) header,
+  body:not(.dps-printing-official-doc) .nav-tabs,
+  body:not(.dps-printing-official-doc) .mobile-nav,
+  body:not(.dps-printing-official-doc) .search-row,
+  body:not(.dps-printing-official-doc) .top-stats,
+  body:not(.dps-printing-official-doc) .filter-panel,
+  body:not(.dps-printing-official-doc) .btn,
+  body:not(.dps-printing-official-doc) #splash,
+  body:not(.dps-printing-official-doc) .dps-watermark {
     display: none !important;
   }
-  .container {
+  body:not(.dps-printing-official-doc) .container {
     max-width: 100% !important;
     padding: 0 !important;
   }
-  .modal-overlay {
+  body:not(.dps-printing-official-doc) .modal-overlay {
     position: static !important;
     background: none !important;
     display: block !important;
     padding: 0 !important;
   }
-  .modal {
+  body:not(.dps-printing-official-doc) .modal {
     box-shadow: none !important;
     border: none !important;
     border-radius: 0 !important;
@@ -3368,13 +3689,11 @@ body {
     <div class="h-title">DPS AMARPALI<span>Inventory Portal</span></div>
   </div>
   <div class="h-right">
-    <button class="btn btn-primary btn-add-header" onclick="openAddChoice()" style="display:inline-flex;align-items:center;gap:6px" title="Add New Item, Bill, or Faculty">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-      <span>Add</span>
+    <button class="btn btn-primary btn-add-header" onclick="openAddChoice()" title="Add New (Item, Bill, Faculty)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
     </button>
-    <button id="pwaInstallBtn" class="btn-pwa-install" onclick="installPWA()" style="display:none;align-items:center;gap:6px" title="Install DPS IMS App on your device">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
-      <span>Install App</span>
+    <button id="pwaInstallBtn" class="btn-pwa-install" onclick="installPWA()" style="display:none" title="Install App">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
     </button>
     <span id="cloudSyncBadge" class="cloud-badge syncing" onclick="fetchCloudData()" title="Click to refresh from Neon Cloud DB">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
@@ -3504,7 +3823,9 @@ body {
         spellcheck="false"
         role="searchbox"
       >
-      <button id="search-clear-btn" class="search-clear-btn" onclick="clearSearchInput()" style="display:none" title="Clear search">✕</button>
+      <button id="search-clear-btn" class="search-clear-btn" onclick="clearSearchInput()" style="display:none" title="Clear search">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
     </div>
     <button class="filter-toggle" id="stock-filter-toggle" onclick="toggleFilter('stock')">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
@@ -3703,7 +4024,7 @@ body {
       <span class="search-box-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
       </span>
-      <input id="rep-search" placeholder="Search in reports..." oninput="handleRepSearch(this)" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <input type="search" id="rep-search" name="rep_filter_search_query" placeholder="Search in reports..." oninput="handleRepSearch(this)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
       <button class="search-clear-btn" id="rep-search-clear" onclick="clearRepSearch()" style="display:none" title="Clear search">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>
@@ -3717,14 +4038,14 @@ body {
   <!-- QUICK DATE BAR & SINGLE DATE SELECTOR -->
   <div class="rep-date-bar">
     <div class="rep-quick-chips">
-      <button type="button" class="rep-date-chip active" id="chip-rep-today" onclick="setRepFilterMode('today')">🌟 Today</button>
-      <button type="button" class="rep-date-chip" id="chip-rep-yesterday" onclick="setRepFilterMode('yesterday')">📅 Yesterday</button>
+      <button type="button" class="rep-date-chip active" id="chip-rep-today" onclick="setRepFilterMode('today')">Today</button>
+      <button type="button" class="rep-date-chip" id="chip-rep-yesterday" onclick="setRepFilterMode('yesterday')">Yesterday</button>
       <button type="button" class="rep-date-chip" id="chip-rep-7d" onclick="setRepFilterMode('7d')">7D</button>
       <button type="button" class="rep-date-chip" id="chip-rep-30d" onclick="setRepFilterMode('30d')">30D</button>
-      <button type="button" class="rep-date-chip" id="chip-rep-all" onclick="setRepFilterMode('all')">🌐 All Time</button>
+      <button type="button" class="rep-date-chip" id="chip-rep-all" onclick="setRepFilterMode('all')">All Time</button>
     </div>
     <div class="rep-single-picker-box">
-      <span class="rep-picker-title">📅 Select Date:</span>
+      <span class="rep-picker-title">Select Date:</span>
       <input type="date" id="f-rep-single" onchange="onRepSingleDateChange(this.value)" class="rep-single-date-input" title="Select single date for report">
     </div>
   </div>
@@ -3734,7 +4055,7 @@ body {
       <div class="filter-group"><label>From Date</label><input type="date" id="f-rep-from" onchange="onRepRangeDateChange()"></div>
       <div class="filter-group"><label>To Date</label><input type="date" id="f-rep-to" onchange="onRepRangeDateChange()"></div>
       <div class="filter-group"><label>Movement Type</label>
-        <select id="f-rep-type" onchange="renderReports()">
+        <select id="f-rep-type" onchange="onRepTypeChange()">
           <option value="all">All Movement</option>
           <option value="inward">Only Inward</option>
           <option value="outward">Only Outward</option>
@@ -3742,17 +4063,11 @@ body {
       </div>
     </div>
     <div class="filter-actions">
-      <button class="btn" onclick="setRepFilterMode('today')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-        <span>Today</span>
-      </button>
+      <button class="btn" onclick="setRepFilterMode('today')">Today</button>
       <button class="btn" onclick="setRepFilterMode('yesterday')">Yesterday</button>
       <button class="btn" onclick="setRepFilterMode('7d')">7D</button>
       <button class="btn" onclick="setRepFilterMode('30d')">30D</button>
-      <button class="btn" onclick="setRepFilterMode('all')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
-        <span>All Time</span>
-      </button>
+      <button class="btn" onclick="setRepFilterMode('all')">All Time</button>
     </div>
     <div class="filter-info" id="rep-filter-info"></div>
   </div>
@@ -3765,7 +4080,7 @@ body {
           <span class="icn" style="width:30px;height:30px;border-radius:8px;background:var(--green-light);color:var(--green);display:inline-flex;align-items:center;justify-content:center">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg>
           </span>
-          <span id="rep-itemwise-title">Item-Wise Inventory & Issue Report (आइटम-वाइज़ रिपोर्ट)</span>
+          <span id="rep-itemwise-title">Item-Wise Inventory & Issue Report</span>
         </div>
         <div class="rep-itemwise-sub" id="rep-itemwise-sub">Loading item distribution report...</div>
       </div>
@@ -3780,13 +4095,13 @@ body {
             <span>Cards</span>
           </button>
         </div>
-        <button type="button" class="btn" onclick="exportItemWiseCSV()" style="padding:6px 11px;font-size:11.5px;font-weight:700" title="Export this item-wise report as CSV">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-          <span>Export CSV</span>
+        <button type="button" class="btn" onclick="exportItemWiseCSV()" style="padding:6px 12px;font-size:11.5px;font-weight:700;background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;display:inline-flex;align-items:center;gap:6px" title="Download Excel (.csv)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line></svg>
+          <span>Download Excel</span>
         </button>
-        <button type="button" class="btn" onclick="window.print()" style="padding:6px 11px;font-size:11.5px;font-weight:700" title="Print this report">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-          <span>Print</span>
+        <button type="button" class="btn" onclick="exportMainReportPDF()" style="padding:6px 12px;font-size:11.5px;font-weight:700;background:#fef2f2;color:#991b1b;border:1px solid #fecaca;display:inline-flex;align-items:center;gap:6px" title="Download Official PDF Report">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          <span>Download PDF</span>
         </button>
       </div>
     </div>
@@ -3813,11 +4128,26 @@ body {
 
     <!-- Sub-filter Tabs -->
     <div class="rep-subfilters">
-      <button type="button" class="rep-subfilter-btn active" id="rep-sub-active" onclick="setRepSubFilter('active')">📦 Active Items in Period (<span id="rep-count-active">0</span>)</button>
-      <button type="button" class="rep-subfilter-btn" id="rep-sub-all" onclick="setRepSubFilter('all')">📋 All Catalog Items (<span id="rep-count-all">0</span>)</button>
-      <button type="button" class="rep-subfilter-btn" id="rep-sub-outward" onclick="setRepSubFilter('outward')">🔴 Outward Issued (<span id="rep-count-outward">0</span>)</button>
-      <button type="button" class="rep-subfilter-btn" id="rep-sub-inward" onclick="setRepSubFilter('inward')">🟢 Inward Received (<span id="rep-count-inward">0</span>)</button>
-      <button type="button" class="rep-subfilter-btn" id="rep-sub-low" onclick="setRepSubFilter('low')">⚠️ Low Stock &lt;15 (<span id="rep-count-low">0</span>)</button>
+      <button type="button" class="rep-subfilter-btn active" id="rep-sub-active" onclick="setRepSubFilter('active')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+        <span>All Movement (<span id="rep-count-active">0</span>)</span>
+      </button>
+      <button type="button" class="rep-subfilter-btn" id="rep-sub-outward" onclick="setRepSubFilter('outward')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        <span>Issued Items (<span id="rep-count-outward">0</span>)</span>
+      </button>
+      <button type="button" class="rep-subfilter-btn" id="rep-sub-inward" onclick="setRepSubFilter('inward')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="7" x2="7" y2="17"></line><polyline points="17 17 7 17 7 7"></polyline></svg>
+        <span>Inward Received (<span id="rep-count-inward">0</span>)</span>
+      </button>
+      <button type="button" class="rep-subfilter-btn" id="rep-sub-all" onclick="setRepSubFilter('all')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+        <span>All Catalog Items (<span id="rep-count-all">0</span>)</span>
+      </button>
+      <button type="button" class="rep-subfilter-btn" id="rep-sub-low" onclick="setRepSubFilter('low')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        <span>Low Stock &lt;15 (<span id="rep-count-low">0</span>)</span>
+      </button>
     </div>
 
     <!-- Report Table / Cards container -->
@@ -4145,7 +4475,7 @@ body {
         <label style="font-size:10px;font-weight:700;text-transform:uppercase;color:#6b7280;display:block;margin-bottom:6px">Variants</label>
         <div class="variant-builder"><div id="inline-variant-list"></div><button class="add-variant-btn" type="button" onclick="addInlineVariantRow()">+ Add Variant</button></div>
       </div>
-      <button class="btn btn-primary" style="margin-top:14px;width:100%;padding:13px" onclick="saveInlineItem()">💾 Create Item & Continue</button>
+      <button class="btn btn-primary" style="margin-top:14px;width:100%;padding:13px" onclick="saveInlineItem()">Create Item & Continue</button>
     </div>
   </div>
 </div>
@@ -4340,41 +4670,49 @@ body {
         <div style="background:#f1f5f9;border:1px solid #cbd5e1;border-radius:12px;padding:12px;text-align:center" id="ib-inward-box">
           <div style="font-size:11px;font-weight:700;color:#475569;text-transform:uppercase">Received (Inward)</div>
           <div style="font-size:24px;font-weight:900;color:#16a34a" id="ib-total-in">0</div>
-          <div style="font-size:11px;color:var(--text-secondary);font-weight:600">units inward</div>
+          <div style="font-size:11px;color:var(--text-secondary);font-weight:600">units added</div>
         </div>
-      </div>
-
-      <!-- VARIANT / COLOR BREAKDOWN PILLS (If multi-variant item) -->
-      <div id="ib-variants-strip" style="display:none;margin-bottom:16px;background:var(--bg-subtle);border:1px solid var(--border);border-radius:12px;padding:12px 14px">
-        <div style="font-size:11.5px;font-weight:800;color:var(--text);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;display:flex;align-items:center;gap:6px">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path></svg>
-          <span>Color / Variant Breakdown:</span>
-        </div>
-        <div id="ib-variants-pills" style="display:flex;flex-wrap:wrap;gap:8px"></div>
       </div>
 
       <!-- WHO RECEIVED WHAT (FACULTY ISSUE LIST / TABLE) -->
-      <div style="margin-bottom:8px;display:flex;align-items:center;justify-content:space-between">
+      <div style="margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
         <div style="font-size:13.5px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:6px">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          <span>Faculty-wise Issue Distribution:</span>
+          <span>Faculty-wise Issue Distribution</span>
+          <span class="count" id="ib-entries-count" style="display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;background:var(--green-light);color:var(--green)">0 records</span>
         </div>
-        <span class="count" id="ib-entries-count" style="display:inline-block;padding:3px 9px;border-radius:10px;font-size:11px;font-weight:700;background:var(--green-light);color:var(--green)">0 entries</span>
+        <div style="display:flex;align-items:center;gap:8px">
+          <button type="button" class="btn" onclick="exportBreakdownExcel()" style="padding:6px 12px;font-size:12px;font-weight:700;background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;display:inline-flex;align-items:center;gap:5px;border-radius:8px;cursor:pointer" title="Download Excel (.csv)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line></svg>
+            <span>Excel</span>
+          </button>
+          <button type="button" class="btn" onclick="exportBreakdownPDF()" style="padding:6px 12px;font-size:12px;font-weight:700;background:#fef2f2;color:#991b1b;border:1px solid #fecaca;display:inline-flex;align-items:center;gap:5px;border-radius:8px;cursor:pointer" title="Print / Download PDF">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            <span>PDF</span>
+          </button>
+        </div>
       </div>
 
-      <div class="table-wrap" style="max-height:360px;overflow-y:auto;border:1px solid var(--border);border-radius:12px">
-        <table style="width:100%;border-collapse:collapse">
+      <div class="table-wrap" style="max-height:360px;overflow-y:auto;border:1.5px solid #94a3b8;border-radius:12px">
+        <table class="bordered-report-table">
           <thead>
             <tr style="background:var(--bg-subtle);text-align:left;font-size:11.5px;color:var(--muted)">
-              <th style="padding:10px 12px">Faculty Member</th>
-              <th style="padding:10px 12px">Department</th>
-              <th style="padding:10px 12px">Shade / Color</th>
-              <th style="padding:10px 12px;text-align:right">Qty Issued</th>
+              <th style="padding:10px 12px;width:105px">Date</th>
+              <th style="padding:10px 12px;width:140px" id="ib-th-colour">Colour / Shade</th>
+              <th style="padding:10px 12px">Issued To (Faculty)</th>
+              <th style="padding:10px 12px;width:120px">Department</th>
+              <th style="padding:10px 12px;width:95px;text-align:right">Quantity</th>
               <th style="padding:10px 12px">Purpose / Remark</th>
-              <th style="padding:10px 12px">Date</th>
             </tr>
           </thead>
           <tbody id="ib-table-body"></tbody>
+          <tfoot>
+            <tr style="background:var(--green-subtle);font-weight:800;border-top:2px solid var(--green-border)">
+              <td colspan="4" style="padding:10px 12px;text-align:right;color:var(--green-dark);font-size:12px;font-weight:800">TOTAL UNITS ISSUED:</td>
+              <td style="padding:10px 12px;text-align:right;font-size:14px;color:var(--red);font-weight:900;font-family:'JetBrains Mono',monospace" id="ib-tfoot-qty">0</td>
+              <td></td>
+            </tr>
+          </tfoot>
         </table>
       </div>
 
@@ -4387,12 +4725,24 @@ body {
         <div id="ib-inward-list"></div>
       </div>
 
-      <div style="margin-top:18px;display:flex;justify-content:flex-end;gap:10px">
-        <button class="btn btn-primary" onclick="openItemFromBreakdown()" id="ib-view-item-btn" style="padding:9px 16px;font-size:13px;display:inline-flex;align-items:center;gap:6px">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
-          <span>Open Item in Inventory</span>
-        </button>
-        <button class="btn" onclick="closeItemBreakdown()" style="padding:9px 16px;font-size:13px">Close</button>
+      <div style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <button type="button" class="btn" onclick="exportBreakdownExcel()" style="padding:8px 14px;font-size:12.5px;font-weight:700;background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;display:inline-flex;align-items:center;gap:6px;border-radius:8px;cursor:pointer">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line></svg>
+            <span>Download Excel</span>
+          </button>
+          <button type="button" class="btn" onclick="exportBreakdownPDF()" style="padding:8px 14px;font-size:12.5px;font-weight:700;background:#fef2f2;color:#991b1b;border:1px solid #fecaca;display:inline-flex;align-items:center;gap:6px;border-radius:8px;cursor:pointer">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            <span>Download PDF</span>
+          </button>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <button class="btn btn-primary" onclick="openItemFromBreakdown()" id="ib-view-item-btn" style="padding:9px 16px;font-size:13px;display:inline-flex;align-items:center;gap:6px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+            <span>Open Item in Inventory</span>
+          </button>
+          <button class="btn" onclick="closeItemBreakdown()" style="padding:9px 16px;font-size:13px">Close</button>
+        </div>
       </div>
     </div>
   </div>
@@ -4404,6 +4754,14 @@ body {
     <div class="modal-head">
       <h3 id="m-title">Item Details</h3>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <button class="btn btn-sm btn-primary" id="modal-add-var-btn" style="display:inline-flex;align-items:center;gap:5px" onclick="openAddVariantModal(activeItemId)" title="Add color / variant to this item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>+ Add Color</span>
+        </button>
+        <button class="btn btn-sm" id="modal-all-var-btn" style="display:none;align-items:center;gap:5px" onclick="closeModal();showPicker(getItem(activeItemId))" title="View all colors / variants of this item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>All Colors</span>
+        </button>
         <button class="btn btn-sm btn-danger" id="modal-del-var-btn" style="display:none;align-items:center;gap:5px" onclick="deleteVariant(activeItemId, activeVariantId)" title="Delete this variant">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
           <span id="modal-del-var-txt">Delete Variant</span>
@@ -4536,7 +4894,7 @@ var SEED_ITEMS = [
   ['Chart Paper', 0, ['White','Black','Red','Blue','Green','Yellow','Orange','Pink','Purple','Brown','Grey','Maroon','Sky Blue','Golden']],
   ['Cobra File', 42, null],['Crepe Paper', 70, null],['Double-Sided Tape', 38, null],['Duster', 25, null],
   ['Envelopes', 220, null],['Exam Answer Copies', 180, null],['Exam Result Register', 16, null],['Fevicol', 45, null],
-  ['Fluorescent Paper', 85, null],['Gate Register', 10, null],['Glazed Paper', 76, null],['Ice Cream Sticks', 320, null],
+  ['Fluorescent Chart Paper', 85, null],['Gate Register', 10, null],['Glazed Paper', 76, null],['Ice Cream Sticks', 320, null],
   ['In-Pass Register', 105, null],['Inquiry Form', 180, null],['Ink', 55, null],['L-Folder', 68, null],
   ['Leave Register', 18, null],['Letter Dispatch Register', 14, null],['Letterheads', 380, null],
   ['Letter Receiving Register', 15, null],['Library Book Register', 12, null],['Marks Register', 52, null],
@@ -4619,7 +4977,8 @@ function loadData(){
     'Out Pass': 'Out-Pass Slips',
     'Certificate': 'Certificates',
     'Envelope': 'Envelopes',
-    'L Folder': 'L-Folder'
+    'L Folder': 'L-Folder',
+    'Fluorescent Paper': 'Fluorescent Chart Paper'
   };
   try {
     var stored = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('dps_inv_v20');
@@ -4838,6 +5197,8 @@ function ensureTodayTransactions(){
 }
 
 var currentBreakdownItem = null;
+var currentBreakdownLogs = [];
+var currentBreakdownDate = '';
 
 function openItemBreakdown(itemName, targetDate, targetDateTo){
   if (!items || items.length === 0) return;
@@ -4894,11 +5255,25 @@ function openItemBreakdown(itemName, targetDate, targetDateTo){
       if (l.type === 'OUTWARD'){
         var q = Number(l.qty) || 0;
         totalOut += q;
+        var facName = l.ref || 'Staff';
+        var dept = '';
+        var purpose = l.detail || '';
+        if (l.detail && l.detail.indexOf('(') !== -1){
+          var match = l.detail.match(/^([^(]+)\(([^)]+)\)\s*(?:-\s*(.*))?$/);
+          if (match){
+            facName = match[1].trim();
+            dept = match[2].trim();
+            purpose = match[3] ? match[3].trim() : '';
+          }
+        }
         outwardLogs.push({
           date: l.date,
           variant: v.name,
           color: v.color,
           qty: q,
+          facName: facName,
+          dept: dept,
+          purpose: purpose,
           detail: l.detail || '',
           ref: l.ref || ''
         });
@@ -4919,79 +5294,117 @@ function openItemBreakdown(itemName, targetDate, targetDateTo){
     }
   }
 
+  // Sort outward records: by Date (desc), then Colour/Variant (A-Z alphabetical), then Faculty Name (A-Z)
+  outwardLogs.sort(function(a, b){
+    if (a.date !== b.date) return b.date.localeCompare(a.date);
+    var vCmp = (a.variant || '').localeCompare(b.variant || '');
+    if (vCmp !== 0) return vCmp;
+    return (a.facName || '').localeCompare(b.facName || '');
+  });
+
   document.getElementById('ib-total-out').textContent = totalOut;
   document.getElementById('ib-fac-count').textContent = Object.keys(facMap).length;
   document.getElementById('ib-current-stock').textContent = itemCurrent(it);
   document.getElementById('ib-total-in').textContent = totalIn;
 
+  // Store for export functions
+  currentBreakdownLogs = outwardLogs;
+  currentBreakdownDate = dateBadgeText;
+
   var inwardBox = document.getElementById('ib-inward-box');
   if (inwardBox) inwardBox.style.display = totalIn > 0 ? 'block' : 'none';
 
-  // Variant breakdown pills:
-  var vStrip = document.getElementById('ib-variants-strip');
-  var vPills = document.getElementById('ib-variants-pills');
-  var vKeys = Object.keys(variantOutMap);
-  if (it.type === 'variant' && vKeys.length > 0){
-    vStrip.style.display = 'block';
-    var vHtml = '';
-    for (var vk = 0; vk < vKeys.length; vk++){
-      var vName = vKeys[vk];
-      var vObj = (it.variants || []).find(function(vx){ return vx.name === vName; });
-      var dot = renderColorSwatchCard(vObj || vName, 16);
-      vHtml += '<div style="display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);padding:4px 10px;border-radius:8px;font-size:12px;font-weight:700">' +
-        dot + '<span>' + esc(vName) + ':</span> <span style="color:var(--red);font-weight:800">' + variantOutMap[vName] + ' units</span>' +
-        '</div>';
-    }
-    vPills.innerHTML = vHtml;
-  } else {
-    vStrip.style.display = 'none';
+  // Dynamic column header for Colour / Shade:
+  var thColour = document.getElementById('ib-th-colour');
+  if (thColour){
+    thColour.textContent = (it.name.toLowerCase().indexOf('chart paper') !== -1) ? 'Chart Paper Colour' : (it.type === 'variant' ? 'Colour / Shade' : 'Variant / Item');
   }
 
-  // Render Table of Who Received How Many:
+  // Update summary tfoot:
+  var tfootQty = document.getElementById('ib-tfoot-qty');
+  if (tfootQty){
+    tfootQty.textContent = (totalOut > 0 ? '− ' : '') + totalOut + ' units';
+  }
+
+  // Render Table of Who Received What (or Inward Deliveries if inward only):
   var tBody = document.getElementById('ib-table-body');
   document.getElementById('ib-entries-count').textContent = outwardLogs.length + ' issue record' + (outwardLogs.length === 1 ? '' : 's');
 
-  if (outwardLogs.length === 0){
-    tBody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:26px;color:var(--muted);font-weight:600">No units issued on this date</td></tr>';
-  } else {
-    var tHtml = '';
-    for (var k = 0; k < outwardLogs.length; k++){
-      var log = outwardLogs[k];
-      var facName = log.ref || 'Staff';
-      var dept = '';
-      var purpose = log.detail || '';
-      if (log.detail && log.detail.indexOf('(') !== -1){
-        var match = log.detail.match(/^([^(]+)\(([^)]+)\)\s*(?:-\s*(.*))?$/);
-        if (match){
-          facName = match[1].trim();
-          dept = match[2].trim();
-          purpose = match[3] ? match[3].trim() : '';
-        }
-      }
-      var vObj2 = (it.variants || []).find(function(vx){ return vx.name === log.variant; });
-      var swatch = (it.type === 'variant') ? '<span style="display:inline-flex;align-items:center;gap:6px">' + renderColorSwatchCard(vObj2 || log.variant, 14) + esc(log.variant) + '</span>' : '<span style="color:var(--muted)">Standard</span>';
+  if (outwardLogs.length === 0 && inwardLogs.length > 0){
+    currentBreakdownLogs = inwardLogs;
+    currentBreakdownType = 'inward';
+    document.getElementById('ib-entries-count').textContent = inwardLogs.length + ' delivery record' + (inwardLogs.length === 1 ? '' : 's');
+    if (thColour) thColour.textContent = (it.type === 'variant' ? 'Colour / Shade' : 'Variant / Item');
 
-      tHtml += '<tr style="border-bottom:1px solid var(--border)">' +
+    var tHtml = '';
+    for (var k = 0; k < inwardLogs.length; k++){
+      var ilog = inwardLogs[k];
+      var vObj2 = (it.variants || []).find(function(vx){ return vx.name === ilog.variant; });
+      var swatch = (it.type === 'variant') ? '<span style="display:inline-flex;align-items:center;gap:6px">' + renderColorSwatchCard(vObj2 || ilog.variant, 14) + esc(ilog.variant) + '</span>' : '<span style="color:var(--muted)">Standard</span>';
+      var vn = (ilog.detail || '').replace(/^From\s+/, '').trim() || 'Vendor / Supplier';
+
+      tHtml += '<tr>' +
+        '<td style="padding:10px 12px;font-family:\'JetBrains Mono\',monospace;font-size:12px;font-weight:700;color:var(--text);white-space:nowrap">' + ilog.date + '</td>' +
+        '<td style="padding:10px 12px;font-size:12px;font-weight:700">' + swatch + '</td>' +
         '<td style="padding:10px 12px;font-weight:800;color:var(--text)">' +
           '<div style="display:flex;align-items:center;gap:7px">' +
-            '<span style="width:26px;height:26px;border-radius:50%;background:var(--blue-light);color:var(--blue);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800">👤</span>' +
-            '<span>' + esc(facName) + '</span>' +
+            '<span style="width:24px;height:24px;border-radius:50%;background:#dcfce7;color:#15803d;display:inline-flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg></span>' +
+            '<span>' + esc(vn) + '</span>' +
           '</div>' +
         '</td>' +
-        '<td style="padding:10px 12px"><span style="font-size:11px;font-weight:700;background:var(--bg-subtle);padding:3px 8px;border-radius:6px;border:1px solid var(--border);color:var(--text-secondary)">' + esc(dept || 'DPS Staff') + '</span></td>' +
-        '<td style="padding:10px 12px;font-size:12px;font-weight:700">' + swatch + '</td>' +
-        '<td style="padding:10px 12px;text-align:right"><span style="font-size:14px;font-weight:900;color:var(--red);background:var(--red-light);padding:3px 10px;border-radius:8px;border:1px solid var(--red-border)">− ' + log.qty + '</span></td>' +
-        '<td style="padding:10px 12px;font-size:12px;color:var(--text-secondary);font-weight:600">' + esc(purpose || 'Academic / School use') + '</td>' +
-        '<td style="padding:10px 12px;font-size:11.5px;color:var(--muted);white-space:nowrap">' + log.date + '</td>' +
+        '<td style="padding:10px 12px"><span style="font-size:11px;font-weight:700;background:var(--bg-subtle);padding:2px 8px;border-radius:6px;border:1px solid var(--border);color:var(--text-secondary)">' + esc(ilog.ref || 'Direct Inward') + '</span></td>' +
+        '<td style="padding:10px 12px;text-align:right"><span style="font-size:13.5px;font-weight:900;color:#15803d;background:#dcfce7;padding:2px 9px;border-radius:7px;border:1px solid #bbf7d0;font-family:\'JetBrains Mono\',monospace">+ ' + ilog.qty + '</span></td>' +
+        '<td style="padding:10px 12px;font-size:12px;color:var(--text-secondary);font-weight:500">' + esc(ilog.detail || 'Stock delivery received') + '</td>' +
       '</tr>';
     }
     tBody.innerHTML = tHtml;
+    if (tfootQty){
+      tfootQty.textContent = '+ ' + totalIn + ' units';
+      tfootQty.style.color = '#15803d';
+    }
+  } else if (outwardLogs.length === 0){
+    currentBreakdownType = 'none';
+    document.getElementById('ib-entries-count').textContent = '0 records';
+    tBody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:26px;color:var(--muted);font-weight:600">' +
+      '<div style="font-size:13.5px;margin-bottom:8px">No units issued or received during ' + esc(dateBadgeText) + '</div>' +
+      '<button type="button" class="btn btn-sm btn-primary" onclick="openItemBreakdown(\'' + esc(it.name).replace(/'/g, "\\'") + '\', \'\', \'\')" style="display:inline-flex;align-items:center;gap:6px">' +
+        '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>' +
+        '<span>View All-Time Issue History (' + esc(it.name) + ')</span>' +
+      '</button>' +
+    '</td></tr>';
+  } else {
+    currentBreakdownType = 'outward';
+    var tHtml = '';
+    for (var k = 0; k < outwardLogs.length; k++){
+      var log = outwardLogs[k];
+      var vObj2 = (it.variants || []).find(function(vx){ return vx.name === log.variant; });
+      var swatch = (it.type === 'variant') ? '<span style="display:inline-flex;align-items:center;gap:6px">' + renderColorSwatchCard(vObj2 || log.variant, 14) + esc(log.variant) + '</span>' : '<span style="color:var(--muted)">Standard</span>';
+
+      tHtml += '<tr>' +
+        '<td style="padding:10px 12px;font-family:\'JetBrains Mono\',monospace;font-size:12px;font-weight:700;color:var(--text);white-space:nowrap">' + log.date + '</td>' +
+        '<td style="padding:10px 12px;font-size:12px;font-weight:700">' + swatch + '</td>' +
+        '<td style="padding:10px 12px;font-weight:800;color:var(--text)">' +
+          '<div style="display:flex;align-items:center;gap:7px">' +
+            '<span style="width:24px;height:24px;border-radius:50%;background:var(--green-light);color:var(--green);display:inline-flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span>' +
+            '<span>' + esc(log.facName) + '</span>' +
+          '</div>' +
+        '</td>' +
+        '<td style="padding:10px 12px"><span style="font-size:11px;font-weight:700;background:var(--bg-subtle);padding:2px 8px;border-radius:6px;border:1px solid var(--border);color:var(--text-secondary)">' + esc(log.dept || 'Staff') + '</span></td>' +
+        '<td style="padding:10px 12px;text-align:right"><span style="font-size:13.5px;font-weight:900;color:var(--red);background:var(--red-light);padding:2px 9px;border-radius:7px;border:1px solid var(--red-border);font-family:\'JetBrains Mono\',monospace">− ' + log.qty + '</span></td>' +
+        '<td style="padding:10px 12px;font-size:12px;color:var(--text-secondary);font-weight:500">' + esc(log.purpose || 'Academic / School use') + '</td>' +
+      '</tr>';
+    }
+    tBody.innerHTML = tHtml;
+    if (tfootQty){
+      tfootQty.textContent = '− ' + totalOut + ' units';
+      tfootQty.style.color = 'var(--red)';
+    }
   }
 
   // Inward deliveries section:
   var inSec = document.getElementById('ib-inward-section');
   var inList = document.getElementById('ib-inward-list');
-  if (inwardLogs.length > 0){
+  if (inwardLogs.length > 0 && outwardLogs.length > 0){
     inSec.style.display = 'block';
     var inHtml = '';
     for (var m = 0; m < inwardLogs.length; m++){
@@ -5013,6 +5426,131 @@ function closeItemBreakdown(){
   var m = document.getElementById('modal-item-breakdown');
   if (m) m.classList.remove('open');
   currentBreakdownItem = null;
+  currentBreakdownLogs = [];
+  currentBreakdownDate = '';
+  currentBreakdownType = 'outward';
+}
+
+function exportBreakdownExcel(){
+  if (!currentBreakdownItem || !currentBreakdownLogs || currentBreakdownLogs.length === 0){
+    return alert('No issue records available to export.');
+  }
+  var itemName = currentBreakdownItem.name;
+  var totalQty = currentBreakdownLogs.reduce(function(acc, l){ return acc + (Number(l.qty) || 0); }, 0);
+  var rows = [
+    ['DELHI PUBLIC SCHOOL, AMARPALI - INVENTORY MANAGEMENT SYSTEM'],
+    ['ITEM ISSUE DISTRIBUTION REPORT: ' + itemName.toUpperCase()],
+    ['Report Period', currentBreakdownDate || 'All Time'],
+    ['Total Units Issued', totalQty + ' units'],
+    ['Current Stock Remaining', itemCurrent(currentBreakdownItem) + ' units'],
+    []
+  ];
+  var hasVariants = currentBreakdownItem.type === 'variant' || (currentBreakdownItem.variants || []).length > 1;
+  var colHeader = (itemName.toLowerCase().indexOf('chart paper') !== -1) ? 'Chart Paper Colour' : (hasVariants ? 'Colour / Shade' : 'Variant / Item');
+  rows.push(['#', 'Date', colHeader, 'Faculty Member', 'Department', 'Quantity Issued', 'Purpose / Remark']);
+  
+  for (var i = 0; i < currentBreakdownLogs.length; i++){
+    var log = currentBreakdownLogs[i];
+    rows.push([
+      i + 1,
+      log.date,
+      log.variant || 'Standard',
+      log.facName || 'Staff',
+      log.dept || 'Staff',
+      log.qty,
+      log.purpose || 'Academic / School use'
+    ]);
+  }
+  rows.push([]);
+  rows.push(['', '', '', '', 'TOTAL UNITS ISSUED:', totalQty, '']);
+
+  var csv = '';
+  for (var r = 0; r < rows.length; r++){
+    var line = [];
+    for (var c = 0; c < rows[r].length; c++){
+      line.push('"' + String(rows[r][c] !== undefined && rows[r][c] !== null ? rows[r][c] : '').replace(/"/g, '""') + '"');
+    }
+    csv += line.join(',') + '\n';
+  }
+  var blob = new Blob(['\uFEFF' + csv], {type:'text/csv;charset=utf-8'});
+  var a = document.createElement('a');
+  var safeName = itemName.replace(/[^a-zA-Z0-9]/g, '_');
+  a.download = 'DPS_' + safeName + '_Issue_Report.csv';
+  a.href = URL.createObjectURL(blob);
+  a.click();
+}
+
+function exportBreakdownPDF(){
+  if (!currentBreakdownItem || !currentBreakdownLogs || currentBreakdownLogs.length === 0){
+    return alert('No issue records available to export.');
+  }
+  var printable = document.getElementById('dps-official-printable-area');
+  if (!printable) return;
+
+  var itemName = currentBreakdownItem.name;
+  var hasVariants = currentBreakdownItem.type === 'variant' || (currentBreakdownItem.variants || []).length > 1;
+  var colHeader = (itemName.toLowerCase().indexOf('chart paper') !== -1) ? 'Chart Paper Colour' : (hasVariants ? 'Colour / Shade' : 'Variant / Item');
+  var totalQty = currentBreakdownLogs.reduce(function(acc, l){ return acc + (Number(l.qty) || 0); }, 0);
+  
+  var tableRows = '';
+  for (var i = 0; i < currentBreakdownLogs.length; i++){
+    var log = currentBreakdownLogs[i];
+    var bg = (i % 2 === 0) ? '#f0f7f2' : '#ffffff';
+    tableRows += '<tr style="background:' + bg + ';">' +
+      '<td style="padding:7px 10px;text-align:center;font-size:11px;color:#333;border:1px solid #333">' + (i + 1) + '</td>' +
+      '<td style="padding:7px 10px;font-family:monospace;font-size:11.5px;font-weight:700;border:1px solid #333">' + log.date + '</td>' +
+      '<td style="padding:7px 10px;font-weight:700;font-size:12px;border:1px solid #333">' + esc(log.variant || 'Standard') + '</td>' +
+      '<td style="padding:7px 10px;font-weight:800;font-size:12px;border:1px solid #333">' + esc(log.facName || 'Staff') + '</td>' +
+      '<td style="padding:7px 10px;font-size:11.5px;color:#333;border:1px solid #333">' + esc(log.dept || 'Staff') + '</td>' +
+      '<td style="padding:7px 10px;text-align:right;font-weight:900;font-size:13px;color:#b91c1c;border:1px solid #333">− ' + log.qty + '</td>' +
+      '<td style="padding:7px 10px;font-size:11.5px;color:#444;border:1px solid #333">' + esc(log.purpose || 'Academic / School use') + '</td>' +
+    '</tr>';
+  }
+
+  printable.innerHTML = '<div style="font-family:Arial,sans-serif;color:#111">' +
+    '<div style="text-align:center;border-bottom:2.5px solid #124f32;padding-bottom:12px;margin-bottom:14px">' +
+      '<h1 style="margin:0 0 4px;font-size:22px;color:#124f32;font-weight:800;letter-spacing:0.5px">DELHI PUBLIC SCHOOL, AMARPALI</h1>' +
+      '<div style="font-size:11.5px;font-weight:700;color:#444;letter-spacing:1px;text-transform:uppercase">CENTRAL INVENTORY · FACULTY ISSUE & DISTRIBUTION REPORT</div>' +
+      '<div style="margin-top:6px;font-size:13px;font-weight:800;color:#124f32">' + esc(itemName) + ' · ' + esc(currentBreakdownDate || 'All-Time Record') + '</div>' +
+    '</div>' +
+    '<div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:10px;margin-bottom:14px;font-size:12px">' +
+      '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7"><div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Item Name</div><div style="font-size:13px;font-weight:800;color:#124f32;margin-top:2px">' + esc(itemName) + '</div></div>' +
+      '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7"><div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Report Period</div><div style="font-size:13px;font-weight:800;color:#124f32;margin-top:2px">' + esc(currentBreakdownDate || 'All Time') + '</div></div>' +
+      '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7"><div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Total Units Issued</div><div style="font-size:13px;font-weight:800;color:#b91c1c;margin-top:2px">− ' + totalQty + ' pcs</div></div>' +
+      '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7"><div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Current Stock Balance</div><div style="font-size:13px;font-weight:800;color:#124f32;margin-top:2px">' + itemCurrent(currentBreakdownItem) + ' pcs</div></div>' +
+    '</div>' +
+    '<table style="width:100%;border-collapse:collapse;border:1.5px solid #333;font-size:12px">' +
+      '<thead>' +
+        '<tr style="background:#124f32;color:#ffffff">' +
+          '<th style="padding:8px;border:1px solid #333;width:35px;text-align:center">#</th>' +
+          '<th style="padding:8px;border:1px solid #333;width:85px;text-align:left">Date</th>' +
+          '<th style="padding:8px;border:1px solid #333;width:120px;text-align:left">' + colHeader + '</th>' +
+          '<th style="padding:8px;border:1px solid #333;text-align:left">Issued To (Faculty)</th>' +
+          '<th style="padding:8px;border:1px solid #333;width:110px;text-align:left">Department</th>' +
+          '<th style="padding:8px;border:1px solid #333;width:85px;text-align:right">Quantity</th>' +
+          '<th style="padding:8px;border:1px solid #333;text-align:left">Purpose / Remark</th>' +
+        '</tr>' +
+      '</thead>' +
+      '<tbody>' + tableRows + '</tbody>' +
+      '<tfoot>' +
+        '<tr style="background:#e8f5ec;font-weight:800;border-top:2px solid #124f32">' +
+          '<td colspan="5" style="padding:9px;border:1px solid #333;text-align:right;color:#124f32">TOTAL UNITS ISSUED:</td>' +
+          '<td style="padding:9px;border:1px solid #333;text-align:right;color:#b91c1c;font-weight:900">− ' + totalQty + '</td>' +
+          '<td style="padding:9px;border:1px solid #333"></td>' +
+        '</tr>' +
+      '</tfoot>' +
+    '</table>' +
+    '<div style="display:flex;justify-content:space-between;margin-top:40px;padding-top:10px;font-size:11.5px;font-weight:700;color:#444">' +
+      '<div style="text-align:center;border-top:1px solid #666;width:150px;padding-top:5px">Prepared By (Store)</div>' +
+      '<div style="text-align:center;border-top:1px solid #666;width:150px;padding-top:5px">Faculty Signature</div>' +
+      '<div style="text-align:center;border-top:1px solid #666;width:150px;padding-top:5px">Principal / Authority</div>' +
+    '</div>' +
+  '</div>';
+
+  document.body.classList.add('dps-printing-official-doc');
+  window.print();
+  window.onafterprint = function(){ document.body.classList.remove('dps-printing-official-doc'); };
+  setTimeout(function(){ document.body.classList.remove('dps-printing-official-doc'); }, 1500);
 }
 
 function openItemFromBreakdown(){
@@ -5174,7 +5712,7 @@ function renderColorSwatchCard(itemOrName, size){
   }
   var s = size || 22;
   if (!hex) {
-    return '<span style="display:inline-flex;width:' + s + 'px;height:' + s + 'px;border-radius:6px;background:var(--green-light);color:var(--green);font-size:11px;font-weight:800;align-items:center;justify-content:center;flex-shrink:0">📄</span>';
+    return '<span style="display:inline-flex;width:' + s + 'px;height:' + s + 'px;border-radius:6px;background:var(--green-light);color:var(--green);align-items:center;justify-content:center;flex-shrink:0"><svg width="' + Math.max(10, Math.round(s*0.55)) + '" height="' + Math.max(10, Math.round(s*0.55)) + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>';
   }
   return '<span class="color-swatch-box" style="width:' + s + 'px;height:' + s + 'px;background:' + hex + ';border:1.5px solid ' + (border || 'rgba(0,0,0,0.2)') + ';box-shadow:0 1px 3px rgba(0,0,0,0.15)"></span>';
 }
@@ -5293,18 +5831,29 @@ function saveNewVariant(){
     logs: logs
   };
 
-  it.variants.push(newVar);
+  // If item was single type, convert to multi-variant
+  if (it.type === 'single'){
+    it.type = 'variant';
+  }
+
+  // If the item had only 1 variant named 'Standard' with 0 stock and 0 logs, replace it
+  if (it.variants.length === 1 && it.variants[0].name === 'Standard' && it.variants[0].current === 0 && (!it.variants[0].logs || it.variants[0].logs.length === 0)){
+    it.variants = [newVar];
+  } else {
+    it.variants.push(newVar);
+  }
   saveData();
 
   closeAddVariantModal();
 
-  // If picker was open, refresh picker
-  if (document.getElementById('modal-pick').classList.contains('open')){
-    showPicker(it);
-  }
+  // If item detail modal was open, close it
+  closeModal();
+
+  // Show color picker for this item so user can see all variants & add more if desired
+  showPicker(it);
   render();
 
-  alert('✅ Successfully added color "' + name + '" to ' + it.name + '!');
+  alert('Successfully added color "' + name + '" to ' + it.name + '.');
 }
 
 function getItem(id){ for (var i = 0; i < items.length; i++) if (items[i].id === id) return items[i]; return null; }
@@ -5334,7 +5883,7 @@ function clearFilters(name){
   if (name === 'stock'){ document.getElementById('f-stock-status').value='all'; document.getElementById('f-stock-min').value=''; document.getElementById('f-stock-max').value=''; document.getElementById('f-type').value='all'; document.getElementById('f-sort').value='name-asc'; render(); }
   if (name === 'bill'){ document.getElementById('f-bill-from').value=''; document.getElementById('f-bill-to').value=''; document.getElementById('f-bill-vendor').value=''; document.getElementById('f-bill-min-items').value=''; document.getElementById('f-bill-min-qty').value=''; document.getElementById('f-bill-sort').value='date-desc'; renderBills(); }
   if (name === 'fac'){ document.getElementById('f-fac-dept').value=''; document.getElementById('f-fac-min').value=''; document.getElementById('f-fac-max').value=''; document.getElementById('f-fac-active').value='all'; document.getElementById('f-fac-sort').value='qty-desc'; renderFaculty(); }
-  if (name === 'rep'){ document.getElementById('f-rep-from').value=''; document.getElementById('f-rep-to').value=''; var sEl = document.getElementById('f-rep-single'); if (sEl) sEl.value=''; document.getElementById('f-rep-type').value='all'; renderReports(); }
+  if (name === 'rep'){ document.getElementById('f-rep-from').value=''; document.getElementById('f-rep-to').value=''; var sEl = document.getElementById('f-rep-single'); if (sEl) sEl.value=''; document.getElementById('f-rep-type').value='all'; repSubFilter = 'all'; ['active','outward','inward','all','low'].forEach(function(k){ var el = document.getElementById('rep-sub-' + k); if (el) el.classList.toggle('active', k === 'all'); }); renderReports(); }
 }
 function updateFilterCount(name, count){
   var el = document.getElementById(name + '-filter-count');
@@ -5407,7 +5956,7 @@ function verifyPin(){
       cb();
     }
   } else {
-    document.getElementById('pin-error').textContent = '❌ Incorrect PIN. Please try again.';
+    document.getElementById('pin-error').textContent = 'Incorrect PIN. Please try again.';
     ['p1','p2','p3','p4'].forEach(function(id){ var el = document.getElementById(id); el.value = ''; el.classList.remove('filled'); });
     document.getElementById('p1').focus();
   }
@@ -5444,11 +5993,25 @@ function switchMainTab(tab){
     var fromEl = document.getElementById('f-rep-from');
     var toEl = document.getElementById('f-rep-to');
     var singleEl = document.getElementById('f-rep-single');
+    var typeEl = document.getElementById('f-rep-type');
+    var typeF = typeEl ? typeEl.value : 'all';
+    var today = todayStr();
     if (fromEl && toEl && !fromEl.value && !toEl.value) {
-      var today = todayStr();
       fromEl.value = today;
       toEl.value = today;
       if (singleEl) singleEl.value = today;
+    }
+    if (typeF === 'inward') repSubFilter = 'inward';
+    else if (typeF === 'outward') repSubFilter = 'outward';
+    else repSubFilter = 'active';
+
+    ['active','outward','inward','all','low'].forEach(function(k){
+      var el = document.getElementById('rep-sub-' + k);
+      if (el) el.classList.toggle('active', k === repSubFilter);
+    });
+    var sInput = document.getElementById('rep-search');
+    if (sInput && (sInput.value.toLowerCase().trim() === 'admin' || sInput.value.toLowerCase().trim() === 'admin@dps.com' || sInput.value.toLowerCase().trim() === 'dpsadmin')) {
+      sInput.value = '';
     }
     renderReports();
   }
@@ -5656,7 +6219,7 @@ function renderBills(){
   document.getElementById('bill-vendors').textContent = Object.keys(vendorsMap).length;
 
   var el = document.getElementById('bill-list');
-  if (filtered.length === 0){ el.innerHTML = '<div class="empty-msg"><span class="big">🧾</span>No bills found</div>'; return; }
+  if (filtered.length === 0){ el.innerHTML = '<div class="empty-msg">No bills found</div>'; return; }
   var html = '';
   for (var i = 0; i < filtered.length; i++){
     var b = filtered[i]; var preview = '';
@@ -5667,7 +6230,7 @@ function renderBills(){
     if (b.items.length > pc) preview += '<div style="font-size:10px;color:#6b7280;padding-top:5px;font-weight:700">+ ' + (b.items.length - pc) + ' more</div>';
     var keyEsc = b.key.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
     html += '<div class="bill-card" onclick="openBillDetail(\'' + keyEsc + '\')">' +
-      '<div class="bill-card-head"><div class="bill-card-title">🧾 Bill #' + esc(b.billNo) + ' / ' + esc(b.year) + '</div><div class="bill-card-inpass">' + esc(b.inPass) + '</div></div>' +
+      '<div class="bill-card-head"><div class="bill-card-title">Bill #' + esc(b.billNo) + ' / ' + esc(b.year) + '</div><div class="bill-card-inpass">' + esc(b.inPass) + '</div></div>' +
       '<div class="bill-card-body"><div><div class="bill-meta-label">Vendor</div><div class="bill-meta-value">' + esc(b.vendor) + '</div></div><div><div class="bill-meta-label">Date</div><div class="bill-meta-value">' + b.date + '</div></div></div>' +
       '<div class="bill-card-items"><div class="bill-items-title">Items in this bill (' + b.items.length + ')</div><div class="bill-items-list">' + preview + '</div></div>' +
       '<div class="bill-card-foot"><span>Items: <span class="total">' + b.items.length + '</span></span><span>Qty: <span class="total">' + b.totalQty + '</span></span></div>' +
@@ -5811,7 +6374,7 @@ function openFacDetail(name){
 function renderFacDetail(){
   var map = collectFaculty('', '');
   var f = map[currentFacName];
-  if (!f){ document.getElementById('fac-detail-body').innerHTML = '<tr><td colspan="5" style="text-align:center;color:#999;padding:20px">No issues yet</td></tr>'; document.getElementById('fac-detail-title').textContent = '👤 ' + currentFacName; return; }
+  if (!f){ document.getElementById('fac-detail-body').innerHTML = '<tr><td colspan="5" style="text-align:center;color:#999;padding:20px">No issues yet</td></tr>'; document.getElementById('fac-detail-title').textContent = currentFacName; return; }
   var from = document.getElementById('fd-from').value;
   var to = document.getElementById('fd-to').value;
   var q = (document.getElementById('fd-search').value || '').toLowerCase();
@@ -5820,7 +6383,7 @@ function renderFacDetail(){
     if (q && (e.item + ' ' + e.subcat + ' ' + e.purpose).toLowerCase().indexOf(q) === -1) return false;
     return true;
   });
-  document.getElementById('fac-detail-title').textContent = '👤 ' + f.name + ' — ' + entries.length + ' entries';
+  document.getElementById('fac-detail-title').textContent = f.name + ' — ' + entries.length + ' entries';
   var html = '';
   for (var i = 0; i < entries.length; i++){
     var e = entries[i];
@@ -5890,9 +6453,31 @@ function setRepItemWiseView(v){
 
 function setRepSubFilter(f){
   repSubFilter = f;
-  ['active','all','outward','inward','low'].forEach(function(k){
+  var typeEl = document.getElementById('f-rep-type');
+  if (typeEl){
+    if (f === 'inward') typeEl.value = 'inward';
+    else if (f === 'outward') typeEl.value = 'outward';
+    else typeEl.value = 'all';
+  }
+  ['active','outward','inward','all','low'].forEach(function(k){
     var el = document.getElementById('rep-sub-' + k);
     if (el) el.classList.toggle('active', k === f);
+  });
+  renderReports();
+}
+
+function onRepTypeChange(){
+  var typeEl = document.getElementById('f-rep-type');
+  var typeF = typeEl ? typeEl.value : 'all';
+  if (typeF === 'inward') repSubFilter = 'inward';
+  else if (typeF === 'outward') repSubFilter = 'outward';
+  else {
+    var fromEl = document.getElementById('f-rep-from');
+    repSubFilter = (fromEl && fromEl.value) ? 'active' : 'all';
+  }
+  ['active','outward','inward','all','low'].forEach(function(k){
+    var el = document.getElementById('rep-sub-' + k);
+    if (el) el.classList.toggle('active', k === repSubFilter);
   });
   renderReports();
 }
@@ -5902,6 +6487,8 @@ function setRepFilterMode(mode){
   var fromEl = document.getElementById('f-rep-from');
   var toEl = document.getElementById('f-rep-to');
   var singleEl = document.getElementById('f-rep-single');
+  var typeEl = document.getElementById('f-rep-type');
+  var typeF = typeEl ? typeEl.value : 'all';
 
   if (mode === 'today'){
     if (fromEl) fromEl.value = today;
@@ -5925,14 +6512,34 @@ function setRepFilterMode(mode){
     if (toEl) toEl.value = '';
     if (singleEl) singleEl.value = '';
   }
+
+  if (typeF === 'inward') repSubFilter = 'inward';
+  else if (typeF === 'outward') repSubFilter = 'outward';
+  else repSubFilter = (fromEl && fromEl.value) ? 'active' : 'all';
+
+  ['active','outward','inward','all','low'].forEach(function(k){
+    var el = document.getElementById('rep-sub-' + k);
+    if (el) el.classList.toggle('active', k === repSubFilter);
+  });
   renderReports();
 }
 
 function onRepSingleDateChange(dt){
   var fromEl = document.getElementById('f-rep-from');
   var toEl = document.getElementById('f-rep-to');
+  var typeEl = document.getElementById('f-rep-type');
+  var typeF = typeEl ? typeEl.value : 'all';
   if (fromEl) fromEl.value = dt;
   if (toEl) toEl.value = dt;
+
+  if (typeF === 'inward') repSubFilter = 'inward';
+  else if (typeF === 'outward') repSubFilter = 'outward';
+  else repSubFilter = dt ? 'active' : 'all';
+
+  ['active','outward','inward','all','low'].forEach(function(k){
+    var el = document.getElementById('rep-sub-' + k);
+    if (el) el.classList.toggle('active', k === repSubFilter);
+  });
   renderReports();
 }
 
@@ -5940,6 +6547,8 @@ function onRepRangeDateChange(){
   var fromEl = document.getElementById('f-rep-from');
   var toEl = document.getElementById('f-rep-to');
   var singleEl = document.getElementById('f-rep-single');
+  var typeEl = document.getElementById('f-rep-type');
+  var typeF = typeEl ? typeEl.value : 'all';
   var fVal = fromEl ? fromEl.value : '';
   var tVal = toEl ? toEl.value : '';
 
@@ -5954,64 +6563,523 @@ function onRepRangeDateChange(){
   } else {
     if (singleEl) singleEl.value = '';
   }
+
+  if (typeF === 'inward') repSubFilter = 'inward';
+  else if (typeF === 'outward') repSubFilter = 'outward';
+  else repSubFilter = (fVal || tVal) ? 'active' : 'all';
+
+  ['active','outward','inward','all','low'].forEach(function(k){
+    var el = document.getElementById('rep-sub-' + k);
+    if (el) el.classList.toggle('active', k === repSubFilter);
+  });
   renderReports();
 }
 
 function exportItemWiseCSV(){
-  var from = document.getElementById('f-rep-from') ? document.getElementById('f-rep-from').value : '';
-  var to = document.getElementById('f-rep-to') ? document.getElementById('f-rep-to').value : '';
-  var today = todayStr();
+  var fromEl = document.getElementById('f-rep-from');
+  var toEl = document.getElementById('f-rep-to');
+  var from = fromEl ? fromEl.value : '';
+  var to = toEl ? toEl.value : '';
+  var typeEl = document.getElementById('f-rep-type');
+  var typeF = typeEl ? typeEl.value : 'all';
+  var isOnlyInward = (typeF === 'inward' || repSubFilter === 'inward');
+  var isOnlyOutward = (typeF === 'outward' || repSubFilter === 'outward');
   var dateStr = (from && to && from === to) ? from : ((from || 'start') + '_to_' + (to || 'today'));
 
-  var rows = [['Item Name', 'Variants Count', 'Inward (Period)', 'Outward (Period)', 'Current Stock', 'Faculty Recipients']];
+  var dayItems = [];
+  var dayOutLogs = [];
+  var dayInLogs = [];
+  var totalOut = 0;
+  var totalIn = 0;
+
   for (var i = 0; i < items.length; i++){
     var it = items[i];
     var curStock = itemCurrent(it);
-    var itemIn = 0; var itemOut = 0;
-    var itemRec = {};
+    var itOut = 0;
+    var itIn = 0;
+    var itFacs = {};
+    var itVendors = {};
+
     for (var j = 0; j < (it.variants || []).length; j++){
       var v = it.variants[j];
       for (var k = 0; k < (v.logs || []).length; k++){
         var l = v.logs[k];
         if (!inRange(l.date, from, to)) continue;
-        if (l.type === 'INWARD') itemIn += Number(l.qty) || 0;
+
+        var q = Number(l.qty) || 0;
         if (l.type === 'OUTWARD'){
-          var q = Number(l.qty) || 0;
-          itemOut += q;
-          var fac = (l.ref || l.detail || 'Staff').split('(')[0].trim();
-          itemRec[fac] = (itemRec[fac] || 0) + q;
+          itOut += q;
+          totalOut += q;
+          var facName = l.ref || 'Staff';
+          var dept = '';
+          var purpose = l.detail || '';
+          if (l.detail && l.detail.indexOf('(') !== -1){
+            var match = l.detail.match(/^([^(]+)\(([^)]+)\)\s*(?:-\s*(.*))?$/);
+            if (match){
+              facName = match[1].trim();
+              dept = match[2].trim();
+              purpose = match[3] ? match[3].trim() : '';
+            }
+          }
+          itFacs[facName] = (itFacs[facName] || 0) + q;
+          dayOutLogs.push({
+            date: l.date,
+            itemName: it.name,
+            variant: v.name,
+            facName: facName,
+            dept: dept,
+            qty: q,
+            purpose: purpose
+          });
+        } else if (l.type === 'INWARD'){
+          itIn += q;
+          totalIn += q;
+          var vn = (l.detail || '').replace(/^From\s+/, '').trim() || 'Vendor';
+          itVendors[vn] = (itVendors[vn] || 0) + q;
+          dayInLogs.push({
+            date: l.date,
+            itemName: it.name,
+            variant: v.name,
+            vendor: vn,
+            ref: l.ref || 'Direct Inward',
+            qty: q,
+            detail: l.detail || ''
+          });
         }
       }
     }
-    if (repSubFilter === 'active' && itemIn === 0 && itemOut === 0) continue;
-    if (repSubFilter === 'outward' && itemOut === 0) continue;
-    if (repSubFilter === 'inward' && itemIn === 0) continue;
-    if (repSubFilter === 'low' && curStock >= 15) continue;
 
-    var recList = [];
-    for (var rk in itemRec) recList.push(rk + ' (' + itemRec[rk] + ')');
-    rows.push([it.name, (it.variants || []).length, itemIn, itemOut, curStock, recList.join('; ')]);
+    var include = false;
+    if (isOnlyInward && itIn > 0) include = true;
+    else if (isOnlyOutward && itOut > 0) include = true;
+    else if (!isOnlyInward && !isOnlyOutward && (itIn > 0 || itOut > 0 || (!from && !to && repSubFilter === 'all'))) include = true;
+
+    if (include){
+      dayItems.push({
+        name: it.name + ((it.variants || []).length > 1 ? ' (' + it.variants.length + ' colors)' : ''),
+        inward: itIn,
+        outward: itOut,
+        facNames: Object.keys(itFacs).join(', ') || '—',
+        vendorNames: Object.keys(itVendors).join(', ') || '—',
+        current: curStock,
+        status: curStock <= 0 ? 'Out of Stock' : (curStock < 15 ? 'Low Stock' : 'In Stock')
+      });
+    }
+  }
+
+  dayItems.sort(function(a, b){ return a.name.localeCompare(b.name); });
+  dayOutLogs.sort(function(a, b){
+    var c = a.itemName.localeCompare(b.itemName);
+    if (c !== 0) return c;
+    return (a.facName || '').localeCompare(b.facName || '');
+  });
+  dayInLogs.sort(function(a, b){
+    var c = a.itemName.localeCompare(b.itemName);
+    if (c !== 0) return c;
+    return (a.vendor || '').localeCompare(b.vendor || '');
+  });
+
+  var rows = [
+    ['DELHI PUBLIC SCHOOL, AMARPALI - INVENTORY MANAGEMENT SYSTEM'],
+    [isOnlyInward ? 'DAILY STOCK INWARD (RECEIPTS) REPORT' : (isOnlyOutward ? 'DAILY INVENTORY ISSUE & DISTRIBUTION REPORT' : 'DAILY COMPREHENSIVE STOCK MOVEMENT REPORT')],
+    ['Period / Date', dateStr]
+  ];
+
+  if (isOnlyInward){
+    rows.push(['Total Units Received Today', '+' + totalIn + ' units']);
+    rows.push([]);
+    rows.push(['=== SECTION 1: ITEMS RECEIVED SUMMARY ===']);
+    rows.push(['#', 'ITEM NAME', 'QUANTITY RECEIVED (+)', 'VENDORS / SUPPLIERS', 'CURRENT STOCK', 'STATUS']);
+    for (var i = 0; i < dayItems.length; i++){
+      rows.push([i + 1, dayItems[i].name, dayItems[i].inward, dayItems[i].vendorNames, dayItems[i].current, dayItems[i].status]);
+    }
+    rows.push(['', 'TOTAL UNITS RECEIVED:', totalIn, '', '', '']);
+    rows.push([]);
+    rows.push(['=== SECTION 2: COMPLETE DETAILED DAILY INWARD REGISTER (STOCK DELIVERIES) ===']);
+    rows.push(['#', 'DATE', 'ITEM NAME', 'COLOUR / VARIANT', 'VENDOR / SUPPLIER', 'QUANTITY RECEIVED (+)', 'BILL / CHALLAN REF']);
+    for (var i = 0; i < dayInLogs.length; i++){
+      var dl = dayInLogs[i];
+      rows.push([i + 1, dl.date, dl.itemName, dl.variant || 'Standard', dl.vendor, dl.qty, dl.ref]);
+    }
+    rows.push(['', '', '', '', 'TOTAL UNITS RECEIVED:', totalIn, '']);
+  } else if (isOnlyOutward){
+    rows.push(['Total Units Issued Today', '−' + totalOut + ' units']);
+    rows.push([]);
+    rows.push(['=== SECTION 1: ITEMS ISSUED SUMMARY ===']);
+    rows.push(['#', 'ITEM NAME', 'QUANTITY ISSUED (−)', 'ISSUED TO (FACULTY MEMBERS)', 'CURRENT STOCK', 'STATUS']);
+    for (var i = 0; i < dayItems.length; i++){
+      rows.push([i + 1, dayItems[i].name, dayItems[i].outward, dayItems[i].facNames, dayItems[i].current, dayItems[i].status]);
+    }
+    rows.push(['', 'TOTAL UNITS ISSUED:', totalOut, '', '', '']);
+    rows.push([]);
+    rows.push(['=== SECTION 2: COMPLETE DETAILED DAILY ISSUE REGISTER (WHO RECEIVED WHAT) ===']);
+    rows.push(['#', 'DATE', 'ITEM NAME', 'COLOUR / VARIANT', 'FACULTY MEMBER', 'DEPARTMENT', 'QUANTITY ISSUED (−)', 'PURPOSE / REMARK']);
+    for (var i = 0; i < dayOutLogs.length; i++){
+      var dl = dayOutLogs[i];
+      rows.push([i + 1, dl.date, dl.itemName, dl.variant || 'Standard', dl.facName, dl.dept || 'Staff', dl.qty, dl.purpose || 'Academic use']);
+    }
+    rows.push(['', '', '', '', '', 'TOTAL UNITS ISSUED:', totalOut, '']);
+  } else {
+    rows.push(['Total Units Received Today', '+' + totalIn + ' units']);
+    rows.push(['Total Units Issued Today', '−' + totalOut + ' units']);
+    rows.push([]);
+    rows.push(['=== SECTION 1: DAILY STOCK MOVEMENT SUMMARY (INWARD & OUTWARD) ===']);
+    rows.push(['#', 'ITEM NAME', 'INWARD (+)', 'OUTWARD (−)', 'CURRENT BALANCE', 'STATUS']);
+    for (var i = 0; i < dayItems.length; i++){
+      rows.push([i + 1, dayItems[i].name, dayItems[i].inward > 0 ? '+' + dayItems[i].inward : 0, dayItems[i].outward > 0 ? '−' + dayItems[i].outward : 0, dayItems[i].current, dayItems[i].status]);
+    }
+    rows.push(['', 'TOTALS:', totalIn, totalOut, '', '']);
+    rows.push([]);
+    rows.push(['=== SECTION 2: DETAILED DAILY ISSUE REGISTER (WHO RECEIVED WHAT) ===']);
+    rows.push(['#', 'DATE', 'ITEM NAME', 'COLOUR / VARIANT', 'FACULTY MEMBER', 'DEPARTMENT', 'QUANTITY ISSUED (−)', 'PURPOSE / REMARK']);
+    for (var i = 0; i < dayOutLogs.length; i++){
+      var dl = dayOutLogs[i];
+      rows.push([i + 1, dl.date, dl.itemName, dl.variant || 'Standard', dl.facName, dl.dept || 'Staff', dl.qty, dl.purpose || 'Academic use']);
+    }
+    if (dayInLogs.length > 0){
+      rows.push([]);
+      rows.push(['=== SECTION 3: DETAILED DAILY INWARD REGISTER (STOCK DELIVERIES) ===']);
+      rows.push(['#', 'DATE', 'ITEM NAME', 'COLOUR / VARIANT', 'VENDOR / SUPPLIER', 'QUANTITY RECEIVED (+)', 'BILL / CHALLAN REF']);
+      for (var i = 0; i < dayInLogs.length; i++){
+        var dl = dayInLogs[i];
+        rows.push([i + 1, dl.date, dl.itemName, dl.variant || 'Standard', dl.vendor, dl.qty, dl.ref]);
+      }
+    }
   }
 
   var csv = '';
   for (var i = 0; i < rows.length; i++){
     var line = [];
-    for (var j = 0; j < rows[i].length; j++) line.push('"' + String(rows[i][j]).replace(/"/g, '""') + '"');
+    for (var j = 0; j < rows[i].length; j++) line.push('"' + String(rows[i][j] !== undefined && rows[i][j] !== null ? rows[i][j] : '').replace(/"/g, '""') + '"');
     csv += line.join(',') + '\n';
   }
   var blob = new Blob(['\uFEFF' + csv], {type:'text/csv;charset=utf-8'});
   var a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'DPS_ItemWise_Report_' + dateStr + '.csv';
+  var filePrefix = isOnlyInward ? 'DPS_Daily_Inward_Report_' : (isOnlyOutward ? 'DPS_Daily_Issue_Report_' : 'DPS_Daily_Stock_Report_');
+  a.download = filePrefix + dateStr + '.csv';
   a.click();
+}
+
+function exportMainReportPDF(){
+  var printable = document.getElementById('dps-official-printable-area');
+  if (!printable) return;
+
+  var fromEl = document.getElementById('f-rep-from');
+  var toEl = document.getElementById('f-rep-to');
+  var from = fromEl ? fromEl.value : '';
+  var to = toEl ? toEl.value : '';
+  var typeEl = document.getElementById('f-rep-type');
+  var typeF = typeEl ? typeEl.value : 'all';
+  var isOnlyInward = (typeF === 'inward' || repSubFilter === 'inward');
+  var isOnlyOutward = (typeF === 'outward' || repSubFilter === 'outward');
+
+  var dateStr = (from && to && from === to) ? ('Date: ' + from) : (from || to ? ('Period: ' + (from || 'Start') + ' to ' + (to || 'Today')) : 'All-Time Record');
+
+  var dayItems = [];
+  var dayOutLogs = [];
+  var dayInLogs = [];
+  var totalOut = 0;
+  var totalIn = 0;
+  var allFacs = {};
+  var allVendors = {};
+
+  for (var i = 0; i < items.length; i++){
+    var it = items[i];
+    var curStock = itemCurrent(it);
+    var itOut = 0;
+    var itIn = 0;
+    var itFacs = {};
+    var itVendors = {};
+
+    for (var j = 0; j < (it.variants || []).length; j++){
+      var v = it.variants[j];
+      for (var k = 0; k < (v.logs || []).length; k++){
+        var l = v.logs[k];
+        if (!inRange(l.date, from, to)) continue;
+
+        var q = Number(l.qty) || 0;
+        if (l.type === 'OUTWARD'){
+          itOut += q;
+          totalOut += q;
+          var facName = l.ref || 'Staff';
+          var dept = '';
+          var purpose = l.detail || '';
+          if (l.detail && l.detail.indexOf('(') !== -1){
+            var match = l.detail.match(/^([^(]+)\(([^)]+)\)\s*(?:-\s*(.*))?$/);
+            if (match){
+              facName = match[1].trim();
+              dept = match[2].trim();
+              purpose = match[3] ? match[3].trim() : '';
+            }
+          }
+          itFacs[facName] = (itFacs[facName] || 0) + q;
+          allFacs[facName] = true;
+          dayOutLogs.push({
+            date: l.date,
+            itemName: it.name,
+            variant: v.name,
+            facName: facName,
+            dept: dept,
+            qty: q,
+            purpose: purpose
+          });
+        } else if (l.type === 'INWARD'){
+          itIn += q;
+          totalIn += q;
+          var vn = (l.detail || '').replace(/^From\s+/, '').trim() || 'Vendor';
+          itVendors[vn] = (itVendors[vn] || 0) + q;
+          allVendors[vn] = true;
+          dayInLogs.push({
+            date: l.date,
+            itemName: it.name,
+            variant: v.name,
+            vendor: vn,
+            ref: l.ref || 'Direct Inward',
+            qty: q,
+            detail: l.detail || ''
+          });
+        }
+      }
+    }
+
+    var include = false;
+    if (isOnlyInward && itIn > 0) include = true;
+    else if (isOnlyOutward && itOut > 0) include = true;
+    else if (!isOnlyInward && !isOnlyOutward && (itIn > 0 || itOut > 0 || (!from && !to && repSubFilter === 'all' && curStock > 0))) include = true;
+
+    if (include){
+      dayItems.push({
+        name: it.name,
+        variantsCount: (it.variants || []).length,
+        inward: itIn,
+        outward: itOut,
+        current: curStock,
+        facNames: Object.keys(itFacs).join(', ') || '—',
+        vendorNames: Object.keys(itVendors).join(', ') || '—'
+      });
+    }
+  }
+
+  dayItems.sort(function(a, b){ return a.name.localeCompare(b.name); });
+  dayOutLogs.sort(function(a, b){
+    var c = a.itemName.localeCompare(b.itemName);
+    if (c !== 0) return c;
+    return (a.facName || '').localeCompare(b.facName || '');
+  });
+  dayInLogs.sort(function(a, b){
+    var c = a.itemName.localeCompare(b.itemName);
+    if (c !== 0) return c;
+    return (a.vendor || '').localeCompare(b.vendor || '');
+  });
+
+  var docTitle = isOnlyInward ? 'DAILY STOCK INWARD (RECEIPTS) REPORT' : (isOnlyOutward ? 'DAILY ISSUE & DISTRIBUTION REPORT' : 'DAILY COMPREHENSIVE STOCK MOVEMENT REPORT');
+
+  var kpiGridHtml = '';
+  if (isOnlyInward){
+    kpiGridHtml = '<div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:10px;margin-bottom:14px;font-size:12px">' +
+      '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7"><div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Items Received</div><div style="font-size:14px;font-weight:800;color:#124f32;margin-top:2px">' + dayItems.length + ' items</div></div>' +
+      '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7"><div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Total Units Received</div><div style="font-size:14px;font-weight:800;color:#15803d;margin-top:2px">+' + totalIn + ' pcs</div></div>' +
+      '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7"><div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Vendors / Sources</div><div style="font-size:14px;font-weight:800;color:#124f32;margin-top:2px">' + Object.keys(allVendors).length + ' suppliers</div></div>' +
+      '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7"><div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Challans / Batches</div><div style="font-size:14px;font-weight:800;color:#124f32;margin-top:2px">' + dayInLogs.length + ' records</div></div>' +
+    '</div>';
+  } else if (isOnlyOutward){
+    kpiGridHtml = '<div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:10px;margin-bottom:14px;font-size:12px">' +
+      '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7"><div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Items Issued</div><div style="font-size:14px;font-weight:800;color:#124f32;margin-top:2px">' + dayItems.length + ' items</div></div>' +
+      '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7"><div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Total Units Issued</div><div style="font-size:14px;font-weight:800;color:#b91c1c;margin-top:2px">−' + totalOut + ' pcs</div></div>' +
+      '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7"><div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Staff Recipients</div><div style="font-size:14px;font-weight:800;color:#124f32;margin-top:2px">' + Object.keys(allFacs).length + ' faculty</div></div>' +
+      '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7"><div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Total Slips</div><div style="font-size:14px;font-weight:800;color:#124f32;margin-top:2px">' + dayOutLogs.length + ' records</div></div>' +
+    '</div>';
+  } else {
+    kpiGridHtml = '<div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:10px;margin-bottom:14px;font-size:12px">' +
+      '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7"><div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Active Items</div><div style="font-size:14px;font-weight:800;color:#124f32;margin-top:2px">' + dayItems.length + ' items</div></div>' +
+      '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7"><div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Total Units Issued</div><div style="font-size:14px;font-weight:800;color:#b91c1c;margin-top:2px">−' + totalOut + ' pcs</div></div>' +
+      '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7"><div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Total Units Received</div><div style="font-size:14px;font-weight:800;color:#15803d;margin-top:2px">+' + totalIn + ' pcs</div></div>' +
+      '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7"><div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Staff Recipients</div><div style="font-size:14px;font-weight:800;color:#124f32;margin-top:2px">' + Object.keys(allFacs).length + ' faculty</div></div>' +
+    '</div>';
+  }
+
+  var tablesHtml = '';
+  if (isOnlyInward){
+    var sRows = '';
+    for (var i = 0; i < dayItems.length; i++){
+      var r = dayItems[i];
+      var bg = (i % 2 === 0) ? '#f0f7f2' : '#ffffff';
+      sRows += '<tr style="background:' + bg + ';">' +
+        '<td style="padding:7px 10px;text-align:center;border:1px solid #333;font-size:11px">' + (i + 1) + '</td>' +
+        '<td style="padding:7px 10px;border:1px solid #333;font-weight:700;font-size:12px">' + esc(r.name) + '</td>' +
+        '<td style="padding:7px 10px;text-align:right;border:1px solid #333;font-weight:900;color:#15803d;font-size:12.5px">+' + r.inward + '</td>' +
+        '<td style="padding:7px 10px;border:1px solid #333;font-size:11px;color:#333">' + esc(r.vendorNames) + '</td>' +
+        '<td style="padding:7px 10px;text-align:center;border:1px solid #333;font-weight:800;font-size:12px">' + r.current + '</td>' +
+      '</tr>';
+    }
+    if (dayItems.length === 0) sRows = '<tr><td colspan="5" style="padding:18px;text-align:center;border:1px solid #333;color:#666">No inward stock deliveries recorded for ' + esc(dateStr) + '.</td></tr>';
+
+    var dRows = '';
+    for (var i = 0; i < dayInLogs.length; i++){
+      var dl = dayInLogs[i];
+      var bg = (i % 2 === 0) ? '#f0f7f2' : '#ffffff';
+      dRows += '<tr style="background:' + bg + ';">' +
+        '<td style="padding:6px 9px;text-align:center;border:1px solid #333;font-size:11px">' + (i + 1) + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-family:monospace;font-size:11px">' + dl.date + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-weight:700;font-size:11.5px">' + esc(dl.itemName) + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-size:11px">' + esc(dl.variant || 'Standard') + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-weight:700;font-size:11.5px">' + esc(dl.vendor) + '</td>' +
+        '<td style="padding:6px 9px;text-align:right;border:1px solid #333;font-weight:900;color:#15803d;font-size:12px">+' + dl.qty + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-size:11px;color:#444">' + esc(dl.ref) + '</td>' +
+      '</tr>';
+    }
+    if (dayInLogs.length === 0) dRows = '<tr><td colspan="7" style="padding:18px;text-align:center;border:1px solid #333;color:#666">No individual inward deliveries.</td></tr>';
+
+    tablesHtml = '<div style="font-size:12px;font-weight:800;color:#124f32;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">1. Summary of Items Received on this Day:</div>' +
+      '<table style="width:100%;border-collapse:collapse;border:1.5px solid #333;font-size:12px;margin-bottom:18px">' +
+        '<thead><tr style="background:#124f32;color:#fff"><th style="padding:8px;border:1px solid #333;width:35px;text-align:center">#</th><th style="padding:8px;border:1px solid #333;text-align:left">ITEM NAME</th><th style="padding:8px;border:1px solid #333;width:110px;text-align:right">RECEIVED (+)</th><th style="padding:8px;border:1px solid #333;text-align:left">VENDORS / SUPPLIERS</th><th style="padding:8px;border:1px solid #333;width:110px;text-align:center">CURRENT STOCK</th></tr></thead>' +
+        '<tbody>' + sRows + '</tbody>' +
+        '<tfoot><tr style="background:#e8f5ec;font-weight:800;border-top:2px solid #124f32"><td colspan="2" style="padding:8px 10px;border:1px solid #333;text-align:right">TOTAL UNITS RECEIVED:</td><td style="padding:8px 10px;border:1px solid #333;text-align:right;color:#15803d;font-weight:900">+' + totalIn + '</td><td colspan="2" style="padding:8px 10px;border:1px solid #333"></td></tr></tfoot>' +
+      '</table>' +
+      '<div style="font-size:12px;font-weight:800;color:#124f32;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">2. Complete Detailed Daily Inward Register (Stock Deliveries):</div>' +
+      '<table style="width:100%;border-collapse:collapse;border:1.5px solid #333;font-size:11px">' +
+        '<thead><tr style="background:#124f32;color:#fff"><th style="padding:7px 8px;border:1px solid #333;width:30px;text-align:center">#</th><th style="padding:7px 8px;border:1px solid #333;width:80px;text-align:left">DATE</th><th style="padding:7px 8px;border:1px solid #333;text-align:left">ITEM NAME</th><th style="padding:7px 8px;border:1px solid #333;width:100px;text-align:left">COLOUR / VARIANT</th><th style="padding:7px 8px;border:1px solid #333;text-align:left">VENDOR / SUPPLIER</th><th style="padding:7px 8px;border:1px solid #333;width:75px;text-align:right">QUANTITY</th><th style="padding:7px 8px;border:1px solid #333;width:130px;text-align:left">CHALLAN / BILL REF</th></tr></thead>' +
+        '<tbody>' + dRows + '</tbody>' +
+        '<tfoot><tr style="background:#e8f5ec;font-weight:800;border-top:2px solid #124f32"><td colspan="5" style="padding:8px;border:1px solid #333;text-align:right">TOTAL UNITS RECEIVED:</td><td style="padding:8px;border:1px solid #333;text-align:right;color:#15803d;font-weight:900">+' + totalIn + '</td><td style="padding:8px;border:1px solid #333"></td></tr></tfoot>' +
+      '</table>';
+  } else if (isOnlyOutward){
+    var sRows = '';
+    for (var i = 0; i < dayItems.length; i++){
+      var r = dayItems[i];
+      var bg = (i % 2 === 0) ? '#f0f7f2' : '#ffffff';
+      sRows += '<tr style="background:' + bg + ';">' +
+        '<td style="padding:7px 10px;text-align:center;border:1px solid #333;font-size:11px">' + (i + 1) + '</td>' +
+        '<td style="padding:7px 10px;border:1px solid #333;font-weight:700;font-size:12px">' + esc(r.name) + '</td>' +
+        '<td style="padding:7px 10px;text-align:right;border:1px solid #333;font-weight:900;color:#b91c1c;font-size:12.5px">−' + r.outward + '</td>' +
+        '<td style="padding:7px 10px;border:1px solid #333;font-size:11px;color:#333">' + esc(r.facNames) + '</td>' +
+        '<td style="padding:7px 10px;text-align:center;border:1px solid #333;font-weight:800;font-size:12px">' + r.current + '</td>' +
+      '</tr>';
+    }
+    if (dayItems.length === 0) sRows = '<tr><td colspan="5" style="padding:18px;text-align:center;border:1px solid #333;color:#666">No items were issued on this date (' + esc(dateStr) + ').</td></tr>';
+
+    var dRows = '';
+    for (var i = 0; i < dayOutLogs.length; i++){
+      var dl = dayOutLogs[i];
+      var bg = (i % 2 === 0) ? '#f0f7f2' : '#ffffff';
+      dRows += '<tr style="background:' + bg + ';">' +
+        '<td style="padding:6px 9px;text-align:center;border:1px solid #333;font-size:11px">' + (i + 1) + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-family:monospace;font-size:11px">' + dl.date + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-weight:700;font-size:11.5px">' + esc(dl.itemName) + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-size:11px">' + esc(dl.variant || 'Standard') + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-weight:700;font-size:11.5px">' + esc(dl.facName) + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-size:11px;color:#333">' + esc(dl.dept || 'Staff') + '</td>' +
+        '<td style="padding:6px 9px;text-align:right;border:1px solid #333;font-weight:900;color:#b91c1c;font-size:12px">−' + dl.qty + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-size:11px;color:#444">' + esc(dl.purpose || 'Academic use') + '</td>' +
+      '</tr>';
+    }
+    if (dayOutLogs.length === 0) dRows = '<tr><td colspan="8" style="padding:18px;text-align:center;border:1px solid #333;color:#666">No individual issue transactions recorded.</td></tr>';
+
+    tablesHtml = '<div style="font-size:12px;font-weight:800;color:#124f32;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">1. Summary of Items Issued on this Day:</div>' +
+      '<table style="width:100%;border-collapse:collapse;border:1.5px solid #333;font-size:12px;margin-bottom:18px">' +
+        '<thead><tr style="background:#124f32;color:#fff"><th style="padding:8px;border:1px solid #333;width:35px;text-align:center">#</th><th style="padding:8px;border:1px solid #333;text-align:left">ITEM NAME</th><th style="padding:8px;border:1px solid #333;width:110px;text-align:right">ISSUED (−)</th><th style="padding:8px;border:1px solid #333;text-align:left">ISSUED TO (STAFF RECIPIENTS)</th><th style="padding:8px;border:1px solid #333;width:110px;text-align:center">REMAINING STOCK</th></tr></thead>' +
+        '<tbody>' + sRows + '</tbody>' +
+        '<tfoot><tr style="background:#e8f5ec;font-weight:800;border-top:2px solid #124f32"><td colspan="2" style="padding:8px 10px;border:1px solid #333;text-align:right">TOTAL UNITS ISSUED:</td><td style="padding:8px 10px;border:1px solid #333;text-align:right;color:#b91c1c;font-weight:900">−' + totalOut + '</td><td colspan="2" style="padding:8px 10px;border:1px solid #333"></td></tr></tfoot>' +
+      '</table>' +
+      '<div style="font-size:12px;font-weight:800;color:#124f32;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">2. Complete Detailed Daily Issue Register (Who Received What):</div>' +
+      '<table style="width:100%;border-collapse:collapse;border:1.5px solid #333;font-size:11px">' +
+        '<thead><tr style="background:#124f32;color:#fff"><th style="padding:7px 8px;border:1px solid #333;width:30px;text-align:center">#</th><th style="padding:7px 8px;border:1px solid #333;width:80px;text-align:left">DATE</th><th style="padding:7px 8px;border:1px solid #333;text-align:left">ITEM NAME</th><th style="padding:7px 8px;border:1px solid #333;width:100px;text-align:left">COLOUR / VARIANT</th><th style="padding:7px 8px;border:1px solid #333;text-align:left">FACULTY MEMBER</th><th style="padding:7px 8px;border:1px solid #333;width:90px;text-align:left">DEPARTMENT</th><th style="padding:7px 8px;border:1px solid #333;width:70px;text-align:right">QTY</th><th style="padding:7px 8px;border:1px solid #333;text-align:left">PURPOSE / REMARK</th></tr></thead>' +
+        '<tbody>' + dRows + '</tbody>' +
+        '<tfoot><tr style="background:#e8f5ec;font-weight:800;border-top:2px solid #124f32"><td colspan="6" style="padding:8px;border:1px solid #333;text-align:right">TOTAL UNITS ISSUED:</td><td style="padding:8px;border:1px solid #333;text-align:right;color:#b91c1c;font-weight:900">−' + totalOut + '</td><td style="padding:8px;border:1px solid #333"></td></tr></tfoot>' +
+      '</table>';
+  } else {
+    var sRows = '';
+    for (var i = 0; i < dayItems.length; i++){
+      var r = dayItems[i];
+      var bg = (i % 2 === 0) ? '#f0f7f2' : '#ffffff';
+      sRows += '<tr style="background:' + bg + ';">' +
+        '<td style="padding:7px 10px;text-align:center;border:1px solid #333;font-size:11px">' + (i + 1) + '</td>' +
+        '<td style="padding:7px 10px;border:1px solid #333;font-weight:700;font-size:12px">' + esc(r.name) + '</td>' +
+        '<td style="padding:7px 10px;text-align:right;border:1px solid #333;font-weight:800;color:#15803d;font-size:12px">' + (r.inward > 0 ? '+' + r.inward : '—') + '</td>' +
+        '<td style="padding:7px 10px;text-align:right;border:1px solid #333;font-weight:800;color:#b91c1c;font-size:12px">' + (r.outward > 0 ? '−' + r.outward : '—') + '</td>' +
+        '<td style="padding:7px 10px;text-align:center;border:1px solid #333;font-weight:800;font-size:12px">' + r.current + '</td>' +
+        '<td style="padding:7px 10px;border:1px solid #333;font-size:11px;color:#333">' + esc(r.facNames || r.vendorNames || '—') + '</td>' +
+      '</tr>';
+    }
+    if (dayItems.length === 0) sRows = '<tr><td colspan="6" style="padding:18px;text-align:center;border:1px solid #333;color:#666">No movement recorded for this date.</td></tr>';
+
+    var dRows = '';
+    for (var i = 0; i < dayOutLogs.length; i++){
+      var dl = dayOutLogs[i];
+      var bg = (i % 2 === 0) ? '#f0f7f2' : '#ffffff';
+      dRows += '<tr style="background:' + bg + ';">' +
+        '<td style="padding:6px 9px;text-align:center;border:1px solid #333;font-size:11px">' + (i + 1) + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-family:monospace;font-size:11px">' + dl.date + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-weight:700;font-size:11.5px">' + esc(dl.itemName) + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-size:11px">' + esc(dl.variant || 'Standard') + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-weight:700;font-size:11.5px">' + esc(dl.facName) + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-size:11px;color:#333">' + esc(dl.dept || 'Staff') + '</td>' +
+        '<td style="padding:6px 9px;text-align:right;border:1px solid #333;font-weight:900;color:#b91c1c;font-size:12px">−' + dl.qty + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-size:11px;color:#444">' + esc(dl.purpose || 'Academic use') + '</td>' +
+      '</tr>';
+    }
+
+    var inRows = '';
+    for (var i = 0; i < dayInLogs.length; i++){
+      var dl = dayInLogs[i];
+      var bg = (i % 2 === 0) ? '#f0f7f2' : '#ffffff';
+      inRows += '<tr style="background:' + bg + ';">' +
+        '<td style="padding:6px 9px;text-align:center;border:1px solid #333;font-size:11px">' + (i + 1) + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-family:monospace;font-size:11px">' + dl.date + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-weight:700;font-size:11.5px">' + esc(dl.itemName) + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-size:11px">' + esc(dl.variant || 'Standard') + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-weight:700;font-size:11.5px">' + esc(dl.vendor) + '</td>' +
+        '<td style="padding:6px 9px;text-align:right;border:1px solid #333;font-weight:900;color:#15803d;font-size:12px">+' + dl.qty + '</td>' +
+        '<td style="padding:6px 9px;border:1px solid #333;font-size:11px;color:#444">' + esc(dl.ref) + '</td>' +
+      '</tr>';
+    }
+
+    tablesHtml = '<div style="font-size:12px;font-weight:800;color:#124f32;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">1. Daily Stock Movement Summary (Inward & Outward):</div>' +
+      '<table style="width:100%;border-collapse:collapse;border:1.5px solid #333;font-size:12px;margin-bottom:18px">' +
+        '<thead><tr style="background:#124f32;color:#fff"><th style="padding:8px;border:1px solid #333;width:35px;text-align:center">#</th><th style="padding:8px;border:1px solid #333;text-align:left">ITEM NAME</th><th style="padding:8px;border:1px solid #333;width:95px;text-align:right">INWARD (+)</th><th style="padding:8px;border:1px solid #333;width:95px;text-align:right">OUTWARD (−)</th><th style="padding:8px;border:1px solid #333;width:95px;text-align:center">BALANCE</th><th style="padding:8px;border:1px solid #333;text-align:left">KEY PARTIES</th></tr></thead>' +
+        '<tbody>' + sRows + '</tbody>' +
+        '<tfoot><tr style="background:#e8f5ec;font-weight:800;border-top:2px solid #124f32"><td colspan="2" style="padding:8px 10px;border:1px solid #333;text-align:right">TOTALS:</td><td style="padding:8px 10px;border:1px solid #333;text-align:right;color:#15803d;font-weight:900">+' + totalIn + '</td><td style="padding:8px 10px;border:1px solid #333;text-align:right;color:#b91c1c;font-weight:900">−' + totalOut + '</td><td colspan="2" style="padding:8px 10px;border:1px solid #333"></td></tr></tfoot>' +
+      '</table>' +
+      '<div style="font-size:12px;font-weight:800;color:#124f32;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">2. Detailed Daily Issue Register (Who Received What):</div>' +
+      '<table style="width:100%;border-collapse:collapse;border:1.5px solid #333;font-size:11px;margin-bottom:18px">' +
+        '<thead><tr style="background:#124f32;color:#fff"><th style="padding:7px 8px;border:1px solid #333;width:30px;text-align:center">#</th><th style="padding:7px 8px;border:1px solid #333;width:80px;text-align:left">DATE</th><th style="padding:7px 8px;border:1px solid #333;text-align:left">ITEM NAME</th><th style="padding:7px 8px;border:1px solid #333;width:100px;text-align:left">COLOUR / VARIANT</th><th style="padding:7px 8px;border:1px solid #333;text-align:left">FACULTY MEMBER</th><th style="padding:7px 8px;border:1px solid #333;width:90px;text-align:left">DEPARTMENT</th><th style="padding:7px 8px;border:1px solid #333;width:70px;text-align:right">QTY</th><th style="padding:7px 8px;border:1px solid #333;text-align:left">PURPOSE / REMARK</th></tr></thead>' +
+        '<tbody>' + (dRows || '<tr><td colspan="8" style="padding:14px;text-align:center;border:1px solid #333;color:#666">No issue records on this date.</td></tr>') + '</tbody>' +
+      '</table>' +
+      (dayInLogs.length > 0 ? ('<div style="font-size:12px;font-weight:800;color:#124f32;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">3. Detailed Daily Inward Register (Stock Deliveries):</div>' +
+      '<table style="width:100%;border-collapse:collapse;border:1.5px solid #333;font-size:11px">' +
+        '<thead><tr style="background:#124f32;color:#fff"><th style="padding:7px 8px;border:1px solid #333;width:30px;text-align:center">#</th><th style="padding:7px 8px;border:1px solid #333;width:80px;text-align:left">DATE</th><th style="padding:7px 8px;border:1px solid #333;text-align:left">ITEM NAME</th><th style="padding:7px 8px;border:1px solid #333;width:100px;text-align:left">COLOUR / VARIANT</th><th style="padding:7px 8px;border:1px solid #333;text-align:left">VENDOR / SUPPLIER</th><th style="padding:7px 8px;border:1px solid #333;width:75px;text-align:right">QUANTITY</th><th style="padding:7px 8px;border:1px solid #333;width:130px;text-align:left">CHALLAN / BILL REF</th></tr></thead>' +
+        '<tbody>' + inRows + '</tbody>' +
+      '</table>') : '');
+  }
+
+  printable.innerHTML = '<div style="font-family:Arial,sans-serif;color:#111">' +
+    '<div style="text-align:center;border-bottom:2.5px solid #124f32;padding-bottom:12px;margin-bottom:14px">' +
+      '<h1 style="margin:0 0 4px;font-size:22px;color:#124f32;font-weight:800;letter-spacing:0.5px">DELHI PUBLIC SCHOOL, AMARPALI</h1>' +
+      '<div style="font-size:11.5px;font-weight:700;color:#444;letter-spacing:1px;text-transform:uppercase">CENTRAL INVENTORY MANAGEMENT SYSTEM · ' + esc(docTitle) + '</div>' +
+      '<div style="margin-top:6px;font-size:13px;font-weight:800;color:#124f32">' + esc(dateStr) + '</div>' +
+    '</div>' +
+    kpiGridHtml +
+    tablesHtml +
+    '<div style="display:flex;justify-content:space-between;margin-top:40px;padding-top:10px;font-size:11.5px;font-weight:700;color:#444">' +
+      '<div style="text-align:center;border-top:1px solid #666;width:150px;padding-top:5px">Prepared By (Store)</div>' +
+      '<div style="text-align:center;border-top:1px solid #666;width:150px;padding-top:5px">Checked By (Accounts)</div>' +
+      '<div style="text-align:center;border-top:1px solid #666;width:150px;padding-top:5px">Principal / Authority</div>' +
+    '</div>' +
+  '</div>';
+
+  document.body.classList.add('dps-printing-official-doc');
+  window.print();
+  window.onafterprint = function(){ document.body.classList.remove('dps-printing-official-doc'); };
+  setTimeout(function(){ document.body.classList.remove('dps-printing-official-doc'); }, 1500);
 }
 
 function renderReports(){
   var searchInput = document.getElementById('rep-search');
-  if (searchInput && searchInput.value.toLowerCase().trim() === 'admin'){
+  if (searchInput && (searchInput.value.toLowerCase().trim() === 'admin' || searchInput.value.toLowerCase().trim() === 'admin@dps.com' || searchInput.value.toLowerCase().trim() === 'dpsadmin')){
     searchInput.value = '';
   }
   var q = (searchInput && searchInput.value ? searchInput.value : '').toLowerCase().trim();
+  if (q === 'admin' || q === 'admin@dps.com' || q === 'dpsadmin') q = '';
 
   var fromEl = document.getElementById('f-rep-from');
   var toEl = document.getElementById('f-rep-to');
@@ -6140,40 +7208,55 @@ function renderReports(){
   var kpiOut = document.getElementById('rep-kpi-out');
   var kpiIn = document.getElementById('rep-kpi-in');
   var kpiFac = document.getElementById('rep-kpi-fac');
-  if (kpiItems) kpiItems.textContent = activeItemCount;
+  if (kpiItems) {
+    if (typeF === 'inward' || repSubFilter === 'inward') kpiItems.textContent = inwardItemCount;
+    else if (typeF === 'outward' || repSubFilter === 'outward') kpiItems.textContent = outwardItemCount;
+    else kpiItems.textContent = activeItemCount;
+  }
   if (kpiOut) kpiOut.textContent = (overallOut > 0 ? '−' : '') + overallOut;
   if (kpiIn) kpiIn.textContent = (overallIn > 0 ? '+' : '') + overallIn;
   if (kpiFac) kpiFac.textContent = Object.keys(allFacSet).length;
 
   var subTitleEl = document.getElementById('rep-itemwise-sub');
   if (subTitleEl) {
-    subTitleEl.textContent = dateLabel + ' · ' + activeItemCount + ' active item(s) · ' + overallOut + ' units issued · ' + overallIn + ' units received';
+    if (typeF === 'inward' || repSubFilter === 'inward') {
+      subTitleEl.textContent = dateLabel + ' · ' + inwardItemCount + ' item(s) received · +' + overallIn + ' total units added to store';
+    } else if (typeF === 'outward' || repSubFilter === 'outward') {
+      subTitleEl.textContent = dateLabel + ' · ' + outwardItemCount + ' item(s) issued · −' + overallOut + ' units issued to ' + Object.keys(allFacSet).length + ' staff member(s)';
+    } else {
+      subTitleEl.textContent = dateLabel + ' · ' + activeItemCount + ' active item(s) · −' + overallOut + ' units issued · +' + overallIn + ' units received';
+    }
   }
 
   // Filter items by active subfilter tab:
   var displayedItems = itemReportList.filter(function(row){
+    if (typeF === 'inward' || repSubFilter === 'inward') return row.inward > 0;
+    if (typeF === 'outward' || repSubFilter === 'outward') return row.outward > 0;
     if (repSubFilter === 'active') return (row.inward > 0 || row.outward > 0);
-    if (repSubFilter === 'outward') return row.outward > 0;
-    if (repSubFilter === 'inward') return row.inward > 0;
     if (repSubFilter === 'low') return row.isLow;
     return true; // 'all'
   });
 
-  // Sort: outward high-to-low, then inward high-to-low, then name A-Z
+  // Sort: strictly alphabetical order by item name (A-Z)
   displayedItems.sort(function(a, b){
-    if (b.outward !== a.outward) return b.outward - a.outward;
-    if (b.inward !== a.inward) return b.inward - a.inward;
     return a.name.localeCompare(b.name);
   });
 
   var contentEl = document.getElementById('rep-itemwise-content');
   if (contentEl) {
     if (displayedItems.length === 0){
-      var emptyTxt = (from || to) ? 'No item transactions recorded for ' + dateLabel : 'No items match the selected filter';
+      var emptyTxt = (typeF === 'inward' || repSubFilter === 'inward')
+        ? 'No items were received (Inward) on ' + dateLabel
+        : (typeF === 'outward' || repSubFilter === 'outward')
+        ? 'No items were issued (Outward) on ' + dateLabel
+        : ((from || to) ? 'No item transactions recorded for ' + dateLabel : 'No items match the selected filter');
       contentEl.innerHTML = '<div class="empty-msg" style="padding:28px;text-align:center;color:var(--muted)">' +
-        '<div style="font-size:24px;margin-bottom:6px">📦</div>' +
+        '<div style="display:flex;justify-content:center;margin-bottom:10px"><span style="width:38px;height:38px;border-radius:10px;background:var(--green-light);color:var(--green);display:inline-flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span></div>' +
         '<b>' + esc(emptyTxt) + '</b>' +
-        '<div style="font-size:12px;margin-top:4px">Select another date or click "All Catalog Items" to inspect full inventory</div>' +
+        '<div style="font-size:12px;margin-top:8px;display:flex;gap:8px;justify-content:center">' +
+          '<button type="button" class="btn" style="padding:4px 10px;font-size:11px" onclick="setRepSubFilter(\'all\')">View All Catalog Items</button>' +
+          '<button type="button" class="btn" style="padding:4px 10px;font-size:11px" onclick="setRepFilterMode(\'all\')">View All Dates</button>' +
+        '</div>' +
       '</div>';
     } else if (repItemWiseView === 'cards'){
       var cHtml = '<div class="rep-cards-grid">';
@@ -6186,9 +7269,9 @@ function renderReports(){
           for (var rk = 0; rk < recKeys.length; rk++){
             recParts.push(esc(recKeys[rk]) + ' (' + r.recipients[recKeys[rk]] + ')');
           }
-          recStr = '<div class="rep-recipients-tag">👥 Issued to: ' + recParts.join(', ') + '</div>';
+          recStr = '<div class="rep-recipients-tag">Issued to: ' + recParts.join(', ') + '</div>';
         } else if (r.inward > 0){
-          recStr = '<div class="rep-recipients-tag" style="color:#15803d;background:#f0fdf4;border-color:#bbf7d0">📥 Stock Received (' + r.txCount + ' batch)</div>';
+          recStr = '<div class="rep-recipients-tag" style="color:#15803d;background:#f0fdf4;border-color:#bbf7d0">Stock Received (' + r.txCount + ' batch)</div>';
         }
 
         var stockStatusBadge = r.isZero ?
@@ -6213,66 +7296,51 @@ function renderReports(){
           '</div>' +
           recStr +
           '<div style="margin-top:8px;display:flex;justify-content:flex-end">' +
-            '<span class="report-pill-btn"><span class="rpb-txt">View Full Breakdown ➔</span></span>' +
+            '<span class="report-pill-btn"><span class="rpb-txt">View Full Breakdown</span></span>' +
           '</div>' +
         '</div>';
       }
       cHtml += '</div>';
       contentEl.innerHTML = cHtml;
     } else {
-      var tHtml = '<table class="rep-table">' +
+      var tHtml = '<table class="rep-table bordered-report-table">' +
         '<thead>' +
           '<tr>' +
             '<th style="width:40px;text-align:center">#</th>' +
-            '<th>Item Name & Subcategory</th>' +
-            '<th style="width:90px;text-align:center">Inward (+)</th>' +
-            '<th style="width:100px;text-align:center">Outward (−)</th>' +
-            '<th style="width:120px;text-align:center">Current Stock</th>' +
-            '<th>Staff Recipients (Issued To)</th>' +
-            '<th style="width:130px;text-align:right">Breakdown</th>' +
+            '<th>ITEM NAME</th>' +
+            '<th style="width:110px;text-align:center">INWARD</th>' +
+            '<th style="width:110px;text-align:center">OUTWARD</th>' +
+            '<th style="width:140px;text-align:center">CURRENT STOCK</th>' +
+            '<th style="width:140px;text-align:center">ACTION</th>' +
           '</tr>' +
         '</thead>' +
         '<tbody>';
 
       for (var i = 0; i < displayedItems.length; i++){
         var r = displayedItems[i];
-        var recKeys = Object.keys(r.recipients);
-        var recStr = '—';
-        if (recKeys.length > 0){
-          var recParts = [];
-          for (var rk = 0; rk < Math.min(4, recKeys.length); rk++){
-            recParts.push('<b>' + esc(recKeys[rk]) + '</b> <span style="color:#b91c1c;font-weight:800">(' + r.recipients[recKeys[rk]] + ')</span>');
-          }
-          recStr = recParts.join(', ');
-          if (recKeys.length > 4) recStr += ' <span style="color:var(--muted);font-weight:700">+' + (recKeys.length - 4) + ' more</span>';
-        } else if (r.inward > 0){
-          recStr = '<span style="color:#15803d;font-weight:700">📥 Inward stock received (' + r.txCount + ' batch)</span>';
-        }
-
         var stockBadge = r.isZero ?
-          '<span style="background:#fee2e2;color:#991b1b;border:1px solid #fecaca;padding:2px 7px;border-radius:6px;font-size:10px;font-weight:800">0 OUT</span>' :
+          '<span style="background:#fee2e2;color:#991b1b;border:1px solid #fecaca;padding:2px 7px;border-radius:6px;font-size:10.5px;font-weight:800">0 OUT</span>' :
           r.isLow ?
-          '<span style="background:#fef3c7;color:#92400e;border:1px solid #fde68a;padding:2px 7px;border-radius:6px;font-size:10px;font-weight:800">' + r.current + ' LOW</span>' :
-          '<span style="background:#e8f5ec;color:#124f32;border:1px solid #b9e0c5;padding:2px 7px;border-radius:6px;font-size:10px;font-weight:800">' + r.current + ' IN STOCK</span>';
+          '<span style="background:#fef3c7;color:#92400e;border:1px solid #fde68a;padding:2px 7px;border-radius:6px;font-size:10.5px;font-weight:800">' + r.current + ' LOW</span>' :
+          '<span style="background:#e8f5ec;color:#124f32;border:1px solid #b9e0c5;padding:2px 7px;border-radius:6px;font-size:10.5px;font-weight:800">' + r.current + ' IN STOCK</span>';
 
-        tHtml += '<tr onclick="openItemBreakdown(\'' + esc(r.name).replace(/'/g, "\\'") + '\', \'' + (from || '') + '\', \'' + (to || '') + '\')" style="cursor:pointer" title="Click to view detailed recipient logs for ' + esc(r.name) + '">' +
-          '<td class="td-num">' + (i + 1) + '</td>' +
+        tHtml += '<tr onclick="openItemBreakdown(\'' + esc(r.name).replace(/'/g, "\\'") + '\', \'' + (from || '') + '\', \'' + (to || '') + '\')" style="cursor:pointer" title="Click to view detailed issue table for ' + esc(r.name) + '">' +
+          '<td class="td-num" style="text-align:center;font-weight:800">' + (i + 1) + '</td>' +
           '<td>' +
-            '<div style="font-weight:800;font-size:13px;color:var(--text);display:flex;align-items:center;gap:6px">' +
+            '<div style="font-weight:800;font-size:13.5px;color:var(--green);display:flex;align-items:center;gap:6px">' +
               esc(r.name) +
-              (r.variantsCount > 1 ? '<span style="font-size:10.5px;font-weight:700;color:var(--text-secondary);background:var(--bg-subtle);border:1px solid var(--border);padding:1px 6px;border-radius:5px">' + r.variantsCount + ' colors</span>' : '') +
+              (r.variantsCount > 1 ? '<span style="font-size:10px;font-weight:700;color:var(--text-secondary);background:var(--bg-subtle);border:1px solid var(--border);padding:1px 6px;border-radius:5px">' + r.variantsCount + ' colors</span>' : '') +
             '</div>' +
           '</td>' +
           '<td style="text-align:center">' +
-            (r.inward > 0 ? '<span class="rep-badge-in">+' + r.inward + '</span>' : '<span style="color:var(--muted)">—</span>') +
+            (r.inward > 0 ? '<span class="rep-badge-in" style="font-size:12px;font-weight:800">+ ' + r.inward + '</span>' : '<span style="color:var(--muted);font-weight:700">0</span>') +
           '</td>' +
           '<td style="text-align:center">' +
-            (r.outward > 0 ? '<span class="rep-badge-out">−' + r.outward + '</span>' : '<span style="color:var(--muted)">—</span>') +
+            (r.outward > 0 ? '<span class="rep-badge-out" style="font-size:12px;font-weight:800">− ' + r.outward + '</span>' : '<span style="color:var(--muted);font-weight:700">0</span>') +
           '</td>' +
           '<td style="text-align:center">' + stockBadge + '</td>' +
-          '<td style="font-size:12px">' + recStr + '</td>' +
-          '<td style="text-align:right">' +
-            '<span class="report-pill-btn"><span class="rpb-txt">Breakdown ➔</span></span>' +
+          '<td style="text-align:center">' +
+            '<span class="report-pill-btn"><span class="rpb-txt">View Table</span></span>' +
           '</td>' +
         '</tr>';
       }
@@ -6383,7 +7451,7 @@ function renderReports(){
     var li = lowItems[i];
     var isZero = li.current <= 0;
     lHtml += '<div class="report-item" onclick="openVariant(' + li.itemId + ',\'' + li.variantId + '\')" style="cursor:pointer" title="Click to view/manage stock">' +
-      '<div class="report-rank" style="background:' + (isZero ? '#fee2e2;color:#991b1b;font-weight:900' : '#fef3c7;color:#92400e;font-weight:800') + '">' + (isZero ? '✕' : '!') + '</div>' +
+      '<div class="report-rank" style="background:' + (isZero ? '#fee2e2;color:#991b1b;font-weight:900' : '#fef3c7;color:#92400e;font-weight:800') + '">' + (isZero ? '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' : '!') + '</div>' +
       '<div class="report-info">' +
         '<div class="report-name">' + esc(li.item) + (li.subcat !== 'Standard' ? ' → ' + esc(li.subcat) : '') + (isZero ? ' <span style="font-size:10px;font-weight:800;color:#dc2626;background:#fee2e2;padding:2px 6px;border-radius:4px;border:1px solid #fecaca">OUT OF STOCK</span>' : '') + '</div>' +
         '<div class="report-meta">' + (isZero ? 'Critical: 0 stock remaining · Reorder immediately' : 'Low stock level · Reorder soon') + '</div>' +
@@ -6391,7 +7459,7 @@ function renderReports(){
       '<div class="report-value red" style="font-size:15px;font-weight:900">' + li.current + '</div>' +
     '</div>';
   }
-  document.getElementById('rep-lowstock').innerHTML = lHtml || '<div class="empty-msg" style="color:#16a34a;font-weight:700">✓ All items well stocked</div>';
+  document.getElementById('rep-lowstock').innerHTML = lHtml || '<div class="empty-msg" style="color:#16a34a;font-weight:700">All items well stocked</div>';
 
   // 7. RECENT ACTIVITY (Transaction history for period)
   var allLogs = [];
@@ -6416,11 +7484,11 @@ function renderReports(){
     var l = allLogs[i];
     var isIn = l.type === 'INWARD';
     rHtml += '<div class="report-item" onclick="openItemBreakdown(\'' + esc(l.item).replace(/'/g, "\\'") + '\', \'' + l.date + '\', \'' + l.date + '\')" style="cursor:pointer;transition:all 0.16s ease" onmouseover="this.style.background=\'var(--green-subtle)\'" onmouseout="this.style.background=\'\'" title="Click to view full distribution report for ' + esc(l.item) + ' on ' + l.date + '">' +
-      '<div class="report-rank" style="background:' + (isIn ? '#dcfce7;color:#166534' : '#fee2e2;color:#991b1b') + '">' + (isIn ? '↓' : '↑') + '</div>' +
+      '<div class="report-rank" style="background:' + (isIn ? '#dcfce7;color:#166534' : '#fee2e2;color:#991b1b') + '">' + (isIn ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>' : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>') + '</div>' +
       '<div class="report-info">' +
         '<div class="report-name" style="display:flex;align-items:center;gap:6px">' +
           esc(l.item) + (l.subcat !== 'Standard' ? ' <span style="font-weight:600;color:var(--text-secondary)">→ ' + esc(l.subcat) + '</span>' : '') +
-          '<span class="report-pill-btn"><span class="rpb-txt">Breakdown ➔</span><span class="rpb-icon">➔</span></span>' +
+          '<span class="report-pill-btn"><span class="rpb-txt">Breakdown</span><span class="rpb-icon"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="9 18 15 12 9 6"></polyline></svg></span></span>' +
         '</div>' +
         '<div class="report-meta">' + l.date + ' · ' + esc(l.detail) + (l.ref ? ' · <span style="color:var(--text);font-weight:600">Ref: ' + esc(l.ref) + '</span>' : '') + '</div>' +
       '</div>' +
@@ -6520,6 +7588,10 @@ function updateModalReadonlyState(){
   var outBtn = document.getElementById('out-submit-btn');
   if (isAdmin){ inNote.style.display = 'none'; outNote.style.display = 'none'; inBtn.disabled = false; outBtn.disabled = false; inBtn.style.opacity = '1'; outBtn.style.opacity = '1'; }
   else { inNote.style.display = 'block'; outNote.style.display = 'block'; inBtn.disabled = true; outBtn.disabled = true; inBtn.style.opacity = '0.5'; outBtn.style.opacity = '0.5'; }
+  var addVarBtn = document.getElementById('modal-add-var-btn');
+  if (addVarBtn) addVarBtn.style.display = isAdmin ? 'inline-flex' : 'none';
+  var delItemBtn = document.getElementById('modal-del-item-btn');
+  if (delItemBtn) delItemBtn.style.display = isAdmin ? 'inline-flex' : 'none';
 }
 function populateOutwardFacultyDropdown(){
   var sel = document.getElementById('out-faculty-select');
@@ -6559,10 +7631,16 @@ function refreshModalHeader(){
   var cb = document.getElementById('ms-current').parentNode;
   if (v.current < 15 && v.current > 0) cb.classList.add('low'); else cb.classList.remove('low');
 
+  var addVarBtn = document.getElementById('modal-add-var-btn');
+  if (addVarBtn) addVarBtn.style.display = isAdmin ? 'inline-flex' : 'none';
+
+  var allVarBtn = document.getElementById('modal-all-var-btn');
+  if (allVarBtn) allVarBtn.style.display = (it.variants.length > 1) ? 'inline-flex' : 'none';
+
   var delVarBtn = document.getElementById('modal-del-var-btn');
   var delVarTxt = document.getElementById('modal-del-var-txt');
   if (delVarBtn){
-    if (it.variants.length > 1 && v.name !== 'Standard'){
+    if (isAdmin && it.variants.length > 1 && v.name !== 'Standard'){
       delVarBtn.style.display = 'inline-flex';
       if (delVarTxt) delVarTxt.textContent = 'Delete ' + esc(v.name);
       delVarBtn.title = 'Delete ' + esc(v.name) + ' variant';
@@ -6666,7 +7744,7 @@ function toggleVariantMode(){
 function addVariantRow(){
   var list = document.getElementById('variant-list');
   var row = document.createElement('div'); row.className = 'variant-row';
-  row.innerHTML = '<input type="text" placeholder="Name" class="v-name"><input type="number" placeholder="Stock" class="v-stock"><input type="number" placeholder="Total" class="v-total"><button class="icon-btn" type="button" onclick="this.parentNode.remove()">✕</button>';
+  row.innerHTML = '<input type="text" placeholder="Name" class="v-name"><input type="number" placeholder="Stock" class="v-stock"><input type="number" placeholder="Total" class="v-total"><button class="icon-btn" type="button" onclick="this.parentNode.remove()" title="Remove variant"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>';
   list.appendChild(row);
 }
 function saveItem(){
@@ -6702,7 +7780,7 @@ function deleteItemById(id){
   var curStock = itemCurrent(it);
   var msg = 'Are you sure you want to delete "' + it.name + '"?';
   if (curStock > 0){
-    msg += '\n\n⚠️ Caution: This item currently has ' + curStock + ' unit(s) in stock.';
+    msg += '\n\nCaution: This item currently has ' + curStock + ' unit(s) in stock.';
   }
   msg += '\n\nThis will permanently delete the item, its variants, and all history.';
   if (!confirm(msg)) return;
@@ -6725,7 +7803,7 @@ function deleteItemById(id){
   if (typeof renderBills === 'function') renderBills();
   if (typeof renderFaculty === 'function') renderFaculty();
   if (typeof renderReports === 'function') renderReports();
-  alert('🗑️ Item "' + deletedName + '" has been deleted.');
+  alert('Item "' + deletedName + '" has been deleted.');
 }
 
 function deleteVariant(itemId, variantId){
@@ -6745,7 +7823,7 @@ function deleteVariant(itemId, variantId){
   }
   var msg = 'Are you sure you want to delete variant "' + v.name + '" of "' + it.name + '"?';
   if (v.current > 0){
-    msg += '\n\n⚠️ Caution: This variant currently has ' + v.current + ' unit(s) in stock.';
+    msg += '\n\nCaution: This variant currently has ' + v.current + ' unit(s) in stock.';
   }
   msg += '\n\nThis will permanently delete this variant and its transaction logs.';
   if (!confirm(msg)) return;
@@ -6768,7 +7846,7 @@ function deleteVariant(itemId, variantId){
   if (typeof renderBills === 'function') renderBills();
   if (typeof renderFaculty === 'function') renderFaculty();
   if (typeof renderReports === 'function') renderReports();
-  alert('🗑️ Variant "' + deletedVarName + '" has been deleted.');
+  alert('Variant "' + deletedVarName + '" has been deleted.');
 }
 function openAddFacultyMaster(){
   if (!isAdmin){
@@ -6788,7 +7866,7 @@ function saveFacultyMaster(){
   for (var i = 0; i < faculties.length; i++) if (faculties[i].name.toLowerCase() === name.toLowerCase()) return alert('Faculty "' + name + '" already exists!');
   faculties.push({ id: Date.now(), name: name, dept: dept });
   saveFaculties(); renderFaculty(); closeAddFacultyMaster();
-  alert('✅ Faculty "' + name + '" added successfully');
+  alert('Faculty "' + name + '" added successfully.');
 }
 function openAddBill(){
   if (!isAdmin){
@@ -6813,13 +7891,13 @@ function getItemOptionsHtml(selectedId){
     var sel = (items[i].id === selectedId) ? ' selected' : '';
     html += '<option value="' + items[i].id + '"' + sel + '>' + esc(items[i].name) + '</option>';
   }
-  html += '<option value="__NEW__" style="color:#0f7a3d;font-weight:700">➕ Add New Item...</option>';
+  html += '<option value="__NEW__" style="color:#0f7a3d;font-weight:700">+ Add New Item...</option>';
   return html;
 }
 function addBillItemRow(){
   var container = document.getElementById('bill-items-list');
   var div = document.createElement('div'); div.className = 'bill-item-block';
-  div.innerHTML = '<div class="bill-item-row-edit"><select class="bi-item" onchange="onBillItemChange(this)">' + getItemOptionsHtml(0) + '</select><input type="number" class="bi-qty" placeholder="Qty" min="1" oninput="updateBillSummary()"><button class="icon-btn" type="button" onclick="this.closest(\'.bill-item-block\').remove();updateBillSummary()">✕</button></div><div class="bill-subcat-row" style="display:none"><select class="bi-subcat"></select></div>';
+  div.innerHTML = '<div class="bill-item-row-edit"><select class="bi-item" onchange="onBillItemChange(this)">' + getItemOptionsHtml(0) + '</select><input type="number" class="bi-qty" placeholder="Qty" min="1" oninput="updateBillSummary()"><button class="icon-btn" type="button" onclick="this.closest(\'.bill-item-block\').remove();updateBillSummary()" title="Remove item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div><div class="bill-subcat-row" style="display:none"><select class="bi-subcat"></select></div>';
   container.appendChild(div);
 }
 function onBillItemChange(sel){
@@ -6884,7 +7962,7 @@ function saveBill(){
     v.logs.unshift({ date: date || todayStr(), type: 'INWARD', qty: t.qty, detail: 'From ' + vendor, ref: billNo + ' / ' + year + ' / ' + inPass });
   }
   saveData(); render(); closeAddBill();
-  alert('✅ Bill #' + billNo + ' saved with ' + toAdd.length + ' item(s)');
+  alert('Bill #' + billNo + ' saved with ' + toAdd.length + ' item(s).');
 }
 function openInlineItem(){
   if (!isAdmin){ requireAdmin(); return; }
@@ -6904,7 +7982,7 @@ function toggleInlineVariant(){
 function addInlineVariantRow(){
   var list = document.getElementById('inline-variant-list');
   var row = document.createElement('div'); row.className = 'variant-row';
-  row.innerHTML = '<input type="text" placeholder="Name" class="v-name"><input type="number" placeholder="Stock" class="v-stock"><input type="number" placeholder="Total" class="v-total"><button class="icon-btn" type="button" onclick="this.parentNode.remove()">✕</button>';
+  row.innerHTML = '<input type="text" placeholder="Name" class="v-name"><input type="number" placeholder="Stock" class="v-stock"><input type="number" placeholder="Total" class="v-total"><button class="icon-btn" type="button" onclick="this.parentNode.remove()" title="Remove variant"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>';
   list.appendChild(row);
 }
 function saveInlineItem(){
@@ -6960,9 +8038,10 @@ function getSlipItemOptionsHtml(selectedId){
   for (var i = 0; i < items.length; i++){
     var sel = (items[i].id === selectedId) ? ' selected' : '';
     var cur = itemCurrent(items[i]);
-    html += '<option value="' + items[i].id + '"' + sel + '>' + esc(items[i].name) + ' (Stock: ' + cur + ')</option>';
+    var varInfo = items[i].variants.length > 1 ? ' [' + items[i].variants.length + ' Colors]' : '';
+    html += '<option value="' + items[i].id + '"' + sel + '>' + esc(items[i].name) + varInfo + ' (Stock: ' + cur + ')</option>';
   }
-  html += '<option value="__NEW__" style="color:#0f7a3d;font-weight:700">➕ Add New Item...</option>';
+  html += '<option value="__NEW__" style="color:#0f7a3d;font-weight:700">+ Add New Item...</option>';
   return html;
 }
 
@@ -6974,14 +8053,23 @@ function addSlipRow(){
   div.className = 'slip-item-row';
   div.setAttribute('data-row', slipRowCounter);
   div.innerHTML =
-    '<div style="grid-column:1/-1;margin-bottom:2px">' +
-      '<span class="slip-row-num">' + slipRowCounter + '</span>' +
-      '<span style="font-size:10px;font-weight:800;color:#6b7280;letter-spacing:0.3px">ITEM #' + slipRowCounter + '</span>' +
+    '<div class="slip-row-header">' +
+      '<div style="display:flex;align-items:center;gap:6px">' +
+        '<span class="slip-row-num">' + slipRowCounter + '</span>' +
+        '<span style="font-size:11px;font-weight:800;color:var(--text-secondary);letter-spacing:0.3px">ITEM #' + slipRowCounter + '</span>' +
+      '</div>' +
+      '<div class="slip-var-summary-badge" style="display:none">0 pcs selected</div>' +
     '</div>' +
-    '<select class="slip-item" onchange="onSlipItemChange(this)">' + getSlipItemOptionsHtml(0) + '</select>' +
-    '<input type="number" class="slip-qty" placeholder="Qty" min="1" oninput="updateSlipSummary()">' +
-    '<button class="icon-btn" type="button" onclick="this.closest(\'.slip-item-row\').remove();updateSlipSummary()">✕</button>' +
-    '<div class="slip-item-subcat" style="display:none"><select class="slip-subcat"></select></div>';
+    '<div class="slip-row-main-inputs">' +
+      '<select class="slip-item" onchange="onSlipItemChange(this)">' + getSlipItemOptionsHtml(0) + '</select>' +
+      '<div class="slip-single-qty-wrap">' +
+        '<input type="number" class="slip-qty" placeholder="Qty" min="1" oninput="updateSlipSummary()">' +
+      '</div>' +
+      '<button class="icon-btn" type="button" onclick="this.closest(\'.slip-item-row\').remove();updateSlipSummary()" title="Remove item">' +
+        '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
+      '</button>' +
+    '</div>' +
+    '<div class="slip-variants-container" style="display:none"></div>';
   container.appendChild(div);
   updateSlipSummary();
 }
@@ -6999,49 +8087,200 @@ function onSlipItemChange(sel){
     openInlineItem();
     return;
   }
-  var subWrap = row.querySelector('.slip-item-subcat');
-  var subSel = row.querySelector('.slip-subcat');
-  if (!val){ subWrap.style.display = 'none'; return; }
-  var it = getItem(parseInt(val));
-  if (!it){ subWrap.style.display = 'none'; return; }
-  if (it.variants.length <= 1){ subWrap.style.display = 'none'; return; }
-  subSel.innerHTML = '';
-  for (var i = 0; i < it.variants.length; i++){
-    var v = it.variants[i];
-    subSel.innerHTML += '<option value="' + v.id + '">' + esc(v.name) + ' (Current: ' + v.current + ')</option>';
+
+  var qtyWrap = row.querySelector('.slip-single-qty-wrap');
+  var singleQty = row.querySelector('.slip-qty');
+  var varBadge = row.querySelector('.slip-var-summary-badge');
+  var varContainer = row.querySelector('.slip-variants-container');
+
+  if (!val){
+    if (qtyWrap) qtyWrap.style.display = 'block';
+    if (singleQty) { singleQty.value = ''; singleQty.placeholder = 'Qty'; }
+    if (varBadge) varBadge.style.display = 'none';
+    if (varContainer){ varContainer.style.display = 'none'; varContainer.innerHTML = ''; }
+    updateSlipSummary();
+    return;
   }
-  subWrap.style.display = 'block';
+
+  var it = getItem(parseInt(val));
+  if (!it){
+    if (qtyWrap) qtyWrap.style.display = 'block';
+    if (varContainer){ varContainer.style.display = 'none'; varContainer.innerHTML = ''; }
+    updateSlipSummary();
+    return;
+  }
+
+  // Multi-variant item (e.g. Chart Paper with all colors)
+  if (it.variants.length > 1){
+    if (qtyWrap) qtyWrap.style.display = 'none';
+    if (singleQty) singleQty.value = '';
+    if (varBadge){
+      varBadge.style.display = 'inline-block';
+      varBadge.textContent = '0 pcs (' + it.variants.length + ' colors available)';
+      varBadge.className = 'slip-var-summary-badge';
+    }
+
+    var gridHtml = '';
+    gridHtml += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding:2px 2px">';
+    gridHtml += '  <div style="font-size:12px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:6px">';
+    gridHtml += '    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path></svg>';
+    gridHtml += '    <span>Choose Colors & Enter Quantities:</span>';
+    gridHtml += '  </div>';
+    gridHtml += '  <button type="button" class="btn btn-sm" onclick="clearSlipRowVariants(this)" style="font-size:11px;padding:3px 8px;color:var(--text-secondary)">Reset</button>';
+    gridHtml += '</div>';
+
+    gridHtml += '<div class="slip-colors-grid">';
+    for (var i = 0; i < it.variants.length; i++){
+      var v = it.variants[i];
+      var isLow = v.current < 15 && v.current > 0;
+      var isZero = v.current <= 0;
+      var dot = renderColorDot(v.name, 14);
+
+      gridHtml += '<div class="slip-color-card" id="slip-card-' + it.id + '-' + v.id + '" data-vid="' + v.id + '" data-max="' + v.current + '">';
+      gridHtml += '  <div class="slip-color-header">';
+      gridHtml += '    <div class="slip-color-title" title="' + esc(v.name) + '">' + dot + '<span class="name">' + esc(v.name) + '</span></div>';
+      if (isZero){
+        gridHtml += '    <span class="stock-badge zero">0 Stock</span>';
+      } else if (isLow){
+        gridHtml += '    <span class="stock-badge low">Low: ' + v.current + '</span>';
+      } else {
+        gridHtml += '    <span class="stock-badge">Stock: ' + v.current + '</span>';
+      }
+      gridHtml += '  </div>';
+
+      gridHtml += '  <div class="slip-color-input-row">';
+      gridHtml += '    <span class="lbl">Qty:</span>';
+      gridHtml += '    <input type="number" class="slip-var-qty" data-itemid="' + it.id + '" data-vid="' + v.id + '" min="0" ' + (v.current > 0 ? 'max="' + v.current + '"' : 'disabled') + ' placeholder="0" oninput="onSlipVarInput(this)">';
+      gridHtml += '  </div>';
+      gridHtml += '</div>';
+    }
+    gridHtml += '</div>';
+
+    if (varContainer){
+      varContainer.innerHTML = gridHtml;
+      varContainer.style.display = 'block';
+    }
+  } else {
+    // Single item
+    if (qtyWrap) qtyWrap.style.display = 'block';
+    if (singleQty) {
+      singleQty.style.display = 'block';
+      singleQty.placeholder = 'Qty (Max: ' + it.variants[0].current + ')';
+    }
+    if (varBadge) varBadge.style.display = 'none';
+    if (varContainer){ varContainer.style.display = 'none'; varContainer.innerHTML = ''; }
+  }
+
   updateSlipSummary();
+}
+
+function onSlipVarInput(inputEl){
+  var row = inputEl.closest('.slip-item-row');
+  var card = inputEl.closest('.slip-color-card');
+  var max = parseInt(card.getAttribute('data-max')) || 0;
+  var val = parseInt(inputEl.value) || 0;
+
+  if (val > 0){
+    card.classList.add('has-qty');
+    if (val > max){
+      card.classList.add('over-max');
+    } else {
+      card.classList.remove('over-max');
+    }
+  } else {
+    card.classList.remove('has-qty');
+    card.classList.remove('over-max');
+  }
+
+  // Live row total calculation
+  var varInputs = row.querySelectorAll('.slip-var-qty');
+  var rowTotal = 0;
+  var selectedCount = 0;
+  for (var i = 0; i < varInputs.length; i++){
+    var q = parseInt(varInputs[i].value) || 0;
+    if (q > 0){
+      rowTotal += q;
+      selectedCount++;
+    }
+  }
+  var varBadge = row.querySelector('.slip-var-summary-badge');
+  if (varBadge){
+    if (rowTotal > 0){
+      varBadge.textContent = selectedCount + ' color' + (selectedCount > 1 ? 's' : '') + ' · ' + rowTotal + ' pcs';
+      varBadge.classList.add('active');
+    } else {
+      var itId = row.querySelector('.slip-item').value;
+      var it = getItem(parseInt(itId));
+      varBadge.textContent = '0 pcs (' + (it ? it.variants.length : 0) + ' colors available)';
+      varBadge.classList.remove('active');
+    }
+  }
+
+  updateSlipSummary();
+}
+
+function clearSlipRowVariants(btn){
+  var row = btn.closest('.slip-item-row');
+  var inputs = row.querySelectorAll('.slip-var-qty');
+  for (var i = 0; i < inputs.length; i++){
+    inputs[i].value = '';
+    onSlipVarInput(inputs[i]);
+  }
 }
 
 function updateSlipSummary(){
   var rows = document.querySelectorAll('#slip-items-list .slip-item-row');
-  var count = 0, qty = 0;
+  var count = 0, totalQty = 0;
   var warn = [];
+
   for (var i = 0; i < rows.length; i++){
     var sel = rows[i].querySelector('.slip-item');
-    var q = parseInt(rows[i].querySelector('.slip-qty').value) || 0;
-    if (!sel.value || sel.value === '__NEW__') continue;
-    if (q <= 0) continue;
+    if (!sel || !sel.value || sel.value === '__NEW__') continue;
     var it = getItem(parseInt(sel.value));
     if (!it) continue;
-    var vid;
-    if (it.variants.length === 1) vid = it.variants[0].id;
-    else vid = rows[i].querySelector('.slip-subcat').value;
-    var v = getVariant(it, vid);
-    if (!v) continue;
-    count++; qty += q;
-    if (q > v.current) warn.push(esc(it.name) + (v.name !== 'Standard' ? ' (' + esc(v.name) + ')' : '') + ' — only ' + v.current + ' available');
+
+    if (it.variants.length > 1){
+      var varInputs = rows[i].querySelectorAll('.slip-var-qty');
+      for (var j = 0; j < varInputs.length; j++){
+        var q = parseInt(varInputs[j].value) || 0;
+        if (q <= 0) continue;
+        var vid = varInputs[j].getAttribute('data-vid');
+        var v = getVariant(it, vid);
+        if (!v) continue;
+        count++;
+        totalQty += q;
+        if (q > v.current){
+          warn.push(esc(it.name) + ' (' + esc(v.name) + ') — requested ' + q + ', only ' + v.current + ' available');
+        }
+      }
+    } else {
+      var qInput = rows[i].querySelector('.slip-qty');
+      var q = parseInt(qInput ? qInput.value : 0) || 0;
+      if (q <= 0) continue;
+      var v = it.variants[0];
+      if (!v) continue;
+      count++;
+      totalQty += q;
+      if (q > v.current){
+        warn.push(esc(it.name) + ' — requested ' + q + ', only ' + v.current + ' available');
+      }
+    }
   }
-  document.getElementById('slip-sum-items').textContent = count;
-  document.getElementById('slip-sum-qty').textContent = qty;
+
+  var sumItemsEl = document.getElementById('slip-sum-items');
+  var sumQtyEl = document.getElementById('slip-sum-qty');
+  if (sumItemsEl) sumItemsEl.textContent = count;
+  if (sumQtyEl) sumQtyEl.textContent = totalQty;
+
   var wEl = document.getElementById('slip-warn');
-  if (warn.length > 0){
-    wEl.className = 'slip-warn show';
-    wEl.innerHTML = '⚠ Insufficient stock for: ' + warn.join(' · ');
-  } else {
-    wEl.className = 'slip-warn';
-    wEl.innerHTML = '';
+  if (wEl){
+    if (warn.length > 0){
+      wEl.className = 'slip-warn show';
+      wEl.innerHTML = '<strong>Insufficient stock:</strong><br>' + warn.join('<br>');
+    } else {
+      wEl.className = 'slip-warn';
+      wEl.innerHTML = '';
+    }
   }
 }
 
@@ -7062,33 +8301,50 @@ function saveIssueSlip(){
 
   for (var i = 0; i < rows.length; i++){
     var sel = rows[i].querySelector('.slip-item');
-    var q = parseInt(rows[i].querySelector('.slip-qty').value) || 0;
-    if (!sel.value || sel.value === '__NEW__') continue;
-    if (q <= 0) continue;
+    if (!sel || !sel.value || sel.value === '__NEW__') continue;
     var it = getItem(parseInt(sel.value));
     if (!it) continue;
-    var vid;
-    if (it.variants.length === 1) vid = it.variants[0].id;
-    else vid = rows[i].querySelector('.slip-subcat').value;
-    var v = getVariant(it, vid);
-    if (!v) continue;
-    if (q > v.current){
-      errors.push(it.name + (v.name !== 'Standard' ? ' (' + v.name + ')' : '') + ' — only ' + v.current + ' available');
-      continue;
+
+    if (it.variants.length > 1){
+      var varInputs = rows[i].querySelectorAll('.slip-var-qty');
+      for (var j = 0; j < varInputs.length; j++){
+        var q = parseInt(varInputs[j].value) || 0;
+        if (q <= 0) continue;
+        var vid = varInputs[j].getAttribute('data-vid');
+        var v = getVariant(it, vid);
+        if (!v) continue;
+        if (q > v.current){
+          errors.push(it.name + ' (' + v.name + ') — only ' + v.current + ' available');
+        } else {
+          toIssue.push({ item: it, variant: v, qty: q });
+        }
+      }
+    } else {
+      var qInput = rows[i].querySelector('.slip-qty');
+      var q = parseInt(qInput ? qInput.value : 0) || 0;
+      if (q <= 0) continue;
+      var v = it.variants[0];
+      if (!v) continue;
+      if (q > v.current){
+        errors.push(it.name + ' — only ' + v.current + ' available');
+      } else {
+        toIssue.push({ item: it, variant: v, qty: q });
+      }
     }
-    toIssue.push({ item: it, variant: v, qty: q });
   }
 
   if (errors.length > 0){
-    alert('⚠ Insufficient stock for:\n\n' + errors.join('\n'));
+    alert('Insufficient stock for:\n\n' + errors.join('\n'));
     return;
   }
-  if (toIssue.length === 0) return alert('Please add at least one item with quantity');
+  if (toIssue.length === 0) return alert('Please enter quantity for at least one item or color.');
 
-  // Apply all issues
+  // Deduct from stock and add outward transaction logs
+  var totalPieces = 0;
   for (var i = 0; i < toIssue.length; i++){
     var t = toIssue[i];
     t.variant.current -= t.qty;
+    totalPieces += t.qty;
     t.variant.logs.unshift({
       date: date,
       type: 'OUTWARD',
@@ -7100,7 +8356,7 @@ function saveIssueSlip(){
 
   saveData(); render(); renderFaculty();
   closeIssueSlip();
-  alert('✅ Issued ' + toIssue.length + ' item(s) to ' + fac.name + ' (Total ' + toIssue.reduce(function(s,x){ return s + x.qty; }, 0) + ' pcs)');
+  alert('Successfully issued ' + toIssue.length + ' item/color variant(s) to ' + fac.name + ' (Total ' + totalPieces + ' pcs). Stock updated!');
 }
 
 function resetData(){
@@ -7329,7 +8585,7 @@ function renderGlobalSearchResults(){
           '<div><span style="font-weight:800;font-size:13.5px;color:var(--green)">Bill #' + esc(b.billNo) + ' / ' + esc(b.year) + '</span> <span style="font-size:11px;color:var(--muted);font-weight:600">· ' + esc(b.date) + '</span></div>' +
           '<div style="background:var(--green-light);color:var(--green);font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:12px">' + b.items.length + ' items · ' + tq + ' pcs</div>' +
         '</div>' +
-        '<div style="font-size:11.5px;color:var(--text);font-weight:600">🚚 ' + esc(b.vendor) + ' · In-Pass: ' + esc(b.inPass) + '</div>' +
+        '<div style="font-size:11.5px;color:var(--text);font-weight:600">' + esc(b.vendor) + ' · In-Pass: ' + esc(b.inPass) + '</div>' +
         '<div style="font-size:10.5px;color:var(--muted);margin-top:3px;font-style:italic">' + esc(itemsDesc) + '</div>' +
       '</div>';
     }
@@ -7520,5 +8776,6 @@ async function fetchCloudData(isManual){
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
 else init();
 </script>
+<div id="dps-official-printable-area" style="display:none"></div>
 </body>
 </html>
