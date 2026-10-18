@@ -217,19 +217,36 @@ header {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
-  padding: 10px 18px;
+  padding: 0 20px;
+  height: 64px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  box-shadow: 0 1px 4px rgba(18, 79, 50, 0.03);
+  box-shadow: 0 1px 4px rgba(18, 79, 50, 0.04);
+  max-width: 100vw;
+  box-sizing: border-box;
 }
+header * {
+  box-sizing: border-box;
+}
+
 .h-left {
   display: flex;
   align-items: center;
   gap: 12px;
   min-width: 0;
-  flex: 1;
+  flex: 0 0 auto;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  user-select: none;
+}
+.h-left:hover {
+  transform: translateY(-1px);
+  opacity: 0.94;
+}
+.h-left:active {
+  transform: scale(0.98);
 }
 .h-logo-img {
   width: 42px;
@@ -239,59 +256,256 @@ header {
   filter: drop-shadow(0 2px 6px rgba(18, 79, 50, 0.15));
   transition: transform 0.2s ease;
 }
-.h-logo-img:hover {
-  transform: scale(1.05);
+.h-logo-fallback {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 17px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(18, 79, 50, 0.2);
 }
 .h-title {
   font-weight: 900;
-  font-size: 14.5px;
+  font-size: 15px;
   line-height: 1.25;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   color: var(--green);
-  letter-spacing: 0.3px;
+  letter-spacing: 0.35px;
 }
 .h-title span {
   display: block;
   font-weight: 600;
-  font-size: 10.5px;
+  font-size: 11px;
   color: var(--muted);
-  letter-spacing: 0.4px;
+  letter-spacing: 0.45px;
 }
-.h-right {
+
+/* DESKTOP INTEGRATED NAVIGATION TABS */
+.nav-tabs {
   display: flex;
-  gap: 8px;
   align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: rgba(18, 79, 50, 0.04);
+  padding: 3px;
+  border-radius: 12px;
+  border: 1px solid var(--green-border);
+  flex: 0 1 auto;
+  min-width: 0;
+}
+.nav-tab {
+  padding: 8px 15px;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid transparent;
   flex-shrink: 0;
 }
-.admin-badge, .readonly-badge, .cloud-badge {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-  min-height: 36px;
-  padding: 0;
+.nav-tab svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+.nav-tab:hover {
+  color: var(--green);
+  background: rgba(255, 255, 255, 0.7);
+}
+.nav-tab.active {
+  color: var(--green);
+  background: #ffffff;
+  font-weight: 800;
+  border-color: rgba(18, 79, 50, 0.12);
+  box-shadow: 0 2px 6px rgba(18, 79, 50, 0.08);
+}
+
+/* HEADER RIGHT ACTIONS */
+.h-right {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+}
+
+/* QUICK SEARCH PILL BUTTON */
+.header-search-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  height: 38px;
+  background: #ffffff;
+  border: 1px solid var(--border);
   border-radius: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: var(--shadow-xs);
+  flex-shrink: 0;
+}
+.header-search-btn:hover {
+  border-color: var(--green-border);
+  color: var(--green);
+  background: var(--green-subtle);
+  transform: translateY(-1px);
+}
+.header-search-btn svg {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  flex-shrink: 0;
+}
+.header-search-kbd {
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  padding: 2px 6px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  line-height: 1;
+}
+
+/* UNIFIED HEADER ACTION BUTTONS */
+.header-btn {
+  height: 38px;
+  padding: 0 13px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.15px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-xs);
+  flex-shrink: 0;
+}
+.header-btn svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+  flex-shrink: 0;
+  stroke: currentColor;
+}
+
+/* CLOUD STATUS BADGE */
+.cloud-badge {
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.15px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: var(--shadow-xs);
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
+.cloud-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+.cloud-badge svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+  flex-shrink: 0;
+  stroke: currentColor;
+}
+.cloud-badge .badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.cloud-badge.synced {
+  background: var(--green-light);
+  color: var(--green);
+  border: 1px solid var(--green-border);
+}
+.cloud-badge.synced .badge-dot {
+  background: #16a34a;
+  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
+}
+.cloud-badge.syncing {
+  background: var(--blue-light);
+  color: var(--blue);
+  border: 1px solid var(--blue-border);
+}
+.cloud-badge.syncing .badge-dot {
+  background: var(--blue);
+  animation: pulseDot 1s infinite alternate;
+}
+.cloud-badge.offline {
+  background: var(--amber-light);
+  color: var(--amber);
+  border: 1px solid var(--amber-border);
+}
+.cloud-badge.offline .badge-dot {
+  background: var(--amber);
+}
+.cloud-badge.error {
+  background: var(--red-light);
+  color: var(--red);
+  border: 1px solid var(--red-border);
+}
+.cloud-badge.error .badge-dot {
+  background: var(--red);
+}
+@keyframes pulseDot { 0% { opacity: 0.4; } 100% { opacity: 1; } }
+
+/* ROLE & AUTH BADGES */
+.admin-badge, .readonly-badge {
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 800;
   letter-spacing: 0.2px;
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 7px;
   box-shadow: var(--shadow-xs);
   transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
-  box-sizing: border-box;
+  flex-shrink: 0;
 }
-.admin-badge .badge-txt,
-.readonly-badge .badge-txt,
-.cloud-badge .badge-txt {
-  display: none !important;
-}
-.admin-badge svg, .readonly-badge svg, .cloud-badge svg {
-  width: 16px;
-  height: 16px;
+.admin-badge svg, .readonly-badge svg {
+  width: 15px;
+  height: 15px;
   display: block;
   flex-shrink: 0;
   stroke: currentColor;
+  stroke-width: 2.2;
 }
 .admin-badge {
   background: var(--green-light);
@@ -299,114 +513,514 @@ header {
   border: 1px solid var(--green-border);
 }
 .readonly-badge {
-  background: var(--red-light);
-  color: var(--red-dark);
-  border: 1px solid var(--red-border);
+  background: var(--bg-subtle);
+  color: var(--muted);
+  border: 1px solid var(--border);
 }
-.cloud-badge {
-  cursor: pointer;
-  user-select: none;
+
+/* PRIMARY ADD BUTTON */
+.btn-add-header {
+  background: var(--green);
+  color: #ffffff;
+  border: 1px solid var(--green-dark);
+  box-shadow: 0 2px 8px rgba(18, 79, 50, 0.22);
+  flex-shrink: 0;
 }
-.cloud-badge:hover {
+.btn-add-header:hover {
+  background: var(--green-dark);
   transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 12px rgba(18, 79, 50, 0.32);
 }
-.cloud-badge.syncing {
-  background: var(--blue-light);
-  color: var(--blue);
-  border: 1px solid var(--blue-border);
+.btn-add-header svg {
+  stroke: #ffffff;
+  stroke-width: 2.5;
 }
-.cloud-badge.synced {
+
+/* EXPORT BUTTON */
+.header-export-btn {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+.header-export-btn:hover {
+  background: var(--green-subtle);
+  border-color: var(--green-border);
+  color: var(--green);
+  transform: translateY(-1px);
+}
+
+/* PWA INSTALL BUTTON */
+.btn-pwa-install {
+  background: #ffffff;
+  color: var(--green);
+  border: 1px solid var(--green-border);
+  flex-shrink: 0;
+}
+.btn-pwa-install:hover {
+  background: var(--green-light);
+  transform: translateY(-1px);
+}
+
+/* ADMIN LOGIN / LOGOUT BUTTON */
+.btn-login-action {
+  background: #ffffff;
+  border: 1px solid var(--green-border);
+  color: var(--green);
+  flex-shrink: 0;
+}
+.btn-login-action:hover {
+  background: var(--green-subtle);
+  border-color: var(--green);
+  transform: translateY(-1px);
+}
+.btn-logout-action {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.btn-logout-action:hover {
+  background: var(--red-light);
+  border-color: var(--red-border);
+  color: var(--red);
+  transform: translateY(-1px);
+}
+
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* ============================================================ */
+/* RESPONSIVE AUTO-ADJUSTING NAVBAR BREAKPOINTS                 */
+/* Prevents horizontal overflow & beautifully scales on laptops */
+/* ============================================================ */
+
+/* Breakpoint 1: Large Desktops & Wide Laptops (<= 1480px) */
+@media (max-width: 1480px) {
+  header {
+    padding: 0 16px;
+    gap: 10px;
+  }
+  .header-search-kbd {
+    display: none !important;
+  }
+  .nav-tab {
+    padding: 7px 12px;
+    font-size: 12.5px;
+    gap: 6px;
+  }
+  .header-export-btn .btn-text {
+    display: none !important;
+  }
+  .header-export-btn {
+    width: 38px;
+    min-width: 38px;
+    padding: 0;
+    justify-content: center;
+  }
+}
+
+/* Breakpoint 2: Standard Laptops (<= 1380px) - Covers 1366px, 1360px & 1280px */
+@media (max-width: 1380px) {
+  header {
+    padding: 0 14px;
+    gap: 8px;
+  }
+  .h-left {
+    gap: 10px;
+  }
+  .h-title {
+    font-size: 14px;
+  }
+  .h-title span {
+    font-size: 10px;
+  }
+  .cloud-badge .badge-txt {
+    display: none !important;
+  }
+  .cloud-badge {
+    padding: 0 10px;
+    gap: 6px;
+  }
+  .admin-badge .badge-txt,
+  .readonly-badge .badge-txt {
+    display: none !important;
+  }
+  .admin-badge,
+  .readonly-badge {
+    width: 38px;
+    min-width: 38px;
+    padding: 0;
+    justify-content: center;
+  }
+  .btn-login-action .btn-text,
+  .btn-logout-action .btn-text {
+    display: none !important;
+  }
+  #adminBtn {
+    width: 38px;
+    min-width: 38px;
+    padding: 0;
+    justify-content: center;
+  }
+  .nav-tabs {
+    gap: 3px;
+    padding: 3px;
+  }
+  .nav-tab {
+    padding: 6px 11px;
+    font-size: 12px;
+    gap: 5px;
+  }
+}
+
+/* Breakpoint 3: Compact Laptops & Large Tablets (<= 1220px) */
+@media (max-width: 1220px) {
+  .header-search-label {
+    display: none !important;
+  }
+  .header-search-btn {
+    width: 38px;
+    min-width: 38px;
+    padding: 0;
+    justify-content: center;
+  }
+  .btn-pwa-install .btn-text {
+    display: none !important;
+  }
+  .btn-pwa-install {
+    width: 38px;
+    min-width: 38px;
+    padding: 0;
+    justify-content: center;
+  }
+  .cloud-badge {
+    width: 38px;
+    min-width: 38px;
+    padding: 0;
+    justify-content: center;
+  }
+  .cloud-badge .badge-dot {
+    margin-left: 2px;
+  }
+  .btn-add-header {
+    padding: 0 11px;
+    font-size: 12px;
+  }
+}
+
+/* Breakpoint 4: Tablets & Split-Screen Windows (<= 980px) */
+@media (max-width: 980px) {
+  header {
+    padding: 0 10px;
+    gap: 6px;
+  }
+  .h-title span {
+    display: none !important;
+  }
+  .h-logo-img {
+    width: 36px;
+    height: 36px;
+  }
+  .btn-add-header .btn-text {
+    display: none !important;
+  }
+  .btn-add-header {
+    width: 38px;
+    min-width: 38px;
+    padding: 0;
+    justify-content: center;
+  }
+  .nav-tabs {
+    gap: 2px;
+  }
+  .nav-tab {
+    padding: 6px 8px;
+    font-size: 11.5px;
+  }
+}
+
+/* Breakpoint 5: Small Tablets (<= 840px) */
+@media (max-width: 840px) {
+  .nav-tab span {
+    display: none !important;
+  }
+  .nav-tab {
+    padding: 8px 10px;
+  }
+  .nav-tab svg {
+    width: 17px;
+    height: 17px;
+  }
+  .h-right {
+    gap: 5px;
+  }
+}
+
+/* ============================================= */
+/* THEME-BASED MESSAGE CENTER & POPUPS           */
+/* ============================================= */
+.theme-msg-center {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+  max-width: 92vw;
+  width: 480px;
+}
+.theme-msg-popup {
+  pointer-events: auto;
+  position: relative;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--green-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 16px 42px -6px rgba(18, 79, 50, 0.22), 0 4px 14px rgba(0, 0, 0, 0.06);
+  padding: 16px 18px 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  overflow: hidden;
+  animation: themeMsgSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+@keyframes themeMsgSlideIn {
+  from { opacity: 0; transform: translateY(-24px) scale(0.94); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.theme-msg-popup.hide {
+  opacity: 0;
+  transform: translateY(-16px) scale(0.95);
+  pointer-events: none;
+}
+.theme-msg-icon-box {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  min-height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.theme-msg-icon-box svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+}
+.theme-msg-success .theme-msg-icon-box,
+.theme-msg-add .theme-msg-icon-box {
   background: var(--green-light);
   color: var(--green);
   border: 1px solid var(--green-border);
 }
-.cloud-badge.offline {
-  background: var(--amber-light);
-  color: var(--amber);
-  border: 1px solid var(--amber-border);
+.theme-msg-success,
+.theme-msg-add {
+  border-left: 4px solid var(--green);
 }
-.cloud-badge.error {
+.theme-msg-delete .theme-msg-icon-box,
+.theme-msg-danger .theme-msg-icon-box {
   background: var(--red-light);
   color: var(--red);
   border: 1px solid var(--red-border);
 }
-#adminBtn {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-  min-height: 36px;
-  padding: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  box-sizing: border-box;
+.theme-msg-delete,
+.theme-msg-danger {
+  border-left: 4px solid var(--red);
+  border-color: var(--red-border);
 }
-#adminBtn svg {
-  width: 16px;
-  height: 16px;
-  display: block;
-  flex-shrink: 0;
-  stroke: currentColor;
-}
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-/* LOGO CLICKABLE & DASHBOARD */
-.h-left {
-  cursor: pointer;
-  transition: transform 0.15s ease, opacity 0.15s ease;
-  user-select: none;
-}
-.h-left:hover {
-  transform: translateY(-1px);
-  opacity: 0.92;
-}
-.h-left:active {
-  transform: scale(0.98);
-}
-
-/* PWA INSTALL BUTTON & ADD HEADER BUTTON - ICON ONLY */
-.btn-pwa-install {
-  background: var(--green);
+.theme-msg-login .theme-msg-icon-box {
+  background: linear-gradient(135deg, #124f32 0%, #09331e 100%);
   color: #ffffff;
-  border: 1px solid var(--green-border);
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-  min-height: 36px;
-  padding: 0;
-  border-radius: 10px;
-  display: inline-flex;
+  border: 1px solid var(--green-dark);
+  box-shadow: 0 4px 12px rgba(18, 79, 50, 0.25);
+}
+.theme-msg-login {
+  border-left: 4px solid var(--green);
+}
+.theme-msg-logout .theme-msg-icon-box {
+  background: var(--bg-subtle);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+.theme-msg-logout {
+  border-left: 4px solid var(--muted);
+}
+.theme-msg-warning .theme-msg-icon-box {
+  background: var(--amber-light);
+  color: var(--amber);
+  border: 1px solid var(--amber-border);
+}
+.theme-msg-warning {
+  border-left: 4px solid var(--amber);
+  border-color: var(--amber-border);
+}
+.theme-msg-body {
+  flex: 1;
+  min-width: 0;
+}
+.theme-msg-title {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.3;
+  margin-bottom: 3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.theme-msg-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  word-break: break-word;
+}
+.theme-msg-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--muted);
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: var(--shadow-sm);
-  box-sizing: border-box;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
 }
-.btn-pwa-install:hover {
-  background: var(--green-dark);
-  transform: translateY(-1px);
+.theme-msg-close:hover {
+  background: var(--bg-subtle);
+  color: var(--text);
 }
-.btn-pwa-install span {
-  display: none !important;
+.theme-msg-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--green);
+  width: 100%;
+  transform-origin: left;
+  animation: themeMsgProgress 3.2s linear forwards;
+}
+.theme-msg-delete .theme-msg-progress,
+.theme-msg-danger .theme-msg-progress {
+  background: var(--red);
+}
+.theme-msg-warning .theme-msg-progress {
+  background: var(--amber);
+}
+@keyframes themeMsgProgress {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
 }
 
-.btn-add-header {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-  min-height: 36px;
-  padding: 0;
-  border-radius: 10px;
-  display: inline-flex;
+/* THEME CONFIRM DIALOG */
+.theme-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 35, 20, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 100010;
+  display: flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
 }
-.btn-add-header span {
-  display: none !important;
+.theme-confirm-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.theme-confirm-card {
+  width: 100%;
+  max-width: 440px;
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  padding: 26px 24px;
+  text-align: center;
+  border: 1px solid var(--green-border);
+  transform: scale(0.92) translateY(10px);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.theme-confirm-overlay.open .theme-confirm-card {
+  transform: scale(1) translateY(0);
+}
+.theme-confirm-icon-wrap {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.theme-confirm-icon-wrap.danger {
+  background: var(--red-light);
+  color: var(--red);
+  border: 1.5px solid var(--red-border);
+}
+.theme-confirm-icon-wrap.warning {
+  background: var(--amber-light);
+  color: var(--amber);
+  border: 1.5px solid var(--amber-border);
+}
+.theme-confirm-icon-wrap.info {
+  background: var(--green-light);
+  color: var(--green);
+  border: 1.5px solid var(--green-border);
+}
+.theme-confirm-icon-wrap svg {
+  width: 28px;
+  height: 28px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+}
+.theme-confirm-content h3 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.theme-confirm-content p {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 22px;
+  white-space: pre-line;
+}
+.theme-confirm-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.theme-confirm-actions button {
+  flex: 1;
+  padding: 11px 18px;
+  font-size: 13.5px;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.tc-btn-danger {
+  background: var(--red) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--red-dark) !important;
+}
+.tc-btn-danger:hover {
+  background: var(--red-dark) !important;
 }
 
 /* SEARCH CLEAR BUTTON */
@@ -477,17 +1091,20 @@ header {
   transform: scale(0.97);
 }
 .btn-primary {
-  background: var(--green);
+  background: linear-gradient(135deg, #1b5e3a 0%, #0d3821 100%);
   color: #ffffff;
-  border-color: var(--green);
-  box-shadow: 0 3px 12px var(--green-glow);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  box-shadow: 0 4px 14px rgba(18, 79, 50, 0.28);
   font-weight: 800;
+  padding: 9px 20px;
 }
 .btn-primary:hover {
-  background: var(--green-dark);
-  border-color: var(--green-dark);
+  background: linear-gradient(135deg, #227347 0%, #104327 100%);
+  border-color: rgba(255, 255, 255, 0.25);
   color: #ffffff;
-  box-shadow: 0 5px 16px var(--green-glow-lg);
+  box-shadow: 0 6px 20px rgba(18, 79, 50, 0.38);
+  transform: translateY(-2px);
 }
 .btn-icon {
   padding: 8px 11px;
@@ -602,54 +1219,7 @@ header {
   box-shadow: 0 2px 8px var(--green-glow);
 }
 
-/* ============================================= */
-/* DESKTOP TABS NAVIGATION                       */
-/* ============================================= */
-.nav-tabs {
-  display: flex;
-  gap: 4px;
-  padding: 0 18px;
-  background: #ffffff;
-  border-bottom: 1px solid var(--border);
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.nav-tabs::-webkit-scrollbar { display: none; }
-.nav-tab {
-  padding: 12px 18px;
-  font-weight: 700;
-  font-size: 13.5px;
-  color: var(--muted);
-  cursor: pointer;
-  border-bottom: 2.5px solid transparent;
-  white-space: nowrap;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-  user-select: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.nav-tab svg {
-  width: 17px;
-  height: 17px;
-  stroke: currentColor;
-  flex-shrink: 0;
-  transition: transform 0.2s ease;
-}
-.nav-tab:hover {
-  color: var(--green);
-  background: var(--green-subtle);
-}
-.nav-tab:hover svg {
-  transform: scale(1.1);
-}
-.nav-tab.active {
-  color: var(--green);
-  border-bottom-color: var(--green);
-  font-weight: 800;
-  background: #ffffff;
-}
+/* Desktop nav tabs integrated in header */
 
 /* ============================================= */
 /* MOBILE BOTTOM NAVIGATION BAR                  */
@@ -788,115 +1358,354 @@ header {
 .stat {
   background: #ffffff;
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 16px;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 20px;
+  padding: 16px 18px;
+  box-shadow: 0 4px 18px rgba(18, 79, 50, 0.05);
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-}
-.stat::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--green) 0%, #34d399 100%);
-  opacity: 0.85;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .stat:hover {
   border-color: var(--green-border);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 26px rgba(18, 79, 50, 0.1);
   transform: translateY(-2px);
 }
+.stat-watermark {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 38px;
+  font-weight: 900;
+  line-height: 1;
+  color: rgba(18, 79, 50, 0.07);
+  pointer-events: none;
+  user-select: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: -1px;
+}
+.stat-icon-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  background: linear-gradient(135deg, #1b5e3a 0%, #0d3821 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(18, 79, 50, 0.26);
+  flex-shrink: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.stat:hover .stat-icon-badge {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(18, 79, 50, 0.35);
+}
+.stat-icon-badge svg {
+  width: 18px;
+  height: 18px;
+  stroke: #ffffff;
+}
+.stat-icon-badge.red {
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.26);
+}
+.stat.stat-low-card {
+  border-color: rgba(220, 38, 38, 0.2);
+}
+.stat.stat-low-card .stat-watermark {
+  color: rgba(220, 38, 38, 0.08);
+}
+.stat-body {
+  margin-top: 12px;
+}
 .stat-label {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 800;
   color: var(--muted);
-  letter-spacing: 0.6px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
 }
 .stat-value {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 900;
-  margin-top: 6px;
-  color: var(--green);
-  font-family: 'JetBrains Mono', monospace;
-  line-height: 1.1;
+  margin-top: 4px;
+  color: #0e1e15;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.15;
 }
 .stat-value.low {
   color: var(--red);
 }
 
-/* Card quick action buttons */
+/* Card quick action buttons (Image 1 Pill Buttons) */
 .card-quick-actions {
   display: flex;
   gap: 7px;
-  margin-top: 10px;
-  padding-top: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
   border-top: 1px solid var(--border);
 }
 .card-issue-btn {
   flex: 1;
-  background: var(--green-light);
-  color: var(--green);
-  border: 1px solid var(--green-border);
-  padding: 6px 10px;
-  border-radius: 9px;
+  background: linear-gradient(135deg, #1b5e3a 0%, #0d3821 100%);
+  color: #ffffff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 9999px;
   font-size: 12px;
   font-weight: 800;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  transition: all 0.18s ease;
+  gap: 6px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(18, 79, 50, 0.25);
 }
 .card-issue-btn:hover {
-  background: var(--green);
+  background: linear-gradient(135deg, #227347 0%, #104327 100%);
   color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(18, 79, 50, 0.35);
+}
+.card-issue-btn:active {
+  transform: scale(0.97);
+}
+.card-issue-btn svg {
+  width: 12px;
+  height: 12px;
+  stroke: #ffffff;
+  flex-shrink: 0;
 }
 .card-details-btn {
   flex: 1;
-  background: #f8fafc;
-  color: var(--muted);
-  border: 1px solid var(--border);
-  padding: 6px 10px;
-  border-radius: 9px;
+  background: #ffffff;
+  color: var(--text-secondary);
+  border: 1.5px solid var(--border);
+  padding: 7px 12px;
+  border-radius: 9999px;
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  transition: all 0.18s ease;
+  gap: 5px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 .card-details-btn:hover {
-  background: #ffffff;
-  color: var(--text);
+  background: var(--green-subtle);
+  color: var(--green);
+  border-color: var(--green-border);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(18, 79, 50, 0.08);
+}
+.card-details-btn:active {
+  transform: scale(0.97);
+}
+.card-details-btn svg {
+  width: 12px;
+  height: 12px;
+  stroke: currentColor;
+  flex-shrink: 0;
+}
   border-color: var(--border-hover);
 }
 .list-issue-btn {
-  background: var(--green-light);
-  color: var(--green);
-  border: 1px solid var(--green-border);
-  padding: 5px 10px;
+  background: var(--green);
+  color: #ffffff;
+  border: 1px solid var(--green-dark);
+  padding: 6px 12px;
   border-radius: 8px;
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 800;
   cursor: pointer;
   white-space: nowrap;
-  display: inline-flex;
+  display: none; /* Hidden by default until item is selected */
   align-items: center;
-  gap: 4px;
-  transition: all 0.18s ease;
+  gap: 5px;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(18, 79, 50, 0.2);
 }
 .list-issue-btn:hover {
+  background: var(--green-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(18, 79, 50, 0.3);
+}
+
+/* LIST ITEM SELECTION STYLES */
+.list-select-indicator {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 1.5px solid var(--border);
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  flex-shrink: 0;
+  transition: all 0.18s ease;
+}
+.list-item:hover .list-select-indicator {
+  border-color: var(--green-border);
+}
+.list-item.selected .list-select-indicator {
+  background: var(--green);
+  border-color: var(--green);
+  color: #ffffff;
+}
+.list-item.selected,
+.grid.list-view .list-item.selected {
+  border-color: var(--green) !important;
+  background-color: var(--green-light) !important;
+  box-shadow: 0 4px 14px rgba(18, 79, 50, 0.14) !important;
+  transform: translateX(3px);
+}
+.list-item.selected .list-issue-btn {
+  display: inline-flex !important;
+  animation: fadeIn 0.2s ease;
+}
+
+/* FLOATING ACTION DOCK ON LIST SELECTION */
+.list-selection-dock {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(140%);
+  z-index: 999;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid var(--green);
+  border-radius: 16px;
+  box-shadow: 0 16px 36px -6px rgba(18, 79, 50, 0.28), 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 10px 18px;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+  opacity: 0;
+  pointer-events: none;
+  max-width: 92vw;
+  width: auto;
+}
+.list-selection-dock.active {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.dock-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.dock-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.dock-check-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
   background: var(--green);
   color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.dock-text {
+  display: flex;
+  flex-direction: column;
+}
+.dock-title {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--text);
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dock-stock {
+  font-size: 11px;
+  color: var(--muted);
+}
+.dock-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dock-issue-btn {
+  padding: 8px 14px;
+  font-size: 12.5px;
+  font-weight: 700;
+  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--green);
+  color: #ffffff;
+  border: 1px solid var(--green-dark);
+  box-shadow: 0 2px 6px rgba(18, 79, 50, 0.2);
+}
+.dock-issue-btn:hover {
+  background: var(--green-dark);
+  transform: translateY(-1px);
+}
+.dock-details-btn {
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+.dock-details-btn:hover {
+  border-color: var(--green-border);
+  color: var(--green);
+  background: var(--green-subtle);
+}
+.dock-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 19px;
+  cursor: pointer;
+  padding: 4px 6px;
+  line-height: 1;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dock-close-btn:hover {
+  background: var(--bg-subtle);
+  color: var(--text);
+}
+@media (max-width: 720px) {
+  .list-selection-dock {
+    bottom: 74px; /* Above mobile bottom bar */
+    width: calc(100vw - 20px);
+    padding: 8px 12px;
+  }
+  .dock-content {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    gap: 8px;
+  }
+  .dock-title {
+    max-width: 110px;
+  }
 }
 
 /* ============================================= */
@@ -916,8 +1725,8 @@ header {
   align-items: center;
   background: #ffffff;
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0 14px;
+  border-radius: 9999px;
+  padding: 0 16px;
   box-shadow: var(--shadow-xs);
   transition: all 0.2s ease;
 }
@@ -958,8 +1767,8 @@ header {
   gap: 6px;
   background: #ffffff;
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 10px 15px;
+  border-radius: 9999px;
+  padding: 10px 18px;
   cursor: pointer;
   font-family: inherit;
   font-weight: 700;
@@ -993,16 +1802,16 @@ header {
   display: inline-flex;
   background: #ffffff;
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 9999px;
   overflow: hidden;
   flex-shrink: 0;
   box-shadow: var(--shadow-xs);
-  padding: 2px;
+  padding: 3px;
 }
 .view-btn {
-  padding: 8px 12px;
+  padding: 8px 14px;
   border: none;
-  border-radius: 9px;
+  border-radius: 9999px;
   background: transparent;
   cursor: pointer;
   font-size: 14px;
@@ -1132,25 +1941,25 @@ header {
 .card {
   background: #ffffff;
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 20px;
   padding: 16px;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: var(--shadow-sm);
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 18px rgba(18, 79, 50, 0.05);
   display: flex;
   flex-direction: column;
   position: relative;
 }
 .card:hover {
   border-color: var(--green-border);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(18, 79, 50, 0.12);
+  transform: translateY(-3px);
 }
 .card:active {
   transform: scale(0.985);
 }
 .card.low {
-  border-color: var(--red-border);
+  border-color: rgba(220, 38, 38, 0.25);
   background: #fffdfd;
 }
 .card-top {
@@ -1160,10 +1969,10 @@ header {
   gap: 8px;
 }
 .card-badge {
-  font-size: 9.5px;
+  font-size: 9px;
   font-weight: 800;
-  padding: 4px 9px;
-  border-radius: 20px;
+  padding: 3.5px 9px;
+  border-radius: 9999px;
   letter-spacing: 0.3px;
   white-space: nowrap;
 }
@@ -3090,6 +3899,23 @@ body {
 }
 
 /* ============================================= */
+/* TABLET DESIGN (721px - 960px)                 */
+/* ============================================= */
+@media (max-width: 960px) and (min-width: 721px) {
+  .top-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .stat {
+    padding: 12px 18px;
+  }
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+/* ============================================= */
 /* MOBILE & RESPONSIVE DESIGN (<= 720px)         */
 /* ============================================= */
 @media(max-width: 720px) {
@@ -3102,7 +3928,7 @@ body {
     font-size: 16px !important; /* Prevents auto-zoom in iOS Safari */
   }
   .container {
-    padding: 10px 12px calc(80px + env(safe-area-inset-bottom, 0px));
+    padding: 8px 10px calc(80px + env(safe-area-inset-bottom, 0px));
     max-width: 100%;
     overflow-x: hidden;
   }
@@ -3144,7 +3970,7 @@ body {
     font-weight: 600;
   }
   .h-right {
-    gap: 4px;
+    gap: 5px;
     flex-shrink: 0;
     align-items: center;
   }
@@ -3155,8 +3981,20 @@ body {
   .header-export-btn {
     display: none !important;
   }
+  .header-search-btn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 10px;
+  }
+  .header-search-label,
+  .header-search-kbd {
+    display: none !important;
+  }
   /* Compact status badges for mobile header - match 36x36px icon size */
-  .cloud-badge, .admin-badge, .readonly-badge, #adminBtn, .h-right .btn-icon, .btn-pwa-install {
+  .cloud-badge, .admin-badge, .readonly-badge, #adminBtn, .btn-pwa-install, .header-btn {
     width: 36px;
     height: 36px;
     min-width: 36px;
@@ -3169,17 +4007,21 @@ body {
     box-sizing: border-box;
   }
   .cloud-badge .badge-txt,
+  .cloud-badge .badge-dot,
   .admin-badge .badge-txt,
   .readonly-badge .badge-txt,
-  .btn-pwa-install span {
+  .btn-pwa-install .btn-text,
+  .btn-admin-action .btn-text,
+  .btn-login-action .btn-text,
+  .btn-logout-action .btn-text {
     display: none !important;
   }
   .cloud-badge svg,
   .admin-badge svg,
   .readonly-badge svg,
   #adminBtn svg,
-  .h-right .btn-icon svg,
-  .btn-pwa-install svg {
+  .btn-pwa-install svg,
+  .header-search-btn svg {
     width: 16px;
     height: 16px;
     display: block;
@@ -3200,31 +4042,57 @@ body {
     right: -100px !important;
   }
 
-  /* TOP STATS */
+  /* TOP STATS (KPI TILES: IMAGE 2 STYLE WITH SQUIRCLE ICONS & WATERMARKS) */
   .top-stats {
     grid-template-columns: 1fr 1fr;
     gap: 8px;
     margin-bottom: 12px;
   }
   .stat {
-    padding: 11px 12px;
-    border-radius: 13px;
+    padding: 12px 14px;
+    border-radius: 18px;
+    min-height: 94px;
+    box-shadow: 0 3px 12px rgba(18, 79, 50, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
   }
   .stat:active {
     transform: scale(0.985);
   }
+  .stat-watermark {
+    font-size: 28px;
+    top: 8px;
+    right: 10px;
+    color: rgba(18, 79, 50, 0.06);
+  }
+  .stat-icon-badge {
+    width: 34px;
+    height: 34px;
+    border-radius: 11px;
+    box-shadow: 0 4px 12px rgba(18, 79, 50, 0.22);
+  }
+  .stat-icon-badge svg {
+    width: 16px;
+    height: 16px;
+  }
+  .stat-body {
+    margin-top: 8px;
+  }
   .stat-label {
-    font-size: 9px;
+    font-size: 9.5px;
     letter-spacing: 0.5px;
     font-weight: 800;
   }
   .stat-value {
-    font-size: 21px;
-    margin-top: 3px;
+    font-size: 22px;
+    margin-top: 1px;
     font-weight: 900;
+    line-height: 1.1;
   }
 
-  /* SEARCH ROW */
+  /* SEARCH ROW (IMAGE 1 PILL CONTROLS) */
   .search-row {
     display: flex;
     gap: 6px;
@@ -3235,8 +4103,8 @@ body {
     flex: 1;
     min-width: 0;
     height: 42px;
-    padding: 0 10px;
-    border-radius: 12px;
+    padding: 0 14px;
+    border-radius: 9999px;
   }
   .search-box input {
     font-size: 14px;
@@ -3244,24 +4112,26 @@ body {
   }
   .filter-toggle {
     height: 42px;
-    padding: 0 11px;
+    padding: 0 14px;
     font-size: 12px;
-    border-radius: 11px;
+    border-radius: 9999px;
     flex-shrink: 0;
     gap: 5px;
   }
   .view-toggle {
     display: flex;
     flex-shrink: 0;
+    border-radius: 9999px;
+    padding: 2px;
   }
   .view-btn {
-    height: 42px;
-    width: 38px;
+    height: 38px;
+    width: 36px;
     padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 9999px;
   }
   .view-btn .vtxt {
     display: none;
@@ -3305,36 +4175,130 @@ body {
     text-align: center;
   }
 
-  /* CARDS (TILE VIEW) */
+  /* CARDS (TILE VIEW: 2 ITEM TILES SIDE-BY-SIDE, IMAGE 2 + IMAGE 1 STYLE) */
   .grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px;
+  }
+  .grid.list-view {
+    grid-template-columns: 1fr !important;
+    gap: 8px;
   }
   .card {
-    padding: 14px;
-    border-radius: 14px;
+    padding: 12px 10px;
+    border-radius: 16px;
+    box-shadow: 0 3px 12px rgba(18, 79, 50, 0.05);
     cursor: pointer;
     touch-action: manipulation;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   .card:active {
     transform: scale(0.985);
   }
-  .card-name {
-    font-size: 14.5px;
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+  }
+  .card-badge {
+    font-size: 8px;
     font-weight: 800;
-    min-height: auto;
+    padding: 2.5px 7px;
+    border-radius: 9999px;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+  }
+  .card-del-btn {
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--muted);
+  }
+  .card-del-btn svg {
+    width: 12px;
+    height: 12px;
+  }
+  .card-name {
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.25;
+    min-height: 32px;
+    margin-top: 6px;
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   .big-stock {
-    margin-top: 10px;
-    padding: 9px 8px;
-    border-radius: 11px;
+    margin-top: 8px;
+    padding: 7px 6px;
+    border-radius: 12px;
+  }
+  .big-stock-label {
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
   }
   .big-stock-value {
-    font-size: 26px;
+    font-size: 22px;
     font-weight: 900;
+    line-height: 1.1;
+    margin-top: 1px;
   }
   .big-stock-unit {
-    font-size: 9px;
+    font-size: 8.5px;
+    margin-top: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .variant-chips {
+    margin-top: 6px;
+    gap: 3px;
+    max-height: 38px;
+    overflow: hidden;
+  }
+  .vchip {
+    font-size: 8px;
+    padding: 2px 5px;
+    border-radius: 9999px;
+  }
+  .card-quick-actions {
+    display: flex;
+    gap: 5px;
+    margin-top: 8px;
+    padding-top: 7px;
+    border-top: 1px solid var(--border);
+  }
+  .card-issue-btn,
+  .card-details-btn {
+    flex: 1;
+    min-width: 0;
+    padding: 6px 4px;
+    font-size: 11px;
+    font-weight: 800;
+    min-height: 30px;
+    border-radius: 9999px; /* Pill button! */
+    gap: 3px;
+    justify-content: center;
+    white-space: nowrap;
+  }
+  .card-issue-btn svg,
+  .card-details-btn svg {
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
   }
 
   /* LIST VIEW */
@@ -3685,57 +4649,92 @@ body {
 <header>
   <div class="h-left" onclick="goToDashboard()" title="DPS Amarpali - Click to open Dashboard">
     <img src="logo.png" alt="DPS" class="h-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-    <div style="width:38px;height:38px;background:var(--green);border-radius:10px;display:none;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:17px;flex-shrink:0">D</div>
+    <div class="h-logo-fallback" style="display:none">D</div>
     <div class="h-title">DPS AMARPALI<span>Inventory Portal</span></div>
   </div>
+
+  <div class="nav-tabs" id="navTabs">
+    <div class="nav-tab active" onclick="switchMainTab('stock')" data-tab="stock" title="Inventory Stock">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+      <span>Stock</span>
+    </div>
+    <div class="nav-tab" onclick="switchMainTab('bills')" data-tab="bills" title="Purchase & Inward Bills">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+      <span>Bills</span>
+    </div>
+    <div class="nav-tab" onclick="switchMainTab('faculty')" data-tab="faculty" title="Staff & Faculty Issue Slips">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>Faculty</span>
+    </div>
+    <div class="nav-tab" onclick="switchMainTab('report')" data-tab="report" title="Inventory & Audit Reports">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+      <span>Reports</span>
+    </div>
+  </div>
+
   <div class="h-right">
-    <button class="btn btn-primary btn-add-header" onclick="openAddChoice()" title="Add New (Item, Bill, Faculty)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+    <button class="header-search-btn" onclick="openGlobalSearch()" title="Global Search (Ctrl + K)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <span class="header-search-label">Quick Search...</span>
+      <kbd class="header-search-kbd">Ctrl K</kbd>
     </button>
-    <button id="pwaInstallBtn" class="btn-pwa-install" onclick="installPWA()" style="display:none" title="Install App">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
-    </button>
-    <span id="cloudSyncBadge" class="cloud-badge syncing" onclick="fetchCloudData()" title="Click to refresh from Neon Cloud DB">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+
+    <span id="cloudSyncBadge" class="cloud-badge syncing" onclick="fetchCloudData()" title="Neon Cloud DB: Click to sync">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+      <span class="badge-dot"></span>
       <span class="badge-txt">Connecting...</span>
     </span>
+
     <span id="authBadge"></span>
-    <button class="btn btn-icon" onclick="openGlobalSearch()" title="Global Search (Items, Bills, Faculty...)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+
+    <button class="btn header-btn header-export-btn" onclick="exportCSV()" title="Export CSV Data">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      <span class="btn-text">Export</span>
     </button>
-    <button class="btn btn-icon header-export-btn" onclick="exportCSV()" title="Export CSV">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+
+    <button id="pwaInstallBtn" class="btn header-btn btn-pwa-install" onclick="installPWA()" style="display:none" title="Install Web App">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+      <span class="btn-text">Install</span>
     </button>
-    <button id="adminBtn" class="btn btn-primary" onclick="handleAdminClick()" title="Login as Admin">
+
+    <button class="btn header-btn btn-add-header" onclick="openAddChoice()" title="Add New Item, Bill, or Faculty">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      <span class="btn-text">Add New</span>
+    </button>
+
+    <button id="adminBtn" class="btn header-btn btn-login-action" onclick="handleAdminClick()" title="Login as Admin">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      <span class="btn-text">Admin Login</span>
     </button>
+  </div>
 </header>
 
-<div id="cloudAlertBanner" style="display:none;background:#fef2f2;border-bottom:1px solid #fecaca;padding:9px 16px;color:#991b1b;font-size:12.5px;font-weight:600;align-items:center;justify-content:space-between;z-index:999;position:sticky;top:54px;box-shadow:0 2px 8px rgba(220,38,38,0.1)">
+<!-- THEME MESSAGE CENTER (POPUP NOTIFICATIONS) -->
+<div id="themeMessageCenter" class="theme-msg-center" aria-live="assertive"></div>
+
+<!-- THEME CONFIRM DIALOG -->
+<div id="themeConfirmModal" class="theme-confirm-overlay" onclick="handleThemeConfirmBackdrop(event)">
+  <div class="theme-confirm-card" role="dialog" aria-modal="true">
+    <div class="theme-confirm-icon-wrap info" id="tcIconWrap">
+      <svg id="tcIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+    </div>
+    <div class="theme-confirm-content">
+      <h3 id="tcTitle">Confirm Action</h3>
+      <p id="tcMessage">Are you sure you want to proceed?</p>
+    </div>
+    <div class="theme-confirm-actions">
+      <button type="button" class="btn btn-secondary" id="tcCancelBtn" onclick="closeThemeConfirm(false)">Cancel</button>
+      <button type="button" class="btn btn-primary" id="tcConfirmBtn" onclick="closeThemeConfirm(true)">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<div id="cloudAlertBanner" style="display:none;background:#fef2f2;border-bottom:1px solid #fecaca;padding:9px 16px;color:#991b1b;font-size:12.5px;font-weight:600;align-items:center;justify-content:space-between;z-index:999;position:sticky;top:64px;box-shadow:0 2px 8px rgba(220,38,38,0.1)">
   <div style="display:flex;align-items:center;gap:8px">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
     <span id="cloudAlertText">Neon Cloud Database Offline</span>
   </div>
   <button onclick="fetchCloudData(true)" style="background:#fee2e2;border:1px solid #fca5a5;color:#991b1b;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">Retry Sync</button>
-</div>
-
-<div class="nav-tabs" id="navTabs">
-  <div class="nav-tab active" onclick="switchMainTab('stock')" data-tab="stock">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
-    <span>Stock</span>
-  </div>
-  <div class="nav-tab" onclick="switchMainTab('bills')" data-tab="bills">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
-    <span>Bills</span>
-  </div>
-  <div class="nav-tab" onclick="switchMainTab('faculty')" data-tab="faculty">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-    <span>Faculty</span>
-  </div>
-  <div class="nav-tab" onclick="switchMainTab('report')" data-tab="report">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
-    <span>Reports</span>
-  </div>
 </div>
 
 <div class="mobile-nav">
@@ -3800,10 +4799,46 @@ body {
 <!-- STOCK TAB -->
 <div class="container" id="tab-stock">
   <div class="top-stats">
-    <div class="stat"><div class="stat-label">Total Items</div><div class="stat-value" id="st-total">0</div></div>
-    <div class="stat"><div class="stat-label">Current Stock</div><div class="stat-value" id="st-stock">0</div></div>
-    <div class="stat"><div class="stat-label">Low Stock</div><div class="stat-value low" id="st-low">0</div></div>
-    <div class="stat"><div class="stat-label">Total Bills</div><div class="stat-value" id="st-bills">0</div></div>
+    <div class="stat">
+      <span class="stat-watermark">01</span>
+      <div class="stat-icon-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+      </div>
+      <div class="stat-body">
+        <div class="stat-label">Total Items</div>
+        <div class="stat-value" id="st-total">0</div>
+      </div>
+    </div>
+    <div class="stat">
+      <span class="stat-watermark">02</span>
+      <div class="stat-icon-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 10 5-10 5L2 7l10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+      </div>
+      <div class="stat-body">
+        <div class="stat-label">Current Stock</div>
+        <div class="stat-value" id="st-stock">0</div>
+      </div>
+    </div>
+    <div class="stat stat-low-card">
+      <span class="stat-watermark">03</span>
+      <div class="stat-icon-badge red">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <div class="stat-body">
+        <div class="stat-label">Low Stock</div>
+        <div class="stat-value low" id="st-low">0</div>
+      </div>
+    </div>
+    <div class="stat">
+      <span class="stat-watermark">04</span>
+      <div class="stat-icon-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <div class="stat-body">
+        <div class="stat-label">Total Bills</div>
+        <div class="stat-value" id="st-bills">0</div>
+      </div>
+    </div>
   </div>
 
   <div class="search-row">
@@ -4855,6 +5890,7 @@ var activeItemId = null;
 var activeVariantId = null;
 var currentFacName = null;
 var currentView = 'tile';
+var selectedListItemId = null;
 var currentBillKey = null;
 var inlineItemCallback = null;
 var STORAGE_KEY = 'dps_inv_v21';
@@ -5580,13 +6616,13 @@ function updateCloudBadge(status, label){
   if (!el) return;
   el.className = 'cloud-badge ' + status;
   if (status === 'syncing'){
-    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg> <span class="badge-txt">' + esc(label || 'Saving Online...') + '</span>';
+    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg><span class="badge-dot"></span><span class="badge-txt">' + esc(label || 'Saving Online...') + '</span>';
   } else if (status === 'synced'){
-    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><polyline points="9 13 11 15 15 11"/></svg> <span class="badge-txt">' + esc(label || 'Neon DB Synced') + '</span>';
+    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><polyline points="9 13 11 15 15 11"/></svg><span class="badge-dot"></span><span class="badge-txt">' + esc(label || 'Cloud Synced') + '</span>';
   } else if (status === 'offline'){
-    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="2" x2="22" y2="22"></line><path d="M9.9 9.9A7 7 0 0 0 2 15a7 7 0 0 0 7 7h10a4.5 4.5 0 0 0 2.2-8.4"></path></svg> <span class="badge-txt">' + esc(label || 'Cloud Offline') + '</span>';
+    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="2" x2="22" y2="22"></line><path d="M9.9 9.9A7 7 0 0 0 2 15a7 7 0 0 0 7 7h10a4.5 4.5 0 0 0 2.2-8.4"></path></svg><span class="badge-dot"></span><span class="badge-txt">' + esc(label || 'Cloud Offline') + '</span>';
   } else if (status === 'error'){
-    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> <span class="badge-txt">' + esc(label || 'Cloud Error') + '</span>';
+    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span class="badge-dot"></span><span class="badge-txt">' + esc(label || 'Cloud Error') + '</span>';
   }
 }
 
@@ -5853,7 +6889,7 @@ function saveNewVariant(){
   showPicker(it);
   render();
 
-  alert('Successfully added color "' + name + '" to ' + it.name + '.');
+  showThemeMessage('add', 'Color/Variant Added', 'Successfully added color "' + name + '" to ' + it.name + '.');
 }
 
 function getItem(id){ for (var i = 0; i < items.length; i++) if (items[i].id === id) return items[i]; return null; }
@@ -5893,26 +6929,170 @@ function updateFilterCount(name, count){
 function setFilterInfo(name, text){ var el = document.getElementById(name + '-filter-info'); if (el) el.textContent = text; }
 
 function handleAdminClick(){
-  if (isAdmin){ if (confirm('Logout from admin?')){ isAdmin = false; updateAdminUI(); } }
-  else openLogin();
+  if (isAdmin){
+    showThemeConfirm({
+      title: 'Logout Admin Mode?',
+      message: 'Are you sure you want to exit Admin Mode? You will revert to Read-Only access.',
+      confirmText: 'Logout',
+      cancelText: 'Stay Logged In',
+      type: 'warning',
+      onConfirm: function(){
+        isAdmin = false;
+        updateAdminUI();
+        showThemeMessage('logout', 'Logged Out', 'Switched to Read-Only mode.');
+      }
+    });
+  } else {
+    openLogin();
+  }
 }
+/* ============================================= */
+/* THEME-BASED MESSAGE CENTER & MODAL SYSTEM     */
+/* ============================================= */
+var _themeMsgTimer = null;
+
+function showThemeMessage(type, title, message, durationMs){
+  var center = document.getElementById('themeMessageCenter');
+  if (!center){
+    center = document.createElement('div');
+    center.id = 'themeMessageCenter';
+    center.className = 'theme-msg-center';
+    document.body.appendChild(center);
+  }
+
+  // Clear existing popups
+  center.innerHTML = '';
+  if (_themeMsgTimer) clearTimeout(_themeMsgTimer);
+
+  var popup = document.createElement('div');
+  popup.className = 'theme-msg-popup theme-msg-' + (type || 'success');
+
+  var iconSvg = '';
+  if (type === 'delete' || type === 'danger'){
+    iconSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>';
+  } else if (type === 'login'){
+    iconSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>';
+  } else if (type === 'logout'){
+    iconSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>';
+  } else if (type === 'warning'){
+    iconSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>';
+  } else if (type === 'add'){
+    iconSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>';
+  } else {
+    // Default success
+    iconSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>';
+  }
+
+  popup.innerHTML =
+    '<div class="theme-msg-icon-box">' + iconSvg + '</div>' +
+    '<div class="theme-msg-body">' +
+      '<div class="theme-msg-title">' + esc(title || 'Notice') + '</div>' +
+      '<div class="theme-msg-desc">' + esc(message || '') + '</div>' +
+    '</div>' +
+    '<button class="theme-msg-close" onclick="closeThemeMessage()" title="Dismiss">&times;</button>' +
+    '<div class="theme-msg-progress"></div>';
+
+  popup.onclick = function(e){
+    if (e.target.tagName !== 'BUTTON') closeThemeMessage();
+  };
+
+  center.appendChild(popup);
+
+  var dur = durationMs || 3400;
+  _themeMsgTimer = setTimeout(function(){
+    closeThemeMessage();
+  }, dur);
+}
+
+function closeThemeMessage(){
+  var center = document.getElementById('themeMessageCenter');
+  if (!center) return;
+  var popup = center.querySelector('.theme-msg-popup');
+  if (popup){
+    popup.classList.add('hide');
+    setTimeout(function(){
+      if (center.contains(popup)) center.removeChild(popup);
+    }, 250);
+  }
+}
+
+/* THEME CONFIRM DIALOG SYSTEM */
+var _tcCallback = null;
+
+function showThemeConfirm(opts){
+  var overlay = document.getElementById('themeConfirmModal');
+  var titleEl = document.getElementById('tcTitle');
+  var msgEl = document.getElementById('tcMessage');
+  var confirmBtn = document.getElementById('tcConfirmBtn');
+  var cancelBtn = document.getElementById('tcCancelBtn');
+  var iconWrap = document.getElementById('tcIconWrap');
+  var iconEl = document.getElementById('tcIcon');
+
+  if (!overlay) return;
+
+  _tcCallback = opts.onConfirm || null;
+  titleEl.textContent = opts.title || 'Are you sure?';
+  msgEl.textContent = opts.message || '';
+  confirmBtn.textContent = opts.confirmText || 'Confirm';
+  cancelBtn.textContent = opts.cancelText || 'Cancel';
+
+  iconWrap.className = 'theme-confirm-icon-wrap ' + (opts.type || 'info');
+  confirmBtn.className = 'btn ' + (opts.type === 'danger' ? 'tc-btn-danger' : 'btn-primary');
+
+  if (opts.type === 'danger'){
+    iconEl.innerHTML = '<polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line>';
+  } else if (opts.type === 'warning'){
+    iconEl.innerHTML = '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line>';
+  } else {
+    iconEl.innerHTML = '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>';
+  }
+
+  overlay.classList.add('open');
+}
+
+function closeThemeConfirm(result){
+  var overlay = document.getElementById('themeConfirmModal');
+  if (overlay) overlay.classList.remove('open');
+  if (result && typeof _tcCallback === 'function'){
+    var cb = _tcCallback;
+    _tcCallback = null;
+    cb();
+  } else {
+    _tcCallback = null;
+  }
+}
+
+function handleThemeConfirmBackdrop(e){
+  if (e.target && e.target.id === 'themeConfirmModal'){
+    closeThemeConfirm(false);
+  }
+}
+
 function updateAdminUI(){
   var badge = document.getElementById('authBadge');
   var btn = document.getElementById('adminBtn');
   var addFac = document.getElementById('addFacBtn');
   var issueBtn = document.getElementById('issueToFacBtn');
+  var passIn = document.getElementById('cloud-pass-input');
+  if (passIn){
+    passIn.type = isAdmin ? 'text' : 'password';
+  }
   if (isAdmin){
-    badge.innerHTML = '<span class="admin-badge"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg> <span class="badge-txt">Admin</span></span>';
-    btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>';
-    btn.title = 'Logout from Admin';
-    btn.classList.remove('btn-primary');
+    if (badge) badge.innerHTML = '<span class="admin-badge" title="Admin Mode Active (Full Access)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg><span class="badge-txt">Admin Mode</span></span>';
+    if (btn){
+      btn.className = 'btn header-btn btn-logout-action';
+      btn.title = 'Logout Admin Mode';
+      btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg><span class="btn-text">Logout</span>';
+    }
     if (addFac) addFac.style.display = 'inline-flex';
     if (issueBtn) issueBtn.style.display = 'inline-flex';
   } else {
-    badge.innerHTML = '<span class="readonly-badge"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg> <span class="badge-txt">View Only</span></span>';
-    btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>';
-    btn.title = 'Login as Admin';
-    btn.classList.add('btn-primary');
+    if (badge) badge.innerHTML = '<span class="readonly-badge" title="Read Only Mode (Admin Login Required for changes)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span class="badge-txt">Read Only</span></span>';
+    if (btn){
+      btn.className = 'btn header-btn btn-login-action';
+      btn.title = 'Login as Admin';
+      btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span class="btn-text">Admin Login</span>';
+    }
     if (addFac) addFac.style.display = 'none';
     if (issueBtn) issueBtn.style.display = 'none';
   }
@@ -5952,6 +7132,7 @@ function verifyPin(){
     closeLogin();
     if (document.getElementById('tab-faculty').style.display !== 'none') renderFaculty();
     if (document.getElementById('tab-stock').style.display !== 'none') render();
+    showThemeMessage('login', 'Admin Access Granted', 'Welcome back! Full write and edit access is now enabled.');
     if (cb && typeof cb === 'function'){
       cb();
     }
@@ -6018,6 +7199,7 @@ function switchMainTab(tab){
 }
 function switchView(v){
   currentView = v;
+  if (v !== 'list') clearListSelection();
   try { localStorage.setItem(VIEW_KEY, v); } catch(e){}
   document.querySelectorAll('.view-btn').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-view') === v); });
   render();
@@ -6107,6 +7289,7 @@ function render(){
     var bt = empty ? 'NO STOCK' : (low ? 'LOW STOCK' : (multi ? it.variants.length + ' VARIANTS' : 'IN STOCK'));
     if (currentView === 'list'){
       var lb = empty ? 'NO STOCK' : (low ? 'LOW' : (multi ? it.variants.length + ' VAR' : 'IN STOCK'));
+      var isSel = (selectedListItemId === it.id);
       var colorDots = '';
       if (multi) {
         var dotCount = Math.min(6, it.variants.length);
@@ -6114,7 +7297,25 @@ function render(){
           colorDots += renderColorDot(it.variants[d].name, 8);
         }
       }
-      html += '<div class="list-item ' + (low ? 'low' : '') + '" onclick="openItem(' + it.id + ')"><div class="list-info"><div class="list-name">' + esc(it.name) + '</div><div class="list-meta" style="display:flex;align-items:center">' + (multi ? it.variants.length + ' variants' + (colorDots ? ' <span style="display:inline-flex;align-items:center;margin-left:6px">' + colorDots + '</span>' : '') : 'Single item') + '</div></div><div class="list-stock"><div class="list-stock-label">Stock</div><div class="list-stock-value ' + (low ? 'low' : '') + '">' + cur + '</div><div class="list-badge ' + bc + '">' + lb + '</div></div><button class="list-issue-btn" title="Quick issue stock to faculty" onclick="openIssueItem(' + it.id + ', event)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg><span>Issue</span></button><button class="card-del-btn" title="Delete ' + esc(it.name) + '" onclick="event.stopPropagation(); deleteItemById(' + it.id + ')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button></div>';
+      html += '<div class="list-item ' + (low ? 'low ' : '') + (isSel ? 'selected ' : '') + '" data-item-id="' + it.id + '" onclick="onListItemClick(' + it.id + ', event)">' +
+        '<div class="list-select-indicator" title="Select item">' +
+          '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>' +
+        '</div>' +
+        '<div class="list-info">' +
+          '<div class="list-name">' + esc(it.name) + '</div>' +
+          '<div class="list-meta" style="display:flex;align-items:center">' + (multi ? it.variants.length + ' variants' + (colorDots ? ' <span style="display:inline-flex;align-items:center;margin-left:6px">' + colorDots + '</span>' : '') : 'Single item') + '</div>' +
+        '</div>' +
+        '<div class="list-stock">' +
+          '<div class="list-stock-label">Stock</div>' +
+          '<div class="list-stock-value ' + (low ? 'low' : '') + '">' + cur + '</div>' +
+          '<div class="list-badge ' + bc + '">' + lb + '</div>' +
+        '</div>' +
+        '<button class="list-issue-btn" title="Quick issue stock to faculty" onclick="openIssueItem(' + it.id + ', event)" style="' + (isSel ? 'display:inline-flex' : 'display:none') + '">' +
+          '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>' +
+          '<span>Issue</span>' +
+        '</button>' +
+        '<button class="card-del-btn" title="Delete ' + esc(it.name) + '" onclick="event.stopPropagation(); deleteItemById(' + it.id + ')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button>' +
+      '</div>';
     } else {
       var chips = '';
       if (multi){
@@ -6131,6 +7332,7 @@ function render(){
   }
   grid.innerHTML = html;
   updateStats();
+  renderListViewSelection();
 }
 
 function updateStats(){
@@ -7676,6 +8878,7 @@ function addInward(){
   v.current += qty;
   v.logs.unshift({ date: date || todayStr(), type: 'INWARD', qty: qty, detail: remark || 'Stock added', ref: bill + ' / ' + year + ' / ' + pass });
   saveData(); render(); renderLog(); switchTab('log'); refreshModalHeader();
+  showThemeMessage('add', 'Stock Added', '+' + qty + ' units added to ' + it.name + ' (' + v.name + ').');
   document.getElementById('in-bill').value = ''; document.getElementById('in-qty').value = '';
   document.getElementById('in-pass').value = ''; document.getElementById('in-remark').value = '';
 }
@@ -7696,6 +8899,7 @@ function addOutward(){
   v.current -= qty;
   v.logs.unshift({ date: date || todayStr(), type: 'OUTWARD', qty: qty, detail: fac.name + ' (' + fac.dept + ') - ' + (remark || ''), ref: fac.name });
   saveData(); render(); renderLog(); switchTab('log'); refreshModalHeader();
+  showThemeMessage('success', 'Stock Issued', '-' + qty + ' units of ' + it.name + ' issued to ' + fac.name + '.');
   document.getElementById('out-qty').value = ''; document.getElementById('out-remark').value = '';
 }
 function renderLog(){
@@ -7751,7 +8955,7 @@ function saveItem(){
   if (!requireAdmin()) return;
   var name = document.getElementById('new-name').value.trim();
   var type = document.getElementById('new-type').value;
-  if (!name) return alert('Please enter an item name');
+  if (!name) return showThemeMessage('warning', 'Input Required', 'Please enter an item name');
   var variants = [];
   if (type === 'single'){
     var stock = parseInt(document.getElementById('new-stock').value) || 0;
@@ -7763,11 +8967,12 @@ function saveItem(){
       var vs = parseInt(rows[i].querySelector('.v-stock').value) || 0;
       if (vn) variants.push({ id: 'v' + Date.now() + '_' + i, name: vn, current: vs, opening: vs, logs: [] });
     }
-    if (variants.length === 0) return alert('Please add at least one variant');
+    if (variants.length === 0) return showThemeMessage('warning', 'Input Required', 'Please add at least one variant');
   }
   items.push({ id: Date.now(), name: name, type: type, variants: variants });
   items.sort(function(a, b){ return a.name.localeCompare(b.name); });
   saveData(); render(); closeAdd();
+  showThemeMessage('add', 'Item Added Successfully', 'Item "' + name + '" (' + (type === 'single' ? 'Single Item' : variants.length + ' variants') + ') has been added.');
 }
 
 function deleteItemById(id){
@@ -7783,27 +8988,35 @@ function deleteItemById(id){
     msg += '\n\nCaution: This item currently has ' + curStock + ' unit(s) in stock.';
   }
   msg += '\n\nThis will permanently delete the item, its variants, and all history.';
-  if (!confirm(msg)) return;
 
-  var deletedName = it.name;
-  items = items.filter(function(x){ return x.id !== id; });
-  saveData();
+  showThemeConfirm({
+    title: 'Delete Item',
+    message: msg,
+    confirmText: 'Delete Permanently',
+    cancelText: 'Cancel',
+    type: 'danger',
+    onConfirm: function(){
+      var deletedName = it.name;
+      items = items.filter(function(x){ return x.id !== id; });
+      saveData();
 
-  if (activeItemId === id){
-    closeModal();
-    activeItemId = null;
-    activeVariantId = null;
-  }
-  if (currentPickerItemId === id){
-    closePick();
-    currentPickerItemId = null;
-  }
+      if (activeItemId === id){
+        closeModal();
+        activeItemId = null;
+        activeVariantId = null;
+      }
+      if (currentPickerItemId === id){
+        closePick();
+        currentPickerItemId = null;
+      }
 
-  render();
-  if (typeof renderBills === 'function') renderBills();
-  if (typeof renderFaculty === 'function') renderFaculty();
-  if (typeof renderReports === 'function') renderReports();
-  alert('Item "' + deletedName + '" has been deleted.');
+      render();
+      if (typeof renderBills === 'function') renderBills();
+      if (typeof renderFaculty === 'function') renderFaculty();
+      if (typeof renderReports === 'function') renderReports();
+      showThemeMessage('delete', 'Item Deleted', 'Item "' + deletedName + '" and its history have been deleted.');
+    }
+  });
 }
 
 function deleteVariant(itemId, variantId){
@@ -7816,9 +9029,16 @@ function deleteVariant(itemId, variantId){
     return;
   }
   if (it.variants.length <= 1){
-    if (confirm('"' + v.name + '" is the only variant of "' + it.name + '". Deleting it will delete the entire item.\n\nDo you want to proceed?')){
-      deleteItemById(itemId);
-    }
+    showThemeConfirm({
+      title: 'Delete Last Variant?',
+      message: '"' + v.name + '" is the only variant of "' + it.name + '". Deleting it will delete the entire item.\n\nDo you want to proceed?',
+      confirmText: 'Delete Item',
+      cancelText: 'Cancel',
+      type: 'danger',
+      onConfirm: function(){
+        deleteItemById(itemId);
+      }
+    });
     return;
   }
   var msg = 'Are you sure you want to delete variant "' + v.name + '" of "' + it.name + '"?';
@@ -7826,27 +9046,35 @@ function deleteVariant(itemId, variantId){
     msg += '\n\nCaution: This variant currently has ' + v.current + ' unit(s) in stock.';
   }
   msg += '\n\nThis will permanently delete this variant and its transaction logs.';
-  if (!confirm(msg)) return;
 
-  var deletedVarName = v.name;
-  it.variants = it.variants.filter(function(x){ return x.id !== variantId; });
-  saveData();
+  showThemeConfirm({
+    title: 'Delete Variant',
+    message: msg,
+    confirmText: 'Delete Variant',
+    cancelText: 'Cancel',
+    type: 'danger',
+    onConfirm: function(){
+      var deletedVarName = v.name;
+      it.variants = it.variants.filter(function(x){ return x.id !== variantId; });
+      saveData();
 
-  if (activeItemId === itemId && activeVariantId === variantId){
-    closeModal();
-    activeItemId = null;
-    activeVariantId = null;
-  }
+      if (activeItemId === itemId && activeVariantId === variantId){
+        closeModal();
+        activeItemId = null;
+        activeVariantId = null;
+      }
 
-  if (currentPickerItemId === itemId){
-    showPicker(it);
-  }
+      if (currentPickerItemId === itemId){
+        showPicker(it);
+      }
 
-  render();
-  if (typeof renderBills === 'function') renderBills();
-  if (typeof renderFaculty === 'function') renderFaculty();
-  if (typeof renderReports === 'function') renderReports();
-  alert('Variant "' + deletedVarName + '" has been deleted.');
+      render();
+      if (typeof renderBills === 'function') renderBills();
+      if (typeof renderFaculty === 'function') renderFaculty();
+      if (typeof renderReports === 'function') renderReports();
+      showThemeMessage('delete', 'Variant Deleted', 'Variant "' + deletedVarName + '" has been deleted.');
+    }
+  });
 }
 function openAddFacultyMaster(){
   if (!isAdmin){
@@ -7861,12 +9089,12 @@ function saveFacultyMaster(){
   if (!requireAdmin()) return;
   var name = document.getElementById('fm-name').value.trim();
   var dept = document.getElementById('fm-dept').value.trim();
-  if (!name) return alert('Please enter a faculty name');
-  if (!dept) return alert('Please enter a department');
-  for (var i = 0; i < faculties.length; i++) if (faculties[i].name.toLowerCase() === name.toLowerCase()) return alert('Faculty "' + name + '" already exists!');
+  if (!name) return showThemeMessage('warning', 'Input Required', 'Please enter a faculty name');
+  if (!dept) return showThemeMessage('warning', 'Input Required', 'Please enter a department');
+  for (var i = 0; i < faculties.length; i++) if (faculties[i].name.toLowerCase() === name.toLowerCase()) return showThemeMessage('warning', 'Duplicate Faculty', 'Faculty "' + name + '" already exists!');
   faculties.push({ id: Date.now(), name: name, dept: dept });
   saveFaculties(); renderFaculty(); closeAddFacultyMaster();
-  alert('Faculty "' + name + '" added successfully.');
+  showThemeMessage('add', 'Faculty Added', 'Faculty member "' + name + '" (' + dept + ') added successfully.');
 }
 function openAddBill(){
   if (!isAdmin){
@@ -7962,7 +9190,7 @@ function saveBill(){
     v.logs.unshift({ date: date || todayStr(), type: 'INWARD', qty: t.qty, detail: 'From ' + vendor, ref: billNo + ' / ' + year + ' / ' + inPass });
   }
   saveData(); render(); closeAddBill();
-  alert('Bill #' + billNo + ' saved with ' + toAdd.length + ' item(s).');
+  showThemeMessage('add', 'Bill Saved', 'Bill #' + billNo + ' saved with ' + toAdd.length + ' item(s). Stock updated.');
 }
 function openInlineItem(){
   if (!isAdmin){ requireAdmin(); return; }
@@ -8007,6 +9235,7 @@ function saveInlineItem(){
   items.push(newItem); items.sort(function(a, b){ return a.name.localeCompare(b.name); });
   saveData(); render(); closeInlineItem();
   if (inlineItemCallback) inlineItemCallback(newItem);
+  showThemeMessage('add', 'Item Created', 'New item "' + name + '" created and selected for bill.');
 }
 
 /* ========================================================
@@ -8356,7 +9585,7 @@ function saveIssueSlip(){
 
   saveData(); render(); renderFaculty();
   closeIssueSlip();
-  alert('Successfully issued ' + toIssue.length + ' item/color variant(s) to ' + fac.name + ' (Total ' + totalPieces + ' pcs). Stock updated!');
+  showThemeMessage('success', 'Issue Slip Completed', 'Issued ' + toIssue.length + ' item(s) to ' + fac.name + ' (' + totalPieces + ' pcs total). Stock updated!');
 }
 
 function resetData(){
@@ -8641,6 +9870,365 @@ function exportCSV(){
   a.click();
 }
 
+// ============================================================
+// LIST VIEW ITEM SELECTION MANAGEMENT (GLOBAL SCOPE)
+// ============================================================
+var selectedListItemId = null;
+
+function onListItemClick(id, event){
+  if (event && (event.target.closest('.card-del-btn') || event.target.closest('.list-issue-btn'))){
+    return;
+  }
+  if (selectedListItemId === id){
+    openItem(id);
+    return;
+  }
+  selectedListItemId = id;
+  renderListViewSelection();
+}
+
+function clearListSelection(){
+  selectedListItemId = null;
+  renderListViewSelection();
+}
+
+function renderListViewSelection(){
+  var items = document.querySelectorAll('.list-item');
+  items.forEach(function(el){
+    var iid = parseInt(el.getAttribute('data-item-id'));
+    var isSel = (iid === selectedListItemId);
+    el.classList.toggle('selected', isSel);
+    var issueBtn = el.querySelector('.list-issue-btn');
+    if (issueBtn){
+      issueBtn.style.display = isSel ? 'inline-flex' : 'none';
+    }
+  });
+
+  var dock = document.getElementById('listSelectionDock');
+  if (!dock){
+    dock = document.createElement('div');
+    dock.id = 'listSelectionDock';
+    dock.className = 'list-selection-dock';
+    document.body.appendChild(dock);
+  }
+
+  if (selectedListItemId && currentView === 'list'){
+    var it = getItem(selectedListItemId);
+    if (!it){
+      dock.classList.remove('active');
+      return;
+    }
+    var cur = itemCurrent(it);
+    dock.innerHTML =
+      '<div class="dock-content">' +
+        '<div class="dock-info">' +
+          '<div class="dock-check-icon">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="20 6 9 17 4 12"></polyline></svg>' +
+          '</div>' +
+          '<div class="dock-text">' +
+            '<span class="dock-title">' + esc(it.name) + '</span>' +
+            '<span class="dock-stock">Current Stock: <b>' + cur + ' units</b></span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="dock-actions">' +
+          '<button class="btn btn-primary dock-issue-btn" onclick="openIssueItem(' + it.id + ', event)" title="Quick issue stock to faculty">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>' +
+            '<span>Issue to Faculty</span>' +
+          '</button>' +
+          '<button class="btn btn-secondary dock-details-btn" onclick="openItem(' + it.id + ')" title="View item breakdown & logs">' +
+            '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>' +
+            '<span>Details</span>' +
+          '</button>' +
+          '<button class="dock-close-btn" onclick="clearListSelection()" title="Clear selection">&times;</button>' +
+        '</div>' +
+      '</div>';
+    dock.classList.add('active');
+  } else {
+    dock.classList.remove('active');
+  }
+}
+
+// ============================================================
+// SINGLE BACK NAVIGATION & MODAL STACK MANAGEMENT (GLOBAL SCOPE)
+// ============================================================
+var _isNavigatingBack = false;
+var _modalHistoryDepth = 0;
+var _lastBackPressTime = 0;
+
+function getTopmostOpenModal(){
+  var list = [
+    { id: 'themeConfirmModal', close: function(){ closeThemeConfirm(false); } },
+    { id: 'modal-login', close: closeLogin },
+    { id: 'modal-inline-item', close: closeInlineItem },
+    { id: 'modal-add-variant', close: closeAddVariantModal },
+    { id: 'modal-item-breakdown', close: closeItemBreakdown },
+    { id: 'modal-choice', close: closeAddChoice },
+    { id: 'modal-add', close: closeAdd },
+    { id: 'modal-addfac', close: closeAddFacultyMaster },
+    { id: 'modal-addbill', close: closeAddBill },
+    { id: 'modal-issueslip', close: closeIssueSlip },
+    { id: 'modal-globalsearch', close: closeGlobalSearch },
+    { id: 'modal-bill', close: closeBillDetail },
+    { id: 'modal-fac', close: closeFacDetail },
+    { id: 'modal', close: closeModal },
+    { id: 'modal-pick', close: closePick }
+  ];
+  for (var i = 0; i < list.length; i++){
+    var el = document.getElementById(list[i].id);
+    if (el && el.classList.contains('open')){
+      return list[i];
+    }
+  }
+  return null;
+}
+
+function initModalHistoryManagement(){
+  if (!history.state || !history.state.dpsimsRoot){
+    history.replaceState({ dpsimsRoot: true, tab: 'stock' }, '');
+  }
+
+  var overlays = document.querySelectorAll('.modal-overlay, .theme-confirm-overlay');
+  var observer = new MutationObserver(function(mutations){
+    mutations.forEach(function(m){
+      if (m.type === 'attributes' && m.attributeName === 'class'){
+        var target = m.target;
+        var isOpen = target.classList.contains('open');
+        if (isOpen && !_isNavigatingBack){
+          _modalHistoryDepth++;
+          history.pushState({ isModal: true, modalId: target.id, depth: _modalHistoryDepth }, '');
+        } else if (!isOpen && !_isNavigatingBack && _modalHistoryDepth > 0){
+          _modalHistoryDepth--;
+          _isNavigatingBack = true;
+          history.back();
+          setTimeout(function(){ _isNavigatingBack = false; }, 80);
+        }
+      }
+    });
+  });
+
+  overlays.forEach(function(el){
+    observer.observe(el, { attributes: true, attributeFilter: ['class'] });
+  });
+
+  window.addEventListener('popstate', function(e){
+    if (_isNavigatingBack){
+      _isNavigatingBack = false;
+      return;
+    }
+
+    var openModal = getTopmostOpenModal();
+    if (openModal){
+      _isNavigatingBack = true;
+      if (_modalHistoryDepth > 0) _modalHistoryDepth--;
+      openModal.close();
+      setTimeout(function(){ _isNavigatingBack = false; }, 80);
+      return;
+    }
+
+    if (selectedListItemId && currentView === 'list'){
+      clearListSelection();
+      history.pushState({ dpsimsRoot: true, tab: 'stock' }, '');
+      return;
+    }
+
+    var activeTabEl = document.querySelector('.nav-tab.active');
+    var activeTab = activeTabEl ? activeTabEl.getAttribute('data-tab') : 'stock';
+    if (activeTab && activeTab !== 'stock'){
+      switchMainTab('stock');
+      history.pushState({ dpsimsRoot: true, tab: 'stock' }, '');
+      return;
+    }
+
+    var now = Date.now();
+    if (now - _lastBackPressTime < 2000){
+      history.back();
+    } else {
+      _lastBackPressTime = now;
+      history.pushState({ dpsimsRoot: true, tab: 'stock' }, '');
+      showThemeMessage('warning', 'DPS IMS', 'Press Back again to exit app', 2000);
+    }
+  });
+}
+
+// ============================================================
+// LIST VIEW ITEM SELECTION MANAGEMENT (GLOBAL SCOPE)
+// ============================================================
+function onListItemClick(id, event){
+  if (event && (event.target.closest('.card-del-btn') || event.target.closest('.list-issue-btn'))){
+    return;
+  }
+  if (selectedListItemId === id){
+    // Clicking already selected item opens full item modal
+    openItem(id);
+    return;
+  }
+  selectedListItemId = id;
+  renderListViewSelection();
+}
+
+function clearListSelection(){
+  selectedListItemId = null;
+  renderListViewSelection();
+}
+
+function renderListViewSelection(){
+  var items = document.querySelectorAll('.list-item');
+  items.forEach(function(el){
+    var iid = parseInt(el.getAttribute('data-item-id'));
+    var isSel = (iid === selectedListItemId);
+    el.classList.toggle('selected', isSel);
+    var issueBtn = el.querySelector('.list-issue-btn');
+    if (issueBtn){
+      issueBtn.style.display = isSel ? 'inline-flex' : 'none';
+    }
+  });
+
+  var dock = document.getElementById('listSelectionDock');
+  if (!dock){
+    dock = document.createElement('div');
+    dock.id = 'listSelectionDock';
+    dock.className = 'list-selection-dock';
+    document.body.appendChild(dock);
+  }
+
+  if (selectedListItemId && currentView === 'list'){
+    var it = getItem(selectedListItemId);
+    if (!it){
+      dock.classList.remove('active');
+      return;
+    }
+    var cur = itemCurrent(it);
+    dock.innerHTML =
+      '<div class="dock-content">' +
+        '<div class="dock-info">' +
+          '<div class="dock-check-icon">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="20 6 9 17 4 12"></polyline></svg>' +
+          '</div>' +
+          '<div class="dock-text">' +
+            '<span class="dock-title">' + esc(it.name) + '</span>' +
+            '<span class="dock-stock">Current Stock: <b>' + cur + ' units</b></span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="dock-actions">' +
+          '<button class="btn btn-primary dock-issue-btn" onclick="openIssueItem(' + it.id + ', event)" title="Quick issue stock to faculty">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>' +
+            '<span>Issue to Faculty</span>' +
+          '</button>' +
+          '<button class="btn btn-secondary dock-details-btn" onclick="openItem(' + it.id + ')" title="View item breakdown & logs">' +
+            '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>' +
+            '<span>Details</span>' +
+          '</button>' +
+          '<button class="dock-close-btn" onclick="clearListSelection()" title="Clear selection">&times;</button>' +
+        '</div>' +
+      '</div>';
+    dock.classList.add('active');
+  } else {
+    dock.classList.remove('active');
+  }
+}
+
+// ============================================================
+// SINGLE BACK NAVIGATION & MODAL STACK MANAGEMENT (GLOBAL SCOPE)
+// ============================================================
+var _isNavigatingBack = false;
+var _modalHistoryDepth = 0;
+var _lastBackPressTime = 0;
+
+function getTopmostOpenModal(){
+  var list = [
+    { id: 'themeConfirmModal', close: function(){ closeThemeConfirm(false); } },
+    { id: 'modal-login', close: closeLogin },
+    { id: 'modal-inline-item', close: closeInlineItem },
+    { id: 'modal-add-variant', close: closeAddVariantModal },
+    { id: 'modal-item-breakdown', close: closeItemBreakdown },
+    { id: 'modal-choice', close: closeAddChoice },
+    { id: 'modal-add', close: closeAdd },
+    { id: 'modal-addfac', close: closeAddFacultyMaster },
+    { id: 'modal-addbill', close: closeAddBill },
+    { id: 'modal-issueslip', close: closeIssueSlip },
+    { id: 'modal-globalsearch', close: closeGlobalSearch },
+    { id: 'modal-bill', close: closeBillDetail },
+    { id: 'modal-fac', close: closeFacDetail },
+    { id: 'modal', close: closeModal },
+    { id: 'modal-pick', close: closePick }
+  ];
+  for (var i = 0; i < list.length; i++){
+    var el = document.getElementById(list[i].id);
+    if (el && el.classList.contains('open')){
+      return list[i];
+    }
+  }
+  return null;
+}
+
+function initModalHistoryManagement(){
+  if (!history.state || !history.state.dpsimsRoot){
+    history.replaceState({ dpsimsRoot: true, tab: 'stock' }, '');
+  }
+
+  var overlays = document.querySelectorAll('.modal-overlay, .theme-confirm-overlay');
+  var observer = new MutationObserver(function(mutations){
+    mutations.forEach(function(m){
+      if (m.type === 'attributes' && m.attributeName === 'class'){
+        var target = m.target;
+        var isOpen = target.classList.contains('open');
+        if (isOpen && !_isNavigatingBack){
+          _modalHistoryDepth++;
+          history.pushState({ isModal: true, modalId: target.id, depth: _modalHistoryDepth }, '');
+        } else if (!isOpen && !_isNavigatingBack && _modalHistoryDepth > 0){
+          _modalHistoryDepth--;
+          _isNavigatingBack = true;
+          history.back();
+          setTimeout(function(){ _isNavigatingBack = false; }, 80);
+        }
+      }
+    });
+  });
+
+  overlays.forEach(function(el){
+    observer.observe(el, { attributes: true, attributeFilter: ['class'] });
+  });
+
+  window.addEventListener('popstate', function(e){
+    if (_isNavigatingBack){
+      _isNavigatingBack = false;
+      return;
+    }
+
+    var openModal = getTopmostOpenModal();
+    if (openModal){
+      _isNavigatingBack = true;
+      if (_modalHistoryDepth > 0) _modalHistoryDepth--;
+      openModal.close();
+      setTimeout(function(){ _isNavigatingBack = false; }, 80);
+      return;
+    }
+
+    if (selectedListItemId && currentView === 'list'){
+      clearListSelection();
+      history.pushState({ dpsimsRoot: true, tab: 'stock' }, '');
+      return;
+    }
+
+    var activeTabEl = document.querySelector('.nav-tab.active');
+    var activeTab = activeTabEl ? activeTabEl.getAttribute('data-tab') : 'stock';
+    if (activeTab && activeTab !== 'stock'){
+      switchMainTab('stock');
+      history.pushState({ dpsimsRoot: true, tab: 'stock' }, '');
+      return;
+    }
+
+    var now = Date.now();
+    if (now - _lastBackPressTime < 2000){
+      history.back();
+    } else {
+      _lastBackPressTime = now;
+      history.pushState({ dpsimsRoot: true, tab: 'stock' }, '');
+      showThemeMessage('warning', 'DPS IMS', 'Press Back again to exit app', 2000);
+    }
+  });
+}
+
 function init(){
   generateBillPool(); loadData();
   ['search', 'rep-search'].forEach(function(sId){
@@ -8676,16 +10264,33 @@ function init(){
     toEl.value = today;
     if (singleEl) singleEl.value = today;
   }
+
   document.addEventListener('keydown', function(e){
     if (e.key === 'Escape'){
-      closeModal(); closeAdd(); closePick(); closeFacDetail(); closeGlobalSearch(); closeBillSearch(); closeBillDetail();
-      closeAddChoice(); closeAddFacultyMaster(); closeAddBill(); closeInlineItem(); closeIssueSlip(); closeAddVariantModal(); closeItemBreakdown();
-      if (!isAdmin) closeLogin();
+      closeThemeMessage();
+      var openModal = getTopmostOpenModal();
+      if (openModal){
+        openModal.close();
+      } else if (selectedListItemId){
+        clearListSelection();
+      }
+    }
+    if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')){
+      e.preventDefault();
+      openGlobalSearch();
     }
   });
+
+  // Global window.alert theme override for safety
+  var _nativeAlert = window.alert;
+  window.alert = function(msg){
+    showThemeMessage('warning', 'Notice', String(msg));
+  };
+
   updateAdminUI();
   render();
   fetchCloudData(true);
+  initModalHistoryManagement();
 
   // Background auto-sync every 25 seconds for multi-user collaboration
   setInterval(function(){
@@ -8773,8 +10378,10 @@ async function fetchCloudData(isManual){
     showCloudAlertBanner('Could not connect to online Neon Database: ' + (err.message || 'Network error') + '. Please check Vercel DATABASE_URL / internet.');
   }
 }
+
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
 else init();
+
 </script>
 <div id="dps-official-printable-area" style="display:none"></div>
 </body>
