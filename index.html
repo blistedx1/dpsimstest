@@ -6397,18 +6397,17 @@ body {
   </div>
 </div>
 
-<!-- ADMIN LOGIN -->
 <!-- ADMIN LOGIN / BIOMETRIC AUTH MODAL -->
 <div class="modal-overlay" id="modal-login" onclick="if(event.target===this)closeLogin()">
   <div class="modal" style="max-width:390px">
-    <!-- TOP NAVIGATION BAR: Top Left Cancel | Top Right Enter PIN -->
+    <!-- TOP NAVIGATION BAR: Top Left Cancel | Mode Toggle (Hidden initially so user is not asked between PIN / Biometric) -->
     <div class="auth-top-bar">
       <button type="button" class="auth-top-btn auth-cancel-btn" onclick="closeLogin()" title="Cancel">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         <span>Cancel</span>
       </button>
 
-      <button type="button" class="auth-top-btn auth-pin-toggle-btn" id="btn-toggle-auth-mode" onclick="toggleAuthMode()" title="Enter PIN">
+      <button type="button" class="auth-top-btn auth-pin-toggle-btn" id="btn-toggle-auth-mode" onclick="toggleAuthMode()" title="Enter PIN" style="display:none">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
         <span id="auth-mode-btn-text">Enter PIN</span>
       </button>
@@ -6423,14 +6422,14 @@ body {
 
       <!-- CENTER HEADING & BIOMETRIC SCANNER BADGE -->
       <div class="auth-center-header">
-        <div class="auth-center-title" id="auth-modal-title">Unlock to Access Admin</div>
-        <div class="auth-scanner-badge" id="auth-scanner-badge">BIOMETRIC SCANNER</div>
+        <div class="auth-center-title" id="auth-modal-title">Screen Lock Verification</div>
+        <div class="auth-scanner-badge" id="auth-scanner-badge">SCREEN LOCK BIOMETRIC</div>
       </div>
 
-      <!-- BIOMETRIC SCANNER VIEW -->
+      <!-- BIOMETRIC SCANNER VIEW (Active by default without asking) -->
       <div id="auth-biometric-view">
         <div class="bio-scanner-wrapper">
-          <div class="bio-scanner-ring" id="bio-scanner-ring" onclick="triggerBiometricScan(true)" role="button" tabindex="0" title="Touch to scan fingerprint">
+          <div class="bio-scanner-ring" id="bio-scanner-ring" onclick="triggerBiometricScan(true)" role="button" tabindex="0" title="Touch to scan fingerprint or verify screen lock">
             <div class="bio-scanner-icon" id="biometric-scan-icon">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/>
@@ -6448,16 +6447,16 @@ body {
           </div>
         </div>
 
-        <div class="bio-touch-prompt" id="bio-touch-prompt">touch the fingerprint sensor</div>
+        <div class="bio-touch-prompt" id="bio-touch-prompt">touch fingerprint sensor or screen lock</div>
         <div class="bio-fail-message" id="bio-fail-message"></div>
 
         <button type="button" class="btn btn-biometric-tap" id="btn-biometric-tap" onclick="triggerBiometricScan(true)">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/><path d="M14 13.12c0 2.38 0 6.38-1 8.88"/><path d="M2 12a10 10 0 0 1 18-6"/><path d="M9 6.8a6 6 0 0 1 9 5.2v2"/></svg>
-          <span id="btn-biometric-tap-text">Scan Fingerprint / Face</span>
+          <span id="btn-biometric-tap-text">Scan Screen Lock / Biometric</span>
         </button>
       </div>
 
-      <!-- PIN INPUT VIEW (Shown after 3 failed attempts or when clicking 'Enter PIN') -->
+      <!-- PIN INPUT VIEW (Appears ONLY when biometric fails or is cancelled) -->
       <div id="auth-pin-view" style="display:none">
         <div class="pin-view-intro" id="pin-view-intro">Enter Admin PIN to unlock</div>
         <div class="pin-inputs">
@@ -6467,18 +6466,18 @@ body {
           <input type="password" class="pin-digit" id="p4" maxlength="1" inputmode="numeric" autocomplete="new-password" oninput="pinNext(this, null)" onkeydown="pinBack(event, this, 'p3')">
         </div>
         <div class="pin-error" id="pin-error"></div>
-        <button type="button" class="btn btn-primary" id="btn-register-bio" style="width:100%;padding:13px;font-size:13.5px;margin-top:10px;display:none;align-items:center;justify-content:center;gap:8px" onclick="onRegisterBiometricClick()">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <button type="button" class="btn btn-primary" id="btn-unlock-pin" style="width:100%;padding:13px;font-size:13.5px;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px" onclick="verifyPin()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
+          <span id="btn-unlock-pin-text">Unlock with PIN</span>
+        </button>
+        <button type="button" class="btn btn-secondary" id="btn-retry-bio" style="width:100%;padding:11px;font-size:13px;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px" onclick="retryBiometricFromPin()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/>
             <path d="M14 13.12c0 2.38 0 6.38-1 8.88"/>
             <path d="M2 12a10 10 0 0 1 18-6"/>
             <path d="M9 6.8a6 6 0 0 1 9 5.2v2"/>
           </svg>
-          <span>Register Biometric & Unlock</span>
-        </button>
-        <button type="button" class="btn btn-primary" id="btn-unlock-pin" style="width:100%;padding:13px;font-size:13.5px;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px" onclick="verifyPin(false)">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
-          <span id="btn-unlock-pin-text">Unlock with PIN</span>
+          <span>Try Screen Lock Again</span>
         </button>
       </div>
 
@@ -8506,9 +8505,10 @@ function base64ToUint8Array(base64) {
 var isPlatformBioAvailable = false;
 var bioFailAttempts = 0;
 var currentAuthMode = 'bio'; // 'bio' | 'pin'
+var isBiometricScanning = false;
 
 function checkBiometricSupport(callback){
-  var supported = !!(window.PublicKeyCredential && navigator.credentials && typeof navigator.credentials.create === 'function');
+  var supported = !!(window.isSecureContext && window.PublicKeyCredential && navigator.credentials && typeof navigator.credentials.create === 'function');
   isBiometricSupported = supported;
 
   if (supported && typeof PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable === 'function'){
@@ -8533,32 +8533,34 @@ function setAuthMode(mode){
   currentAuthMode = mode;
   var bioView = document.getElementById('auth-biometric-view');
   var pinView = document.getElementById('auth-pin-view');
+  var toggleBtn = document.getElementById('btn-toggle-auth-mode');
   var toggleBtnTxt = document.getElementById('auth-mode-btn-text');
   var badge = document.getElementById('auth-scanner-badge');
   var title = document.getElementById('auth-modal-title');
-  var regBtn = document.getElementById('btn-register-bio');
   var unlockPinBtn = document.getElementById('btn-unlock-pin');
 
   if (mode === 'pin'){
     if (bioView) bioView.style.display = 'none';
     if (pinView) pinView.style.display = 'block';
-    if (toggleBtnTxt) toggleBtnTxt.textContent = 'Use Biometric';
+    if (toggleBtn) {
+      toggleBtn.style.display = 'inline-flex';
+      if (toggleBtnTxt) toggleBtnTxt.textContent = 'Use Biometric';
+    }
     if (badge) badge.textContent = 'PIN VERIFICATION';
-    if (title) title.textContent = 'Unlock to Access Admin';
-
-    if (regBtn) regBtn.style.display = !hasBiometricEnrolled() ? 'flex' : 'none';
-    if (unlockPinBtn) unlockPinBtn.className = !hasBiometricEnrolled() ? 'btn btn-secondary' : 'btn btn-primary';
+    if (title) title.textContent = 'Unlock with Admin PIN';
+    if (unlockPinBtn) unlockPinBtn.style.display = 'flex';
 
     setTimeout(function(){
       var p1 = document.getElementById('p1');
       if (p1) p1.focus();
-    }, 120);
+    }, 100);
   } else {
     if (bioView) bioView.style.display = 'block';
     if (pinView) pinView.style.display = 'none';
-    if (toggleBtnTxt) toggleBtnTxt.textContent = 'Enter PIN';
-    if (badge) badge.textContent = 'BIOMETRIC SCANNER';
-    if (title) title.textContent = 'Unlock to Access Admin';
+    // Hidden initially: do NOT ask between PIN / Biometric upfront
+    if (toggleBtn) toggleBtn.style.display = 'none';
+    if (badge) badge.textContent = 'SCREEN LOCK BIOMETRIC';
+    if (title) title.textContent = 'Screen Lock Verification';
   }
 }
 
@@ -8567,7 +8569,13 @@ function toggleAuthMode(){
     setAuthMode('pin');
   } else {
     setAuthMode('bio');
+    triggerBiometricScan(true);
   }
+}
+
+function retryBiometricFromPin(){
+  setAuthMode('bio');
+  triggerBiometricScan(true);
 }
 
 function updateBiometricUIState(){
@@ -8597,7 +8605,6 @@ async function registerBiometrics(silentSuccessPrompt, andUnlockAdmin){
       name: 'DPS Amrapali IMS'
     };
     var host = window.location.hostname;
-    // Omit rp.id if host is an IP address to avoid WebAuthn spec error
     if (host && host !== '' && !/^[0-9.]+$/.test(host)) {
       rpEntity.id = host;
     }
@@ -8617,7 +8624,8 @@ async function registerBiometrics(silentSuccessPrompt, andUnlockAdmin){
           { alg: -8, type: 'public-key' }    // Ed25519
         ],
         authenticatorSelection: {
-          userVerification: 'preferred',
+          authenticatorAttachment: 'platform', // Directly targets Built-in Screen Lock (Windows Hello, Android, Touch ID)
+          userVerification: 'required',        // Require device screen lock verification
           residentKey: 'preferred'
         },
         timeout: 60000,
@@ -8636,7 +8644,7 @@ async function registerBiometrics(silentSuccessPrompt, andUnlockAdmin){
         localStorage.setItem(BIO_STORAGE_KEY + '_raw', bufferToBase64(credential.rawId));
       }
       if (!silentSuccessPrompt){
-        showThemeMessage('login', 'Biometrics Registered!', 'Fingerprint / Windows Hello is now enrolled on this device for instant 1-tap Admin access.');
+        showThemeMessage('login', 'Biometrics Registered!', 'Device screen lock is enrolled for instant 1-tap Admin access.');
       }
       renderBiometricSettingsContent();
       return true;
@@ -8660,63 +8668,122 @@ async function registerBiometrics(silentSuccessPrompt, andUnlockAdmin){
 }
 
 async function triggerBiometricScan(isUserClick){
+  if (isBiometricScanning) return;
   var failMsg = document.getElementById('bio-fail-message');
   var promptEl = document.getElementById('bio-touch-prompt');
   var ring = document.getElementById('bio-scanner-ring');
 
-  if (!isBiometricSupported){
+  var canBio = !!(window.isSecureContext && window.PublicKeyCredential && navigator.credentials && typeof navigator.credentials.create === 'function');
+  if (!canBio){
     setAuthMode('pin');
     var intro = document.getElementById('pin-view-intro');
-    if (intro) intro.textContent = 'Biometrics not available on this browser. Please enter Admin PIN.';
+    if (intro) intro.textContent = 'Biometrics not available on this device/browser. Please enter Admin PIN.';
     return;
   }
 
-  // If not enrolled yet, prompt user to enter PIN once to enroll
-  if (!hasBiometricEnrolled()){
-    if (isUserClick){
-      setAuthMode('pin');
-      var intro = document.getElementById('pin-view-intro');
-      if (intro) intro.textContent = 'First-time setup: Enter Admin PIN to register biometrics.';
-    }
-    return;
-  }
-
+  isBiometricScanning = true;
   if (failMsg) failMsg.textContent = '';
-  if (ring) ring.classList.add('scanning');
-  if (promptEl) promptEl.textContent = 'scanning... touch fingerprint sensor';
+  if (ring) {
+    ring.classList.add('scanning');
+    ring.classList.remove('fail-shake');
+  }
+  if (promptEl) promptEl.textContent = 'touch fingerprint sensor or verify screen lock...';
 
   try {
     var challenge = new Uint8Array(32);
     window.crypto.getRandomValues(challenge);
 
-    var getOptions = {
-      publicKey: {
-        challenge: challenge,
-        userVerification: 'preferred',
-        timeout: 60000
-      }
-    };
-
     var host = window.location.hostname;
-    if (host && host !== '' && !/^[0-9.]+$/.test(host)) {
-      getOptions.publicKey.rpId = host;
-    }
+    var rpId = (host && host !== '' && !/^[0-9.]+$/.test(host)) ? host : undefined;
 
-    var savedCredRaw = localStorage.getItem(BIO_STORAGE_KEY + '_raw');
-    var savedCredId = localStorage.getItem(BIO_STORAGE_KEY);
-    if (savedCredRaw || savedCredId){
+    var assertion = null;
+    var isNewEnrollment = false;
+
+    // 1. If already enrolled, invoke Screen Lock via navigator.credentials.get
+    if (hasBiometricEnrolled()){
+      var getOptions = {
+        publicKey: {
+          challenge: challenge,
+          userVerification: 'required',
+          timeout: 60000
+        }
+      };
+      if (rpId) getOptions.publicKey.rpId = rpId;
+
+      var savedCredRaw = localStorage.getItem(BIO_STORAGE_KEY + '_raw');
+      var savedCredId = localStorage.getItem(BIO_STORAGE_KEY);
+      if (savedCredRaw || savedCredId){
+        try {
+          var rawId = savedCredRaw ? base64ToUint8Array(savedCredRaw) : base64ToUint8Array(savedCredId);
+          getOptions.publicKey.allowCredentials = [{
+            type: 'public-key',
+            id: rawId,
+            transports: ['internal']
+          }];
+        } catch(e) {}
+      }
+
       try {
-        var rawId = savedCredRaw ? base64ToUint8Array(savedCredRaw) : base64ToUint8Array(savedCredId);
-        getOptions.publicKey.allowCredentials = [{
-          type: 'public-key',
-          id: rawId
-        }];
-      } catch(e) {}
+        assertion = await navigator.credentials.get(getOptions);
+      } catch(getErr){
+        console.warn('Existing credential get() error:', getErr);
+        if (getErr.name === 'NotAllowedError'){
+          // User explicitly cancelled or timed out the screen lock prompt
+          throw getErr;
+        }
+        // If credential not found/reset on device, try create below
+        assertion = null;
+      }
     }
 
-    var assertion = await navigator.credentials.get(getOptions);
+    // 2. If not enrolled yet (or get failed due to missing device credential):
+    // Directly open OS Screen Lock to enroll and verify in ONE seamless gesture!
+    if (!assertion){
+      var userId = new Uint8Array(16);
+      window.crypto.getRandomValues(userId);
+
+      var rpEntity = { name: 'DPS IMS' };
+      if (rpId) rpEntity.id = rpId;
+
+      var createOptions = {
+        publicKey: {
+          challenge: challenge,
+          rp: rpEntity,
+          user: {
+            id: userId,
+            name: 'admin@dpsims.local',
+            displayName: 'DPS Admin'
+          },
+          pubKeyCredParams: [
+            { alg: -7, type: 'public-key' },   // ES256 (Touch ID / Face ID / Android)
+            { alg: -257, type: 'public-key' }, // RS256 (Windows Hello)
+            { alg: -8, type: 'public-key' }    // Ed25519
+          ],
+          authenticatorSelection: {
+            authenticatorAttachment: 'platform', // Directly targets Built-in Screen Lock (Windows Hello / Android / Touch ID)!
+            userVerification: 'required',
+            residentKey: 'preferred'
+          },
+          timeout: 60000,
+          attestation: 'none'
+        }
+      };
+
+      var newCred = await navigator.credentials.create(createOptions);
+      if (newCred && newCred.id){
+        localStorage.setItem(BIO_STORAGE_KEY, newCred.id);
+        localStorage.setItem(BIO_USER_ID_KEY, bufferToBase64(userId));
+        if (newCred.rawId){
+          localStorage.setItem(BIO_STORAGE_KEY + '_raw', bufferToBase64(newCred.rawId));
+        }
+        assertion = newCred;
+        isNewEnrollment = true;
+      }
+    }
+
+    isBiometricScanning = false;
     if (ring) ring.classList.remove('scanning');
-    if (promptEl) promptEl.textContent = 'touch the fingerprint sensor';
+    if (promptEl) promptEl.textContent = 'verified!';
 
     if (assertion){
       bioFailAttempts = 0;
@@ -8727,36 +8794,32 @@ async function triggerBiometricScan(isUserClick){
       closeLogin();
       if (document.getElementById('tab-faculty').style.display !== 'none') renderFaculty();
       if (document.getElementById('tab-stock').style.display !== 'none') render();
-      showThemeMessage('login', 'Biometric Verified', 'Admin access unlocked with device biometric.');
+      showThemeMessage('login', isNewEnrollment ? 'Screen Lock Enrolled & Verified' : 'Screen Lock Verified', 'Admin access unlocked with device screen lock.');
       if (cb && typeof cb === 'function'){
         cb();
       }
     }
   } catch(err){
+    isBiometricScanning = false;
     if (ring) {
       ring.classList.remove('scanning');
       ring.classList.add('fail-shake');
       setTimeout(function(){ if (ring) ring.classList.remove('fail-shake'); }, 480);
     }
-    if (promptEl) promptEl.textContent = 'touch the fingerprint sensor';
-    console.warn('Biometric auth error:', err);
+    console.warn('Biometric auth error/cancelled:', err);
 
-    bioFailAttempts++;
-    if (bioFailAttempts < 3){
-      if (failMsg){
-        failMsg.textContent = 'Fingerprint not recognized (Attempt ' + bioFailAttempts + ' of 3). Touch sensor again.';
-      }
-    } else {
-      // 3 FAILS: Switch to PIN mode!
-      if (failMsg){
-        failMsg.textContent = 'Biometric failed 3 times. Please enter Admin PIN.';
-      }
-      setTimeout(function(){
-        setAuthMode('pin');
-        var intro = document.getElementById('pin-view-intro');
-        if (intro) intro.textContent = 'Biometric failed 3 times. Please enter Admin PIN to continue.';
-      }, 500);
+    // "BIOMETRIC FAIL hone par pin ka option aayega"
+    // Immediately display the PIN view!
+    setAuthMode('pin');
+    var intro = document.getElementById('pin-view-intro');
+    if (intro){
+      intro.innerHTML = '<span style="color:#dc2626;font-weight:700">Biometric cancelled or failed.</span><br><span style="font-size:12px;color:var(--muted)">Enter Admin PIN to unlock:</span>';
     }
+    ['p1','p2','p3','p4'].forEach(function(id){ var el = document.getElementById(id); if (el) { el.value = ''; el.classList.remove('filled'); } });
+    setTimeout(function(){
+      var p1 = document.getElementById('p1');
+      if (p1) p1.focus();
+    }, 150);
   }
 }
 
@@ -8767,8 +8830,6 @@ async function loginWithBiometrics(){
 async function onRegisterBiometricClick(){
   var pin = ['p1','p2','p3','p4'].map(function(id){ return (document.getElementById(id)||{}).value || ''; }).join('');
   var statusMsg = document.getElementById('pin-error');
-  var regBtn = document.getElementById('btn-register-bio');
-  if (regBtn) regBtn.classList.remove('btn-pulse');
 
   if (pin !== ADMIN_PIN){
     if (statusMsg){
@@ -8780,9 +8841,8 @@ async function onRegisterBiometricClick(){
     return;
   }
 
-  if (statusMsg) statusMsg.innerHTML = '<span style="color:var(--green);font-weight:700">Authorizing... please touch your fingerprint scanner or confirm Windows Hello.</span>';
+  if (statusMsg) statusMsg.innerHTML = '<span style="color:var(--green);font-weight:700">Authorizing screen lock... please verify your fingerprint or Windows Hello.</span>';
 
-  // DIRECT USER GESTURE WebAuthn create call:
   var ok = await registerBiometrics(true, true);
   if (ok){
     bioFailAttempts = 0;
@@ -8793,7 +8853,7 @@ async function onRegisterBiometricClick(){
     closeLogin();
     if (document.getElementById('tab-faculty').style.display !== 'none') renderFaculty();
     if (document.getElementById('tab-stock').style.display !== 'none') render();
-    showThemeMessage('login', 'Biometric Registered!', 'Fingerprint is now enrolled & Admin mode is unlocked.');
+    showThemeMessage('login', 'Biometric Registered!', 'Screen lock is now enrolled & Admin mode is unlocked.');
     if (cb && typeof cb === 'function') cb();
   }
 }
@@ -8890,8 +8950,12 @@ async function testBiometrics(){
     var getOptions = {
       publicKey: {
         challenge: challenge,
-        allowCredentials: [{ type: 'public-key', id: rawId }],
-        userVerification: 'preferred',
+        allowCredentials: [{
+          type: 'public-key',
+          id: rawId,
+          transports: ['internal']
+        }],
+        userVerification: 'required',
         timeout: 60000
       }
     };
@@ -8902,7 +8966,7 @@ async function testBiometrics(){
 
     var assertion = await navigator.credentials.get(getOptions);
     if (assertion){
-      showThemeMessage('login', 'Biometrics Test Passed!', 'Your fingerprint/face was verified successfully by the device authenticator.');
+      showThemeMessage('login', 'Biometrics Test Passed!', 'Screen Lock verified successfully.');
     }
   } catch(e){
     if (e.name !== 'NotAllowedError'){
@@ -8964,18 +9028,24 @@ function openLogin(callback){
   var intro = document.getElementById('pin-view-intro');
   if (intro) intro.textContent = 'Enter Admin PIN to unlock';
   var promptEl = document.getElementById('bio-touch-prompt');
-  if (promptEl) promptEl.textContent = 'touch the fingerprint sensor';
+  if (promptEl) promptEl.textContent = 'touch fingerprint sensor or screen lock';
 
   ['p1','p2','p3','p4'].forEach(function(id){ var el = document.getElementById(id); if (el){ el.value = ''; el.classList.remove('filled'); } });
 
+  var canBio = !!(window.isSecureContext && window.PublicKeyCredential && navigator.credentials && typeof navigator.credentials.create === 'function');
+  if (!canBio){
+    setAuthMode('pin');
+    if (intro) intro.textContent = 'Biometrics not available on this device/browser. Please enter Admin PIN:';
+    document.getElementById('modal-login').classList.add('open');
+    return;
+  }
+
+  // Open directly in pure Biometric mode - do not ask user PIN vs Biometric upfront
   setAuthMode('bio');
   document.getElementById('modal-login').classList.add('open');
 
-  if (hasBiometricEnrolled()){
-    setTimeout(function(){
-      triggerBiometricScan(false);
-    }, 280);
-  }
+  // Trigger screen lock biometric immediately in the direct user click gesture!
+  triggerBiometricScan(true);
 }
 function closeLogin(){
   document.getElementById('modal-login').classList.remove('open');
@@ -8990,16 +9060,7 @@ function pinNext(el, nextId){
     } else {
       var pin = ['p1','p2','p3','p4'].map(function(id){ return (document.getElementById(id)||{}).value || ''; }).join('');
       if (pin === ADMIN_PIN){
-        if (hasBiometricEnrolled()){
-          setTimeout(verifyPin, 120);
-        } else {
-          var regBtn = document.getElementById('btn-register-bio');
-          var err = document.getElementById('pin-error');
-          if (err) err.innerHTML = '<span style="color:var(--green);font-weight:700">✓ PIN Verified! Click "Register Biometric & Unlock" below.</span>';
-          if (regBtn){
-            regBtn.classList.add('btn-pulse');
-          }
-        }
+        setTimeout(verifyPin, 100);
       } else {
         setTimeout(verifyPin, 150);
       }
@@ -9017,11 +9078,7 @@ function pinBack(e, el, prevId){
   }
   if (e.key === 'Enter'){
     e.preventDefault();
-    if (!hasBiometricEnrolled()){
-      onRegisterBiometricClick();
-    } else {
-      verifyPin();
-    }
+    verifyPin();
   }
 }
 
@@ -9040,7 +9097,8 @@ function verifyPin(){
       cb();
     }
   } else {
-    document.getElementById('pin-error').textContent = 'Incorrect PIN. Please try again.';
+    var err = document.getElementById('pin-error');
+    if (err) err.textContent = 'Incorrect PIN. Please try again.';
     ['p1','p2','p3','p4'].forEach(function(id){ var el = document.getElementById(id); if (el) { el.value = ''; el.classList.remove('filled'); } });
     var p1 = document.getElementById('p1');
     if (p1) p1.focus();
