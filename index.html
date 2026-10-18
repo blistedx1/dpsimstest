@@ -1063,9 +1063,9 @@ header * {
 /* BUTTONS                                       */
 /* ============================================= */
 .btn {
-  padding: 8px 14px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
+  padding: 8px 18px;
+  border-radius: 9999px;
+  border: 1.5px solid var(--border);
   background: #ffffff;
   font-weight: 700;
   font-size: 13px;
@@ -1074,18 +1074,18 @@ header * {
   white-space: nowrap;
   font-family: inherit;
   color: var(--text);
-  box-shadow: var(--shadow-xs);
+  box-shadow: 0 2px 8px rgba(18, 79, 50, 0.05);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
 }
 .btn:hover {
-  background: var(--card-hover);
-  border-color: var(--border-hover);
-  color: var(--green);
+  background: #f7faf8;
+  border-color: rgba(27, 94, 58, 0.3);
+  color: #113823;
   transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 12px rgba(18, 79, 50, 0.12);
 }
 .btn:active {
   transform: scale(0.97);
@@ -1106,13 +1106,25 @@ header * {
   box-shadow: 0 6px 20px rgba(18, 79, 50, 0.38);
   transform: translateY(-2px);
 }
+.btn-secondary {
+  background: #ffffff;
+  border: 1.5px solid rgba(27, 94, 58, 0.25);
+  color: #1b5e3a;
+  border-radius: 9999px;
+  font-weight: 700;
+}
+.btn-secondary:hover {
+  background: #f0fdf4;
+  border-color: var(--green);
+  color: #113823;
+}
 .btn-icon {
   padding: 8px 11px;
   font-size: 14px;
   background: #ffffff;
   border-color: var(--border);
   color: var(--muted);
-  border-radius: 10px;
+  border-radius: 9999px;
 }
 .btn-icon svg {
   width: 17px;
@@ -1125,21 +1137,23 @@ header * {
   border-color: var(--border-hover);
 }
 .btn-sm {
-  padding: 6px 11px;
+  padding: 6px 14px;
   font-size: 12px;
-  border-radius: 8px;
+  border-radius: 9999px;
 }
 .btn-danger {
-  background: var(--red-light);
-  color: var(--red-dark);
-  border-color: var(--red-border);
+  background: #fef2f2;
+  color: #dc2626;
+  border-color: #fecaca;
+  border-radius: 9999px;
   font-weight: 700;
 }
 .btn-danger:hover {
-  background: var(--red);
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
   color: #ffffff;
-  border-color: var(--red);
+  border-color: #dc2626;
   box-shadow: 0 4px 14px rgba(220, 38, 38, 0.25);
+  transform: translateY(-1px);
 }
 .btn-danger:active {
   transform: scale(0.97);
@@ -2210,25 +2224,113 @@ header * {
   color: var(--green);
 }
 .modal-head .btn {
-  padding: 6px 12px;
-  font-size: 12.5px;
+  padding: 6px 14px;
+  font-size: 12px;
+  border-radius: 9999px;
+}
+.modal-head .btn:not(.btn-primary):not(.btn-danger):last-child {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  background: #f8faf8;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+}
+.modal-head .btn:not(.btn-primary):not(.btn-danger):last-child:hover {
+  background: #fee2e2;
+  color: #dc2626;
+  border-color: #fca5a5;
+  transform: rotate(90deg);
 }
 
 .summary-strip {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  gap: 12px;
   padding: 14px 20px;
-  background: var(--bg-subtle);
+  background: linear-gradient(180deg, #f7faf8 0%, #ffffff 100%);
   border-bottom: 1px solid var(--border);
 }
 .summary-box {
   background: #ffffff;
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 11px;
-  text-align: center;
-  box-shadow: var(--shadow-xs);
+  border-radius: 18px;
+  padding: 12px 14px;
+  text-align: left;
+  box-shadow: 0 4px 16px rgba(18, 79, 50, 0.05);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 84px;
+}
+.summary-box:hover {
+  transform: translateY(-2px);
+  border-color: var(--green-border);
+  box-shadow: 0 8px 24px rgba(18, 79, 50, 0.1);
+}
+.summary-watermark {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1;
+  color: rgba(18, 79, 50, 0.07);
+  pointer-events: none;
+  user-select: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: -1px;
+}
+.summary-box-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.summary-icon-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #1b5e3a 0%, #0d3821 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(18, 79, 50, 0.24);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+.summary-box:hover .summary-icon-badge {
+  transform: scale(1.08);
+}
+.summary-icon-badge.blue {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
+}
+.summary-icon-badge.green {
+  background: linear-gradient(135deg, #1b5e3a 0%, #0d3821 100%);
+  box-shadow: 0 4px 12px rgba(18, 79, 50, 0.28);
+}
+.summary-icon-badge.red {
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.28);
+}
+.summary-icon-badge svg {
+  width: 15px;
+  height: 15px;
+  stroke: #ffffff;
+}
+.summary-box-body {
+  margin-top: 2px;
 }
 .summary-label {
   font-size: 9.5px;
@@ -2236,54 +2338,68 @@ header * {
   letter-spacing: 0.5px;
   text-transform: uppercase;
   color: var(--muted);
+  margin-bottom: 2px;
 }
 .summary-value {
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 900;
-  margin-top: 3px;
+  line-height: 1.1;
   color: var(--text);
   font-family: 'JetBrains Mono', monospace;
 }
-.summary-box.blue .summary-value { color: var(--blue); }
-.summary-box.green .summary-value { color: var(--green); }
-.summary-box.red .summary-value { color: var(--red); }
+.summary-box.blue .summary-value { color: #1e40af; }
+.summary-box.green .summary-value { color: #166534; }
+.summary-box.red .summary-value { color: #991b1b; }
 .summary-box.low {
   background: #fef2f2;
-  border-color: var(--red-border);
+  border-color: rgba(220, 38, 38, 0.3);
 }
-.summary-box.low .summary-value { color: var(--red); }
+.summary-box.low .summary-watermark {
+  color: rgba(220, 38, 38, 0.1);
+}
+.summary-box.low .summary-value {
+  color: #dc2626;
+}
 
 .tabs {
   display: flex;
-  gap: 6px;
-  padding: 10px 20px 0;
-  background: var(--bg-subtle);
+  gap: 8px;
+  padding: 12px 20px;
+  background: #f8faf8;
   border-bottom: 1px solid var(--border);
   overflow-x: auto;
   scrollbar-width: none;
+  align-items: center;
 }
 .tabs::-webkit-scrollbar { display: none; }
 .tab {
-  padding: 10px 16px;
-  border-radius: 10px 10px 0 0;
+  padding: 8px 18px;
+  border-radius: 9999px;
   font-weight: 700;
-  font-size: 12.5px;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
   cursor: pointer;
-  border: 1px solid transparent;
+  border: 1.5px solid transparent;
   white-space: nowrap;
   flex-shrink: 0;
-  color: var(--muted);
-  transition: all 0.15s ease;
+  color: #4b6354;
+  background: #eef4f0;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .tab:hover {
-  color: var(--green);
+  color: #113823;
+  background: #e1ede4;
 }
 .tab.active {
-  background: #ffffff;
-  border-color: var(--border);
-  border-bottom-color: #ffffff;
-  color: var(--green);
+  background: linear-gradient(135deg, #1b5e3a 0%, #0d3821 100%);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.15);
   font-weight: 800;
+  box-shadow: 0 4px 14px rgba(18, 79, 50, 0.28);
 }
 .tab-content {
   padding: 18px 20px;
@@ -2388,18 +2504,24 @@ header * {
   margin-top: 10px;
   width: 100%;
   padding: 11px;
-  border: 1px dashed var(--green);
+  border: 1.5px dashed rgba(27, 94, 58, 0.4);
   background: #ffffff;
-  color: var(--green);
-  border-radius: 10px;
+  color: #113823;
+  border-radius: 9999px;
   cursor: pointer;
   font-weight: 800;
   font-size: 13px;
   font-family: inherit;
-  transition: all 0.15s ease;
+  transition: all 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 .add-variant-btn:hover {
-  background: var(--green-light);
+  background: #f0fdf4;
+  border-color: var(--green);
+  transform: translateY(-1px);
 }
 
 .subcat-grid {
@@ -2411,19 +2533,19 @@ header * {
 .subcat {
   background: #ffffff;
   border: 1.5px solid var(--border);
-  border-radius: 14px;
-  padding: 13px;
+  border-radius: 18px;
+  padding: 14px;
   cursor: pointer;
-  transition: all 0.18s ease;
-  box-shadow: var(--shadow-xs);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(18, 79, 50, 0.05);
 }
 .subcat:hover {
   border-color: var(--green);
-  box-shadow: var(--shadow-sm);
-  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(18, 79, 50, 0.12);
+  transform: translateY(-2px);
 }
 .subcat.low {
-  border-color: var(--red-border);
+  border-color: rgba(220, 38, 38, 0.3);
   background: #fffdfd;
 }
 .subcat-name {
@@ -2453,8 +2575,9 @@ header * {
   font-weight: 700;
 }
 .subcat-inout span {
-  padding: 3px 7px;
-  border-radius: 6px;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  font-weight: 700;
 }
 .subcat-inout .in { background: var(--green-light); color: var(--green); }
 .subcat-inout .out { background: var(--red-light); color: var(--red); }
@@ -2801,10 +2924,16 @@ table.bordered-report-table tfoot td,
 }
 .rep-kpi-card {
   background: #ffffff;
-  border: 1px solid var(--green-border);
-  border-radius: 10px;
-  padding: 10px 12px;
-  box-shadow: var(--shadow-xs);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 13px 15px;
+  box-shadow: 0 4px 16px rgba(18, 79, 50, 0.05);
+  transition: all 0.2s ease;
+}
+.rep-kpi-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--green-border);
+  box-shadow: 0 8px 22px rgba(18, 79, 50, 0.1);
 }
 .rep-kpi-label {
   font-size: 10px;
@@ -3494,14 +3623,19 @@ table.bordered-report-table tfoot td,
 }
 .readonly-note {
   background: #fffbeb;
-  border: 1px solid #fef3c7;
+  border: 1.5px solid #fde68a;
   color: #92400e;
-  padding: 11px 14px;
-  border-radius: 12px;
+  padding: 9px 18px;
+  border-radius: 9999px;
   font-size: 12.5px;
-  font-weight: 600;
-  margin-bottom: 14px;
+  font-weight: 700;
+  margin-bottom: 16px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.08);
 }
 .empty-msg {
   text-align: center;
@@ -3718,18 +3852,24 @@ table.bordered-report-table tfoot td,
   margin-top: 10px;
   width: 100%;
   padding: 12px;
-  border: 1px dashed var(--green);
+  border: 1.5px dashed rgba(27, 94, 58, 0.4);
   background: #ffffff;
-  color: var(--green);
-  border-radius: 10px;
+  color: #113823;
+  border-radius: 9999px;
   cursor: pointer;
   font-weight: 800;
   font-size: 13px;
   font-family: inherit;
-  transition: all 0.15s ease;
+  transition: all 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 .slip-add-btn:hover {
-  background: var(--green-light);
+  background: #f0fdf4;
+  border-color: var(--green);
+  transform: translateY(-1px);
 }
 .slip-summary {
   margin-top: 14px;
@@ -3783,21 +3923,21 @@ table.bordered-report-table tfoot td,
 }
 .choice-btn {
   background: #ffffff;
-  border: 2px solid var(--border);
-  border-radius: 16px;
-  padding: 18px 20px;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 16px 18px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 16px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: left;
   font-family: inherit;
-  box-shadow: var(--shadow-xs);
+  box-shadow: 0 4px 16px rgba(18, 79, 50, 0.05);
 }
 .choice-btn:hover {
   border-color: var(--green);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 24px rgba(18, 79, 50, 0.12);
   transform: translateY(-2px);
 }
 .choice-btn:active {
@@ -3806,19 +3946,23 @@ table.bordered-report-table tfoot td,
 .choice-icon {
   width: 44px;
   height: 44px;
-  border-radius: 12px;
-  background: var(--green-light);
-  border: 1px solid var(--green-border);
-  color: var(--green);
+  border-radius: 14px;
+  background: linear-gradient(135deg, #1b5e3a 0%, #0d3821 100%);
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(18, 79, 50, 0.25);
+  transition: transform 0.2s ease;
+}
+.choice-btn:hover .choice-icon {
+  transform: scale(1.06);
 }
 .choice-icon svg {
   width: 22px;
   height: 22px;
-  stroke: var(--green);
+  stroke: #ffffff;
 }
 .choice-info {
   flex: 1;
@@ -5659,7 +5803,7 @@ body {
         <input type="number" id="new-var-initial-stock" placeholder="0" min="0" value="0" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;font-size:13.5px;font-weight:600">
       </div>
 
-      <button class="btn btn-primary" style="width:100%;padding:13px;font-size:14px;font-weight:800;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:6px" onclick="saveNewVariant()">
+      <button class="btn btn-primary" style="width:100%;padding:13px;font-size:14px;font-weight:800;border-radius:9999px;display:flex;align-items:center;justify-content:center;gap:6px" onclick="saveNewVariant()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
         <span>Save New Color</span>
       </button>
@@ -5686,26 +5830,58 @@ body {
     </div>
     <div class="tab-content" style="padding:20px">
       <!-- SUMMARY KPI METRICS -->
-      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));gap:10px;margin-bottom:18px">
-        <div style="background:var(--red-light);border:1px solid var(--red-border);border-radius:12px;padding:12px;text-align:center">
-          <div style="font-size:11px;font-weight:700;color:var(--red-dark);text-transform:uppercase">Total Issued</div>
-          <div style="font-size:24px;font-weight:900;color:var(--red)" id="ib-total-out">0</div>
-          <div style="font-size:11px;color:var(--text-secondary);font-weight:600">units to staff</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));gap:12px;margin-bottom:18px">
+        <div class="stat" style="padding:14px 16px;min-height:92px;border-radius:18px">
+          <span class="stat-watermark" style="font-size:28px;top:6px;right:10px">01</span>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <div class="stat-icon-badge red" style="width:34px;height:34px;border-radius:11px">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17V5"/><path d="m8 9 4-4 4 4"/><path d="M8 19H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h4"/><path d="M16 19h4a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4"/></svg>
+            </div>
+          </div>
+          <div>
+            <div class="stat-label" style="font-size:10px;color:var(--muted)">Total Issued</div>
+            <div style="font-size:22px;font-weight:900;color:var(--red);font-family:'JetBrains Mono',monospace" id="ib-total-out">0</div>
+            <div style="font-size:10.5px;color:var(--text-secondary);font-weight:600">units to staff</div>
+          </div>
         </div>
-        <div style="background:var(--blue-light);border:1px solid var(--blue-border);border-radius:12px;padding:12px;text-align:center">
-          <div style="font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase">Staff / Faculty</div>
-          <div style="font-size:24px;font-weight:900;color:var(--blue)" id="ib-fac-count">0</div>
-          <div style="font-size:11px;color:var(--text-secondary);font-weight:600">recipients</div>
+        <div class="stat" style="padding:14px 16px;min-height:92px;border-radius:18px">
+          <span class="stat-watermark" style="font-size:28px;top:6px;right:10px">02</span>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <div class="stat-icon-badge" style="width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);box-shadow:0 4px 12px rgba(37,99,235,0.28)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+          </div>
+          <div>
+            <div class="stat-label" style="font-size:10px;color:var(--muted)">Staff / Faculty</div>
+            <div style="font-size:22px;font-weight:900;color:var(--blue);font-family:'JetBrains Mono',monospace" id="ib-fac-count">0</div>
+            <div style="font-size:10.5px;color:var(--text-secondary);font-weight:600">recipients</div>
+          </div>
         </div>
-        <div style="background:var(--green-light);border:1px solid var(--green-border);border-radius:12px;padding:12px;text-align:center">
-          <div style="font-size:11px;font-weight:700;color:var(--green-dark);text-transform:uppercase">Current Stock</div>
-          <div style="font-size:24px;font-weight:900;color:var(--green)" id="ib-current-stock">0</div>
-          <div style="font-size:11px;color:var(--text-secondary);font-weight:600">units remaining</div>
+        <div class="stat" style="padding:14px 16px;min-height:92px;border-radius:18px">
+          <span class="stat-watermark" style="font-size:28px;top:6px;right:10px">03</span>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <div class="stat-icon-badge" style="width:34px;height:34px;border-radius:11px">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+            </div>
+          </div>
+          <div>
+            <div class="stat-label" style="font-size:10px;color:var(--muted)">Current Stock</div>
+            <div style="font-size:22px;font-weight:900;color:var(--green);font-family:'JetBrains Mono',monospace" id="ib-current-stock">0</div>
+            <div style="font-size:10.5px;color:var(--text-secondary);font-weight:600">units remaining</div>
+          </div>
         </div>
-        <div style="background:#f1f5f9;border:1px solid #cbd5e1;border-radius:12px;padding:12px;text-align:center" id="ib-inward-box">
-          <div style="font-size:11px;font-weight:700;color:#475569;text-transform:uppercase">Received (Inward)</div>
-          <div style="font-size:24px;font-weight:900;color:#16a34a" id="ib-total-in">0</div>
-          <div style="font-size:11px;color:var(--text-secondary);font-weight:600">units added</div>
+        <div class="stat" id="ib-inward-box" style="padding:14px 16px;min-height:92px;border-radius:18px">
+          <span class="stat-watermark" style="font-size:28px;top:6px;right:10px">04</span>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <div class="stat-icon-badge" style="width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg, #0f766e 0%, #115e59 100%);box-shadow:0 4px 12px rgba(15,118,110,0.28)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M8 5H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4"/></svg>
+            </div>
+          </div>
+          <div>
+            <div class="stat-label" style="font-size:10px;color:var(--muted)">Received (Inward)</div>
+            <div style="font-size:22px;font-weight:900;color:#16a34a;font-family:'JetBrains Mono',monospace" id="ib-total-in">0</div>
+            <div style="font-size:10.5px;color:var(--text-secondary);font-weight:600">units added</div>
+          </div>
         </div>
       </div>
 
@@ -5717,11 +5893,11 @@ body {
           <span class="count" id="ib-entries-count" style="display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;background:var(--green-light);color:var(--green)">0 records</span>
         </div>
         <div style="display:flex;align-items:center;gap:8px">
-          <button type="button" class="btn" onclick="exportBreakdownExcel()" style="padding:6px 12px;font-size:12px;font-weight:700;background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;display:inline-flex;align-items:center;gap:5px;border-radius:8px;cursor:pointer" title="Download Excel (.csv)">
+          <button type="button" class="btn" onclick="exportBreakdownExcel()" style="padding:6px 12px;font-size:12px;font-weight:700;background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;display:inline-flex;align-items:center;gap:5px;border-radius:9999px;cursor:pointer" title="Download Excel (.csv)">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line></svg>
             <span>Excel</span>
           </button>
-          <button type="button" class="btn" onclick="exportBreakdownPDF()" style="padding:6px 12px;font-size:12px;font-weight:700;background:#fef2f2;color:#991b1b;border:1px solid #fecaca;display:inline-flex;align-items:center;gap:5px;border-radius:8px;cursor:pointer" title="Print / Download PDF">
+          <button type="button" class="btn" onclick="exportBreakdownPDF()" style="padding:6px 12px;font-size:12px;font-weight:700;background:#fef2f2;color:#991b1b;border:1px solid #fecaca;display:inline-flex;align-items:center;gap:5px;border-radius:9999px;cursor:pointer" title="Print / Download PDF">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
             <span>PDF</span>
           </button>
@@ -5762,11 +5938,11 @@ body {
 
       <div style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
         <div style="display:flex;align-items:center;gap:8px">
-          <button type="button" class="btn" onclick="exportBreakdownExcel()" style="padding:8px 14px;font-size:12.5px;font-weight:700;background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;display:inline-flex;align-items:center;gap:6px;border-radius:8px;cursor:pointer">
+          <button type="button" class="btn" onclick="exportBreakdownExcel()" style="padding:8px 14px;font-size:12.5px;font-weight:700;background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;display:inline-flex;align-items:center;gap:6px;border-radius:9999px;cursor:pointer">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line></svg>
             <span>Download Excel</span>
           </button>
-          <button type="button" class="btn" onclick="exportBreakdownPDF()" style="padding:8px 14px;font-size:12.5px;font-weight:700;background:#fef2f2;color:#991b1b;border:1px solid #fecaca;display:inline-flex;align-items:center;gap:6px;border-radius:8px;cursor:pointer">
+          <button type="button" class="btn" onclick="exportBreakdownPDF()" style="padding:8px 14px;font-size:12.5px;font-weight:700;background:#fef2f2;color:#991b1b;border:1px solid #fecaca;display:inline-flex;align-items:center;gap:6px;border-radius:9999px;cursor:pointer">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
             <span>Download PDF</span>
           </button>
@@ -5776,7 +5952,7 @@ body {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
             <span>Open Item in Inventory</span>
           </button>
-          <button class="btn" onclick="closeItemBreakdown()" style="padding:9px 16px;font-size:13px">Close</button>
+          <button class="btn" onclick="closeItemBreakdown()" style="padding:9px 18px;font-size:13px;border-radius:9999px">Close</button>
         </div>
       </div>
     </div>
@@ -5811,9 +5987,42 @@ body {
       </div>
     </div>
     <div class="summary-strip">
-      <div class="summary-box blue"><div class="summary-label">Current</div><div class="summary-value" id="ms-current">0</div></div>
-      <div class="summary-box green"><div class="summary-label">Received</div><div class="summary-value" id="ms-in">0</div></div>
-      <div class="summary-box red"><div class="summary-label">Issued</div><div class="summary-value" id="ms-out">0</div></div>
+      <div class="summary-box blue">
+        <span class="summary-watermark">01</span>
+        <div class="summary-box-top">
+          <div class="summary-icon-badge blue">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+          </div>
+        </div>
+        <div class="summary-box-body">
+          <div class="summary-label">Current</div>
+          <div class="summary-value" id="ms-current">0</div>
+        </div>
+      </div>
+      <div class="summary-box green">
+        <span class="summary-watermark">02</span>
+        <div class="summary-box-top">
+          <div class="summary-icon-badge green">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M8 5H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4"/></svg>
+          </div>
+        </div>
+        <div class="summary-box-body">
+          <div class="summary-label">Received</div>
+          <div class="summary-value" id="ms-in">0</div>
+        </div>
+      </div>
+      <div class="summary-box red">
+        <span class="summary-watermark">03</span>
+        <div class="summary-box-top">
+          <div class="summary-icon-badge red">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17V5"/><path d="m8 9 4-4 4 4"/><path d="M8 19H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h4"/><path d="M16 19h4a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4"/></svg>
+          </div>
+        </div>
+        <div class="summary-box-body">
+          <div class="summary-label">Issued</div>
+          <div class="summary-value" id="ms-out">0</div>
+        </div>
+      </div>
     </div>
     <div class="tabs">
       <div class="tab active" id="tab-in" onclick="switchTab('in')">INWARD</div>
@@ -8789,7 +8998,7 @@ function updateModalReadonlyState(){
   var inBtn = document.getElementById('in-submit-btn');
   var outBtn = document.getElementById('out-submit-btn');
   if (isAdmin){ inNote.style.display = 'none'; outNote.style.display = 'none'; inBtn.disabled = false; outBtn.disabled = false; inBtn.style.opacity = '1'; outBtn.style.opacity = '1'; }
-  else { inNote.style.display = 'block'; outNote.style.display = 'block'; inBtn.disabled = true; outBtn.disabled = true; inBtn.style.opacity = '0.5'; outBtn.style.opacity = '0.5'; }
+  else { inNote.style.display = 'flex'; outNote.style.display = 'flex'; inBtn.disabled = true; outBtn.disabled = true; inBtn.style.opacity = '0.5'; outBtn.style.opacity = '0.5'; }
   var addVarBtn = document.getElementById('modal-add-var-btn');
   if (addVarBtn) addVarBtn.style.display = isAdmin ? 'inline-flex' : 'none';
   var delItemBtn = document.getElementById('modal-del-item-btn');
@@ -8830,7 +9039,7 @@ function refreshModalHeader(){
   document.getElementById('ms-current').textContent = v.current;
   document.getElementById('ms-in').textContent = variantIn(v);
   document.getElementById('ms-out').textContent = variantOut(v);
-  var cb = document.getElementById('ms-current').parentNode;
+  var cb = document.getElementById('ms-current').closest('.summary-box') || document.getElementById('ms-current').parentNode;
   if (v.current < 15 && v.current > 0) cb.classList.add('low'); else cb.classList.remove('low');
 
   var addVarBtn = document.getElementById('modal-add-var-btn');
