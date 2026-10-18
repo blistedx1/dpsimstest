@@ -8410,7 +8410,28 @@ var bioFailAttempts = 0;
 var currentAuthMode = 'bio'; // 'bio' | 'pin'
 var isBiometricScanning = false;
 
+function isMobileOrTabletDevice(){
+  var ua = (navigator.userAgent || navigator.vendor || window.opera || '').toLowerCase();
+  var isMobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(ua);
+  var isIPad = (ua.indexOf('macintosh') !== -1 && typeof navigator.maxTouchPoints === 'number' && navigator.maxTouchPoints > 1);
+  if (isMobileUA || isIPad) return true;
+
+  var hasTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+  var isCoarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  if (hasTouch && isCoarse && window.innerWidth <= 1024) return true;
+
+  if (hasTouch && window.innerWidth <= 768) return true;
+
+  return false;
+}
+
 function checkBiometricSupport(callback){
+  if (!isMobileOrTabletDevice()){
+    isBiometricSupported = false;
+    isPlatformBioAvailable = false;
+    if (typeof callback === 'function') callback(false);
+    return;
+  }
   var supported = !!(window.isSecureContext && window.PublicKeyCredential && navigator.credentials && typeof navigator.credentials.create === 'function');
   isBiometricSupported = supported;
 
@@ -8427,12 +8448,17 @@ function checkBiometricSupport(callback){
 }
 
 function hasBiometricEnrolled(){
+  if (!isMobileOrTabletDevice()) return false;
   try {
     return !!localStorage.getItem(BIO_STORAGE_KEY);
   } catch(e) { return false; }
 }
 
 function setAuthMode(mode){
+  var isMobileOrTab = isMobileOrTabletDevice();
+  if (!isMobileOrTab) {
+    mode = 'pin';
+  }
   currentAuthMode = mode;
   var bioView = document.getElementById('auth-biometric-view');
   var pinView = document.getElementById('auth-pin-view');
@@ -8441,15 +8467,19 @@ function setAuthMode(mode){
   var badge = document.getElementById('auth-scanner-badge');
   var title = document.getElementById('auth-modal-title');
   var unlockPinBtn = document.getElementById('btn-unlock-pin');
+  var retryBioBtn = document.getElementById('btn-retry-bio');
 
   if (mode === 'pin'){
     if (bioView) bioView.style.display = 'none';
     if (pinView) pinView.style.display = 'block';
     if (toggleBtn) {
-      toggleBtn.style.display = 'inline-flex';
+      toggleBtn.style.display = isMobileOrTab ? 'inline-flex' : 'none';
       if (toggleBtnTxt) toggleBtnTxt.textContent = 'Use Biometric';
     }
-    if (badge) badge.textContent = 'PIN VERIFICATION';
+    if (retryBioBtn) {
+      retryBioBtn.style.display = isMobileOrTab ? 'flex' : 'none';
+    }
+    if (badge) badge.textContent = isMobileOrTab ? 'PIN VERIFICATION' : 'ADMIN PIN VERIFICATION';
     if (title) title.textContent = 'Unlock with Admin PIN';
     if (unlockPinBtn) unlockPinBtn.style.display = 'flex';
 
@@ -8460,7 +8490,6 @@ function setAuthMode(mode){
   } else {
     if (bioView) bioView.style.display = 'block';
     if (pinView) pinView.style.display = 'none';
-    // Hidden initially: do NOT ask between PIN / Biometric upfront
     if (toggleBtn) toggleBtn.style.display = 'none';
     if (badge) badge.textContent = 'SCREEN LOCK BIOMETRIC';
     if (title) title.textContent = 'Screen Lock Verification';
@@ -8468,6 +8497,10 @@ function setAuthMode(mode){
 }
 
 function toggleAuthMode(){
+  if (!isMobileOrTabletDevice()){
+    setAuthMode('pin');
+    return;
+  }
   if (currentAuthMode === 'bio'){
     setAuthMode('pin');
   } else {
@@ -8477,6 +8510,7 @@ function toggleAuthMode(){
 }
 
 function retryBiometricFromPin(){
+  if (!isMobileOrTabletDevice()) return;
   closeLogin();
   setTimeout(function(){
     triggerBiometricScan(true);
@@ -8484,7 +8518,7 @@ function retryBiometricFromPin(){
 }
 
 function updateBiometricUIState(){
-  if (!isBiometricSupported){
+  if (!isMobileOrTabletDevice() || !isBiometricSupported){
     setAuthMode('pin');
   }
 }
@@ -8573,6 +8607,11 @@ async function registerBiometrics(silentSuccessPrompt, andUnlockAdmin){
 }
 
 async function triggerBiometricScan(isUserClick){
+  if (!isMobileOrTabletDevice()){
+    setAuthMode('pin');
+    document.getElementById('modal-login').classList.add('open');
+    return;
+  }
   if (isBiometricScanning) return;
   var failMsg = document.getElementById('bio-fail-message');
   var promptEl = document.getElementById('bio-touch-prompt');
@@ -8765,6 +8804,10 @@ async function onRegisterBiometricClick(){
 }
 
 function openBiometricSettings(){
+  if (!isMobileOrTabletDevice()){
+    showThemeMessage('info', 'Desktop Mode', 'Admin access on Desktop is verified via PIN. Biometrics (Fingerprint / Screen Lock) are enabled on Mobile & Tablet devices.');
+    return;
+  }
   renderBiometricSettingsContent();
   document.getElementById('modal-biometric-settings').classList.add('open');
 }
@@ -8892,8 +8935,11 @@ function updateAdminUI(){
   }
   if (isAdmin){
     if (badge) {
-      badge.innerHTML = '<span class="admin-badge" title="Admin Mode Active (Click to manage Biometrics & Security)" style="cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg><span class="badge-txt">Admin Mode</span></span>';
-      badge.onclick = openBiometricSettings;
+      var isMobileOrTab = isMobileOrTabletDevice();
+      badge.innerHTML = '<span class="admin-badge" title="' + (isMobileOrTab ? 'Admin Mode Active (Click to manage Biometrics & Security)' : 'Admin Mode Active (PIN Protected)') + '" style="cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg><span class="badge-txt">Admin Mode</span></span>';
+      badge.onclick = isMobileOrTab ? openBiometricSettings : function(){
+        showThemeMessage('info', 'Admin Security', 'Admin Mode is active on Desktop via PIN security.');
+      };
     }
     if (btn){
       btn.className = 'btn header-btn btn-logout-action';
@@ -8938,6 +8984,22 @@ function openLogin(callback){
 
   ['p1','p2','p3','p4'].forEach(function(id){ var el = document.getElementById(id); if (el){ el.value = ''; el.classList.remove('filled'); } });
 
+  // DESKTOP MODE: ONLY PIN option is given! No biometric prompt or screen lock!
+  if (!isMobileOrTabletDevice()){
+    setAuthMode('pin');
+    var retryBioBtn = document.getElementById('btn-retry-bio');
+    if (retryBioBtn) retryBioBtn.style.display = 'none';
+    var toggleBtn = document.getElementById('btn-toggle-auth-mode');
+    if (toggleBtn) toggleBtn.style.display = 'none';
+    document.getElementById('modal-login').classList.add('open');
+    setTimeout(function(){
+      var p1 = document.getElementById('p1');
+      if (p1) p1.focus();
+    }, 120);
+    return;
+  }
+
+  // MOBILE / TABLET MODE: Screen Lock Biometric verification
   var canBio = !!(window.isSecureContext && window.PublicKeyCredential && navigator.credentials && typeof navigator.credentials.create === 'function');
   if (!canBio){
     setAuthMode('pin');
@@ -8950,7 +9012,7 @@ function openLogin(callback){
     return;
   }
 
-  // Trigger screen lock biometric DIRECTLY on click - ZERO MODAL WINDOWS OPENED!
+  // Mobile/Tablet: Trigger screen lock biometric DIRECTLY on click - ZERO MODAL WINDOWS OPENED!
   triggerBiometricScan(true);
 }
 function closeLogin(){
