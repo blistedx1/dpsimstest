@@ -127,142 +127,20 @@ body {
 
 /* ============================================= */
 /* ========================================================================= */
-/* SPLASH SCREEN: FULL SCREEN ON DESKTOP & EXACT PRESERVED ON MOBILE        */
-/* ONLY MAIN LOGO ZOOMS OUT WHILE OPENING THE APP                            */
+/* SPLASH SCREEN: PURE CLEAN BRANDING WITH GREEN AMBIENT GLOW */
 /* ========================================================================= */
 #splash {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
-  background: radial-gradient(circle at center, #ffffff 40%, #eef5f0 100%);
+  background: radial-gradient(circle at center, #ffffff 20%, #f1f8f3 65%, #e3eee6 100%);
   z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.65s ease;
-}
-
-/* Mobile Splash Artwork Frame (Screen width <= 768px) */
-.splash-bg-mobile {
-  display: block;
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background: url('splash-bg.png') no-repeat center center;
-  background-size: cover;
-  pointer-events: none;
-  z-index: 1;
-  transition: opacity 0.5s ease;
-}
-
-/* Desktop Full Screen Splash Artwork Frame (Screen width > 768px) */
-.splash-desktop-frame {
-  display: none;
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
-  transition: opacity 0.5s ease;
-}
-
-@media (min-width: 769px) {
-  .splash-bg-mobile {
-    display: none !important;
-  }
-  .splash-desktop-frame {
-    display: block !important;
-  }
-}
-
-/* Desktop Perimeter Stationery Items */
-.splash-item {
-  position: absolute;
-  user-select: none;
-  pointer-events: none;
-  filter: drop-shadow(0 14px 28px rgba(18, 79, 50, 0.10));
-}
-
-/* Top-Left: Ruler & Protractor */
-.item-ruler {
-  top: 0;
-  left: 0;
-  width: clamp(140px, 13vw, 225px);
-  max-height: 38vh;
-  object-fit: contain;
-  transform-origin: top left;
-}
-
-/* Top-Center: Folder */
-.item-folder {
-  top: clamp(8px, 1.8vh, 24px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: clamp(180px, 16vw, 270px);
-  max-height: 22vh;
-  object-fit: contain;
-}
-
-/* Top-Right: Color Palette & Brush */
-.item-palette {
-  top: clamp(12px, 2vh, 32px);
-  right: clamp(15px, 2.5vw, 45px);
-  width: clamp(140px, 13vw, 220px);
-  max-height: 34vh;
-  object-fit: contain;
-}
-
-/* Mid-Left: Scissors & Sharpener */
-.item-scissors {
-  top: 50%;
-  left: clamp(10px, 2vw, 35px);
-  transform: translateY(-50%);
-  width: clamp(120px, 11vw, 185px);
-  max-height: 34vh;
-  object-fit: contain;
-}
-
-/* Mid-Right: Pen Stand / Markers */
-.item-pen {
-  top: 50%;
-  right: clamp(10px, 2vw, 35px);
-  transform: translateY(-50%);
-  width: clamp(110px, 10vw, 175px);
-  max-height: 34vh;
-  object-fit: contain;
-}
-
-/* Bottom-Left: Pencil & Eraser */
-.item-pencil {
-  bottom: clamp(12px, 2vh, 30px);
-  left: clamp(15px, 2.5vw, 45px);
-  width: clamp(120px, 11vw, 195px);
-  max-height: 34vh;
-  object-fit: contain;
-}
-
-/* Bottom-Center: Notebooks / Textbooks */
-.item-book {
-  bottom: clamp(8px, 1.8vh, 22px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: clamp(140px, 13vw, 220px);
-  max-height: 22vh;
-  object-fit: contain;
-}
-
-/* Bottom-Right: Drawing Paper & Ruler */
-.item-sheet {
-  bottom: clamp(12px, 2vh, 30px);
-  right: clamp(15px, 2.5vw, 45px);
-  width: clamp(150px, 14vw, 240px);
-  max-height: 34vh;
-  object-fit: contain;
 }
 
 /* Main Center Logo & Content */
@@ -279,10 +157,41 @@ body {
 }
 
 .splash-logo-wrap {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   animation: splashPulse 2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* GREEN AMBIENT LIGHT AURA GLOWING BEHIND THE OFFICIAL LOGO */
+.splash-ambient-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.60) 0%, rgba(18, 79, 50, 0.38) 40%, rgba(16, 185, 129, 0.16) 68%, transparent 82%);
+  filter: blur(28px);
+  pointer-events: none;
+  z-index: 1;
+  animation: ambientLightPulse 3.2s infinite ease-in-out;
+}
+
+@media (min-width: 769px) {
+  .splash-ambient-glow {
+    width: clamp(280px, 25vw, 360px);
+    height: clamp(280px, 25vw, 360px);
+    filter: blur(36px);
+  }
+}
+
+@keyframes ambientLightPulse {
+  0% { transform: translate(-50%, -50%) scale(0.92); opacity: 0.70; filter: blur(24px); }
+  50% { transform: translate(-50%, -50%) scale(1.18); opacity: 1; filter: blur(36px); }
+  100% { transform: translate(-50%, -50%) scale(0.92); opacity: 0.70; filter: blur(24px); }
 }
 
 @keyframes splashPulse {
@@ -292,10 +201,12 @@ body {
 }
 
 .splash-logo-img {
+  position: relative;
+  z-index: 2;
   width: 180px;
   height: 180px;
   object-fit: contain;
-  filter: drop-shadow(0 14px 30px rgba(18, 79, 50, 0.16));
+  filter: drop-shadow(0 14px 30px rgba(18, 79, 50, 0.25)) drop-shadow(0 0 24px rgba(34, 197, 94, 0.45));
 }
 
 @media (min-width: 769px) {
@@ -388,11 +299,6 @@ body {
   pointer-events: none;
   visibility: hidden;
   transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.65s ease;
-}
-
-#splash.hide .splash-bg-mobile,
-#splash.hide .splash-desktop-frame {
-  opacity: 0;
 }
 
 #splash.hide .splash-center-content {
@@ -5756,24 +5662,10 @@ body {
 </div>
 
 <div id="splash">
-  <!-- Mobile Splash Artwork: Kept 100% exact as approved by user -->
-  <div class="splash-bg-mobile"></div>
-
-  <!-- Desktop Full Screen Splash Artwork: Frames the entire viewport -->
-  <div class="splash-desktop-frame" aria-hidden="true">
-    <img src="splash-assets/ruler.png" alt="" class="splash-item item-ruler">
-    <img src="splash-assets/folder.png" alt="" class="splash-item item-folder">
-    <img src="splash-assets/palette.png" alt="" class="splash-item item-palette">
-    <img src="splash-assets/scissors.png" alt="" class="splash-item item-scissors">
-    <img src="splash-assets/pen.png" alt="" class="splash-item item-pen">
-    <img src="splash-assets/pencil.png" alt="" class="splash-item item-pencil">
-    <img src="splash-assets/book.png" alt="" class="splash-item item-book">
-    <img src="splash-assets/sheet.png" alt="" class="splash-item item-sheet">
-  </div>
-
-  <!-- Main Center Logo & Title: ONLY this zooms out while opening the app -->
+  <!-- Clean Official Brand Splash with Green Ambient Light Aura -->
   <div class="splash-center-content">
     <div class="splash-logo-wrap">
+      <div class="splash-ambient-glow" aria-hidden="true"></div>
       <img src="logo.png" alt="DPS Amrapali" class="splash-logo-img" onerror="this.style.display='none';document.getElementById('splash-fallback').style.display='flex'">
     </div>
     <div id="splash-fallback" style="display:none;width:175px;height:175px;background:var(--green);border-radius:24px;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:38px">DPS</div>
@@ -8574,8 +8466,10 @@ function toggleAuthMode(){
 }
 
 function retryBiometricFromPin(){
-  setAuthMode('bio');
-  triggerBiometricScan(true);
+  closeLogin();
+  setTimeout(function(){
+    triggerBiometricScan(true);
+  }, 120);
 }
 
 function updateBiometricUIState(){
@@ -8809,13 +8703,14 @@ async function triggerBiometricScan(isUserClick){
     console.warn('Biometric auth error/cancelled:', err);
 
     // "BIOMETRIC FAIL hone par pin ka option aayega"
-    // Immediately display the PIN view!
+    // Open the PIN modal window ONLY now!
     setAuthMode('pin');
     var intro = document.getElementById('pin-view-intro');
     if (intro){
       intro.innerHTML = '<span style="color:#dc2626;font-weight:700">Biometric cancelled or failed.</span><br><span style="font-size:12px;color:var(--muted)">Enter Admin PIN to unlock:</span>';
     }
     ['p1','p2','p3','p4'].forEach(function(id){ var el = document.getElementById(id); if (el) { el.value = ''; el.classList.remove('filled'); } });
+    document.getElementById('modal-login').classList.add('open');
     setTimeout(function(){
       var p1 = document.getElementById('p1');
       if (p1) p1.focus();
@@ -9037,14 +8932,14 @@ function openLogin(callback){
     setAuthMode('pin');
     if (intro) intro.textContent = 'Biometrics not available on this device/browser. Please enter Admin PIN:';
     document.getElementById('modal-login').classList.add('open');
+    setTimeout(function(){
+      var p1 = document.getElementById('p1');
+      if (p1) p1.focus();
+    }, 150);
     return;
   }
 
-  // Open directly in pure Biometric mode - do not ask user PIN vs Biometric upfront
-  setAuthMode('bio');
-  document.getElementById('modal-login').classList.add('open');
-
-  // Trigger screen lock biometric immediately in the direct user click gesture!
+  // Trigger screen lock biometric DIRECTLY on click - ZERO MODAL WINDOWS OPENED!
   triggerBiometricScan(true);
 }
 function closeLogin(){
