@@ -3918,9 +3918,13 @@ table.bordered-report-table tfoot td,
 }
 
 .bill-doc-table-wrap {
+  width: 100% !important;
+  max-width: 100% !important;
   height: auto;
   max-height: 52vh;
   overflow-y: auto;
+  overflow-x: hidden !important; /* Never scroll horizontally */
+  box-sizing: border-box !important;
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
   border: 1px solid var(--border);
@@ -3932,9 +3936,14 @@ table.bordered-report-table tfoot td,
   width: 0 !important;
   height: 0 !important;
 }
-.bill-doc-table {
-  width: 100%;
-  border-collapse: collapse;
+.bill-doc-table,
+table.bill-doc-table {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+  box-sizing: border-box !important;
   font-size: 12.5px;
 }
 .bill-doc-table thead th {
@@ -3947,9 +3956,10 @@ table.bordered-report-table tfoot td,
   font-size: 10.5px;
   letter-spacing: 0.4px;
   text-transform: uppercase;
-  padding: 8px 10px;
+  padding: 8px 6px;
   border-bottom: 1.5px solid var(--green-border);
   border-right: 1px solid var(--green-border);
+  box-sizing: border-box !important;
 }
 .bill-doc-table thead th:last-child {
   border-right: none;
@@ -3961,43 +3971,66 @@ table.bordered-report-table tfoot td,
   background-color: #ffffff;
 }
 .bill-doc-table td {
-  padding: 8px 10px;
+  padding: 7px 6px;
   border-bottom: 1px solid #edf4ef;
   border-right: 1px solid #edf4ef;
   vertical-align: middle;
+  box-sizing: border-box !important;
 }
 .bill-doc-table td:last-child {
   border-right: none;
 }
 .bill-col-num {
-  text-align: center;
+  text-align: center !important;
   font-size: 11px;
   font-weight: 700;
   color: var(--muted);
-  width: 36px;
+  width: 30px !important;
+  max-width: 30px !important;
+  min-width: 30px !important;
+  padding: 6px 2px !important;
 }
 .bill-col-name {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+  width: calc(100% - 92px) !important;
+  overflow: hidden !important;
+  word-break: break-word !important;
+  padding: 6px 5px !important;
 }
 .bill-item-title {
   font-weight: 700;
   color: var(--text);
-  font-size: 12.5px;
+  font-size: 12px;
+  line-height: 1.3;
+  word-break: break-word;
 }
 .bill-item-subcat {
-  font-size: 10.5px;
+  font-size: 10px;
   color: var(--muted);
   font-weight: 600;
+  margin-top: 1px;
 }
 .bill-col-qty {
-  text-align: right;
-  width: 75px;
+  text-align: right !important;
+  width: 62px !important;
+  max-width: 62px !important;
+  min-width: 62px !important;
+  white-space: nowrap !important;
+  padding: 6px 4px !important;
 }
 .bill-qty-pill {
-  display: inline-block;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   background: var(--green-subtle);
+  border: 1px solid var(--green-border);
+  color: var(--green);
+  font-weight: 800;
+  font-size: 12px;
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  white-space: nowrap;
+}
   border: 1px solid var(--green-border);
   color: var(--green);
   font-weight: 800;
@@ -5170,42 +5203,85 @@ body {
   }
   .bill-doc-table-wrap {
     flex: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
     height: auto !important;
     max-height: 48vh !important;
     overflow-y: auto !important;
+    overflow-x: hidden !important; /* STRICTLY NO HORIZONTAL SCROLL */
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
     border-radius: 8px !important;
+    box-sizing: border-box !important;
   }
   .bill-doc-table-wrap::-webkit-scrollbar {
     display: none !important;
     width: 0 !important;
     height: 0 !important;
   }
+  .bill-doc-table,
+  table.bill-doc-table {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: collapse !important;
+    box-sizing: border-box !important;
+  }
   .bill-doc-table thead th {
-    padding: 6px 8px !important;
+    padding: 6px 4px !important;
     font-size: 9.5px !important;
+    box-sizing: border-box !important;
   }
   .bill-doc-table td {
-    padding: 6px 8px !important;
+    padding: 6px 4px !important;
     font-size: 11.5px !important;
+    box-sizing: border-box !important;
   }
   .bill-col-num {
     width: 28px !important;
+    max-width: 28px !important;
+    min-width: 28px !important;
     font-size: 10px !important;
+    text-align: center !important;
+    padding: 6px 2px !important;
+    box-sizing: border-box !important;
+  }
+  .bill-col-name {
+    width: calc(100% - 88px) !important;
+    overflow: hidden !important;
+    word-break: break-word !important;
+    padding: 6px 4px !important;
+    box-sizing: border-box !important;
   }
   .bill-item-title {
     font-size: 11.5px !important;
+    line-height: 1.25 !important;
+    word-break: break-word !important;
   }
   .bill-item-subcat {
     font-size: 9.5px !important;
+    line-height: 1.2 !important;
+    margin-top: 1px !important;
   }
   .bill-col-qty {
-    width: 65px !important;
+    width: 60px !important;
+    max-width: 60px !important;
+    min-width: 60px !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+    padding: 6px 4px !important;
+    box-sizing: border-box !important;
   }
   .bill-qty-pill {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     font-size: 11px !important;
     padding: 2px 6px !important;
+    min-width: 32px !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
   }
   .bill-doc-total {
     padding: 7px 10px !important;
@@ -5240,13 +5316,14 @@ body {
     gap: 6px;
   }
 
-  /* FACULTY TABLE */
+  /* FACULTY TABLE & REPORT TABLES */
   .table-wrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     border-radius: 12px;
   }
-  table {
+  .table-wrap table,
+  table.rep-table {
     min-width: 500px;
     font-size: 12px;
   }
@@ -8518,8 +8595,8 @@ function openBillDetail(key){
     rows += '<tr>' +
       '<td class="bill-col-num">' + (i+1) + '</td>' +
       '<td class="bill-col-name">' +
-        '<span class="bill-item-title">' + esc(it.itemName) + '</span>' +
-        (it.subcat !== 'Standard' ? '<span class="bill-item-subcat">→ ' + esc(it.subcat) + '</span>' : '') +
+        '<div class="bill-item-title">' + esc(it.itemName) + '</div>' +
+        (it.subcat !== 'Standard' ? '<div class="bill-item-subcat">→ ' + esc(it.subcat) + '</div>' : '') +
       '</td>' +
       '<td class="bill-col-qty"><span class="bill-qty-pill">' + it.qty + '</span></td>' +
     '</tr>';
@@ -8557,7 +8634,7 @@ function openBillDetail(key){
         '<div class="bill-doc-table-wrap">' +
           '<table class="bill-doc-table">' +
             '<thead>' +
-              '<tr><th style="width:36px;text-align:center">#</th><th>Item Name & Variant</th><th style="width:70px;text-align:right">Qty</th></tr>' +
+              '<tr><th class="bill-col-num">#</th><th class="bill-col-name">Item Name &amp; Variant</th><th class="bill-col-qty">Qty</th></tr>' +
             '</thead>' +
             '<tbody>' + rows + '</tbody>' +
           '</table>' +
