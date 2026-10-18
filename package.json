@@ -1,7 +1,7 @@
 {
   "name": "dpsims",
   "version": "1.0.0",
-  "description": "DPS Amarpali Inventory Management System with Neon PostgreSQL and Vercel",
+  "description": "DPS Amrapali Inventory Management System with Neon PostgreSQL and Vercel",
   "main": "dev_server.js",
   "scripts": {
     "start": "node dev_server.js",

@@ -1,4 +1,4 @@
-# DPS AMARPALI - Inventory Management System (Cloud Connected)
+# DPS AMRAPALI - Inventory Management System (Cloud Connected)
 
 This project is configured with **Neon PostgreSQL** and prepared for **1-Click Deployment to Vercel**.
 

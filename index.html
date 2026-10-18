@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
-<title>DPS AMARPALI - Inventory</title>
+<title>DPS AMRAPALI - Inventory</title>
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="apple-touch-icon" href="logo.png">
 <link rel="manifest" href="manifest.json">
@@ -5025,17 +5025,17 @@ body {
       <img src="logo.png" alt="DPS Amrapali" class="splash-logo-img" onerror="this.style.display='none';document.getElementById('splash-fallback').style.display='flex'">
     </div>
     <div id="splash-fallback" style="display:none;width:175px;height:175px;background:var(--green);border-radius:24px;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:38px">DPS</div>
-    <div class="splash-school">DPS AMARPALI</div>
+    <div class="splash-school">DPS AMRAPALI</div>
     <div class="splash-school-sub">INVENTORY SYSTEM 2026</div>
     <div class="splash-loading"><span></span><span></span><span></span></div>
   </div>
 </div>
 
 <header>
-  <div class="h-left" onclick="goToDashboard()" title="DPS Amarpali - Click to open Dashboard">
+  <div class="h-left" onclick="goToDashboard()" title="DPS Amrapali - Click to open Dashboard">
     <img src="logo.png" alt="DPS" class="h-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
     <div class="h-logo-fallback" style="display:none">D</div>
-    <div class="h-title">DPS AMARPALI<span>Inventory Portal</span></div>
+    <div class="h-title">DPS AMRAPALI<span>Inventory Portal</span></div>
   </div>
 
   <div class="nav-tabs" id="navTabs">
@@ -6956,7 +6956,7 @@ function exportBreakdownExcel(){
   var itemName = currentBreakdownItem.name;
   var totalQty = currentBreakdownLogs.reduce(function(acc, l){ return acc + (Number(l.qty) || 0); }, 0);
   var rows = [
-    ['DELHI PUBLIC SCHOOL, AMARPALI - INVENTORY MANAGEMENT SYSTEM'],
+    ['DELHI PUBLIC SCHOOL, AMRAPALI - INVENTORY MANAGEMENT SYSTEM'],
     ['ITEM ISSUE DISTRIBUTION REPORT: ' + itemName.toUpperCase()],
     ['Report Period', currentBreakdownDate || 'All Time'],
     ['Total Units Issued', totalQty + ' units'],
@@ -7027,7 +7027,7 @@ function exportBreakdownPDF(){
 
   printable.innerHTML = '<div style="font-family:Arial,sans-serif;color:#111">' +
     '<div style="text-align:center;border-bottom:2.5px solid #124f32;padding-bottom:12px;margin-bottom:14px">' +
-      '<h1 style="margin:0 0 4px;font-size:22px;color:#124f32;font-weight:800;letter-spacing:0.5px">DELHI PUBLIC SCHOOL, AMARPALI</h1>' +
+      '<h1 style="margin:0 0 4px;font-size:22px;color:#124f32;font-weight:800;letter-spacing:0.5px">DELHI PUBLIC SCHOOL, AMRAPALI</h1>' +
       '<div style="font-size:11.5px;font-weight:700;color:#444;letter-spacing:1px;text-transform:uppercase">CENTRAL INVENTORY · FACULTY ISSUE & DISTRIBUTION REPORT</div>' +
       '<div style="margin-top:6px;font-size:13px;font-weight:800;color:#124f32">' + esc(itemName) + ' · ' + esc(currentBreakdownDate || 'All-Time Record') + '</div>' +
     '</div>' +
@@ -8028,7 +8028,7 @@ function openBillDetail(key){
     var it = b.items[i];
     rows += '<tr><td>' + (i+1) + '</td><td>' + esc(it.itemName) + (it.subcat !== 'Standard' ? ' <span style="color:#6b7280;font-size:11px">→ ' + esc(it.subcat) + '</span>' : '') + '</td><td><b>' + it.qty + '</b></td></tr>';
   }
-  var html = '<div class="bill-doc"><div class="bill-doc-header"><h2>DELHI PUBLIC SCHOOL, AMARPALI</h2><div class="sub">CENTRAL INVENTORY · BILL RECORD</div><div class="bill-doc-number">Bill #' + esc(b.billNo) + ' / ' + esc(b.year) + '</div></div>' +
+  var html = '<div class="bill-doc"><div class="bill-doc-header"><h2>DELHI PUBLIC SCHOOL, AMRAPALI</h2><div class="sub">CENTRAL INVENTORY · BILL RECORD</div><div class="bill-doc-number">Bill #' + esc(b.billNo) + ' / ' + esc(b.year) + '</div></div>' +
     '<div class="bill-doc-body"><div class="bill-doc-meta">' +
       '<div class="bill-doc-meta-item"><div class="bill-doc-meta-label">In-Pass No.</div><div class="bill-doc-meta-value">' + esc(b.inPass) + '</div></div>' +
       '<div class="bill-doc-meta-item"><div class="bill-doc-meta-label">Bill Date</div><div class="bill-doc-meta-value">' + b.date + '</div></div>' +
@@ -8457,7 +8457,7 @@ function exportItemWiseCSV(){
   });
 
   var rows = [
-    ['DELHI PUBLIC SCHOOL, AMARPALI - INVENTORY MANAGEMENT SYSTEM'],
+    ['DELHI PUBLIC SCHOOL, AMRAPALI - INVENTORY MANAGEMENT SYSTEM'],
     [isOnlyInward ? 'DAILY STOCK INWARD (RECEIPTS) REPORT' : (isOnlyOutward ? 'DAILY INVENTORY ISSUE & DISTRIBUTION REPORT' : 'DAILY COMPREHENSIVE STOCK MOVEMENT REPORT')],
     ['Period / Date', dateStr]
   ];
@@ -8831,7 +8831,7 @@ function exportMainReportPDF(){
 
   printable.innerHTML = '<div style="font-family:Arial,sans-serif;color:#111">' +
     '<div style="text-align:center;border-bottom:2.5px solid #124f32;padding-bottom:12px;margin-bottom:14px">' +
-      '<h1 style="margin:0 0 4px;font-size:22px;color:#124f32;font-weight:800;letter-spacing:0.5px">DELHI PUBLIC SCHOOL, AMARPALI</h1>' +
+      '<h1 style="margin:0 0 4px;font-size:22px;color:#124f32;font-weight:800;letter-spacing:0.5px">DELHI PUBLIC SCHOOL, AMRAPALI</h1>' +
       '<div style="font-size:11.5px;font-weight:700;color:#444;letter-spacing:1px;text-transform:uppercase">CENTRAL INVENTORY MANAGEMENT SYSTEM · ' + esc(docTitle) + '</div>' +
       '<div style="margin-top:6px;font-size:13px;font-weight:800;color:#124f32">' + esc(dateStr) + '</div>' +
     '</div>' +

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DPS AMARPALI - Inventory</title>
+<title>DPS AMRAPALI - Inventory</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Plus Jakarta Sans',Arial,sans-serif;-webkit-tap-highlight-color:transparent}
@@ -325,7 +325,7 @@ td{padding:9px 11px;border-top:1px solid var(--border);white-space:nowrap}
     <img src="logo.png" alt="DPS Amrapali" class="splash-logo-img" onerror="this.style.display='none';document.getElementById('splash-fallback').style.display='flex'">
   </div>
   <div id="splash-fallback" style="display:none;width:200px;height:200px;background:var(--green);border-radius:26px;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:42px">DPS</div>
-  <div class="splash-school">DPS AMARPALI</div>
+  <div class="splash-school">DPS AMRAPALI</div>
   <div class="splash-school-sub">INVENTORY SYSTEM 2026</div>
   <div class="splash-loading"><span></span><span></span><span></span></div>
 </div>
@@ -334,7 +334,7 @@ td{padding:9px 11px;border-top:1px solid var(--border);white-space:nowrap}
   <div class="h-left">
     <img src="logo.png" alt="DPS" class="h-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
     <div style="width:38px;height:38px;background:var(--green);border-radius:10px;display:none;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:17px;flex-shrink:0">D</div>
-    <div class="h-title">DPS AMARPALI<span>Inventory Portal</span></div>
+    <div class="h-title">DPS AMRAPALI<span>Inventory Portal</span></div>
   </div>
   <div class="h-right">
     <span id="authBadge"></span>
@@ -1289,7 +1289,7 @@ function openBillDetail(key){
     var it = b.items[i];
     rows += '<tr><td>' + (i+1) + '</td><td>' + esc(it.itemName) + (it.subcat !== 'Standard' ? ' <span style="color:#6b7280;font-size:11px">→ ' + esc(it.subcat) + '</span>' : '') + '</td><td><b>' + it.qty + '</b></td></tr>';
   }
-  var html = '<div class="bill-doc"><div class="bill-doc-header"><h2>DELHI PUBLIC SCHOOL, AMARPALI</h2><div class="sub">CENTRAL INVENTORY · BILL RECORD</div><div class="bill-doc-number">Bill #' + esc(b.billNo) + ' / ' + esc(b.year) + '</div></div>' +
+  var html = '<div class="bill-doc"><div class="bill-doc-header"><h2>DELHI PUBLIC SCHOOL, AMRAPALI</h2><div class="sub">CENTRAL INVENTORY · BILL RECORD</div><div class="bill-doc-number">Bill #' + esc(b.billNo) + ' / ' + esc(b.year) + '</div></div>' +
     '<div class="bill-doc-body"><div class="bill-doc-meta">' +
       '<div class="bill-doc-meta-item"><div class="bill-doc-meta-label">In-Pass No.</div><div class="bill-doc-meta-value">' + esc(b.inPass) + '</div></div>' +
       '<div class="bill-doc-meta-item"><div class="bill-doc-meta-label">Bill Date</div><div class="bill-doc-meta-value">' + b.date + '</div></div>' +
