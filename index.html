@@ -61,8 +61,8 @@
   --shadow-lg: 0 14px 34px rgba(18, 79, 50, 0.11);
   --shadow-xl: 0 24px 50px rgba(18, 79, 50, 0.16);
   
-  --glass-header: linear-gradient(135deg, #124f32 0%, #09331e 100%);
-  --glass-nav: linear-gradient(180deg, #124f32 0%, #09331e 100%);
+  --glass-header: rgba(255, 255, 255, 0.94);
+  --glass-nav: rgba(255, 255, 255, 0.96);
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
@@ -406,17 +406,17 @@ header {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  background: var(--glass-header);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid var(--border);
   padding: 0 20px;
   height: 64px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  box-shadow: 0 4px 18px rgba(9, 51, 30, 0.22);
+  box-shadow: 0 1px 4px rgba(18, 79, 50, 0.04);
   max-width: 100vw;
   box-sizing: border-box;
 }
@@ -446,14 +446,13 @@ header * {
   height: 42px;
   object-fit: contain;
   flex-shrink: 0;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(0 2px 6px rgba(18, 79, 50, 0.15));
   transition: transform 0.2s ease;
 }
 .h-logo-fallback {
   width: 40px;
   height: 40px;
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
   border-radius: 11px;
   display: flex;
   align-items: center;
@@ -462,21 +461,21 @@ header * {
   font-weight: 800;
   font-size: 17px;
   flex-shrink: 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px rgba(18, 79, 50, 0.2);
 }
 .h-title {
   font-weight: 900;
   font-size: 15px;
   line-height: 1.25;
   white-space: nowrap;
-  color: #ffffff;
+  color: var(--green);
   letter-spacing: 0.35px;
 }
 .h-title span {
   display: block;
   font-weight: 600;
   font-size: 11px;
-  color: #a3d9b8;
+  color: var(--muted);
   letter-spacing: 0.45px;
 }
 
@@ -486,10 +485,10 @@ header * {
   align-items: center;
   justify-content: center;
   gap: 4px;
-  background: rgba(0, 0, 0, 0.22);
+  background: rgba(18, 79, 50, 0.04);
   padding: 3px;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid var(--green-border);
   flex: 0 1 auto;
   min-width: 0;
 }
@@ -497,7 +496,7 @@ header * {
   padding: 8px 15px;
   font-weight: 700;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--text-secondary);
   border-radius: 8px;
   cursor: pointer;
   white-space: nowrap;
@@ -518,15 +517,15 @@ header * {
   transition: transform 0.2s ease;
 }
 .nav-tab:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.14);
+  color: var(--green);
+  background: rgba(255, 255, 255, 0.7);
 }
 .nav-tab.active {
   color: var(--green);
   background: #ffffff;
   font-weight: 800;
-  border-color: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  border-color: rgba(18, 79, 50, 0.12);
+  box-shadow: 0 2px 6px rgba(18, 79, 50, 0.08);
 }
 
 /* HEADER RIGHT ACTIONS */
@@ -545,10 +544,10 @@ header * {
   gap: 8px;
   padding: 0 12px;
   height: 38px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: #ffffff;
+  border: 1px solid var(--border);
   border-radius: 10px;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--muted);
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
@@ -557,9 +556,9 @@ header * {
   flex-shrink: 0;
 }
 .header-search-btn:hover {
-  border-color: rgba(255, 255, 255, 0.4);
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.22);
+  border-color: var(--green-border);
+  color: var(--green);
+  background: var(--green-subtle);
   transform: translateY(-1px);
 }
 .header-search-btn svg {
@@ -572,11 +571,11 @@ header * {
   font-family: inherit;
   font-size: 10.5px;
   font-weight: 700;
-  background: rgba(255, 255, 255, 0.18);
-  color: #ffffff;
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
   padding: 2px 6px;
   border-radius: 5px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid var(--border);
   line-height: 1;
 }
 
@@ -617,9 +616,6 @@ header * {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  color: #ffffff;
   box-shadow: var(--shadow-xs);
   transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
@@ -628,8 +624,7 @@ header * {
 }
 .cloud-badge:hover {
   transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: var(--shadow-sm);
 }
 .cloud-badge svg {
   width: 15px;
@@ -646,38 +641,38 @@ header * {
   flex-shrink: 0;
 }
 .cloud-badge.synced {
-  background: rgba(255, 255, 255, 0.14);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: var(--green-light);
+  color: var(--green);
+  border: 1px solid var(--green-border);
 }
 .cloud-badge.synced .badge-dot {
-  background: #4ade80;
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.35);
+  background: #16a34a;
+  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
 }
 .cloud-badge.syncing {
-  background: rgba(59, 130, 246, 0.25);
-  color: #ffffff;
-  border: 1px solid rgba(147, 197, 253, 0.35);
+  background: var(--blue-light);
+  color: var(--blue);
+  border: 1px solid var(--blue-border);
 }
 .cloud-badge.syncing .badge-dot {
-  background: #60a5fa;
+  background: var(--blue);
   animation: pulseDot 1s infinite alternate;
 }
 .cloud-badge.offline {
-  background: rgba(245, 158, 11, 0.25);
-  color: #fef3c7;
-  border: 1px solid rgba(253, 230, 138, 0.35);
+  background: var(--amber-light);
+  color: var(--amber);
+  border: 1px solid var(--amber-border);
 }
 .cloud-badge.offline .badge-dot {
-  background: #fbbf24;
+  background: var(--amber);
 }
 .cloud-badge.error {
-  background: rgba(239, 68, 68, 0.25);
-  color: #fee2e2;
-  border: 1px solid rgba(254, 202, 202, 0.35);
+  background: var(--red-light);
+  color: var(--red);
+  border: 1px solid var(--red-border);
 }
 .cloud-badge.error .badge-dot {
-  background: #f87171;
+  background: var(--red);
 }
 @keyframes pulseDot { 0% { opacity: 0.4; } 100% { opacity: 1; } }
 
@@ -706,86 +701,82 @@ header * {
   stroke-width: 2.2;
 }
 .admin-badge {
-  background: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: var(--green-light);
+  color: var(--green);
+  border: 1px solid var(--green-border);
 }
 .readonly-badge {
-  background: rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: var(--bg-subtle);
+  color: var(--muted);
+  border: 1px solid var(--border);
 }
 
 /* PRIMARY ADD BUTTON */
 .btn-add-header {
-  background: #ffffff;
-  color: var(--green);
-  border: 1px solid #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  font-weight: 800;
+  background: var(--green);
+  color: #ffffff;
+  border: 1px solid var(--green-dark);
+  box-shadow: 0 2px 8px rgba(18, 79, 50, 0.22);
   flex-shrink: 0;
 }
 .btn-add-header:hover {
-  background: #e8f5ec;
-  color: var(--green-dark);
-  border-color: #e8f5ec;
+  background: var(--green-dark);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 12px rgba(18, 79, 50, 0.32);
 }
 .btn-add-header svg {
-  stroke: var(--green);
-  stroke-width: 2.6;
+  stroke: #ffffff;
+  stroke-width: 2.5;
 }
 
 /* EXPORT BUTTON */
 .header-export-btn {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  color: #ffffff;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
   flex-shrink: 0;
 }
 .header-export-btn:hover {
-  background: rgba(255, 255, 255, 0.22);
-  border-color: rgba(255, 255, 255, 0.38);
-  color: #ffffff;
+  background: var(--green-subtle);
+  border-color: var(--green-border);
+  color: var(--green);
   transform: translateY(-1px);
 }
 
 /* PWA INSTALL BUTTON */
 .btn-pwa-install {
-  background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: #ffffff;
+  color: var(--green);
+  border: 1px solid var(--green-border);
   flex-shrink: 0;
 }
 .btn-pwa-install:hover {
-  background: rgba(255, 255, 255, 0.22);
+  background: var(--green-light);
   transform: translateY(-1px);
 }
 
 /* ADMIN LOGIN / LOGOUT BUTTON */
 .btn-login-action {
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: #ffffff;
+  background: #ffffff;
+  border: 1px solid var(--green-border);
+  color: var(--green);
   flex-shrink: 0;
 }
 .btn-login-action:hover {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.4);
-  color: #ffffff;
+  background: var(--green-subtle);
+  border-color: var(--green);
   transform: translateY(-1px);
 }
 .btn-logout-action {
-  background: rgba(220, 38, 38, 0.35);
-  border: 1px solid rgba(254, 202, 202, 0.45);
-  color: #ffffff;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  color: var(--muted);
   flex-shrink: 0;
 }
 .btn-logout-action:hover {
-  background: rgba(220, 38, 38, 0.5);
-  border-color: rgba(254, 202, 202, 0.65);
-  color: #ffffff;
+  background: var(--red-light);
+  border-color: var(--red-border);
+  color: var(--red);
   transform: translateY(-1px);
 }
 
@@ -1468,14 +1459,14 @@ header * {
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(180deg, #124f32 0%, #09331e 100%);
+  background: var(--glass-nav);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid var(--border);
   z-index: 200;
   padding: 6px 10px;
   padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px));
-  box-shadow: 0 -4px 20px rgba(9, 51, 30, 0.25);
+  box-shadow: 0 -4px 20px rgba(18, 79, 50, 0.08);
 }
 .mobile-nav-inner {
   display: grid;
@@ -1496,7 +1487,7 @@ header * {
   border: none;
   background: none;
   font-family: inherit;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--muted);
   position: relative;
 }
 .mob-tab:active {
@@ -1508,7 +1499,7 @@ header * {
   justify-content: center;
   width: 22px;
   height: 22px;
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--muted);
   transition: transform 0.2s ease, color 0.2s ease;
 }
 .mob-tab .micon svg {
@@ -1519,24 +1510,24 @@ header * {
 .mob-tab .mlabel {
   font-size: 9.5px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.75);
+  color: var(--muted);
   letter-spacing: 0.2px;
   transition: color 0.2s ease;
 }
 .mob-tab.active {
-  background: rgba(255, 255, 255, 0.18);
-  color: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, var(--green-light) 0%, #d8edd8 100%);
+  color: var(--green);
+  box-shadow: 0 2px 8px rgba(18, 79, 50, 0.12);
 }
 .mob-tab.active .micon {
-  color: #ffffff;
+  color: var(--green);
   transform: scale(1.08);
 }
 .mob-tab.active .micon svg {
   stroke-width: 2.3;
 }
 .mob-tab.active .mlabel {
-  color: #ffffff;
+  color: var(--green);
   font-weight: 800;
   font-size: 9.5px;
 }
@@ -1549,7 +1540,7 @@ header * {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #4ade80;
+  background: var(--green);
   animation: dotPop 0.3s ease forwards;
 }
 @keyframes dotPop {
@@ -4253,6 +4244,14 @@ table.bill-doc-table {
 .btn-biometric-action:active {
   transform: scale(0.98);
 }
+@keyframes btnGlowPulse {
+  0% { box-shadow: 0 0 0 0 rgba(18, 79, 50, 0.45); transform: scale(1); }
+  50% { box-shadow: 0 0 0 10px rgba(18, 79, 50, 0); transform: scale(1.02); }
+  100% { box-shadow: 0 0 0 0 rgba(18, 79, 50, 0); transform: scale(1); }
+}
+.btn-pulse {
+  animation: btnGlowPulse 1.4s infinite ease-in-out !important;
+}
 .biometric-divider {
   display: flex;
   align-items: center;
@@ -6372,8 +6371,8 @@ body {
           </svg>
           <span id="biometric-btn-text">Verify Biometrics</span>
         </button>
-        <div class="biometric-divider">
-          <span>OR ENTER 4-DIGIT PIN</span>
+        <div class="biometric-divider" id="biometric-divider-box">
+          <span id="biometric-divider-text">OR ENTER 4-DIGIT PIN</span>
         </div>
       </div>
 
@@ -6388,9 +6387,18 @@ body {
         <input type="password" class="pin-digit" id="p4" maxlength="1" inputmode="numeric" autocomplete="new-password" oninput="pinNext(this, null)" onkeydown="pinBack(event, this, 'p3')">
       </div>
       <div class="pin-error" id="pin-error"></div>
-      <button class="btn btn-primary" style="width:100%;padding:13px;font-size:13.5px;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px" onclick="verifyPin()">
+      <button type="button" class="btn btn-primary" id="btn-register-bio" style="width:100%;padding:13px;font-size:13.5px;margin-top:10px;display:none;align-items:center;justify-content:center;gap:8px" onclick="onRegisterBiometricClick()">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/>
+          <path d="M14 13.12c0 2.38 0 6.38-1 8.88"/>
+          <path d="M2 12a10 10 0 0 1 18-6"/>
+          <path d="M9 6.8a6 6 0 0 1 9 5.2v2"/>
+        </svg>
+        <span>Register Biometric & Unlock</span>
+      </button>
+      <button type="button" class="btn btn-primary" id="btn-unlock-pin" style="width:100%;padding:13px;font-size:13.5px;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px" onclick="verifyPin(false)">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
-        <span>Unlock with PIN</span>
+        <span id="btn-unlock-pin-text">Unlock with PIN</span>
       </button>
       <div class="hint" style="text-align:center;margin-top:10px">Only admin can make entries. Everyone can view the inventory.</div>
     </div>
@@ -8413,21 +8421,23 @@ function base64ToUint8Array(base64) {
   return bytes;
 }
 
+var isPlatformBioAvailable = false;
 function checkBiometricSupport(callback){
-  if (window.PublicKeyCredential && typeof PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable === 'function'){
+  var supported = !!(window.PublicKeyCredential && navigator.credentials && typeof navigator.credentials.create === 'function');
+  isBiometricSupported = supported;
+
+  if (supported && typeof PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable === 'function'){
     PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable().then(function(available){
-      isBiometricSupported = !!available;
+      isPlatformBioAvailable = !!available;
       updateBiometricUIState();
       if (typeof callback === 'function') callback(isBiometricSupported);
     }).catch(function(){
-      isBiometricSupported = false;
       updateBiometricUIState();
-      if (typeof callback === 'function') callback(false);
+      if (typeof callback === 'function') callback(isBiometricSupported);
     });
   } else {
-    isBiometricSupported = false;
     updateBiometricUIState();
-    if (typeof callback === 'function') callback(false);
+    if (typeof callback === 'function') callback(isBiometricSupported);
   }
 }
 
@@ -8444,11 +8454,24 @@ function updateBiometricUIState(){
   var descText = document.getElementById('biometric-desc-text');
   var titleText = document.getElementById('biometric-title-text');
   var triggerBtn = document.getElementById('biometric-trigger-btn');
+  var divider = document.getElementById('biometric-divider-box');
+  var dividerTxt = document.getElementById('biometric-divider-text');
+  var pinPrompt = document.getElementById('pin-prompt-text');
+  var regBioBtn = document.getElementById('btn-register-bio');
+  var unlockPinBtn = document.getElementById('btn-unlock-pin');
+  var unlockPinText = document.getElementById('btn-unlock-pin-text');
   if (!box) return;
 
   if (!isBiometricSupported){
     box.style.display = 'none';
     if (lockIcon) lockIcon.style.display = 'flex';
+    if (regBioBtn) regBioBtn.style.display = 'none';
+    if (unlockPinBtn) {
+      unlockPinBtn.style.display = 'flex';
+      unlockPinBtn.className = 'btn btn-primary';
+    }
+    if (unlockPinText) unlockPinText.textContent = 'Unlock with PIN';
+    if (pinPrompt) pinPrompt.textContent = 'Enter 4-digit PIN to unlock admin access';
     return;
   }
 
@@ -8457,18 +8480,45 @@ function updateBiometricUIState(){
 
   if (hasBiometricEnrolled()){
     if (titleText) titleText.textContent = 'Biometric Fast Unlock';
-    if (descText) descText.textContent = 'Touch ID / Face ID / Windows Hello is active';
+    if (descText) descText.textContent = 'Touch ID / Face ID / Windows Hello is active on this device';
     if (btnText) btnText.textContent = 'Verify Fingerprint / Face ID';
-    if (triggerBtn) triggerBtn.className = 'btn btn-biometric-action';
+    if (triggerBtn) {
+      triggerBtn.style.display = 'inline-flex';
+      triggerBtn.className = 'btn btn-biometric-action';
+    }
+    if (divider) divider.style.display = 'flex';
+    if (dividerTxt) dividerTxt.textContent = 'OR ENTER 4-DIGIT PIN';
+    if (pinPrompt) pinPrompt.textContent = 'Or enter 4-digit PIN below';
+    if (regBioBtn) regBioBtn.style.display = 'none';
+    if (unlockPinBtn) {
+      unlockPinBtn.style.display = 'flex';
+      unlockPinBtn.className = 'btn btn-primary';
+    }
+    if (unlockPinText) unlockPinText.textContent = 'Unlock with PIN';
   } else {
-    if (titleText) titleText.textContent = 'Biometric Authentication';
-    if (descText) descText.textContent = 'Touch ID, Face ID, Windows Hello or Fingerprint';
-    if (btnText) btnText.textContent = 'Setup / Unlock Biometrics';
-    if (triggerBtn) triggerBtn.className = 'btn btn-biometric-action';
+    if (titleText) titleText.textContent = 'Setup Biometric Authentication';
+    if (descText) descText.textContent = 'Touch ID, Face ID, Windows Hello or Fingerprint for 1-tap admin login';
+    if (btnText) btnText.textContent = 'Register Biometrics (Enter PIN 9903)';
+    if (triggerBtn) {
+      triggerBtn.style.display = 'inline-flex';
+      triggerBtn.className = 'btn btn-biometric-action';
+    }
+    if (divider) divider.style.display = 'flex';
+    if (dividerTxt) dividerTxt.textContent = 'AUTHORIZE WITH ADMIN PIN';
+    if (pinPrompt) pinPrompt.textContent = 'Enter Admin PIN (9903) to register biometrics & unlock';
+    if (regBioBtn) {
+      regBioBtn.style.display = 'flex';
+      regBioBtn.className = 'btn btn-primary';
+    }
+    if (unlockPinBtn) {
+      unlockPinBtn.style.display = 'flex';
+      unlockPinBtn.className = 'btn btn-secondary';
+    }
+    if (unlockPinText) unlockPinText.textContent = 'Unlock with PIN Only';
   }
 }
 
-async function registerBiometrics(silentSuccessPrompt){
+async function registerBiometrics(silentSuccessPrompt, andUnlockAdmin){
   if (!isBiometricSupported){
     showThemeMessage('warning', 'Biometrics Unavailable', 'Web Authentication is not supported on this browser or platform.');
     return false;
@@ -8483,24 +8533,30 @@ async function registerBiometrics(silentSuccessPrompt){
     var userId = new Uint8Array(16);
     window.crypto.getRandomValues(userId);
 
+    var rpEntity = {
+      name: 'DPS Amrapali IMS'
+    };
+    var host = window.location.hostname;
+    // Omit rp.id if host is an IP address to avoid WebAuthn spec error
+    if (host && host !== '' && !/^[0-9.]+$/.test(host)) {
+      rpEntity.id = host;
+    }
+
     var createOptions = {
       publicKey: {
         challenge: challenge,
-        rp: {
-          name: 'DPS Amrapali IMS',
-          id: window.location.hostname
-        },
+        rp: rpEntity,
         user: {
           id: userId,
           name: 'admin@dpsamrapali.edu',
           displayName: 'DPS Amrapali Admin'
         },
         pubKeyCredParams: [
-          { alg: -7, type: 'public-key' },
-          { alg: -257, type: 'public-key' }
+          { alg: -7, type: 'public-key' },   // ES256 (Touch ID / Face ID / Android)
+          { alg: -257, type: 'public-key' }, // RS256 (Windows Hello)
+          { alg: -8, type: 'public-key' }    // Ed25519
         ],
         authenticatorSelection: {
-          authenticatorAttachment: 'platform',
           userVerification: 'preferred',
           residentKey: 'preferred'
         },
@@ -8515,22 +8571,61 @@ async function registerBiometrics(silentSuccessPrompt){
     if (credential && credential.id){
       localStorage.setItem(BIO_STORAGE_KEY, credential.id);
       localStorage.setItem(BIO_USER_ID_KEY, bufferToBase64(userId));
+      if (credential.rawId){
+        localStorage.setItem(BIO_STORAGE_KEY + '_raw', bufferToBase64(credential.rawId));
+      }
       updateBiometricUIState();
       if (!silentSuccessPrompt){
-        showThemeMessage('login', 'Biometrics Registered!', 'Fingerprint / Face ID is now enrolled on this device for instant 1-tap Admin access.');
+        showThemeMessage('login', 'Biometrics Registered!', 'Fingerprint / Windows Hello is now enrolled on this device for instant 1-tap Admin access.');
       }
       renderBiometricSettingsContent();
       return true;
     }
+    return false;
   } catch(err){
     if (scanIcon) scanIcon.classList.remove('scanning');
     console.warn('Biometric registration error:', err);
+    var msg = 'Biometric setup failed.';
     if (err.name === 'NotAllowedError'){
-      if (statusMsg) statusMsg.textContent = 'Biometric prompt was cancelled or timed out.';
-    } else {
-      if (statusMsg) statusMsg.textContent = 'Biometric setup failed: ' + (err.message || 'Unknown error');
+      msg = 'Biometric prompt was cancelled or timed out.';
+    } else if (err.name === 'InvalidStateError'){
+      msg = 'An authenticator is already registered on this device.';
+    } else if (err.message){
+      msg = 'Biometric error: ' + err.message;
     }
+    if (statusMsg) statusMsg.textContent = msg;
     return false;
+  }
+}
+
+async function onRegisterBiometricClick(){
+  var pin = ['p1','p2','p3','p4'].map(function(id){ return (document.getElementById(id)||{}).value || ''; }).join('');
+  var statusMsg = document.getElementById('pin-error');
+  var regBtn = document.getElementById('btn-register-bio');
+  if (regBtn) regBtn.classList.remove('btn-pulse');
+
+  if (pin !== ADMIN_PIN){
+    if (statusMsg){
+      statusMsg.textContent = 'Please enter Admin PIN (9903) in the 4 boxes above first.';
+    }
+    document.getElementById('p1').focus();
+    return;
+  }
+
+  if (statusMsg) statusMsg.innerHTML = '<span style="color:var(--green);font-weight:700">Authorizing... please touch your fingerprint scanner or confirm Windows Hello.</span>';
+
+  // DIRECT USER GESTURE WebAuthn create call:
+  var ok = await registerBiometrics(true, true);
+  if (ok){
+    isAdmin = true;
+    updateAdminUI();
+    var cb = pendingAdminCallback;
+    pendingAdminCallback = null;
+    closeLogin();
+    if (document.getElementById('tab-faculty').style.display !== 'none') renderFaculty();
+    if (document.getElementById('tab-stock').style.display !== 'none') render();
+    showThemeMessage('login', 'Biometric Registered!', 'Fingerprint / Windows Hello is now active & Admin mode is unlocked.');
+    if (cb && typeof cb === 'function') cb();
   }
 }
 
@@ -8539,22 +8634,13 @@ async function loginWithBiometrics(){
   var scanIcon = document.getElementById('biometric-scan-icon');
 
   if (!isBiometricSupported){
-    if (statusMsg) statusMsg.textContent = 'Biometrics not supported on this device. Please use your PIN.';
+    if (statusMsg) statusMsg.textContent = 'Biometrics not supported on this browser. Please use your PIN.';
     return;
   }
 
-  // If not enrolled yet, prompt user
+  // If not enrolled yet, direct to registration flow
   if (!hasBiometricEnrolled()){
-    showThemeConfirm({
-      title: 'Setup Biometric Authentication',
-      message: 'To enable 1-tap Fingerprint / Face ID login on this device, please enter the Admin PIN (9903) once to verify admin access.',
-      confirmText: 'Enter PIN to Setup',
-      cancelText: 'Cancel',
-      type: 'info',
-      onConfirm: function(){
-        document.getElementById('p1').focus();
-      }
-    });
+    onRegisterBiometricClick();
     return;
   }
 
@@ -8568,20 +8654,24 @@ async function loginWithBiometrics(){
     var getOptions = {
       publicKey: {
         challenge: challenge,
-        rpId: window.location.hostname,
         userVerification: 'preferred',
         timeout: 60000
       }
     };
 
+    var host = window.location.hostname;
+    if (host && host !== '' && !/^[0-9.]+$/.test(host)) {
+      getOptions.publicKey.rpId = host;
+    }
+
+    var savedCredRaw = localStorage.getItem(BIO_STORAGE_KEY + '_raw');
     var savedCredId = localStorage.getItem(BIO_STORAGE_KEY);
-    if (savedCredId){
+    if (savedCredRaw || savedCredId){
       try {
-        var rawId = base64ToUint8Array(savedCredId);
+        var rawId = savedCredRaw ? base64ToUint8Array(savedCredRaw) : base64ToUint8Array(savedCredId);
         getOptions.publicKey.allowCredentials = [{
           type: 'public-key',
-          id: rawId,
-          transports: ['internal']
+          id: rawId
         }];
       } catch(e) {}
     }
@@ -8698,18 +8788,24 @@ async function testBiometrics(){
   try {
     var challenge = new Uint8Array(32);
     window.crypto.getRandomValues(challenge);
+    var savedCredRaw = localStorage.getItem(BIO_STORAGE_KEY + '_raw');
     var savedCredId = localStorage.getItem(BIO_STORAGE_KEY);
-    var rawId = base64ToUint8Array(savedCredId);
+    var rawId = savedCredRaw ? base64ToUint8Array(savedCredRaw) : base64ToUint8Array(savedCredId);
 
-    var assertion = await navigator.credentials.get({
+    var getOptions = {
       publicKey: {
         challenge: challenge,
-        rpId: window.location.hostname,
-        allowCredentials: [{ type: 'public-key', id: rawId, transports: ['internal'] }],
+        allowCredentials: [{ type: 'public-key', id: rawId }],
         userVerification: 'preferred',
         timeout: 60000
       }
-    });
+    };
+    var host = window.location.hostname;
+    if (host && host !== '' && !/^[0-9.]+$/.test(host)) {
+      getOptions.publicKey.rpId = host;
+    }
+
+    var assertion = await navigator.credentials.get(getOptions);
     if (assertion){
       showThemeMessage('login', 'Biometrics Test Passed!', 'Your fingerprint/face was verified successfully by the device authenticator.');
     }
@@ -8778,17 +8874,54 @@ function closeLogin(){
   pendingAdminCallback = null;
 }
 function pinNext(el, nextId){
-  if (el.value && /[0-9]/.test(el.value)){ el.classList.add('filled'); if (nextId){ var nx = document.getElementById(nextId); if (nx) nx.focus(); } else setTimeout(verifyPin, 150); }
-  else if (el.value && !/[0-9]/.test(el.value)){ el.value = ''; el.classList.remove('filled'); }
+  if (el.value && /[0-9]/.test(el.value)){
+    el.classList.add('filled');
+    if (nextId){
+      var nx = document.getElementById(nextId);
+      if (nx) nx.focus();
+    } else {
+      var pin = ['p1','p2','p3','p4'].map(function(id){ return (document.getElementById(id)||{}).value || ''; }).join('');
+      if (pin === ADMIN_PIN){
+        if (hasBiometricEnrolled()){
+          setTimeout(verifyPin, 120);
+        } else {
+          var regBtn = document.getElementById('btn-register-bio');
+          var err = document.getElementById('pin-error');
+          if (err) err.innerHTML = '<span style="color:var(--green);font-weight:700">✓ PIN 9903 Verified! Click "Register Biometric & Unlock" below.</span>';
+          if (regBtn){
+            regBtn.classList.add('btn-pulse');
+          }
+        }
+      } else {
+        setTimeout(verifyPin, 150);
+      }
+    }
+  } else if (el.value && !/[0-9]/.test(el.value)){
+    el.value = '';
+    el.classList.remove('filled');
+  }
 }
+
 function pinBack(e, el, prevId){
-  if (e.key === 'Backspace' && !el.value && prevId){ var pv = document.getElementById(prevId); if (pv){ pv.focus(); pv.value = ''; pv.classList.remove('filled'); } }
-  if (e.key === 'Enter') verifyPin();
+  if (e.key === 'Backspace' && !el.value && prevId){
+    var pv = document.getElementById(prevId);
+    if (pv){ pv.focus(); pv.value = ''; pv.classList.remove('filled'); }
+  }
+  if (e.key === 'Enter'){
+    e.preventDefault();
+    if (!hasBiometricEnrolled()){
+      onRegisterBiometricClick();
+    } else {
+      verifyPin();
+    }
+  }
 }
+
 function verifyPin(){
-  var pin = ['p1','p2','p3','p4'].map(function(id){ return document.getElementById(id).value; }).join('');
+  var pin = ['p1','p2','p3','p4'].map(function(id){ return (document.getElementById(id)||{}).value || ''; }).join('');
   if (pin === ADMIN_PIN){
-    isAdmin = true; updateAdminUI();
+    isAdmin = true;
+    updateAdminUI();
     var cb = pendingAdminCallback;
     pendingAdminCallback = null;
     closeLogin();
@@ -8798,24 +8931,11 @@ function verifyPin(){
     if (cb && typeof cb === 'function'){
       cb();
     }
-    if (isBiometricSupported && !hasBiometricEnrolled()){
-      setTimeout(function(){
-        showThemeConfirm({
-          title: 'Enable Biometric Login?',
-          message: 'Would you like to enable Fingerprint / Face ID / Windows Hello on this device for instant 1-tap admin unlock next time?',
-          confirmText: 'Enable Biometrics',
-          cancelText: 'Not Now',
-          type: 'info',
-          onConfirm: function(){
-            registerBiometrics();
-          }
-        });
-      }, 700);
-    }
   } else {
     document.getElementById('pin-error').textContent = 'Incorrect PIN. Please try again.';
-    ['p1','p2','p3','p4'].forEach(function(id){ var el = document.getElementById(id); el.value = ''; el.classList.remove('filled'); });
-    document.getElementById('p1').focus();
+    ['p1','p2','p3','p4'].forEach(function(id){ var el = document.getElementById(id); if (el) { el.value = ''; el.classList.remove('filled'); } });
+    var p1 = document.getElementById('p1');
+    if (p1) p1.focus();
   }
 }
 
