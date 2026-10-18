@@ -21,6 +21,9 @@ function getPool() {
       idleTimeoutMillis: 30000,
       connectionTimeoutMillis: 10000
     });
+    pool.on('error', (err) => {
+      console.warn('Neon Cloud DB idle connection warning:', err.message);
+    });
   }
   return pool;
 }

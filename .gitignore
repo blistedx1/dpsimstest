@@ -2,3 +2,5 @@ node_modules/
 .env
 .vercel/
 test_*.js
+scratch/
+test_folder.png

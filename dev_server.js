@@ -79,3 +79,12 @@ server.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}/`);
   console.log(`Connected to Neon PostgreSQL database via /api/data`);
 });
+
+process.on('uncaughtException', (err) => {
+  console.warn('Dev server caught exception:', err.message);
+});
+
+process.on('unhandledRejection', (reason) => {
+  console.warn('Dev server unhandled rejection:', reason);
+});
+
