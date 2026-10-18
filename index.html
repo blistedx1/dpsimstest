@@ -927,10 +927,10 @@ header * {
 .theme-confirm-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(6, 35, 20, 0.45);
+  background: rgba(6, 35, 20, 0.55);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  z-index: 100010;
+  z-index: 100020;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1015,12 +1015,22 @@ header * {
   cursor: pointer;
 }
 .tc-btn-danger {
-  background: var(--red) !important;
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%) !important;
   color: #ffffff !important;
-  border: 1px solid var(--red-dark) !important;
+  border: 1px solid rgba(220, 38, 38, 0.4) !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.28);
 }
-.tc-btn-danger:hover {
-  background: var(--red-dark) !important;
+.tc-btn-danger:hover:not(:disabled) {
+  background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(220, 38, 38, 0.38);
+}
+.tc-btn-danger:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 /* SEARCH CLEAR BUTTON */
@@ -3567,6 +3577,13 @@ table.bordered-report-table tfoot td,
 /* ============================================= */
 /* PIN AUTHENTICATION MODAL                      */
 /* ============================================= */
+#modal-login {
+  z-index: 100050 !important;
+}
+#modal-login .modal {
+  border-radius: 22px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+}
 .pin-inputs {
   display: flex;
   gap: 10px;
@@ -4865,10 +4882,26 @@ body {
     <div class="theme-confirm-content">
       <h3 id="tcTitle">Confirm Action</h3>
       <p id="tcMessage">Are you sure you want to proceed?</p>
+
+      <!-- ALPHANUMERIC SECURITY CODE VERIFICATION BOX (Accidental Tap Protection) -->
+      <div id="tcCodeBox" style="display:none;margin-top:16px;background:#fef2f2;border:1.5px dashed #fca5a5;border-radius:16px;padding:14px;text-align:center">
+        <div style="font-size:11.5px;font-weight:700;color:#991b1b;margin-bottom:8px">
+          To prevent accidental deletion, type this code to confirm:
+        </div>
+        <div id="tcCodeDisplay" style="font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:900;letter-spacing:5px;color:#991b1b;background:#ffffff;border:1.5px solid #fca5a5;border-radius:10px;padding:8px 16px;display:inline-block;user-select:all;box-shadow:0 2px 8px rgba(220,38,38,0.1);margin-bottom:10px">
+          ABCD
+        </div>
+        <div>
+          <input id="tcCodeInput" type="text" placeholder="ENTER CODE" maxlength="6" autocomplete="off" style="width:100%;max-width:240px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:800;letter-spacing:4px;text-transform:uppercase;padding:10px 14px;border-radius:9999px;border:2px solid #cbd5e1;outline:none;transition:border-color 0.2s" oninput="onTcCodeInput(this)" onkeydown="onTcCodeKeydown(event)">
+        </div>
+        <div id="tcCodeError" style="font-size:11.5px;color:#dc2626;font-weight:700;margin-top:6px;display:none">
+          Code does not match. Please enter the exact code shown above.
+        </div>
+      </div>
     </div>
     <div class="theme-confirm-actions">
       <button type="button" class="btn btn-secondary" id="tcCancelBtn" onclick="closeThemeConfirm(false)">Cancel</button>
-      <button type="button" class="btn btn-primary" id="tcConfirmBtn" onclick="closeThemeConfirm(true)">Confirm</button>
+      <button type="button" class="btn btn-primary" id="tcConfirmBtn" onclick="submitThemeConfirm()">Confirm</button>
     </div>
   </div>
 </div>
@@ -5391,7 +5424,7 @@ body {
 </div>
 
 <!-- ADMIN LOGIN -->
-<div class="modal-overlay" id="modal-login">
+<div class="modal-overlay" id="modal-login" onclick="if(event.target===this)closeLogin()">
   <div class="modal" style="max-width:380px">
     <div class="modal-head">
       <h3>
@@ -7228,6 +7261,67 @@ function closeThemeMessage(){
 /* THEME CONFIRM DIALOG SYSTEM */
 var _tcCallback = null;
 
+var _tcRequiredCode = null;
+
+function generateConfirmCode(){
+  var chars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+  var code = '';
+  for (var i = 0; i < 4; i++){
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
+}
+
+function onTcCodeInput(el){
+  var confirmBtn = document.getElementById('tcConfirmBtn');
+  var codeError = document.getElementById('tcCodeError');
+  if (!_tcRequiredCode) return;
+  var entered = (el.value || '').trim().toUpperCase();
+  el.value = entered;
+  if (codeError) codeError.style.display = 'none';
+  if (entered === _tcRequiredCode){
+    el.style.borderColor = '#16a34a';
+    el.style.background = '#f0fdf4';
+    if (confirmBtn){
+      confirmBtn.disabled = false;
+      confirmBtn.style.opacity = '1';
+      confirmBtn.style.cursor = 'pointer';
+    }
+  } else {
+    el.style.borderColor = '#cbd5e1';
+    el.style.background = '#ffffff';
+    if (confirmBtn){
+      confirmBtn.disabled = true;
+      confirmBtn.style.opacity = '0.45';
+      confirmBtn.style.cursor = 'not-allowed';
+    }
+  }
+}
+
+function onTcCodeKeydown(e){
+  if (e.key === 'Enter'){
+    e.preventDefault();
+    submitThemeConfirm();
+  }
+}
+
+function submitThemeConfirm(){
+  if (_tcRequiredCode){
+    var input = document.getElementById('tcCodeInput');
+    var entered = (input ? input.value : '').trim().toUpperCase();
+    if (entered !== _tcRequiredCode){
+      var codeError = document.getElementById('tcCodeError');
+      if (codeError) codeError.style.display = 'block';
+      if (input){
+        input.style.borderColor = '#dc2626';
+        input.focus();
+      }
+      return;
+    }
+  }
+  closeThemeConfirm(true);
+}
+
 function showThemeConfirm(opts){
   var overlay = document.getElementById('themeConfirmModal');
   var titleEl = document.getElementById('tcTitle');
@@ -7236,6 +7330,10 @@ function showThemeConfirm(opts){
   var cancelBtn = document.getElementById('tcCancelBtn');
   var iconWrap = document.getElementById('tcIconWrap');
   var iconEl = document.getElementById('tcIcon');
+  var codeBox = document.getElementById('tcCodeBox');
+  var codeDisplay = document.getElementById('tcCodeDisplay');
+  var codeInput = document.getElementById('tcCodeInput');
+  var codeError = document.getElementById('tcCodeError');
 
   if (!overlay) return;
 
@@ -7256,12 +7354,35 @@ function showThemeConfirm(opts){
     iconEl.innerHTML = '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>';
   }
 
+  _tcRequiredCode = null;
+  if (opts.requireCode){
+    _tcRequiredCode = generateConfirmCode();
+    if (codeDisplay) codeDisplay.textContent = _tcRequiredCode;
+    if (codeInput){
+      codeInput.value = '';
+      codeInput.style.borderColor = '#cbd5e1';
+      codeInput.style.background = '#ffffff';
+    }
+    if (codeError) codeError.style.display = 'none';
+    if (codeBox) codeBox.style.display = 'block';
+    confirmBtn.disabled = true;
+    confirmBtn.style.opacity = '0.45';
+    confirmBtn.style.cursor = 'not-allowed';
+    setTimeout(function(){ if (codeInput) codeInput.focus(); }, 160);
+  } else {
+    if (codeBox) codeBox.style.display = 'none';
+    confirmBtn.disabled = false;
+    confirmBtn.style.opacity = '1';
+    confirmBtn.style.cursor = 'pointer';
+  }
+
   overlay.classList.add('open');
 }
 
 function closeThemeConfirm(result){
   var overlay = document.getElementById('themeConfirmModal');
   if (overlay) overlay.classList.remove('open');
+  _tcRequiredCode = null;
   if (result && typeof _tcCallback === 'function'){
     var cb = _tcCallback;
     _tcCallback = null;
@@ -9204,6 +9325,7 @@ function deleteItemById(id){
     confirmText: 'Delete Permanently',
     cancelText: 'Cancel',
     type: 'danger',
+    requireCode: true,
     onConfirm: function(){
       var deletedName = it.name;
       items = items.filter(function(x){ return x.id !== id; });
@@ -9262,6 +9384,7 @@ function deleteVariant(itemId, variantId){
     confirmText: 'Delete Variant',
     cancelText: 'Cancel',
     type: 'danger',
+    requireCode: true,
     onConfirm: function(){
       var deletedVarName = v.name;
       it.variants = it.variants.filter(function(x){ return x.id !== variantId; });
