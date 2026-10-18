@@ -3593,6 +3593,18 @@ table.bordered-report-table tfoot td,
   border-radius: 20px;
   letter-spacing: 0.3px;
 }
+.bill-card-date-badge {
+  font-size: 11px;
+  font-weight: 800;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 3px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+  color: #ffffff;
+  font-family: 'JetBrains Mono', monospace;
+  white-space: nowrap;
+}
 .bill-card-body {
   padding: 13px 16px;
   display: grid;
@@ -3680,104 +3692,366 @@ table.bordered-report-table tfoot td,
   font-size: 13px;
 }
 
-/* BILL DOC PRINT MODAL (Delhi Public School Stationery) */
+/* BILL DOC PRINT MODAL (Delhi Public School Official Stationery) */
+#modal-bill,
+#modal-bill .modal,
+#modal-bill .tab-content,
+#modal-bill #bill-detail-body,
+.bill-doc,
+.bill-doc-body,
+.bill-doc-table-wrap {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE / Edge */
+}
+#modal-bill::-webkit-scrollbar,
+#modal-bill .modal::-webkit-scrollbar,
+#modal-bill .tab-content::-webkit-scrollbar,
+#modal-bill #bill-detail-body::-webkit-scrollbar,
+.bill-doc::-webkit-scrollbar,
+.bill-doc-body::-webkit-scrollbar,
+.bill-doc-table-wrap::-webkit-scrollbar {
+  display: none !important; /* Chrome / Safari / Opera */
+  width: 0 !important;
+  height: 0 !important;
+}
+
+#modal-bill .modal {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(18, 79, 50, 0.22);
+  height: auto;
+  max-height: 92vh;
+}
+
+#modal-bill .modal-head {
+  padding: 12px 18px;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#modal-bill .tab-content,
+#modal-bill #bill-detail-body {
+  padding: 0 !important;
+  height: auto;
+  max-height: calc(92vh - 55px);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto !important;
+}
+
 .bill-doc {
-  padding: 0;
-}
-.bill-doc-header {
-  background: linear-gradient(135deg, #124f32 0%, #09331e 100%);
-  color: #ffffff;
-  padding: 24px;
-  text-align: center;
-}
-.bill-doc-header h2 {
-  font-size: 19px;
-  font-weight: 800;
-  margin-bottom: 4px;
-}
-.bill-doc-header .sub {
-  font-size: 11.5px;
-  opacity: 0.92;
-  letter-spacing: 1px;
-  font-weight: 600;
-}
-.bill-doc-number {
-  margin-top: 14px;
-  background: rgba(255, 255, 255, 0.22);
-  display: inline-block;
-  padding: 8px 20px;
-  border-radius: 20px;
-  font-weight: 800;
-  font-size: 15px;
-}
-.bill-doc-body {
-  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 100%;
   background: #ffffff;
 }
+
+/* Official Faded DPS Logo Watermark */
+.bill-doc-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(250px, 64vw);
+  height: min(250px, 64vw);
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  opacity: 0.075; /* Elegant faded official school crest watermark */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: grayscale(12%);
+}
+.bill-doc-watermark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.bill-doc-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 100%;
+}
+
+.bill-doc-header {
+  background: linear-gradient(135deg, #124f32 0%, #08331d 100%);
+  color: #ffffff;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  box-shadow: 0 3px 10px rgba(18, 79, 50, 0.16);
+}
+.bill-doc-header-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bill-header-logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #ffffff;
+  padding: 2px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.22);
+  flex-shrink: 0;
+}
+.bill-header-text h2 {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  margin: 0;
+  line-height: 1.25;
+}
+.bill-header-text .sub {
+  font-size: 10.5px;
+  opacity: 0.92;
+  letter-spacing: 0.8px;
+  font-weight: 700;
+  margin-top: 2px;
+  text-transform: uppercase;
+}
+.bill-doc-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.bill-number-pill {
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+.bill-inpass-pill {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 11.5px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.bill-doc-body {
+  padding: 12px 18px 14px;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  background: transparent;
+}
+
 .bill-doc-meta {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 18px;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 8px;
+  background: #f2f9f4;
+  border: 1px solid var(--green-border);
+  border-radius: 11px;
+  padding: 8px 12px;
+  flex-shrink: 0;
 }
 .bill-doc-meta-item {
-  background: #f8faf8;
-  border-radius: 12px;
-  padding: 11px 14px;
-  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 .bill-doc-meta-label {
-  font-size: 9.5px;
+  font-size: 9px;
   font-weight: 800;
   color: var(--muted);
   letter-spacing: 0.5px;
   text-transform: uppercase;
 }
 .bill-doc-meta-value {
-  font-size: 14.5px;
-  font-weight: 700;
-  margin-top: 3px;
-  word-break: break-word;
+  font-size: 13px;
+  font-weight: 800;
   color: var(--text);
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bill-items-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 6px;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--green);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.bill-items-count-badge {
+  font-size: 10.5px;
+  background: var(--green-light);
+  color: var(--green);
+  padding: 2px 9px;
+  border-radius: 12px;
+  font-weight: 800;
+  border: 1px solid var(--green-border);
+}
+
+.bill-doc-table-wrap {
+  height: auto;
+  max-height: 52vh;
+  overflow-y: auto;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.95);
+}
+.bill-doc-table-wrap::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 .bill-doc-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
-  margin-top: 8px;
+  font-size: 12.5px;
 }
-.bill-doc-table th {
-  background: var(--green-light);
-  color: var(--green);
-  text-align: left;
-  padding: 11px 12px;
-  font-size: 11px;
+.bill-doc-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #e8f5ec;
+  color: #124f32;
+  font-weight: 800;
+  font-size: 10.5px;
+  letter-spacing: 0.4px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border: 1px solid var(--green-border);
+  padding: 8px 10px;
+  border-bottom: 1.5px solid var(--green-border);
+  border-right: 1px solid var(--green-border);
+}
+.bill-doc-table thead th:last-child {
+  border-right: none;
+}
+.bill-doc-table tbody tr:nth-child(odd) td {
+  background-color: #f7faf8;
+}
+.bill-doc-table tbody tr:nth-child(even) td {
+  background-color: #ffffff;
 }
 .bill-doc-table td {
-  padding: 11px 12px;
-  border: 1px solid var(--border);
-  white-space: normal;
-  color: var(--text);
+  padding: 8px 10px;
+  border-bottom: 1px solid #edf4ef;
+  border-right: 1px solid #edf4ef;
+  vertical-align: middle;
 }
+.bill-doc-table td:last-child {
+  border-right: none;
+}
+.bill-col-num {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  width: 36px;
+}
+.bill-col-name {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.bill-item-title {
+  font-weight: 700;
+  color: var(--text);
+  font-size: 12.5px;
+}
+.bill-item-subcat {
+  font-size: 10.5px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.bill-col-qty {
+  text-align: right;
+  width: 75px;
+}
+.bill-qty-pill {
+  display: inline-block;
+  background: var(--green-subtle);
+  border: 1px solid var(--green-border);
+  color: var(--green);
+  font-weight: 800;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
 .bill-doc-total {
   background: var(--green-light);
-  padding: 13px 16px;
-  border-radius: 12px;
-  margin-top: 14px;
+  border: 1px solid var(--green-border);
+  padding: 9px 14px;
+  border-radius: 10px;
+  margin-top: 9px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-weight: 800;
-  font-size: 14px;
-  border: 1px solid var(--green-border);
+  flex-shrink: 0;
 }
-.bill-doc-total span:last-child {
+.bill-total-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 800;
   color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.bill-total-value {
   font-size: 17px;
   font-weight: 900;
+  color: var(--green);
+  font-family: 'JetBrains Mono', monospace;
+}
+.bill-total-value small {
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.bill-doc-foot-official {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  padding-top: 2px;
 }
 
 /* ============================================= */
@@ -4773,21 +5047,183 @@ body {
     width: 10px;
   }
 
-  /* BILLS TAB */
+  /* BILLS TAB & SINGLE-PAGE BILL MODAL OPTIMIZATIONS FOR MOBILE */
   .bill-card-body {
     grid-template-columns: 1fr;
     gap: 8px;
   }
-  .bill-doc-header {
-    padding: 18px 14px;
+
+  /* One-Page Bill Modal on Mobile with Zero Scrollbar and Natural Content Height (No Extra Blank Space) */
+  #modal-bill .modal {
+    max-height: 90vh !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    border-radius: 20px 20px 0 0 !important;
   }
-  .bill-doc-header h2 {
-    font-size: 16px;
+  #modal-bill .modal-head {
+    padding: 8px 14px 6px !important;
+    flex-shrink: 0 !important;
+  }
+  #modal-bill .modal-head::before {
+    margin: 0 auto 5px !important;
+    width: 32px !important;
+    height: 3.5px !important;
+  }
+  #modal-bill .tab-content,
+  #modal-bill #bill-detail-body {
+    padding: 0 !important;
+    max-height: calc(90vh - 50px) !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow-y: auto !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  #modal-bill #bill-detail-body::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  .bill-doc {
+    height: auto !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
+  }
+  .bill-doc-inner {
+    height: auto !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .bill-doc-watermark {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: min(210px, 56vw) !important;
+    height: min(210px, 56vw) !important;
+    pointer-events: none !important;
+    user-select: none !important;
+    z-index: 1 !important;
+    opacity: 0.075 !important;
+  }
+  .bill-doc-header {
+    padding: 9px 12px !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+  }
+  .bill-header-logo {
+    width: 28px !important;
+    height: 28px !important;
+  }
+  .bill-header-text h2 {
+    font-size: 13.5px !important;
+  }
+  .bill-header-text .sub {
+    font-size: 9px !important;
+    letter-spacing: 0.5px !important;
+  }
+  .bill-number-pill {
+    font-size: 11.5px !important;
+    padding: 3px 9px !important;
+  }
+  .bill-inpass-pill {
+    font-size: 10.5px !important;
+    padding: 3px 8px !important;
+  }
+  .bill-doc-body {
+    padding: 8px 10px 10px !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: visible !important;
   }
   .bill-doc-meta {
-    grid-template-columns: 1fr;
-    gap: 6px;
-    padding: 10px;
+    grid-template-columns: 1.2fr 1fr 1fr !important;
+    gap: 5px !important;
+    padding: 6px 8px !important;
+    border-radius: 9px !important;
+    flex-shrink: 0 !important;
+  }
+  .bill-doc-meta-label {
+    font-size: 8px !important;
+  }
+  .bill-doc-meta-value {
+    font-size: 11.5px !important;
+  }
+  .bill-items-header-bar {
+    margin-top: 6px !important;
+    margin-bottom: 4px !important;
+    font-size: 10.5px !important;
+    flex-shrink: 0 !important;
+  }
+  .bill-items-count-badge {
+    font-size: 9.5px !important;
+    padding: 1px 7px !important;
+  }
+  .bill-doc-table-wrap {
+    flex: none !important;
+    height: auto !important;
+    max-height: 48vh !important;
+    overflow-y: auto !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    border-radius: 8px !important;
+  }
+  .bill-doc-table-wrap::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  .bill-doc-table thead th {
+    padding: 6px 8px !important;
+    font-size: 9.5px !important;
+  }
+  .bill-doc-table td {
+    padding: 6px 8px !important;
+    font-size: 11.5px !important;
+  }
+  .bill-col-num {
+    width: 28px !important;
+    font-size: 10px !important;
+  }
+  .bill-item-title {
+    font-size: 11.5px !important;
+  }
+  .bill-item-subcat {
+    font-size: 9.5px !important;
+  }
+  .bill-col-qty {
+    width: 65px !important;
+  }
+  .bill-qty-pill {
+    font-size: 11px !important;
+    padding: 2px 6px !important;
+  }
+  .bill-doc-total {
+    padding: 7px 10px !important;
+    margin-top: 6px !important;
+    border-radius: 8px !important;
+    flex-shrink: 0 !important;
+  }
+  .bill-total-label {
+    font-size: 11px !important;
+  }
+  .bill-total-value {
+    font-size: 15px !important;
+  }
+  .bill-doc-foot-official {
+    margin-top: 4px !important;
+    font-size: 8.5px !important;
+    padding-top: 0 !important;
+    flex-shrink: 0 !important;
   }
   .bill-item-row-edit {
     grid-template-columns: 1fr 65px 36px;
@@ -4985,10 +5421,25 @@ body {
     max-height: unset !important;
     max-width: 100% !important;
   }
+  .bill-doc {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    box-shadow: none !important;
+  }
   .bill-doc-header {
     background: #124f32 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+  }
+  .bill-doc-watermark {
+    display: flex !important;
+    opacity: 0.08 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .bill-doc-table-wrap {
+    overflow: visible !important;
+    max-height: none !important;
   }
 }
 </style>
@@ -5951,15 +6402,21 @@ body {
 
 <!-- BILL DETAIL -->
 <div class="modal-overlay" id="modal-bill">
-  <div class="modal" style="max-width:800px">
+  <div class="modal" style="max-width:760px">
     <div class="modal-head">
-      <h3>
+      <div style="display:flex;align-items:center;gap:8px">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        <span>Bill Details</span>
-      </h3>
-      <button class="btn" onclick="closeBillDetail()" title="Close">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
+        <span style="font-weight:800;font-size:14px">Bill Details</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <button class="btn" onclick="printBillDoc()" title="Print Bill / Save PDF" style="padding:5px 11px;font-size:11.5px;display:inline-flex;align-items:center;gap:5px;font-weight:700;border-radius:8px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          <span>Print</span>
+        </button>
+        <button class="btn" onclick="closeBillDetail()" title="Close">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
     </div>
     <div class="tab-content" id="bill-detail-body"></div>
   </div>
@@ -7933,13 +8390,20 @@ function collectAllBills(){
         var billNo = parts[0] || '?'; var year = parts[1] || '?'; var inPass = parts[2] || '?';
         var key = billNo + '|' + year + '|' + inPass;
         if (!billMap[key]){ billMap[key] = { key: key, billNo: billNo, year: year, inPass: inPass, vendor: (l.detail || '').replace(/^From\s+/, ''), date: l.date, items: [] }; }
-        if (l.date < billMap[key].date) billMap[key].date = l.date;
+        if (l.date && (!billMap[key].date || l.date > billMap[key].date)) billMap[key].date = l.date;
         billMap[key].items.push({ itemName: it.name, subcat: v.name, qty: l.qty, date: l.date });
       }
     }
   }
   var arr = [];
   for (var kk in billMap) if (billMap.hasOwnProperty(kk)) arr.push(billMap[kk]);
+  // HAMESHA DATEWISE SORT (Latest / Newest Date first, then by billNo):
+  arr.sort(function(a, b){
+    var da = a.date || '';
+    var db = b.date || '';
+    if (db !== da) return db.localeCompare(da);
+    return String(b.billNo).localeCompare(String(a.billNo));
+  });
   return arr;
 }
 
@@ -7961,7 +8425,8 @@ function renderBills(){
   var vendorF = document.getElementById('f-bill-vendor').value;
   var minItems = parseInt(document.getElementById('f-bill-min-items').value);
   var minQty = parseInt(document.getElementById('f-bill-min-qty').value);
-  var sortF = document.getElementById('f-bill-sort').value;
+  var sortEl = document.getElementById('f-bill-sort');
+  var sortF = (sortEl && sortEl.value) ? sortEl.value : 'date-desc';
 
   var filtered = []; var totalQty = 0; var vendorsMap = {};
   for (var i = 0; i < bills.length; i++){
@@ -7976,12 +8441,27 @@ function renderBills(){
     if (!isNaN(minQty) && bq < minQty) continue;
     filtered.push(b);
   }
+  // HAMESHA DATEWISE (Always sorted date-wise: newest first)
   filtered.sort(function(a, b){
-    if (sortF === 'date-desc') return b.date.localeCompare(a.date);
-    if (sortF === 'date-asc') return a.date.localeCompare(b.date);
-    if (sortF === 'billno-asc') return String(a.billNo).localeCompare(String(b.billNo));
-    if (sortF === 'qty-desc') return b.totalQty - a.totalQty;
-    return 0;
+    var da = a.date || '';
+    var db = b.date || '';
+    if (sortF === 'date-asc') {
+      if (da !== db) return da.localeCompare(db);
+      return String(a.billNo).localeCompare(String(b.billNo));
+    }
+    if (sortF === 'billno-asc') {
+      var nDiff = String(a.billNo).localeCompare(String(b.billNo));
+      if (nDiff !== 0) return nDiff;
+      return db.localeCompare(da);
+    }
+    if (sortF === 'qty-desc') {
+      var qDiff = (b.totalQty || 0) - (a.totalQty || 0);
+      if (qDiff !== 0) return qDiff;
+      return db.localeCompare(da);
+    }
+    // Default is date-desc: Newest date first, then by billNo
+    if (db !== da) return db.localeCompare(da);
+    return String(b.billNo).localeCompare(String(a.billNo));
   });
 
   var activeCount = 0;
@@ -7989,7 +8469,7 @@ function renderBills(){
   if (!isNaN(minItems)) activeCount++; if (!isNaN(minQty)) activeCount++;
   if (sortF !== 'date-desc') activeCount++;
   updateFilterCount('bill', activeCount);
-  setFilterInfo('bill', filtered.length + ' of ' + bills.length + ' bills shown');
+  setFilterInfo('bill', filtered.length + ' of ' + bills.length + ' bills shown (Date-wise)');
 
   document.getElementById('bill-count').textContent = bills.length;
   document.getElementById('bill-qty').textContent = totalQty;
@@ -8007,8 +8487,17 @@ function renderBills(){
     if (b.items.length > pc) preview += '<div style="font-size:10px;color:#6b7280;padding-top:5px;font-weight:700">+ ' + (b.items.length - pc) + ' more</div>';
     var keyEsc = b.key.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
     html += '<div class="bill-card" onclick="openBillDetail(\'' + keyEsc + '\')">' +
-      '<div class="bill-card-head"><div class="bill-card-title">Bill #' + esc(b.billNo) + ' / ' + esc(b.year) + '</div><div class="bill-card-inpass">' + esc(b.inPass) + '</div></div>' +
-      '<div class="bill-card-body"><div><div class="bill-meta-label">Vendor</div><div class="bill-meta-value">' + esc(b.vendor) + '</div></div><div><div class="bill-meta-label">Date</div><div class="bill-meta-value">' + b.date + '</div></div></div>' +
+      '<div class="bill-card-head">' +
+        '<div class="bill-card-title">Bill #' + esc(b.billNo) + ' / ' + esc(b.year) + '</div>' +
+        '<div style="display:flex;align-items:center;gap:6px">' +
+          '<div class="bill-card-date-badge">' + b.date + '</div>' +
+          '<div class="bill-card-inpass">' + esc(b.inPass) + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="bill-card-body">' +
+        '<div><div class="bill-meta-label">Vendor / Supplier</div><div class="bill-meta-value">' + esc(b.vendor) + '</div></div>' +
+        '<div><div class="bill-meta-label">Bill Date</div><div class="bill-meta-value" style="color:var(--green);font-weight:800">' + b.date + '</div></div>' +
+      '</div>' +
       '<div class="bill-card-items"><div class="bill-items-title">Items in this bill (' + b.items.length + ')</div><div class="bill-items-list">' + preview + '</div></div>' +
       '<div class="bill-card-foot"><span>Items: <span class="total">' + b.items.length + '</span></span><span>Qty: <span class="total">' + b.totalQty + '</span></span></div>' +
     '</div>';
@@ -8026,21 +8515,151 @@ function openBillDetail(key){
   var rows = '';
   for (var i = 0; i < b.items.length; i++){
     var it = b.items[i];
-    rows += '<tr><td>' + (i+1) + '</td><td>' + esc(it.itemName) + (it.subcat !== 'Standard' ? ' <span style="color:#6b7280;font-size:11px">→ ' + esc(it.subcat) + '</span>' : '') + '</td><td><b>' + it.qty + '</b></td></tr>';
+    rows += '<tr>' +
+      '<td class="bill-col-num">' + (i+1) + '</td>' +
+      '<td class="bill-col-name">' +
+        '<span class="bill-item-title">' + esc(it.itemName) + '</span>' +
+        (it.subcat !== 'Standard' ? '<span class="bill-item-subcat">→ ' + esc(it.subcat) + '</span>' : '') +
+      '</td>' +
+      '<td class="bill-col-qty"><span class="bill-qty-pill">' + it.qty + '</span></td>' +
+    '</tr>';
   }
-  var html = '<div class="bill-doc"><div class="bill-doc-header"><h2>DELHI PUBLIC SCHOOL, AMRAPALI</h2><div class="sub">CENTRAL INVENTORY · BILL RECORD</div><div class="bill-doc-number">Bill #' + esc(b.billNo) + ' / ' + esc(b.year) + '</div></div>' +
-    '<div class="bill-doc-body"><div class="bill-doc-meta">' +
-      '<div class="bill-doc-meta-item"><div class="bill-doc-meta-label">In-Pass No.</div><div class="bill-doc-meta-value">' + esc(b.inPass) + '</div></div>' +
-      '<div class="bill-doc-meta-item"><div class="bill-doc-meta-label">Bill Date</div><div class="bill-doc-meta-value">' + b.date + '</div></div>' +
-      '<div class="bill-doc-meta-item" style="grid-column:1/-1"><div class="bill-doc-meta-label">Vendor</div><div class="bill-doc-meta-value">' + esc(b.vendor) + '</div></div>' +
+
+  var html = '<div class="bill-doc">' +
+    '<!-- Official DPS Faded Watermark in background -->' +
+    '<div class="bill-doc-watermark" aria-hidden="true">' +
+      '<img src="logo.png" alt="DPS Emblem" onerror="this.parentElement.style.display=\'none\'">' +
     '</div>' +
-    '<div style="font-size:12px;font-weight:800;color:#0f7a3d;letter-spacing:0.5px;text-transform:uppercase;margin-top:14px">Items Received (' + b.items.length + ')</div>' +
-    '<table class="bill-doc-table"><thead><tr><th style="width:40px">#</th><th>Item Name</th><th style="width:80px">Qty</th></tr></thead><tbody>' + rows + '</tbody></table>' +
-    '<div class="bill-doc-total"><span>Total Quantity</span><span>' + totalQty + ' pcs</span></div></div></div>';
+    '<div class="bill-doc-inner">' +
+      '<div class="bill-doc-header">' +
+        '<div class="bill-doc-header-main">' +
+          '<img src="logo.png" class="bill-header-logo" alt="DPS Logo" onerror="this.style.display=\'none\'">' +
+          '<div class="bill-header-text">' +
+            '<h2>DELHI PUBLIC SCHOOL, AMRAPALI</h2>' +
+            '<div class="sub">CENTRAL INVENTORY · GOODS INWARD BILL</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="bill-doc-pills">' +
+          '<span class="bill-number-pill">Bill #' + esc(b.billNo) + ' / ' + esc(b.year) + '</span>' +
+          '<span class="bill-inpass-pill">In-Pass: ' + esc(b.inPass) + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="bill-doc-body">' +
+        '<div class="bill-doc-meta">' +
+          '<div class="bill-doc-meta-item"><div class="bill-doc-meta-label">Vendor / Supplier</div><div class="bill-doc-meta-value" title="' + esc(b.vendor) + '">' + esc(b.vendor) + '</div></div>' +
+          '<div class="bill-doc-meta-item"><div class="bill-doc-meta-label">Bill Date</div><div class="bill-doc-meta-value">' + b.date + '</div></div>' +
+          '<div class="bill-doc-meta-item"><div class="bill-doc-meta-label">In-Pass No.</div><div class="bill-doc-meta-value">' + esc(b.inPass) + '</div></div>' +
+        '</div>' +
+        '<div class="bill-items-header-bar">' +
+          '<span>Items Received (' + b.items.length + ')</span>' +
+          '<span class="bill-items-count-badge">' + totalQty + ' total pcs</span>' +
+        '</div>' +
+        '<div class="bill-doc-table-wrap">' +
+          '<table class="bill-doc-table">' +
+            '<thead>' +
+              '<tr><th style="width:36px;text-align:center">#</th><th>Item Name & Variant</th><th style="width:70px;text-align:right">Qty</th></tr>' +
+            '</thead>' +
+            '<tbody>' + rows + '</tbody>' +
+          '</table>' +
+        '</div>' +
+        '<div class="bill-doc-total">' +
+          '<div class="bill-total-label">' +
+            '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>' +
+            '<span>Total Units Received</span>' +
+          '</div>' +
+          '<div class="bill-total-value">' + totalQty + ' <small>pcs</small></div>' +
+        '</div>' +
+        '<div class="bill-doc-foot-official">' +
+          '<span>Central Inventory Verified</span>' +
+          '<span>•</span>' +
+          '<span>DPS Amrapali Official Voucher</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+
   document.getElementById('bill-detail-body').innerHTML = html;
   document.getElementById('modal-bill').classList.add('open');
 }
 function closeBillDetail(){ document.getElementById('modal-bill').classList.remove('open'); }
+
+function printBillDoc(){
+  var bills = collectAllBills(); var b = null;
+  for (var i = 0; i < bills.length; i++) if (bills[i].key === currentBillKey){ b = bills[i]; break; }
+  if (!b) return alert('Bill not found');
+  var printable = document.getElementById('dps-official-printable-area');
+  if (!printable) return;
+
+  var totalQty = 0;
+  for (var i = 0; i < b.items.length; i++) totalQty += b.items[i].qty;
+  var rows = '';
+  for (var i = 0; i < b.items.length; i++){
+    var it = b.items[i];
+    var bg = (i % 2 === 0) ? '#f0f7f2' : '#ffffff';
+    rows += '<tr style="background:' + bg + ';">' +
+      '<td style="padding:7px 10px;text-align:center;font-size:11px;border:1px solid #333">' + (i+1) + '</td>' +
+      '<td style="padding:7px 10px;font-weight:700;font-size:12px;border:1px solid #333">' + esc(it.itemName) + (it.subcat !== 'Standard' ? ' <span style="color:#555;font-size:11px">→ ' + esc(it.subcat) + '</span>' : '') + '</td>' +
+      '<td style="padding:7px 10px;text-align:right;font-weight:900;font-size:13px;color:#124f32;border:1px solid #333">' + it.qty + '</td>' +
+    '</tr>';
+  }
+
+  printable.innerHTML = '<div style="position:relative;overflow:hidden;font-family:Arial,sans-serif;color:#111;padding:10px">' +
+    '<!-- Official DPS Faded Watermark in background -->' +
+    '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:280px;height:280px;opacity:0.07;pointer-events:none;z-index:0;text-align:center">' +
+      '<img src="logo.png" style="width:100%;height:100%;object-fit:contain" alt="" onerror="this.style.display=\'none\'">' +
+    '</div>' +
+    '<div style="position:relative;z-index:1">' +
+      '<div style="text-align:center;border-bottom:2.5px solid #124f32;padding-bottom:12px;margin-bottom:14px">' +
+        '<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:4px">' +
+          '<img src="logo.png" style="width:36px;height:36px;object-fit:contain" alt="" onerror="this.style.display=\'none\'">' +
+          '<h1 style="margin:0;font-size:22px;color:#124f32;font-weight:800;letter-spacing:0.5px">DELHI PUBLIC SCHOOL, AMRAPALI</h1>' +
+        '</div>' +
+        '<div style="font-size:11.5px;font-weight:700;color:#444;letter-spacing:1px;text-transform:uppercase">CENTRAL INVENTORY · GOODS INWARD BILL VOUCHER</div>' +
+        '<div style="margin-top:6px;font-size:14px;font-weight:800;color:#124f32">Bill #' + esc(b.billNo) + ' / ' + esc(b.year) + ' &nbsp;·&nbsp; In-Pass No: ' + esc(b.inPass) + '</div>' +
+      '</div>' +
+      '<div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:10px;margin-bottom:14px;font-size:12px">' +
+        '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7">' +
+          '<div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Vendor / Supplier</div>' +
+          '<div style="font-size:13px;font-weight:800;color:#124f32;margin-top:2px">' + esc(b.vendor) + '</div>' +
+        '</div>' +
+        '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7">' +
+          '<div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Bill Date</div>' +
+          '<div style="font-size:13px;font-weight:800;color:#124f32;margin-top:2px">' + b.date + '</div>' +
+        '</div>' +
+        '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7">' +
+          '<div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Total Quantity</div>' +
+          '<div style="font-size:13px;font-weight:800;color:#124f32;margin-top:2px">' + totalQty + ' pcs (' + b.items.length + ' items)</div>' +
+        '</div>' +
+      '</div>' +
+      '<table style="width:100%;border-collapse:collapse;border:1.5px solid #333;font-size:12px">' +
+        '<thead>' +
+          '<tr style="background:#124f32;color:#ffffff">' +
+            '<th style="padding:8px;border:1px solid #333;width:35px;text-align:center">#</th>' +
+            '<th style="padding:8px;border:1px solid #333;text-align:left">Item & Variant / Shade</th>' +
+            '<th style="padding:8px;border:1px solid #333;width:90px;text-align:right">Quantity</th>' +
+          '</tr>' +
+        '</thead>' +
+        '<tbody>' + rows + '</tbody>' +
+        '<tfoot>' +
+          '<tr style="background:#e8f5ec;font-weight:800;border-top:2px solid #124f32">' +
+            '<td colspan="2" style="padding:9px 10px;border:1px solid #333;text-align:right;color:#124f32">TOTAL QUANTITY RECEIVED:</td>' +
+            '<td style="padding:9px 10px;border:1px solid #333;text-align:right;color:#124f32;font-weight:900">' + totalQty + ' pcs</td>' +
+          '</tr>' +
+        '</tfoot>' +
+      '</table>' +
+      '<div style="display:flex;justify-content:space-between;margin-top:40px;padding-top:10px;font-size:11.5px;font-weight:700;color:#444">' +
+        '<div style="text-align:center;border-top:1px solid #666;width:150px;padding-top:5px">Received By (Store)</div>' +
+        '<div style="text-align:center;border-top:1px solid #666;width:150px;padding-top:5px">Accounts Verified</div>' +
+        '<div style="text-align:center;border-top:1px solid #666;width:150px;padding-top:5px">Principal / Authority</div>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+
+  document.body.classList.add('dps-printing-official-doc');
+  window.print();
+  window.onafterprint = function(){ document.body.classList.remove('dps-printing-official-doc'); };
+  setTimeout(function(){ document.body.classList.remove('dps-printing-official-doc'); }, 1500);
+}
 
 function collectFaculty(from, to){
   var map = {};
