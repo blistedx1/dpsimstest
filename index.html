@@ -4100,18 +4100,213 @@ table.bill-doc-table {
   z-index: 100050 !important;
 }
 #modal-login .modal {
-  border-radius: 22px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 25px 60px rgba(18, 79, 50, 0.22);
+  border: 1px solid rgba(18, 79, 50, 0.14);
+  overflow: hidden;
+}
+.auth-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px 8px;
+  background: #ffffff;
+}
+.auth-top-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 13px;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.auth-top-btn:hover {
+  background: #ffffff;
+  border-color: var(--green-border);
+  color: var(--green);
+  transform: translateY(-1px);
+}
+.auth-top-btn:active {
+  transform: scale(0.96);
+}
+.auth-cancel-btn:hover {
+  border-color: #fecaca;
+  color: #dc2626;
+  background: #fef2f2;
+}
+.auth-modal-body {
+  padding: 6px 22px 20px;
+}
+.auth-center-header {
+  text-align: center;
+  margin: 6px 0 16px;
+}
+.auth-center-title {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--green);
+  margin: 0 0 6px;
+  letter-spacing: -0.2px;
+}
+.auth-scanner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  color: var(--green-dark);
+  background: rgba(18, 79, 50, 0.08);
+  border: 1px solid var(--green-border);
+  padding: 3.5px 12px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+}
+.bio-scanner-wrapper {
+  margin: 14px auto 10px;
+  display: flex;
+  justify-content: center;
+}
+.bio-scanner-ring {
+  width: 98px;
+  height: 98px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(18, 79, 50, 0.04) 0%, rgba(18, 79, 50, 0.12) 100%);
+  border: 2.5px solid var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 0 24px rgba(18, 79, 50, 0.18);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+  user-select: none;
+}
+.bio-scanner-ring:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 32px rgba(18, 79, 50, 0.35);
+  border-color: var(--green-dark);
+}
+.bio-scanner-ring:active {
+  transform: scale(0.96);
+}
+.bio-scanner-ring.scanning {
+  animation: bioScanPulse 1.4s infinite ease-in-out;
+  border-color: #10b981;
+}
+.bio-scanner-ring.fail-shake {
+  animation: bioShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  border-color: #dc2626 !important;
+  box-shadow: 0 0 24px rgba(220, 38, 38, 0.35) !important;
+}
+@keyframes bioScanPulse {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+  50% { box-shadow: 0 0 0 16px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+@keyframes bioShake {
+  10%, 90% { transform: translate3d(-2px, 0, 0); }
+  20%, 80% { transform: translate3d(3px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+.bio-scanner-icon {
+  color: var(--green);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.bio-scan-beam {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  height: 2.5px;
+  background: linear-gradient(90deg, transparent, #22c55e, #4ade80, transparent);
+  box-shadow: 0 0 10px #22c55e;
+  border-radius: 9999px;
+  animation: scanLaser 2s infinite ease-in-out;
+  pointer-events: none;
+}
+@keyframes scanLaser {
+  0% { top: 18%; opacity: 0.3; }
+  50% { top: 78%; opacity: 1; }
+  100% { top: 18%; opacity: 0.3; }
+}
+.bio-touch-prompt {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 6px;
+  letter-spacing: 0.3px;
+  text-transform: lowercase;
+}
+.bio-fail-message {
+  font-size: 12px;
+  font-weight: 700;
+  color: #dc2626;
+  text-align: center;
+  min-height: 18px;
+  margin-bottom: 12px;
+  line-height: 1.35;
+}
+.btn-biometric-tap {
+  width: 100%;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--green);
+  color: #ffffff;
+  border: 1px solid var(--green-dark);
+  font-size: 13.5px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(18, 79, 50, 0.22);
+  transition: all 0.2s ease;
+}
+.btn-biometric-tap:hover {
+  background: var(--green-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(18, 79, 50, 0.32);
+}
+.pin-view-intro {
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.auth-footer-hint {
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 14px;
+  font-weight: 500;
 }
 .pin-inputs {
   display: flex;
   gap: 10px;
   justify-content: center;
-  margin: 18px 0;
+  margin: 14px 0 10px;
 }
 .pin-digit {
   width: 58px;
-  height: 66px;
+  height: 64px;
   border-radius: 14px;
   border: 2px solid var(--border);
   text-align: center;
@@ -4137,112 +4332,8 @@ table.bill-doc-table {
   text-align: center;
   font-size: 12.5px;
   font-weight: 700;
-  margin-top: 8px;
+  margin-top: 6px;
   min-height: 20px;
-}
-.lock-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
-  background: var(--green-light);
-  border: 1px solid var(--green-border);
-  color: var(--green);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 12px;
-}
-.lock-icon svg {
-  width: 28px;
-  height: 28px;
-  stroke: var(--green);
-}
-
-/* BIOMETRIC WEBAUTHN AUTHENTICATION STYLES */
-.biometric-box {
-  background: linear-gradient(135deg, #f0f7f2 0%, #e2efe6 100%);
-  border: 1.5px solid var(--green-border);
-  border-radius: 16px;
-  padding: 16px 14px 14px;
-  margin-bottom: 16px;
-  text-align: center;
-  position: relative;
-  transition: all 0.25s ease;
-}
-.biometric-box:hover {
-  border-color: var(--green);
-  box-shadow: 0 4px 16px rgba(18, 79, 50, 0.12);
-}
-.biometric-icon-wrap {
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 10px;
-  cursor: pointer;
-  box-shadow: 0 4px 14px rgba(18, 79, 50, 0.28);
-  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  position: relative;
-  user-select: none;
-}
-.biometric-icon-wrap:hover {
-  transform: scale(1.08);
-  box-shadow: 0 6px 20px rgba(18, 79, 50, 0.4);
-}
-.biometric-icon-wrap:active {
-  transform: scale(0.95);
-}
-.biometric-icon-wrap.scanning {
-  animation: bioPulse 1.2s infinite ease-in-out;
-}
-@keyframes bioPulse {
-  0% { box-shadow: 0 0 0 0 rgba(18, 79, 50, 0.5); transform: scale(1); }
-  50% { box-shadow: 0 0 0 14px rgba(18, 79, 50, 0); transform: scale(1.06); }
-  100% { box-shadow: 0 0 0 0 rgba(18, 79, 50, 0); transform: scale(1); }
-}
-.biometric-title {
-  font-size: 13.5px;
-  font-weight: 800;
-  color: var(--green);
-  margin-bottom: 3px;
-  letter-spacing: 0.2px;
-}
-.biometric-desc {
-  font-size: 11px;
-  color: var(--muted);
-  font-weight: 600;
-  line-height: 1.35;
-  margin-bottom: 12px;
-  padding: 0 6px;
-}
-.btn-biometric-action {
-  width: 100%;
-  height: 42px;
-  border-radius: 11px;
-  background: var(--green);
-  color: #ffffff;
-  border: 1px solid var(--green-dark);
-  font-size: 13px;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(18, 79, 50, 0.22);
-  transition: all 0.2s ease;
-}
-.btn-biometric-action:hover {
-  background: var(--green-dark);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(18, 79, 50, 0.32);
-}
-.btn-biometric-action:active {
-  transform: scale(0.98);
 }
 @keyframes btnGlowPulse {
   0% { box-shadow: 0 0 0 0 rgba(18, 79, 50, 0.45); transform: scale(1); }
@@ -4251,26 +4342,6 @@ table.bill-doc-table {
 }
 .btn-pulse {
   animation: btnGlowPulse 1.4s infinite ease-in-out !important;
-}
-.biometric-divider {
-  display: flex;
-  align-items: center;
-  margin: 14px 0 6px;
-  text-align: center;
-}
-.biometric-divider::before,
-.biometric-divider::after {
-  content: '';
-  flex: 1;
-  border-bottom: 1px solid var(--border);
-}
-.biometric-divider span {
-  padding: 0 10px;
-  font-size: 10px;
-  font-weight: 800;
-  color: var(--muted);
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
 }
 .biometric-badge-pill {
   display: inline-flex;
@@ -6327,80 +6398,91 @@ body {
 </div>
 
 <!-- ADMIN LOGIN -->
+<!-- ADMIN LOGIN / BIOMETRIC AUTH MODAL -->
 <div class="modal-overlay" id="modal-login" onclick="if(event.target===this)closeLogin()">
-  <div class="modal" style="max-width:380px">
-    <div class="modal-head">
-      <h3>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-        <span>Admin Login</span>
-      </h3>
-      <button class="btn" onclick="closeLogin()" title="Close">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  <div class="modal" style="max-width:390px">
+    <!-- TOP NAVIGATION BAR: Top Left Cancel | Top Right Enter PIN -->
+    <div class="auth-top-bar">
+      <button type="button" class="auth-top-btn auth-cancel-btn" onclick="closeLogin()" title="Cancel">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        <span>Cancel</span>
+      </button>
+
+      <button type="button" class="auth-top-btn auth-pin-toggle-btn" id="btn-toggle-auth-mode" onclick="toggleAuthMode()" title="Enter PIN">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        <span id="auth-mode-btn-text">Enter PIN</span>
       </button>
     </div>
-    <div class="tab-content" style="padding:22px">
+
+    <div class="auth-modal-body">
       <!-- Dummy inputs to absorb browser autofill so it doesn't corrupt search box -->
       <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;opacity:0">
         <input type="text" name="fake_username_trap" tabindex="-1" autocomplete="username">
         <input type="password" name="fake_password_trap" tabindex="-1" autocomplete="current-password">
       </div>
 
-      <!-- Biometric WebAuthn Unlock Box -->
-      <div id="biometric-login-box" class="biometric-box">
-        <div class="biometric-icon-wrap" id="biometric-scan-icon" onclick="loginWithBiometrics()" role="button" tabindex="0" title="Click to verify with Biometrics (Touch ID / Face ID / Windows Hello / Fingerprint)">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/>
-            <path d="M14 13.12c0 2.38 0 6.38-1 8.88"/>
-            <path d="M17.29 21.02c.12-.6.43-2.3.5-3.02"/>
-            <path d="M2 12a10 10 0 0 1 18-6"/>
-            <path d="M2 16h.01"/>
-            <path d="M21.8 16c.2-2 .131-5.354 0-6"/>
-            <path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2"/>
-            <path d="M8.65 22c.21-.66.45-1.32.57-2"/>
-            <path d="M9 6.8a6 6 0 0 1 9 5.2v2"/>
-          </svg>
+      <!-- CENTER HEADING & BIOMETRIC SCANNER BADGE -->
+      <div class="auth-center-header">
+        <div class="auth-center-title" id="auth-modal-title">Unlock to Access Admin</div>
+        <div class="auth-scanner-badge" id="auth-scanner-badge">BIOMETRIC SCANNER</div>
+      </div>
+
+      <!-- BIOMETRIC SCANNER VIEW -->
+      <div id="auth-biometric-view">
+        <div class="bio-scanner-wrapper">
+          <div class="bio-scanner-ring" id="bio-scanner-ring" onclick="triggerBiometricScan(true)" role="button" tabindex="0" title="Touch to scan fingerprint">
+            <div class="bio-scanner-icon" id="biometric-scan-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/>
+                <path d="M14 13.12c0 2.38 0 6.38-1 8.88"/>
+                <path d="M17.29 21.02c.12-.6.43-2.3.5-3.02"/>
+                <path d="M2 12a10 10 0 0 1 18-6"/>
+                <path d="M2 16h.01"/>
+                <path d="M21.8 16c.2-2 .131-5.354 0-6"/>
+                <path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2"/>
+                <path d="M8.65 22c.21-.66.45-1.32.57-2"/>
+                <path d="M9 6.8a6 6 0 0 1 9 5.2v2"/>
+              </svg>
+              <div class="bio-scan-beam" id="bio-scan-beam"></div>
+            </div>
+          </div>
         </div>
-        <div class="biometric-title" id="biometric-title-text">Biometric Unlock</div>
-        <div class="biometric-desc" id="biometric-desc-text">Touch ID, Face ID, Windows Hello or Fingerprint</div>
-        <button type="button" class="btn btn-biometric-action" id="biometric-trigger-btn" onclick="loginWithBiometrics()">
+
+        <div class="bio-touch-prompt" id="bio-touch-prompt">touch the fingerprint sensor</div>
+        <div class="bio-fail-message" id="bio-fail-message"></div>
+
+        <button type="button" class="btn btn-biometric-tap" id="btn-biometric-tap" onclick="triggerBiometricScan(true)">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/><path d="M14 13.12c0 2.38 0 6.38-1 8.88"/><path d="M2 12a10 10 0 0 1 18-6"/><path d="M9 6.8a6 6 0 0 1 9 5.2v2"/></svg>
+          <span id="btn-biometric-tap-text">Scan Fingerprint / Face</span>
+        </button>
+      </div>
+
+      <!-- PIN INPUT VIEW (Shown after 3 failed attempts or when clicking 'Enter PIN') -->
+      <div id="auth-pin-view" style="display:none">
+        <div class="pin-view-intro" id="pin-view-intro">Enter Admin PIN to unlock</div>
+        <div class="pin-inputs">
+          <input type="password" class="pin-digit" id="p1" maxlength="1" inputmode="numeric" autocomplete="new-password" oninput="pinNext(this, 'p2')" onkeydown="pinBack(event, this, null)">
+          <input type="password" class="pin-digit" id="p2" maxlength="1" inputmode="numeric" autocomplete="new-password" oninput="pinNext(this, 'p3')" onkeydown="pinBack(event, this, 'p1')">
+          <input type="password" class="pin-digit" id="p3" maxlength="1" inputmode="numeric" autocomplete="new-password" oninput="pinNext(this, 'p4')" onkeydown="pinBack(event, this, 'p2')">
+          <input type="password" class="pin-digit" id="p4" maxlength="1" inputmode="numeric" autocomplete="new-password" oninput="pinNext(this, null)" onkeydown="pinBack(event, this, 'p3')">
+        </div>
+        <div class="pin-error" id="pin-error"></div>
+        <button type="button" class="btn btn-primary" id="btn-register-bio" style="width:100%;padding:13px;font-size:13.5px;margin-top:10px;display:none;align-items:center;justify-content:center;gap:8px" onclick="onRegisterBiometricClick()">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/>
             <path d="M14 13.12c0 2.38 0 6.38-1 8.88"/>
             <path d="M2 12a10 10 0 0 1 18-6"/>
             <path d="M9 6.8a6 6 0 0 1 9 5.2v2"/>
           </svg>
-          <span id="biometric-btn-text">Verify Biometrics</span>
+          <span>Register Biometric & Unlock</span>
         </button>
-        <div class="biometric-divider" id="biometric-divider-box">
-          <span id="biometric-divider-text">OR ENTER 4-DIGIT PIN</span>
-        </div>
+        <button type="button" class="btn btn-primary" id="btn-unlock-pin" style="width:100%;padding:13px;font-size:13.5px;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px" onclick="verifyPin(false)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
+          <span id="btn-unlock-pin-text">Unlock with PIN</span>
+        </button>
       </div>
 
-      <div class="lock-icon" id="login-lock-icon" style="display:none">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-      </div>
-      <div style="text-align:center;font-size:12.5px;color:var(--muted);font-weight:600;margin-bottom:6px" id="pin-prompt-text">Enter 4-digit PIN to unlock admin access</div>
-      <div class="pin-inputs">
-        <input type="password" class="pin-digit" id="p1" maxlength="1" inputmode="numeric" autocomplete="new-password" oninput="pinNext(this, 'p2')" onkeydown="pinBack(event, this, null)">
-        <input type="password" class="pin-digit" id="p2" maxlength="1" inputmode="numeric" autocomplete="new-password" oninput="pinNext(this, 'p3')" onkeydown="pinBack(event, this, 'p1')">
-        <input type="password" class="pin-digit" id="p3" maxlength="1" inputmode="numeric" autocomplete="new-password" oninput="pinNext(this, 'p4')" onkeydown="pinBack(event, this, 'p2')">
-        <input type="password" class="pin-digit" id="p4" maxlength="1" inputmode="numeric" autocomplete="new-password" oninput="pinNext(this, null)" onkeydown="pinBack(event, this, 'p3')">
-      </div>
-      <div class="pin-error" id="pin-error"></div>
-      <button type="button" class="btn btn-primary" id="btn-register-bio" style="width:100%;padding:13px;font-size:13.5px;margin-top:10px;display:none;align-items:center;justify-content:center;gap:8px" onclick="onRegisterBiometricClick()">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/>
-          <path d="M14 13.12c0 2.38 0 6.38-1 8.88"/>
-          <path d="M2 12a10 10 0 0 1 18-6"/>
-          <path d="M9 6.8a6 6 0 0 1 9 5.2v2"/>
-        </svg>
-        <span>Register Biometric & Unlock</span>
-      </button>
-      <button type="button" class="btn btn-primary" id="btn-unlock-pin" style="width:100%;padding:13px;font-size:13.5px;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px" onclick="verifyPin(false)">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
-        <span id="btn-unlock-pin-text">Unlock with PIN</span>
-      </button>
-      <div class="hint" style="text-align:center;margin-top:10px">Only admin can make entries. Everyone can view the inventory.</div>
+      <div class="auth-footer-hint">Only admin can make entries. View access is open.</div>
     </div>
   </div>
 </div>
@@ -8422,6 +8504,9 @@ function base64ToUint8Array(base64) {
 }
 
 var isPlatformBioAvailable = false;
+var bioFailAttempts = 0;
+var currentAuthMode = 'bio'; // 'bio' | 'pin'
+
 function checkBiometricSupport(callback){
   var supported = !!(window.PublicKeyCredential && navigator.credentials && typeof navigator.credentials.create === 'function');
   isBiometricSupported = supported;
@@ -8429,14 +8514,11 @@ function checkBiometricSupport(callback){
   if (supported && typeof PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable === 'function'){
     PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable().then(function(available){
       isPlatformBioAvailable = !!available;
-      updateBiometricUIState();
       if (typeof callback === 'function') callback(isBiometricSupported);
     }).catch(function(){
-      updateBiometricUIState();
       if (typeof callback === 'function') callback(isBiometricSupported);
     });
   } else {
-    updateBiometricUIState();
     if (typeof callback === 'function') callback(isBiometricSupported);
   }
 }
@@ -8447,74 +8529,50 @@ function hasBiometricEnrolled(){
   } catch(e) { return false; }
 }
 
-function updateBiometricUIState(){
-  var box = document.getElementById('biometric-login-box');
-  var lockIcon = document.getElementById('login-lock-icon');
-  var btnText = document.getElementById('biometric-btn-text');
-  var descText = document.getElementById('biometric-desc-text');
-  var titleText = document.getElementById('biometric-title-text');
-  var triggerBtn = document.getElementById('biometric-trigger-btn');
-  var divider = document.getElementById('biometric-divider-box');
-  var dividerTxt = document.getElementById('biometric-divider-text');
-  var pinPrompt = document.getElementById('pin-prompt-text');
-  var regBioBtn = document.getElementById('btn-register-bio');
+function setAuthMode(mode){
+  currentAuthMode = mode;
+  var bioView = document.getElementById('auth-biometric-view');
+  var pinView = document.getElementById('auth-pin-view');
+  var toggleBtnTxt = document.getElementById('auth-mode-btn-text');
+  var badge = document.getElementById('auth-scanner-badge');
+  var title = document.getElementById('auth-modal-title');
+  var regBtn = document.getElementById('btn-register-bio');
   var unlockPinBtn = document.getElementById('btn-unlock-pin');
-  var unlockPinText = document.getElementById('btn-unlock-pin-text');
-  if (!box) return;
 
-  if (!isBiometricSupported){
-    box.style.display = 'none';
-    if (lockIcon) lockIcon.style.display = 'flex';
-    if (regBioBtn) regBioBtn.style.display = 'none';
-    if (unlockPinBtn) {
-      unlockPinBtn.style.display = 'flex';
-      unlockPinBtn.className = 'btn btn-primary';
-    }
-    if (unlockPinText) unlockPinText.textContent = 'Unlock with PIN';
-    if (pinPrompt) pinPrompt.textContent = 'Enter 4-digit PIN to unlock admin access';
-    return;
-  }
+  if (mode === 'pin'){
+    if (bioView) bioView.style.display = 'none';
+    if (pinView) pinView.style.display = 'block';
+    if (toggleBtnTxt) toggleBtnTxt.textContent = 'Use Biometric';
+    if (badge) badge.textContent = 'PIN VERIFICATION';
+    if (title) title.textContent = 'Unlock to Access Admin';
 
-  box.style.display = 'block';
-  if (lockIcon) lockIcon.style.display = 'none';
+    if (regBtn) regBtn.style.display = !hasBiometricEnrolled() ? 'flex' : 'none';
+    if (unlockPinBtn) unlockPinBtn.className = !hasBiometricEnrolled() ? 'btn btn-secondary' : 'btn btn-primary';
 
-  if (hasBiometricEnrolled()){
-    if (titleText) titleText.textContent = 'Biometric Fast Unlock';
-    if (descText) descText.textContent = 'Touch ID / Face ID / Windows Hello is active on this device';
-    if (btnText) btnText.textContent = 'Verify Fingerprint / Face ID';
-    if (triggerBtn) {
-      triggerBtn.style.display = 'inline-flex';
-      triggerBtn.className = 'btn btn-biometric-action';
-    }
-    if (divider) divider.style.display = 'flex';
-    if (dividerTxt) dividerTxt.textContent = 'OR ENTER 4-DIGIT PIN';
-    if (pinPrompt) pinPrompt.textContent = 'Or enter 4-digit PIN below';
-    if (regBioBtn) regBioBtn.style.display = 'none';
-    if (unlockPinBtn) {
-      unlockPinBtn.style.display = 'flex';
-      unlockPinBtn.className = 'btn btn-primary';
-    }
-    if (unlockPinText) unlockPinText.textContent = 'Unlock with PIN';
+    setTimeout(function(){
+      var p1 = document.getElementById('p1');
+      if (p1) p1.focus();
+    }, 120);
   } else {
-    if (titleText) titleText.textContent = 'Setup Biometric Authentication';
-    if (descText) descText.textContent = 'Touch ID, Face ID, Windows Hello or Fingerprint for 1-tap admin login';
-    if (btnText) btnText.textContent = 'Register Biometrics (Enter PIN 9903)';
-    if (triggerBtn) {
-      triggerBtn.style.display = 'inline-flex';
-      triggerBtn.className = 'btn btn-biometric-action';
-    }
-    if (divider) divider.style.display = 'flex';
-    if (dividerTxt) dividerTxt.textContent = 'AUTHORIZE WITH ADMIN PIN';
-    if (pinPrompt) pinPrompt.textContent = 'Enter Admin PIN (9903) to register biometrics & unlock';
-    if (regBioBtn) {
-      regBioBtn.style.display = 'flex';
-      regBioBtn.className = 'btn btn-primary';
-    }
-    if (unlockPinBtn) {
-      unlockPinBtn.style.display = 'flex';
-      unlockPinBtn.className = 'btn btn-secondary';
-    }
-    if (unlockPinText) unlockPinText.textContent = 'Unlock with PIN Only';
+    if (bioView) bioView.style.display = 'block';
+    if (pinView) pinView.style.display = 'none';
+    if (toggleBtnTxt) toggleBtnTxt.textContent = 'Enter PIN';
+    if (badge) badge.textContent = 'BIOMETRIC SCANNER';
+    if (title) title.textContent = 'Unlock to Access Admin';
+  }
+}
+
+function toggleAuthMode(){
+  if (currentAuthMode === 'bio'){
+    setAuthMode('pin');
+  } else {
+    setAuthMode('bio');
+  }
+}
+
+function updateBiometricUIState(){
+  if (!isBiometricSupported){
+    setAuthMode('pin');
   }
 }
 
@@ -8525,7 +8583,9 @@ async function registerBiometrics(silentSuccessPrompt, andUnlockAdmin){
   }
   var statusMsg = document.getElementById('pin-error');
   var scanIcon = document.getElementById('biometric-scan-icon');
+  var ring = document.getElementById('bio-scanner-ring');
   if (scanIcon) scanIcon.classList.add('scanning');
+  if (ring) ring.classList.add('scanning');
 
   try {
     var challenge = new Uint8Array(32);
@@ -8567,6 +8627,7 @@ async function registerBiometrics(silentSuccessPrompt, andUnlockAdmin){
 
     var credential = await navigator.credentials.create(createOptions);
     if (scanIcon) scanIcon.classList.remove('scanning');
+    if (ring) ring.classList.remove('scanning');
 
     if (credential && credential.id){
       localStorage.setItem(BIO_STORAGE_KEY, credential.id);
@@ -8574,7 +8635,6 @@ async function registerBiometrics(silentSuccessPrompt, andUnlockAdmin){
       if (credential.rawId){
         localStorage.setItem(BIO_STORAGE_KEY + '_raw', bufferToBase64(credential.rawId));
       }
-      updateBiometricUIState();
       if (!silentSuccessPrompt){
         showThemeMessage('login', 'Biometrics Registered!', 'Fingerprint / Windows Hello is now enrolled on this device for instant 1-tap Admin access.');
       }
@@ -8584,6 +8644,7 @@ async function registerBiometrics(silentSuccessPrompt, andUnlockAdmin){
     return false;
   } catch(err){
     if (scanIcon) scanIcon.classList.remove('scanning');
+    if (ring) ring.classList.remove('scanning');
     console.warn('Biometric registration error:', err);
     var msg = 'Biometric setup failed.';
     if (err.name === 'NotAllowedError'){
@@ -8598,54 +8659,31 @@ async function registerBiometrics(silentSuccessPrompt, andUnlockAdmin){
   }
 }
 
-async function onRegisterBiometricClick(){
-  var pin = ['p1','p2','p3','p4'].map(function(id){ return (document.getElementById(id)||{}).value || ''; }).join('');
-  var statusMsg = document.getElementById('pin-error');
-  var regBtn = document.getElementById('btn-register-bio');
-  if (regBtn) regBtn.classList.remove('btn-pulse');
-
-  if (pin !== ADMIN_PIN){
-    if (statusMsg){
-      statusMsg.textContent = 'Please enter Admin PIN (9903) in the 4 boxes above first.';
-    }
-    document.getElementById('p1').focus();
-    return;
-  }
-
-  if (statusMsg) statusMsg.innerHTML = '<span style="color:var(--green);font-weight:700">Authorizing... please touch your fingerprint scanner or confirm Windows Hello.</span>';
-
-  // DIRECT USER GESTURE WebAuthn create call:
-  var ok = await registerBiometrics(true, true);
-  if (ok){
-    isAdmin = true;
-    updateAdminUI();
-    var cb = pendingAdminCallback;
-    pendingAdminCallback = null;
-    closeLogin();
-    if (document.getElementById('tab-faculty').style.display !== 'none') renderFaculty();
-    if (document.getElementById('tab-stock').style.display !== 'none') render();
-    showThemeMessage('login', 'Biometric Registered!', 'Fingerprint / Windows Hello is now active & Admin mode is unlocked.');
-    if (cb && typeof cb === 'function') cb();
-  }
-}
-
-async function loginWithBiometrics(){
-  var statusMsg = document.getElementById('pin-error');
-  var scanIcon = document.getElementById('biometric-scan-icon');
+async function triggerBiometricScan(isUserClick){
+  var failMsg = document.getElementById('bio-fail-message');
+  var promptEl = document.getElementById('bio-touch-prompt');
+  var ring = document.getElementById('bio-scanner-ring');
 
   if (!isBiometricSupported){
-    if (statusMsg) statusMsg.textContent = 'Biometrics not supported on this browser. Please use your PIN.';
+    setAuthMode('pin');
+    var intro = document.getElementById('pin-view-intro');
+    if (intro) intro.textContent = 'Biometrics not available on this browser. Please enter Admin PIN.';
     return;
   }
 
-  // If not enrolled yet, direct to registration flow
+  // If not enrolled yet, prompt user to enter PIN once to enroll
   if (!hasBiometricEnrolled()){
-    onRegisterBiometricClick();
+    if (isUserClick){
+      setAuthMode('pin');
+      var intro = document.getElementById('pin-view-intro');
+      if (intro) intro.textContent = 'First-time setup: Enter Admin PIN to register biometrics.';
+    }
     return;
   }
 
-  if (statusMsg) statusMsg.textContent = '';
-  if (scanIcon) scanIcon.classList.add('scanning');
+  if (failMsg) failMsg.textContent = '';
+  if (ring) ring.classList.add('scanning');
+  if (promptEl) promptEl.textContent = 'scanning... touch fingerprint sensor';
 
   try {
     var challenge = new Uint8Array(32);
@@ -8677,9 +8715,11 @@ async function loginWithBiometrics(){
     }
 
     var assertion = await navigator.credentials.get(getOptions);
-    if (scanIcon) scanIcon.classList.remove('scanning');
+    if (ring) ring.classList.remove('scanning');
+    if (promptEl) promptEl.textContent = 'touch the fingerprint sensor';
 
     if (assertion){
+      bioFailAttempts = 0;
       isAdmin = true;
       updateAdminUI();
       var cb = pendingAdminCallback;
@@ -8693,13 +8733,68 @@ async function loginWithBiometrics(){
       }
     }
   } catch(err){
-    if (scanIcon) scanIcon.classList.remove('scanning');
-    console.warn('Biometric auth error:', err);
-    if (err.name === 'NotAllowedError'){
-      if (statusMsg) statusMsg.textContent = 'Biometric scan was cancelled. You can enter PIN below.';
-    } else {
-      if (statusMsg) statusMsg.textContent = 'Biometric verification failed. Please enter 4-digit PIN.';
+    if (ring) {
+      ring.classList.remove('scanning');
+      ring.classList.add('fail-shake');
+      setTimeout(function(){ if (ring) ring.classList.remove('fail-shake'); }, 480);
     }
+    if (promptEl) promptEl.textContent = 'touch the fingerprint sensor';
+    console.warn('Biometric auth error:', err);
+
+    bioFailAttempts++;
+    if (bioFailAttempts < 3){
+      if (failMsg){
+        failMsg.textContent = 'Fingerprint not recognized (Attempt ' + bioFailAttempts + ' of 3). Touch sensor again.';
+      }
+    } else {
+      // 3 FAILS: Switch to PIN mode!
+      if (failMsg){
+        failMsg.textContent = 'Biometric failed 3 times. Please enter Admin PIN.';
+      }
+      setTimeout(function(){
+        setAuthMode('pin');
+        var intro = document.getElementById('pin-view-intro');
+        if (intro) intro.textContent = 'Biometric failed 3 times. Please enter Admin PIN to continue.';
+      }, 500);
+    }
+  }
+}
+
+async function loginWithBiometrics(){
+  return triggerBiometricScan(true);
+}
+
+async function onRegisterBiometricClick(){
+  var pin = ['p1','p2','p3','p4'].map(function(id){ return (document.getElementById(id)||{}).value || ''; }).join('');
+  var statusMsg = document.getElementById('pin-error');
+  var regBtn = document.getElementById('btn-register-bio');
+  if (regBtn) regBtn.classList.remove('btn-pulse');
+
+  if (pin !== ADMIN_PIN){
+    if (statusMsg){
+      statusMsg.textContent = 'Incorrect PIN. Please try again.';
+    }
+    ['p1','p2','p3','p4'].forEach(function(id){ var el = document.getElementById(id); if (el) { el.value = ''; el.classList.remove('filled'); } });
+    var p1 = document.getElementById('p1');
+    if (p1) p1.focus();
+    return;
+  }
+
+  if (statusMsg) statusMsg.innerHTML = '<span style="color:var(--green);font-weight:700">Authorizing... please touch your fingerprint scanner or confirm Windows Hello.</span>';
+
+  // DIRECT USER GESTURE WebAuthn create call:
+  var ok = await registerBiometrics(true, true);
+  if (ok){
+    bioFailAttempts = 0;
+    isAdmin = true;
+    updateAdminUI();
+    var cb = pendingAdminCallback;
+    pendingAdminCallback = null;
+    closeLogin();
+    if (document.getElementById('tab-faculty').style.display !== 'none') renderFaculty();
+    if (document.getElementById('tab-stock').style.display !== 'none') render();
+    showThemeMessage('login', 'Biometric Registered!', 'Fingerprint is now enrolled & Admin mode is unlocked.');
+    if (cb && typeof cb === 'function') cb();
   }
 }
 
@@ -8861,12 +8956,25 @@ function requireAdmin(callback){
 }
 function openLogin(callback){
   if (typeof callback === 'function') pendingAdminCallback = callback;
-  document.getElementById('pin-error').textContent = '';
-  ['p1','p2','p3','p4'].forEach(function(id){ var el = document.getElementById(id); el.value = ''; el.classList.remove('filled'); });
+  bioFailAttempts = 0;
+  var failMsg = document.getElementById('bio-fail-message');
+  if (failMsg) failMsg.textContent = '';
+  var statusMsg = document.getElementById('pin-error');
+  if (statusMsg) statusMsg.textContent = '';
+  var intro = document.getElementById('pin-view-intro');
+  if (intro) intro.textContent = 'Enter Admin PIN to unlock';
+  var promptEl = document.getElementById('bio-touch-prompt');
+  if (promptEl) promptEl.textContent = 'touch the fingerprint sensor';
+
+  ['p1','p2','p3','p4'].forEach(function(id){ var el = document.getElementById(id); if (el){ el.value = ''; el.classList.remove('filled'); } });
+
+  setAuthMode('bio');
   document.getElementById('modal-login').classList.add('open');
-  updateBiometricUIState();
-  if (!hasBiometricEnrolled()){
-    setTimeout(function(){ document.getElementById('p1').focus(); }, 150);
+
+  if (hasBiometricEnrolled()){
+    setTimeout(function(){
+      triggerBiometricScan(false);
+    }, 280);
   }
 }
 function closeLogin(){
@@ -8887,7 +8995,7 @@ function pinNext(el, nextId){
         } else {
           var regBtn = document.getElementById('btn-register-bio');
           var err = document.getElementById('pin-error');
-          if (err) err.innerHTML = '<span style="color:var(--green);font-weight:700">✓ PIN 9903 Verified! Click "Register Biometric & Unlock" below.</span>';
+          if (err) err.innerHTML = '<span style="color:var(--green);font-weight:700">✓ PIN Verified! Click "Register Biometric & Unlock" below.</span>';
           if (regBtn){
             regBtn.classList.add('btn-pulse');
           }
