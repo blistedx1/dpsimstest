@@ -1,6 +1,6 @@
 {
-  "name": "DPS AMRAPALI - Inventory Portal",
-  "short_name": "DPS IMS",
+  "name": "DPS AMRAPALI - INVENTORY SYSTEM",
+  "short_name": "DPS AMRAPALI",
   "description": "Delhi Public School Amrapali - Stationery & Stock Inventory Portal",
   "start_url": "/",
   "scope": "/",
@@ -18,12 +18,6 @@
     {
       "src": "logo-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "logo.png",
-      "sizes": "816x1024",
       "type": "image/png",
       "purpose": "any"
     },
