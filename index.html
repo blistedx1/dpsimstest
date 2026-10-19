@@ -10,7 +10,7 @@
 <title>DPS AMRAPALI - INVENTORY SYSTEM</title>
 <link rel="icon" type="image/png" href="logo-192.png">
 <link rel="apple-touch-icon" href="logo-192.png">
-<link rel="manifest" href="manifest.json?v=8">
+<link rel="manifest" href="manifest.json?v=9">
 <meta name="application-name" content="DPS AMRAPALI">
 <meta name="apple-mobile-web-app-title" content="DPS AMRAPALI">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1526,6 +1526,50 @@ header * {
   background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
   box-shadow: 0 6px 16px rgba(220, 38, 38, 0.26);
 }
+.stat-icon-badge.teal {
+  background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
+  box-shadow: 0 6px 16px rgba(15, 118, 110, 0.26);
+}
+.stat-icon-badge.blue {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.26);
+}
+.stat-icon-badge.amber {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  box-shadow: 0 6px 16px rgba(217, 119, 6, 0.26);
+}
+.stat-icon-badge.purple {
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.26);
+}
+
+.top-stats-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+@media (max-width: 960px) and (min-width: 721px) {
+  .top-stats-3 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+}
+@media (max-width: 720px) {
+  .top-stats-3 {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .top-stats-3 > .stat:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 480px) {
+  .top-stats-3 {
+    gap: 6px;
+  }
+}
 .stat.stat-low-card {
   border-color: rgba(220, 38, 38, 0.2);
 }
@@ -3016,43 +3060,34 @@ table.bordered-report-table tfoot td,
 /* KPI SUMMARY GRID */
 .rep-kpi-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 10px;
-  padding: 14px 18px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  padding: 16px 18px;
   background: var(--green-subtle);
   border-bottom: 1px solid var(--border);
 }
-.rep-kpi-card {
-  background: #ffffff;
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 13px 15px;
-  box-shadow: 0 4px 16px rgba(18, 79, 50, 0.05);
-  transition: all 0.2s ease;
+@media (max-width: 960px) and (min-width: 721px) {
+  .rep-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
 }
-.rep-kpi-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--green-border);
-  box-shadow: 0 8px 22px rgba(18, 79, 50, 0.1);
+@media (max-width: 720px) {
+  .rep-kpi-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 12px 14px;
+  }
 }
-.rep-kpi-label {
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  color: var(--muted);
+@media (max-width: 480px) {
+  .rep-kpi-grid {
+    gap: 6px;
+    padding: 10px 10px;
+  }
 }
-.rep-kpi-value {
-  font-size: 20px;
-  font-weight: 900;
-  line-height: 1.2;
-  margin-top: 3px;
-  font-family: 'JetBrains Mono', monospace;
+.rep-kpi-grid .stat {
+  margin-bottom: 0;
 }
-.rep-kpi-value.green { color: #16a34a; }
-.rep-kpi-value.red { color: #dc2626; }
-.rep-kpi-value.blue { color: #1d4ed8; }
-.rep-kpi-value.dark { color: var(--green-dark); }
 
 /* SUB-FILTER TABS */
 .rep-subfilters {
@@ -5950,10 +5985,37 @@ body {
 
 <!-- BILLS TAB -->
 <div class="container" id="tab-bills" style="display:none">
-  <div class="reg-stats">
-    <div class="reg-stat"><div class="reg-stat-label">Total Bills</div><div class="reg-stat-value" id="bill-count">0</div></div>
-    <div class="reg-stat"><div class="reg-stat-label">Items Received</div><div class="reg-stat-value" id="bill-qty">0</div></div>
-    <div class="reg-stat"><div class="reg-stat-label">Vendors</div><div class="reg-stat-value" id="bill-vendors">0</div></div>
+  <div class="top-stats-3 stats-row">
+    <div class="stat">
+      <span class="stat-watermark">01</span>
+      <div class="stat-icon-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      </div>
+      <div class="stat-body">
+        <div class="stat-label">Total Bills</div>
+        <div class="stat-value" id="bill-count">0</div>
+      </div>
+    </div>
+    <div class="stat">
+      <span class="stat-watermark">02</span>
+      <div class="stat-icon-badge teal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+      </div>
+      <div class="stat-body">
+        <div class="stat-label">Items Received</div>
+        <div class="stat-value" id="bill-qty">0</div>
+      </div>
+    </div>
+    <div class="stat">
+      <span class="stat-watermark">03</span>
+      <div class="stat-icon-badge amber">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <div class="stat-body">
+        <div class="stat-label">Active Vendors</div>
+        <div class="stat-value" id="bill-vendors">0</div>
+      </div>
+    </div>
   </div>
   <div class="search-row">
     <div class="search-box">
@@ -6007,10 +6069,37 @@ body {
 
 <!-- FACULTY TAB -->
 <div class="container" id="tab-faculty" style="display:none">
-  <div class="reg-stats">
-    <div class="reg-stat"><div class="reg-stat-label">Total Faculty</div><div class="reg-stat-value" id="fac-count">0</div></div>
-    <div class="reg-stat"><div class="reg-stat-label">Items Issued</div><div class="reg-stat-value" id="fac-qty">0</div></div>
-    <div class="reg-stat"><div class="reg-stat-label">Transactions</div><div class="reg-stat-value" id="fac-tx">0</div></div>
+  <div class="top-stats-3 stats-row">
+    <div class="stat">
+      <span class="stat-watermark">01</span>
+      <div class="stat-icon-badge blue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="stat-body">
+        <div class="stat-label">Total Faculty</div>
+        <div class="stat-value" id="fac-count">0</div>
+      </div>
+    </div>
+    <div class="stat">
+      <span class="stat-watermark">02</span>
+      <div class="stat-icon-badge red">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17V5"/><path d="m8 9 4-4 4 4"/><path d="M8 19H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h4"/><path d="M16 19h4a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4"/></svg>
+      </div>
+      <div class="stat-body">
+        <div class="stat-label">Items Issued</div>
+        <div class="stat-value low" id="fac-qty">0</div>
+      </div>
+    </div>
+    <div class="stat">
+      <span class="stat-watermark">03</span>
+      <div class="stat-icon-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <div class="stat-body">
+        <div class="stat-label">Transactions</div>
+        <div class="stat-value" id="fac-tx">0</div>
+      </div>
+    </div>
   </div>
   <div class="search-row">
     <div class="search-box">
@@ -6166,21 +6255,45 @@ body {
 
     <!-- Summary KPI Cards -->
     <div class="rep-kpi-grid">
-      <div class="rep-kpi-card">
-        <div class="rep-kpi-label">Active Items</div>
-        <div class="rep-kpi-value dark" id="rep-kpi-items">0</div>
+      <div class="stat">
+        <span class="stat-watermark">01</span>
+        <div class="stat-icon-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+        </div>
+        <div class="stat-body">
+          <div class="stat-label">Catalog Items</div>
+          <div class="stat-value" id="rep-kpi-items">0</div>
+        </div>
       </div>
-      <div class="rep-kpi-card">
-        <div class="rep-kpi-label">Total Outward Issued</div>
-        <div class="rep-kpi-value red" id="rep-kpi-out">0</div>
+      <div class="stat">
+        <span class="stat-watermark">02</span>
+        <div class="stat-icon-badge red">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </div>
+        <div class="stat-body">
+          <div class="stat-label">Outward Issued</div>
+          <div class="stat-value low" id="rep-kpi-out">0</div>
+        </div>
       </div>
-      <div class="rep-kpi-card">
-        <div class="rep-kpi-label">Total Inward Added</div>
-        <div class="rep-kpi-value green" id="rep-kpi-in">0</div>
+      <div class="stat">
+        <span class="stat-watermark">03</span>
+        <div class="stat-icon-badge teal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="7" x2="7" y2="17"></line><polyline points="17 17 7 17 7 7"></polyline></svg>
+        </div>
+        <div class="stat-body">
+          <div class="stat-label">Inward Added</div>
+          <div class="stat-value" id="rep-kpi-in" style="color:var(--green)">0</div>
+        </div>
       </div>
-      <div class="rep-kpi-card">
-        <div class="rep-kpi-label">Staff Recipients</div>
-        <div class="rep-kpi-value blue" id="rep-kpi-fac">0</div>
+      <div class="stat">
+        <span class="stat-watermark">04</span>
+        <div class="stat-icon-badge blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="stat-body">
+          <div class="stat-label">Staff Recipients</div>
+          <div class="stat-value" id="rep-kpi-fac" style="color:var(--blue)">0</div>
+        </div>
       </div>
     </div>
 
