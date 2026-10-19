@@ -10,7 +10,7 @@
 <title>DPS AMRAPALI - INVENTORY SYSTEM</title>
 <link rel="icon" type="image/png" href="logo-192.png">
 <link rel="apple-touch-icon" href="logo-192.png">
-<link rel="manifest" href="manifest.json?v=6">
+<link rel="manifest" href="manifest.json?v=7">
 <meta name="application-name" content="DPS AMRAPALI">
 <meta name="apple-mobile-web-app-title" content="DPS AMRAPALI">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -127,8 +127,7 @@ body {
 
 /* ============================================= */
 /* ========================================================================= */
-/* SPLASH SCREEN: PURE CLEAN TYPOGRAPHY - DPS AMRAPALI INVENTORY SYSTEM      */
-/* COMPLETELY REMOVED UNWANTED ICON AS REQUESTED                             */
+/* SPLASH SCREEN: OFFICIAL YELLOW FLAME LOGO - DPS AMRAPALI INVENTORY SYSTEM */
 /* ========================================================================= */
 #splash {
   position: fixed;
@@ -151,7 +150,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 20px;
   text-align: center;
   transform: scale(1);
   transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.2, 1), opacity 0.5s ease;
@@ -160,28 +159,26 @@ body {
 }
 
 @keyframes splashEntrance {
-  0% { transform: translateY(18px) scale(0.96); opacity: 0; }
+  0% { transform: translateY(16px) scale(0.94); opacity: 0; }
   100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
-.splash-pill {
-  display: inline-flex;
+.splash-logo-wrap {
+  display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 16px;
-  border-radius: 999px;
-  background: rgba(18, 79, 50, 0.06);
-  border: 1px solid rgba(18, 79, 50, 0.16);
-  color: #124f32;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 2.2px;
-  text-transform: uppercase;
+  justify-content: center;
   margin-bottom: 16px;
 }
 
+.splash-logo-img {
+  width: clamp(155px, 42vw, 215px);
+  height: clamp(155px, 42vw, 215px);
+  object-fit: contain;
+  filter: drop-shadow(0 14px 28px rgba(18, 79, 50, 0.12));
+}
+
 .splash-title {
-  font-size: clamp(28px, 7.5vw, 44px);
+  font-size: clamp(26px, 6.8vw, 38px);
   font-weight: 900;
   color: #124f32;
   letter-spacing: 2px;
@@ -192,10 +189,10 @@ body {
 }
 
 .splash-subtitle {
-  font-size: clamp(14px, 4vw, 20px);
+  font-size: clamp(13px, 3.6vw, 18px);
   font-weight: 800;
   color: #1b633f;
-  letter-spacing: 4px;
+  letter-spacing: 3.5px;
   margin-top: 8px;
   line-height: 1.25;
   text-transform: uppercase;
@@ -206,12 +203,12 @@ body {
   width: 48px;
   height: 3px;
   border-radius: 999px;
-  background: linear-gradient(90deg, #124f32 0%, #34d399 100%);
-  margin: 18px auto 0;
+  background: linear-gradient(90deg, #124f32 0%, #eab308 50%, #34d399 100%);
+  margin: 16px auto 0;
 }
 
 .splash-loading {
-  margin-top: 24px;
+  margin-top: 20px;
   display: flex;
   gap: 8px;
   align-items: center;
@@ -231,7 +228,7 @@ body {
 }
 
 .splash-loading span:nth-child(2) {
-  background: #4b8f64;
+  background: #eab308;
   animation-delay: -0.16s;
 }
 
@@ -5615,10 +5612,12 @@ body {
 </div>
 
 <div id="splash">
-  <!-- Clean Brand Typography Splash Screen: DPS AMRAPALI INVENTORY SYSTEM -->
+  <!-- Official Yellow Flame Logo Splash Screen: DPS AMRAPALI INVENTORY SYSTEM -->
   <div class="splash-center-content">
-    <div class="splash-pill">DELHI PUBLIC SCHOOL</div>
-    <h1 class="splash-title">DPS AMRAPALI</h1>
+    <div class="splash-logo-wrap">
+      <img src="logo.png" alt="DPS Amrapali" class="splash-logo-img">
+    </div>
+    <div class="splash-title">DPS AMRAPALI</div>
     <div class="splash-subtitle">INVENTORY SYSTEM</div>
     <div class="splash-divider"></div>
     <div class="splash-loading"><span></span><span></span><span></span></div>
