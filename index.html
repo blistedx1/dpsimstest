@@ -127,23 +127,23 @@ body {
 
 /* ============================================= */
 /* ========================================================================= */
-/* SPLASH SCREEN: PURE CLEAN BRANDING WITH GREEN AMBIENT GLOW */
+/* SPLASH SCREEN: PURE CLEAN OFFICIAL LOGO WITH YELLOW FLAME                */
+/* COMPLETELY REMOVED UNWANTED BLACK ARTIFACT BOXES & EXTRA CLUTTER         */
 /* ========================================================================= */
 #splash {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
-  background: radial-gradient(circle at center, #ffffff 20%, #f1f8f3 65%, #e3eee6 100%);
+  background: #ffffff;
   z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.65s ease;
+  transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.55s ease;
 }
 
-/* Main Center Logo & Content */
 .splash-center-content {
   position: relative;
   z-index: 10;
@@ -152,159 +152,38 @@ body {
   align-items: center;
   justify-content: center;
   transform: scale(1);
-  transition: transform 0.75s cubic-bezier(0.2, 0.9, 0.2, 1), opacity 0.6s ease;
+  transition: transform 0.65s cubic-bezier(0.2, 0.9, 0.2, 1), opacity 0.55s ease;
   will-change: transform, opacity;
-}
-
-.splash-logo-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: splashPulse 2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-/* GREEN AMBIENT LIGHT AURA GLOWING BEHIND THE OFFICIAL LOGO (SOFT & DIM) */
-.splash-ambient-glow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: clamp(310px, 78vw, 380px);
-  height: clamp(310px, 78vw, 380px);
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(34, 197, 94, 0.14) 0%, rgba(18, 79, 50, 0.06) 45%, rgba(16, 185, 129, 0.02) 72%, transparent 85%);
-  filter: blur(42px);
-  pointer-events: none;
-  z-index: 1;
-  animation: ambientLightPulse 3.5s infinite ease-in-out;
-}
-
-@media (min-width: 769px) {
-  .splash-ambient-glow {
-    width: clamp(390px, 35vw, 490px);
-    height: clamp(390px, 35vw, 490px);
-    filter: blur(52px);
-  }
-}
-
-@keyframes ambientLightPulse {
-  0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.20; }
-  50% { transform: translate(-50%, -50%) scale(1.06); opacity: 0.35; }
-  100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.20; }
-}
-
-@keyframes splashPulse {
-  0% { transform: scale(0.75); opacity: 0; }
-  50% { transform: scale(1.04); opacity: 1; }
-  100% { transform: scale(1); opacity: 1; }
 }
 
 .splash-logo-img {
   position: relative;
   z-index: 2;
-  width: clamp(255px, 68vw, 305px);
-  height: clamp(255px, 68vw, 305px);
+  width: clamp(230px, 62vw, 320px);
+  height: clamp(230px, 62vw, 320px);
   object-fit: contain;
-  filter: drop-shadow(0 12px 24px rgba(18, 79, 50, 0.10)) drop-shadow(0 0 10px rgba(34, 197, 94, 0.10));
+  filter: drop-shadow(0 14px 28px rgba(18, 79, 50, 0.08));
+  animation: splashOfficialEntrance 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-@media (min-width: 769px) {
-  .splash-logo-img {
-    width: clamp(315px, 28vw, 395px);
-    height: clamp(315px, 28vw, 395px);
-  }
+@keyframes splashOfficialEntrance {
+  0% { transform: scale(0.82); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
-.splash-school {
-  margin-top: 18px;
-  font-size: 22px;
-  font-weight: 900;
-  color: var(--green);
-  letter-spacing: 2.2px;
-  text-align: center;
-  font-family: 'Plus Jakarta Sans', Arial, sans-serif;
-  animation: fadeUp 0.8s ease 0.3s both;
-}
-
-@media (min-width: 769px) {
-  .splash-school {
-    margin-top: 22px;
-    font-size: clamp(23px, 2.2vw, 28px);
-    letter-spacing: 2.8px;
-  }
-}
-
-.splash-school-sub {
-  margin-top: 5px;
-  font-size: 11px;
-  font-weight: 700;
-  color: #4b6b57;
-  letter-spacing: 2.5px;
-  text-align: center;
-  font-family: 'Plus Jakarta Sans', Arial, sans-serif;
-  animation: fadeUp 0.8s ease 0.5s both;
-}
-
-@media (min-width: 769px) {
-  .splash-school-sub {
-    margin-top: 6px;
-    font-size: 12.5px;
-    letter-spacing: 3.2px;
-  }
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.splash-loading {
-  margin-top: 22px;
-  display: flex;
-  gap: 7px;
-  animation: fadeUp 0.8s ease 0.7s both;
-}
-
-.splash-loading span {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  animation: bounceDot 1.4s infinite ease-in-out both;
-}
-
-.splash-loading span:nth-child(1) {
-  background: #9fb4a5;
-  animation-delay: -0.32s;
-}
-
-.splash-loading span:nth-child(2) {
-  background: #9fb4a5;
-  animation-delay: -0.16s;
-}
-
-.splash-loading span:nth-child(3) {
-  background: var(--green);
-  animation-delay: 0s;
-}
-
-@keyframes bounceDot {
-  0%, 80%, 100% { transform: scale(0.5); opacity: 0.3; }
-  40% { transform: scale(1); opacity: 1; }
-}
-
-/* ONLY MAIN LOGO ZOOMS OUT WHILE OPENING THE APP */
 #splash.hide {
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
-  transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.65s ease;
+  transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.55s ease;
 }
 
 #splash.hide .splash-center-content {
   transform: scale(0.28) translateY(-40px);
   opacity: 0;
 }
+
+
 
 /* HEADER                                        */
 /* ============================================= */
@@ -5662,16 +5541,9 @@ body {
 </div>
 
 <div id="splash">
-  <!-- Clean Official Brand Splash with Green Ambient Light Aura -->
+  <!-- Official Pure Brand Splash Screen with Yellow Flame Crest -->
   <div class="splash-center-content">
-    <div class="splash-logo-wrap">
-      <div class="splash-ambient-glow" aria-hidden="true"></div>
-      <img src="logo.png" alt="DPS Amrapali" class="splash-logo-img" onerror="this.style.display='none';document.getElementById('splash-fallback').style.display='flex'">
-    </div>
-    <div id="splash-fallback" style="display:none;width:175px;height:175px;background:var(--green);border-radius:24px;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:38px">DPS</div>
-    <div class="splash-school">DPS AMRAPALI</div>
-    <div class="splash-school-sub">INVENTORY SYSTEM 2026</div>
-    <div class="splash-loading"><span></span><span></span><span></span></div>
+    <img src="logo.png" alt="Delhi Public School" class="splash-logo-img" id="splashMainLogo">
   </div>
 </div>
 
@@ -5887,7 +5759,7 @@ body {
     </div>
   </div>
 
-  <div class="search-row">
+<div class="search-row">
     <div class="search-box">
       <span class="search-box-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -7104,8 +6976,8 @@ var currentView = 'tile';
 var selectedListItemId = null;
 var currentBillKey = null;
 var inlineItemCallback = null;
-var STORAGE_KEY = 'dps_inv_v21';
-var FAC_KEY = 'dps_fac_v1';
+var STORAGE_KEY = 'dps_inv_clean_v1';
+var FAC_KEY = 'dps_fac_clean_v1';
 var VIEW_KEY = 'dps_inv_view';
 
 var VENDORS = ['Sharma Stationers','Agarwal Trading Co.','Krishna Book Depot','Gupta Paper Mart','Delhi Stationery Hub','Verma Enterprises','Mehta Office Supplies','Singh Paper House'];
@@ -7123,36 +6995,9 @@ function daysAgo(n){ var d = new Date(); d.setDate(d.getDate() - n); return form
 function todayStr(){ return formatLocalDate(new Date()); }
 function esc(s){ if (s === null || s === undefined) return ''; return String(s).replace(/[&<>"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; }); }
 
-var SEED_FACULTY = [
-  { name: 'R. Sharma', dept: 'Science Dept' },{ name: 'A. Verma', dept: 'Maths Dept' },
-  { name: 'S. Gupta', dept: 'English Dept' },{ name: 'M. Khan', dept: 'Hindi Dept' },
-  { name: 'P. Singh', dept: 'Sports Dept' },{ name: 'K. Mishra', dept: 'Library' },
-  { name: 'D. Yadav', dept: 'Accounts' },{ name: 'N. Jain', dept: 'Admin Office' },
-  { name: 'V. Tiwari', dept: 'Examination Cell' },{ name: 'H. Chauhan', dept: 'Principal Office' }
-];
+var SEED_FACULTY = [];
 
-var SEED_ITEMS = [
-  ['A4 Colour Sheets', 85, null],['A4 Paper Ream', 8, null],['A4 Copier Paper Sheets', 120, null],
-  ['Accession Register', 22, null],['Accounts Register', 30, null],['Admission Form', 350, null],
-  ['Admission Register', 18, null],['Admission & Withdrawal Register', 12, null],['Art Paper Sheets', 90, null],
-  ['Asset Register', 14, null],['Attendance Register for Staff', 20, null],['Attendance Register for Students', 60, null],
-  ['Box File', 45, null],['Brown Tape', 62, null],['Button Document Folder', 25, null],['Cardboard', 95, null],
-  ['Casual and Other Leave Register', 15, null],['Cellophane Roll', 32, null],['Certificates', 400, null],
-  ['Chart Paper', 0, ['White','Black','Red','Blue','Green','Yellow','Orange','Pink','Purple','Brown','Grey','Maroon','Sky Blue','Golden']],
-  ['Cobra File', 42, null],['Crepe Paper', 70, null],['Double-Sided Tape', 38, null],['Duster', 25, null],
-  ['Envelopes', 220, null],['Exam Answer Copies', 180, null],['Exam Result Register', 16, null],['Fevicol', 45, null],
-  ['Fluorescent Chart Paper', 85, null],['Gate Register', 10, null],['Glazed Paper', 76, null],['Ice Cream Sticks', 320, null],
-  ['In-Pass Register', 105, null],['Inquiry Form', 180, null],['Ink', 55, null],['L-Folder', 68, null],
-  ['Leave Register', 18, null],['Letter Dispatch Register', 14, null],['Letterheads', 380, null],
-  ['Letter Receiving Register', 15, null],['Library Book Register', 12, null],['Marks Register', 52, null],
-  ['Miscellaneous Items', 130, null],['Out-Pass Slips', 98, null],
-  ['Pen', 0, ['Black Pen','Blue Pen','Red Pen','Green Pen']],
-  ['Permanent Marker', 62, null],['Plastic Button Folder', 72, null],['Pointer', 30, null],
-  ['Punching Machine', 9, null],['Registration Form', 240, null],['Returnable In Pass Register', 16, null],
-  ['Scale', 55, null],['Scissors', 35, null],['Stapler', 28, null],['Stapler Pins', 180, null],
-  ["Teacher's Diary", 45, null],['T.C. Form Register', 14, null],['Transparent Tape', 88, null],
-  ['Whiteboard Marker', 65, null]
-];
+var SEED_ITEMS = [];
 
 var BILL_POOL = [];
 function generateBillPool(){
@@ -7186,70 +7031,35 @@ function makeVariant(vid, vname, targetCurrent){
 }
 
 function buildSeedItems(){
-  return SEED_ITEMS.map(function(row, idx){
-    var it = { id: idx + 1, name: row[0] };
-    var vs = [];
-    if (row[2] && row[2].length){
-      it.type = 'variant';
-      for (var i = 0; i < row[2].length; i++) vs.push(makeVariant('v' + (i+1), row[2][i], rand(20, 150)));
-    } else {
-      it.type = 'single';
-      vs.push(makeVariant('v1', 'Standard', row[1]));
-    }
-    it.variants = vs;
-    return it;
-  });
+  return [];
 }
 
 function loadData(){
-  var spellingFixes = {
-    'A4 Paper Rim': 'A4 Paper Ream',
-    'Crape Paper': 'Crepe Paper',
-    'A4 Colour Sheet': 'A4 Colour Sheets',
-    'A4 Paper Sheets / Art Paper Sheets': 'A4 Copier Paper Sheets',
-    'Attendance Register for Student': 'Attendance Register for Students',
-    'Casual and Others Leave Register': 'Casual and Other Leave Register',
-    'Double Side Tape': 'Double-Sided Tape',
-    'Letter Head': 'Letterheads',
-    'Glaze Paper': 'Glazed Paper',
-    'Stapler Pin': 'Stapler Pins',
-    'Teachers Diary': "Teacher's Diary",
-    'TC Form Register': 'T.C. Form Register',
-    'Mark Register': 'Marks Register',
-    'Account Register': 'Accounts Register',
-    'Admission Withdrawal Register': 'Admission & Withdrawal Register',
-    'Button Bag': 'Button Document Folder',
-    'Exam Copy': 'Exam Answer Copies',
-    'In Pass': 'In-Pass Register',
-    'Out Pass': 'Out-Pass Slips',
-    'Certificate': 'Certificates',
-    'Envelope': 'Envelopes',
-    'L Folder': 'L-Folder',
-    'Fluorescent Paper': 'Fluorescent Chart Paper'
-  };
+  // Clear any old demo cache keys
   try {
-    var stored = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('dps_inv_v20');
-    if (stored){ var parsed = JSON.parse(stored); if (Array.isArray(parsed) && parsed.length > 0) items = parsed; }
+    localStorage.removeItem('dps_inv_v21');
+    localStorage.removeItem('dps_inv_v20');
+    localStorage.removeItem('dps_fac_v1');
   } catch(e){}
-  if (!items || items.length === 0){
-    items = buildSeedItems();
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch(e){}
-  } else {
-    var hasUpdates = false;
-    for (var i = 0; i < items.length; i++){
-      if (spellingFixes[items[i].name]){
-        items[i].name = spellingFixes[items[i].name];
-        hasUpdates = true;
-      }
+
+  items = [];
+  faculties = [];
+
+  try {
+    var stored = localStorage.getItem(STORAGE_KEY);
+    if (stored){
+      var parsed = JSON.parse(stored);
+      if (Array.isArray(parsed)) items = parsed;
     }
-    if (hasUpdates) saveData(false);
-  }
-  for (var i = 0; i < items.length; i++) delete items[i].icon;
-  try { var sf = localStorage.getItem(FAC_KEY); if (sf){ var pf = JSON.parse(sf); if (Array.isArray(pf) && pf.length > 0) faculties = pf; } } catch(e){}
-  if (!faculties || faculties.length === 0){
-    faculties = SEED_FACULTY.map(function(f, i){ return { id: i + 1, name: f.name, dept: f.dept }; });
-    try { localStorage.setItem(FAC_KEY, JSON.stringify(faculties)); } catch(e){}
-  }
+  } catch(e){}
+
+  try {
+    var sf = localStorage.getItem(FAC_KEY);
+    if (sf){
+      var pf = JSON.parse(sf);
+      if (Array.isArray(pf)) faculties = pf;
+    }
+  } catch(e){}
 }
 
 function ensureTodayTransactions(){
@@ -9207,7 +9017,21 @@ function render(){
 
   if (filtered.length === 0){
     grid.className = 'grid empty';
-    grid.innerHTML = '<div style="font-size:14px">No items found</div>';
+    if (items.length === 0) {
+      grid.innerHTML = '<div class="empty-inventory-state" style="grid-column:1/-1;text-align:center;padding:48px 20px;background:#ffffff;border:1.5px dashed var(--border);border-radius:20px;box-shadow:0 4px 16px rgba(18,79,50,0.03)">' +
+        '<div style="width:56px;height:56px;border-radius:18px;background:var(--green-light);color:var(--green);display:inline-flex;align-items:center;justify-content:center;margin-bottom:14px">' +
+          '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>' +
+        '</div>' +
+        '<h3 style="font-size:17px;font-weight:800;color:var(--text);margin-bottom:6px">Inventory Ready & Fresh</h3>' +
+        '<p style="font-size:13px;color:var(--muted);max-width:380px;margin:0 auto 18px;line-height:1.5">All demo data has been cleared. Click below to add your first stationery item, inward bill, or faculty member.</p>' +
+        '<button class="btn btn-primary" onclick="openAddChoice()" style="padding:10px 22px;border-radius:999px;font-size:13.5px;font-weight:700;display:inline-flex;align-items:center;gap:8px">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>' +
+          '<span>+ Add First Item</span>' +
+        '</button>' +
+      '</div>';
+    } else {
+      grid.innerHTML = '<div style="font-size:14px;color:var(--muted)">No items match your filter/search criteria</div>';
+    }
     updateStats();
     return;
   }
@@ -9273,11 +9097,15 @@ function updateStats(){
   var grand = 0, lowV = 0;
   for (var i = 0; i < items.length; i++){ grand += itemCurrent(items[i]); lowV += itemLowCount(items[i]); }
   var bills = collectAllBills();
-  document.getElementById('st-total').textContent = items.length;
-  document.getElementById('st-stock').textContent = grand;
-  document.getElementById('st-low').textContent = lowV;
-  document.getElementById('st-bills').textContent = bills.length;
+  var stTotal = document.getElementById('st-total'); if (stTotal) stTotal.textContent = items.length;
+  var stStock = document.getElementById('st-stock'); if (stStock) stStock.textContent = grand;
+  var stLow = document.getElementById('st-low'); if (stLow) stLow.textContent = lowV;
+  var stBills = document.getElementById('st-bills'); if (stBills) stBills.textContent = bills.length;
+  
 }
+
+
+
 
 function collectAllBills(){
   var billMap = {};
@@ -12594,13 +12422,11 @@ async function fetchCloudData(isManual){
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch(e){}
         updated = true;
       } else {
-        // Cloud database is empty, seed it with initial data!
-        items = buildSeedItems();
-        faculties = SEED_FACULTY.map(function(f, i){ return { id: i + 1, name: f.name, dept: f.dept }; });
-        ensureTodayTransactions();
+        // Cloud database is clean and fresh, start with empty data
+        items = [];
+        faculties = [];
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch(e){}
         try { localStorage.setItem(FAC_KEY, JSON.stringify(faculties)); } catch(e){}
-        triggerCloudSync(true);
         updated = true;
       }
       if (json.faculties && Array.isArray(json.faculties) && json.faculties.length > 0){

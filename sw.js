@@ -1,8 +1,11 @@
-const CACHE_NAME = 'dpsims-pwa-v4';
+const CACHE_NAME = 'dpsims-pwa-v5';
 const CORE_ASSETS = [
   '/',
   '/index.html',
   '/logo.png',
+  '/logo-maskable.png',
+  '/logo-192.png',
+  '/logo-512.png',
   '/manifest.json'
 ];
 
