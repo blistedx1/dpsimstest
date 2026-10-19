@@ -719,7 +719,7 @@ td{padding:9px 11px;border-top:1px solid var(--border);white-space:nowrap}
 
       <div class="slip-items-builder">
         <div id="slip-items-list"></div>
-        <button class="slip-add-btn" type="button" onclick="addSlipRow()">+ Add Another Item</button>
+        <button class="slip-add-btn" type="button" onclick="addSlipRow(true)">+ Add Another Item</button>
       </div>
 
       <div class="slip-summary">
@@ -1952,12 +1952,25 @@ function openIssueSlip(){
     fsel.innerHTML += '<option value="' + faculties[i].id + '">' + esc(faculties[i].name) + ' (' + esc(faculties[i].dept) + ')</option>';
   }
   // Reset items list
+  slipRowCounter = 0;
   document.getElementById('slip-items-list').innerHTML = '';
-  addSlipRow();
+  addSlipRow(false);
   updateSlipSummary();
   document.getElementById('modal-issueslip').classList.add('open');
 }
 function closeIssueSlip(){ document.getElementById('modal-issueslip').classList.remove('open'); }
+
+function openSlipItemPicker(sel){
+  if (!sel) return;
+  try { sel.focus({ preventScroll: false }); } catch(e){}
+  try {
+    if (typeof sel.showPicker === 'function'){
+      sel.showPicker();
+      return true;
+    }
+  } catch(e){}
+  return false;
+}
 
 function getSlipItemOptionsHtml(selectedId){
   var html = '<option value="">-- Select Item --</option>';
@@ -1971,23 +1984,42 @@ function getSlipItemOptionsHtml(selectedId){
 }
 
 var slipRowCounter = 0;
-function addSlipRow(){
-  slipRowCounter++;
+function addSlipRow(autoOpen){
+  if (autoOpen === undefined) autoOpen = true;
   var container = document.getElementById('slip-items-list');
+  if (!container) return;
+
+  var existingRows = container.querySelectorAll('.slip-item-row');
+  if (existingRows.length > 0){
+    var lastRow = existingRows[existingRows.length - 1];
+    var lastSel = lastRow.querySelector('.slip-item');
+    if (lastSel && !lastSel.value){
+      if (autoOpen) openSlipItemPicker(lastSel);
+      return lastRow;
+    }
+  }
+
+  slipRowCounter++;
   var div = document.createElement('div');
   div.className = 'slip-item-row';
   div.setAttribute('data-row', slipRowCounter);
   div.innerHTML =
-    '<div style="grid-column:1/-1;margin-bottom:2px">' +
+    '<div style="grid-column:1/-1;margin-bottom:2px;cursor:pointer" onclick="var s=this.closest(\'.slip-item-row\').querySelector(\'.slip-item\');if(s&&!s.value)openSlipItemPicker(s)">' +
       '<span class="slip-row-num">' + slipRowCounter + '</span>' +
       '<span style="font-size:10px;font-weight:800;color:#6b7280;letter-spacing:0.3px">ITEM #' + slipRowCounter + '</span>' +
     '</div>' +
     '<select class="slip-item" onchange="onSlipItemChange(this)">' + getSlipItemOptionsHtml(0) + '</select>' +
-    '<input type="number" class="slip-qty" placeholder="Qty" min="1" oninput="updateSlipSummary()">' +
+    '<input type="number" class="slip-qty" placeholder="Qty" min="1" oninput="updateSlipSummary()" onkeydown="if(event.key===\'Enter\'){event.preventDefault();addSlipRow(true);}">' +
     '<button class="icon-btn" type="button" onclick="this.closest(\'.slip-item-row\').remove();updateSlipSummary()">✕</button>' +
     '<div class="slip-item-subcat" style="display:none"><select class="slip-subcat"></select></div>';
   container.appendChild(div);
   updateSlipSummary();
+
+  var sel = div.querySelector('.slip-item');
+  if (autoOpen && sel){
+    openSlipItemPicker(sel);
+  }
+  return div;
 }
 
 function onSlipItemChange(sel){
@@ -2005,10 +2037,18 @@ function onSlipItemChange(sel){
   }
   var subWrap = row.querySelector('.slip-item-subcat');
   var subSel = row.querySelector('.slip-subcat');
+  var qtyInput = row.querySelector('.slip-qty');
   if (!val){ subWrap.style.display = 'none'; return; }
   var it = getItem(parseInt(val));
   if (!it){ subWrap.style.display = 'none'; return; }
-  if (it.variants.length <= 1){ subWrap.style.display = 'none'; return; }
+  if (it.variants.length <= 1){
+    subWrap.style.display = 'none';
+    if (qtyInput){
+      setTimeout(function(){ qtyInput.focus(); qtyInput.select(); }, 60);
+    }
+    updateSlipSummary();
+    return;
+  }
   subSel.innerHTML = '';
   for (var i = 0; i < it.variants.length; i++){
     var v = it.variants[i];

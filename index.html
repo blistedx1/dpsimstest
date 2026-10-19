@@ -6573,7 +6573,7 @@ body {
       <div class="form-grid">
         <div class="form-group"><label>Date</label><input id="slip-date" type="date"></div>
         <div class="form-group"><label>Faculty</label>
-          <select id="slip-faculty">
+          <select id="slip-faculty" onchange="onSlipFacultyChange(this)">
             <option value="">-- Choose faculty --</option>
           </select>
         </div>
@@ -6586,7 +6586,7 @@ body {
 
       <div class="slip-items-builder">
         <div id="slip-items-list"></div>
-        <button class="slip-add-btn" type="button" onclick="addSlipRow()">+ Add Another Item</button>
+        <button class="slip-add-btn" type="button" onclick="addSlipRow(true)">+ Add Another Item</button>
       </div>
 
       <div class="slip-summary">
@@ -11260,7 +11260,7 @@ function openAddBill(){
   document.getElementById('bill-date-input').value = todayStr();
   document.getElementById('bill-vendor-input').value = '';
   document.getElementById('bill-items-list').innerHTML = '';
-  addBillItemRow();
+  addBillItemRow(false);
   var vl = document.getElementById('vendor-list'); vl.innerHTML = '';
   for (var i = 0; i < VENDORS.length; i++) vl.innerHTML += '<option value="' + VENDORS[i] + '">';
   document.getElementById('modal-addbill').classList.add('open');
@@ -11275,11 +11275,16 @@ function getItemOptionsHtml(selectedId){
   html += '<option value="__NEW__" style="color:#0f7a3d;font-weight:700">+ Add New Item...</option>';
   return html;
 }
-function addBillItemRow(){
+function addBillItemRow(autoOpen){
+  if (autoOpen === undefined) autoOpen = true;
   var container = document.getElementById('bill-items-list');
   var div = document.createElement('div'); div.className = 'bill-item-block';
-  div.innerHTML = '<div class="bill-item-row-edit"><select class="bi-item" onchange="onBillItemChange(this)">' + getItemOptionsHtml(0) + '</select><input type="number" class="bi-qty" placeholder="Qty" min="1" oninput="updateBillSummary()"><button class="icon-btn" type="button" onclick="this.closest(\'.bill-item-block\').remove();updateBillSummary()" title="Remove item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div><div class="bill-subcat-row" style="display:none"><select class="bi-subcat"></select></div>';
+  div.innerHTML = '<div class="bill-item-row-edit"><select class="bi-item" onchange="onBillItemChange(this)">' + getItemOptionsHtml(0) + '</select><input type="number" class="bi-qty" placeholder="Qty" min="1" oninput="updateBillSummary()" onkeydown="if(event.key===\'Enter\'){event.preventDefault();addBillItemRow(true);}"><button class="icon-btn" type="button" onclick="this.closest(\'.bill-item-block\').remove();updateBillSummary()" title="Remove item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div><div class="bill-subcat-row" style="display:none"><select class="bi-subcat"></select></div>';
   container.appendChild(div);
+  var sel = div.querySelector('.bi-item');
+  if (autoOpen && sel){
+    openSlipItemPicker(sel);
+  }
 }
 function onBillItemChange(sel){
   var val = sel.value; var block = sel.closest('.bill-item-block');
@@ -11291,7 +11296,14 @@ function onBillItemChange(sel){
   var subWrap = block.querySelector('.bill-subcat-row'); var subSel = block.querySelector('.bi-subcat');
   if (!val){ subWrap.style.display = 'none'; return; }
   var it = getItem(parseInt(val));
-  if (!it || it.variants.length <= 1){ subWrap.style.display = 'none'; return; }
+  if (!it || it.variants.length <= 1){
+    subWrap.style.display = 'none';
+    var qtyInput = block.querySelector('.bi-qty');
+    if (qtyInput){
+      setTimeout(function(){ qtyInput.focus(); qtyInput.select(); }, 60);
+    }
+    return;
+  }
   subSel.innerHTML = '';
   for (var i = 0; i < it.variants.length; i++){
     var v = it.variants[i];
@@ -11408,12 +11420,44 @@ function openIssueSlip(){
     fsel.innerHTML += '<option value="' + faculties[i].id + '">' + esc(faculties[i].name) + ' (' + esc(faculties[i].dept) + ')</option>';
   }
   // Reset items list
+  slipRowCounter = 0;
   document.getElementById('slip-items-list').innerHTML = '';
-  addSlipRow();
+  addSlipRow(false);
   updateSlipSummary();
   document.getElementById('modal-issueslip').classList.add('open');
 }
 function closeIssueSlip(){ document.getElementById('modal-issueslip').classList.remove('open'); }
+
+function openSlipItemPicker(sel){
+  if (!sel) return;
+  try {
+    sel.focus({ preventScroll: false });
+  } catch(e){}
+
+  try {
+    if (typeof sel.showPicker === 'function'){
+      sel.showPicker();
+      return true;
+    }
+  } catch(err){
+    console.warn('showPicker on slip-item failed or blocked:', err);
+  }
+  return false;
+}
+
+function onSlipFacultyChange(sel){
+  if (sel && sel.value){
+    var firstRow = document.querySelector('#slip-items-list .slip-item-row');
+    if (firstRow){
+      var itemSel = firstRow.querySelector('.slip-item');
+      if (itemSel && !itemSel.value){
+        setTimeout(function(){
+          openSlipItemPicker(itemSel);
+        }, 50);
+      }
+    }
+  }
+}
 
 function getSlipItemOptionsHtml(selectedId){
   var html = '<option value="">-- Select Item --</option>';
@@ -11428,14 +11472,31 @@ function getSlipItemOptionsHtml(selectedId){
 }
 
 var slipRowCounter = 0;
-function addSlipRow(){
-  slipRowCounter++;
+function addSlipRow(autoOpen){
+  if (autoOpen === undefined) autoOpen = true;
+
   var container = document.getElementById('slip-items-list');
+  if (!container) return;
+
+  // If the last row is still empty with no item chosen, reuse it and open its items list!
+  var existingRows = container.querySelectorAll('.slip-item-row');
+  if (existingRows.length > 0){
+    var lastRow = existingRows[existingRows.length - 1];
+    var lastSel = lastRow.querySelector('.slip-item');
+    if (lastSel && !lastSel.value){
+      if (autoOpen){
+        openSlipItemPicker(lastSel);
+      }
+      return lastRow;
+    }
+  }
+
+  slipRowCounter++;
   var div = document.createElement('div');
   div.className = 'slip-item-row';
   div.setAttribute('data-row', slipRowCounter);
   div.innerHTML =
-    '<div class="slip-row-header">' +
+    '<div class="slip-row-header" onclick="var s=this.closest(\'.slip-item-row\').querySelector(\'.slip-item\');if(s&&!s.value)openSlipItemPicker(s)" style="cursor:pointer" title="Click to select item">' +
       '<div style="display:flex;align-items:center;gap:6px">' +
         '<span class="slip-row-num">' + slipRowCounter + '</span>' +
         '<span style="font-size:11px;font-weight:800;color:var(--text-secondary);letter-spacing:0.3px">ITEM #' + slipRowCounter + '</span>' +
@@ -11445,7 +11506,7 @@ function addSlipRow(){
     '<div class="slip-row-main-inputs">' +
       '<select class="slip-item" onchange="onSlipItemChange(this)">' + getSlipItemOptionsHtml(0) + '</select>' +
       '<div class="slip-single-qty-wrap">' +
-        '<input type="number" class="slip-qty" placeholder="Qty" min="1" oninput="updateSlipSummary()">' +
+        '<input type="number" class="slip-qty" placeholder="Qty" min="1" oninput="updateSlipSummary()" onkeydown="handleSlipQtyKeydown(event, this)">' +
       '</div>' +
       '<button class="icon-btn" type="button" onclick="this.closest(\'.slip-item-row\').remove();updateSlipSummary()" title="Remove item">' +
         '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
@@ -11454,6 +11515,22 @@ function addSlipRow(){
     '<div class="slip-variants-container" style="display:none"></div>';
   container.appendChild(div);
   updateSlipSummary();
+
+  var sel = div.querySelector('.slip-item');
+  if (autoOpen && sel){
+    openSlipItemPicker(sel);
+  }
+  return div;
+}
+
+function handleSlipQtyKeydown(event, inputEl){
+  if (event.key === 'Enter'){
+    event.preventDefault();
+    var val = parseInt(inputEl.value) || 0;
+    if (val > 0){
+      addSlipRow(true);
+    }
+  }
 }
 
 function onSlipItemChange(sel){
@@ -11542,12 +11619,24 @@ function onSlipItemChange(sel){
       varContainer.innerHTML = gridHtml;
       varContainer.style.display = 'block';
     }
+
+    setTimeout(function(){
+      var firstVarInput = varContainer ? varContainer.querySelector('.slip-var-qty:not([disabled])') : null;
+      if (firstVarInput){
+        firstVarInput.focus();
+        firstVarInput.select();
+      }
+    }, 60);
   } else {
     // Single item
     if (qtyWrap) qtyWrap.style.display = 'block';
     if (singleQty) {
       singleQty.style.display = 'block';
       singleQty.placeholder = 'Qty (Max: ' + it.variants[0].current + ')';
+      setTimeout(function(){
+        singleQty.focus();
+        singleQty.select();
+      }, 60);
     }
     if (varBadge) varBadge.style.display = 'none';
     if (varContainer){ varContainer.style.display = 'none'; varContainer.innerHTML = ''; }
