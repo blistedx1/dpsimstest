@@ -10,7 +10,7 @@
 <title>DPS AMRAPALI - INVENTORY SYSTEM</title>
 <link rel="icon" type="image/png" href="logo-192.png">
 <link rel="apple-touch-icon" href="logo-192.png">
-<link rel="manifest" href="manifest.json?v=7">
+<link rel="manifest" href="manifest.json?v=8">
 <meta name="application-name" content="DPS AMRAPALI">
 <meta name="apple-mobile-web-app-title" content="DPS AMRAPALI">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -127,7 +127,7 @@ body {
 
 /* ============================================= */
 /* ========================================================================= */
-/* SPLASH SCREEN: OFFICIAL YELLOW FLAME LOGO - DPS AMRAPALI INVENTORY SYSTEM */
+/* SPLASH SCREEN: DYNAMIC LOGO ZOOM IN - DPS AMRAPALI INVENTORY SYSTEM       */
 /* ========================================================================= */
 #splash {
   position: fixed;
@@ -140,7 +140,7 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s ease;
+  transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.65s ease;
 }
 
 .splash-center-content {
@@ -153,28 +153,40 @@ body {
   padding: 20px;
   text-align: center;
   transform: scale(1);
-  transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.2, 1), opacity 0.5s ease;
+  transition: transform 0.75s cubic-bezier(0.2, 0.9, 0.2, 1), opacity 0.65s ease;
   will-change: transform, opacity;
-  animation: splashEntrance 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes splashEntrance {
-  0% { transform: translateY(16px) scale(0.94); opacity: 0; }
-  100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
 .splash-logo-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
+/* SCHOOL LOGO ZOOM IN ANIMATION */
 .splash-logo-img {
-  width: clamp(155px, 42vw, 215px);
-  height: clamp(155px, 42vw, 215px);
+  width: clamp(165px, 45vw, 230px);
+  height: clamp(165px, 45vw, 230px);
   object-fit: contain;
-  filter: drop-shadow(0 14px 28px rgba(18, 79, 50, 0.12));
+  filter: drop-shadow(0 14px 32px rgba(18, 79, 50, 0.16));
+  animation: logoZoomIn 1.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform, opacity;
+}
+
+@keyframes logoZoomIn {
+  0% {
+    transform: scale(0.32);
+    opacity: 0;
+  }
+  65% {
+    transform: scale(1.09);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .splash-title {
@@ -186,6 +198,7 @@ body {
   margin: 0;
   text-transform: uppercase;
   font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+  animation: splashFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
 }
 
 .splash-subtitle {
@@ -197,6 +210,7 @@ body {
   line-height: 1.25;
   text-transform: uppercase;
   font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+  animation: splashFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.32s both;
 }
 
 .splash-divider {
@@ -205,6 +219,7 @@ body {
   border-radius: 999px;
   background: linear-gradient(90deg, #124f32 0%, #eab308 50%, #34d399 100%);
   margin: 16px auto 0;
+  animation: splashFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.42s both;
 }
 
 .splash-loading {
@@ -213,6 +228,18 @@ body {
   gap: 8px;
   align-items: center;
   justify-content: center;
+  animation: splashFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.52s both;
+}
+
+@keyframes splashFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .splash-loading span {
@@ -242,15 +269,16 @@ body {
   40% { transform: scale(1.15); opacity: 1; }
 }
 
+/* ZOOM IN TRANSITION WHEN APP OPENS INTO DASHBOARD */
 #splash.hide {
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s ease;
+  transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.65s ease;
 }
 
 #splash.hide .splash-center-content {
-  transform: scale(0.92) translateY(-18px);
+  transform: scale(1.28);
   opacity: 0;
 }
 
