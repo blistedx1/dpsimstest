@@ -32,7 +32,10 @@ const server = http.createServer((req, res) => {
         } catch (e) {
           req.body = {};
         }
+      } else {
+        req.body = {};
       }
+      req.query = Object.fromEntries(urlObj.searchParams);
       
       // Adapt res for express/vercel style
       const originalEnd = res.end.bind(res);

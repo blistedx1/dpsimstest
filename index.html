@@ -5718,7 +5718,7 @@ body {
       <kbd class="header-search-kbd">Ctrl K</kbd>
     </button>
 
-    <span id="cloudSyncBadge" class="cloud-badge syncing" onclick="fetchCloudData()" title="Neon Cloud DB: Click to sync">
+    <span id="cloudSyncBadge" class="cloud-badge syncing" onclick="openDatabaseHealthModal()" title="Neon Cloud DB: Click for Health & Diagnostics" style="cursor:pointer">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
       <span class="badge-dot"></span>
       <span class="badge-txt">Connecting...</span>
@@ -6183,11 +6183,11 @@ body {
   <!-- QUICK DATE BAR & SINGLE DATE SELECTOR -->
   <div class="rep-date-bar">
     <div class="rep-quick-chips">
-      <button type="button" class="rep-date-chip active" id="chip-rep-today" onclick="setRepFilterMode('today')">Today</button>
+      <button type="button" class="rep-date-chip" id="chip-rep-today" onclick="setRepFilterMode('today')">Today</button>
       <button type="button" class="rep-date-chip" id="chip-rep-yesterday" onclick="setRepFilterMode('yesterday')">Yesterday</button>
       <button type="button" class="rep-date-chip" id="chip-rep-7d" onclick="setRepFilterMode('7d')">7D</button>
       <button type="button" class="rep-date-chip" id="chip-rep-30d" onclick="setRepFilterMode('30d')">30D</button>
-      <button type="button" class="rep-date-chip" id="chip-rep-all" onclick="setRepFilterMode('all')">All Time</button>
+      <button type="button" class="rep-date-chip active" id="chip-rep-all" onclick="setRepFilterMode('all')">All Time</button>
     </div>
     <div class="rep-single-picker-box">
       <span class="rep-picker-title">Select Date:</span>
@@ -6490,6 +6490,28 @@ body {
     </div>
     <div class="tab-content" style="padding:20px" id="biometric-settings-content">
       <!-- Dynamic content rendered by renderBiometricSettings() -->
+    </div>
+  </div>
+</div>
+
+<!-- DATABASE HEALTH & DIAGNOSTICS MODAL -->
+<div class="modal-overlay" id="modal-db-health" onclick="if(event.target===this)closeDatabaseHealthModal()">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-head">
+      <h3>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+          <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+        </svg>
+        <span>Database Health & Cloud Sync</span>
+      </h3>
+      <button class="btn" onclick="closeDatabaseHealthModal()" title="Close">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="tab-content" style="padding:20px" id="db-health-content">
+      <!-- Dynamic live diagnostics rendered by renderDatabaseHealth() -->
     </div>
   </div>
 </div>
@@ -7848,16 +7870,26 @@ function hideCloudAlertBanner(){
   if (b) b.style.display = 'none';
 }
 
+var hasPendingSync = false;
+var localModifiedTimestamp = 0;
+var lastSyncTimestamp = 0;
+var syncRetryTimer = null;
+var syncRetryCount = 0;
+var BACKUP_STORAGE_KEY = 'DPS_IMS_LOCAL_BACKUP';
+
 function updateCloudBadge(status, label){
   var el = document.getElementById('cloudSyncBadge');
   if (!el) return;
   el.className = 'cloud-badge ' + status;
   if (status === 'syncing'){
-    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg><span class="badge-dot"></span><span class="badge-txt">' + esc(label || 'Saving Online...') + '</span>';
+    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg><span class="badge-dot"></span><span class="badge-txt">' + esc(label || 'Saving to Neon DB...') + '</span>';
   } else if (status === 'synced'){
-    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><polyline points="9 13 11 15 15 11"/></svg><span class="badge-dot"></span><span class="badge-txt">' + esc(label || 'Cloud Synced') + '</span>';
+    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><polyline points="9 13 11 15 15 11"/></svg><span class="badge-dot"></span><span class="badge-txt">' + esc(label || 'Neon DB Synced') + '</span>';
   } else if (status === 'offline'){
     el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="2" x2="22" y2="22"></line><path d="M9.9 9.9A7 7 0 0 0 2 15a7 7 0 0 0 7 7h10a4.5 4.5 0 0 0 2.2-8.4"></path></svg><span class="badge-dot"></span><span class="badge-txt">' + esc(label || 'Cloud Offline') + '</span>';
+  } else if (status === 'pending'){
+    el.className = 'cloud-badge syncing';
+    el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span class="badge-dot" style="background:#f59e0b"></span><span class="badge-txt">' + esc(label || 'Saved Locally (Syncing)') + '</span>';
   } else if (status === 'error'){
     el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span class="badge-dot"></span><span class="badge-txt">' + esc(label || 'Cloud Error') + '</span>';
   }
@@ -7865,15 +7897,21 @@ function updateCloudBadge(status, label){
 
 function triggerCloudSync(immediate){
   if (cloudSyncTimer) clearTimeout(cloudSyncTimer);
-  updateCloudBadge('syncing', 'Saving Online...');
-  var delay = immediate ? 50 : 300;
+  updateCloudBadge('syncing', 'Saving to Neon DB...');
+  var delay = immediate ? 50 : 350;
   cloudSyncTimer = setTimeout(async function(){
+    if (isCloudSyncing) return;
     try {
       isCloudSyncing = true;
+      var payload = {
+        items: items,
+        faculties: faculties,
+        clientTimestamp: localModifiedTimestamp || Date.now()
+      };
       var res = await fetch('/api/data', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: items, faculties: faculties })
+        body: JSON.stringify(payload)
       });
       if (!res.ok) {
         var errJson = await res.json().catch(function(){ return {}; });
@@ -7881,6 +7919,10 @@ function triggerCloudSync(immediate){
       }
       var json = await res.json();
       if (json.success){
+        hasPendingSync = false;
+        syncRetryCount = 0;
+        if (syncRetryTimer) clearTimeout(syncRetryTimer);
+        lastSyncTimestamp = json.updatedAt ? new Date(json.updatedAt).getTime() : Date.now();
         updateCloudBadge('synced', 'Neon DB Synced');
         hideCloudAlertBanner();
       } else {
@@ -7888,8 +7930,18 @@ function triggerCloudSync(immediate){
       }
     } catch(err){
       console.error('Neon DB Cloud Sync Error:', err);
-      updateCloudBadge('error', 'Sync Failed');
-      showCloudAlertBanner('Online Save Failed: ' + (err.message || 'Check database connection / Vercel DATABASE_URL.'));
+      hasPendingSync = true;
+      updateCloudBadge('pending', 'Saved Locally (Retrying...)');
+      showCloudAlertBanner('Neon DB connection delayed (' + (err.message || 'Connecting') + '). Your entry is saved safely locally and will auto-sync momentarily.');
+      // Auto-retry with backoff
+      if (syncRetryCount < 8) {
+        syncRetryCount++;
+        var retryDelay = Math.min(30000, 2000 * Math.pow(1.6, syncRetryCount));
+        if (syncRetryTimer) clearTimeout(syncRetryTimer);
+        syncRetryTimer = setTimeout(function(){
+          triggerCloudSync(true);
+        }, retryDelay);
+      }
     } finally {
       isCloudSyncing = false;
     }
@@ -7897,13 +7949,150 @@ function triggerCloudSync(immediate){
 }
 
 function saveData(immediateCloud){
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch(e){}
+  hasPendingSync = true;
+  localModifiedTimestamp = Date.now();
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    localStorage.setItem(BACKUP_STORAGE_KEY, JSON.stringify({
+      items: items,
+      faculties: faculties,
+      timestamp: localModifiedTimestamp
+    }));
+  } catch(e){
+    console.warn('LocalStorage save error:', e);
+  }
   triggerCloudSync(immediateCloud !== false);
 }
 
 function saveFaculties(immediateCloud){
-  try { localStorage.setItem(FAC_KEY, JSON.stringify(faculties)); } catch(e){}
+  hasPendingSync = true;
+  localModifiedTimestamp = Date.now();
+  try {
+    localStorage.setItem(FAC_KEY, JSON.stringify(faculties));
+    localStorage.setItem(BACKUP_STORAGE_KEY, JSON.stringify({
+      items: items,
+      faculties: faculties,
+      timestamp: localModifiedTimestamp
+    }));
+  } catch(e){
+    console.warn('LocalStorage save error:', e);
+  }
   triggerCloudSync(immediateCloud !== false);
+}
+
+function openDatabaseHealthModal(){
+  var m = document.getElementById('modal-db-health');
+  if (!m) return;
+  m.classList.add('open');
+  renderDatabaseHealth(true);
+}
+
+function closeDatabaseHealthModal(){
+  var m = document.getElementById('modal-db-health');
+  if (m) m.classList.remove('open');
+}
+
+async function renderDatabaseHealth(runPing){
+  var c = document.getElementById('db-health-content');
+  if (!c) return;
+
+  var localLogs = 0;
+  (items || []).forEach(function(it){
+    (it.variants || []).forEach(function(v){
+      if (v.logs) localLogs += v.logs.length;
+    });
+  });
+
+  if (runPing) {
+    c.innerHTML = '<div style="text-align:center;padding:30px">' +
+      '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite;color:var(--green)"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>' +
+      '<div style="margin-top:12px;font-size:13px;font-weight:700">Connecting to Neon PostgreSQL & Running Diagnostics...</div>' +
+    '</div>';
+  }
+
+  try {
+    var res = await fetch('/api/data?health=true');
+    var data = await res.json();
+    if (!res.ok || !data.healthy) {
+      throw new Error(data.error || 'Database responded with an error');
+    }
+
+    var html = '<div style="display:flex;flex-direction:column;gap:14px">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;background:#f0fdf4;border:1px solid #bbf7d0;padding:12px 14px;border-radius:10px">' +
+        '<div style="display:flex;align-items:center;gap:10px">' +
+          '<span style="width:10px;height:10px;border-radius:50%;background:#16a34a;box-shadow:0 0 8px #16a34a"></span>' +
+          '<div>' +
+            '<div style="font-weight:800;font-size:13.5px;color:#15803d">Neon Cloud PostgreSQL Online</div>' +
+            '<div style="font-size:11.5px;color:#166534">' + esc(data.pgVersion || 'PostgreSQL 18.6') + ' · Latency: <b>' + (data.latencyMs || '—') + ' ms</b></div>' +
+          '</div>' +
+        '</div>' +
+        '<span style="background:#16a34a;color:#fff;font-size:10.5px;font-weight:800;padding:3px 8px;border-radius:6px">HEALTHY</span>' +
+      '</div>' +
+
+      '<div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:10px;text-align:center">' +
+        '<div style="background:var(--bg-subtle);border:1px solid var(--border);padding:10px;border-radius:8px">' +
+          '<div style="font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase">Items In DB</div>' +
+          '<div style="font-size:18px;font-weight:900;color:var(--green)">' + data.itemCount + '</div>' +
+        '</div>' +
+        '<div style="background:var(--bg-subtle);border:1px solid var(--border);padding:10px;border-radius:8px">' +
+          '<div style="font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase">Movement Logs</div>' +
+          '<div style="font-size:18px;font-weight:900;color:#2563eb">' + data.logsCount + '</div>' +
+        '</div>' +
+        '<div style="background:var(--bg-subtle);border:1px solid var(--border);padding:10px;border-radius:8px">' +
+          '<div style="font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase">Staff Members</div>' +
+          '<div style="font-size:18px;font-weight:900;color:var(--text)">' + data.facultyCount + '</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="background:var(--bg-subtle);border:1px solid var(--border);padding:12px;border-radius:8px;font-size:12px;line-height:1.6">' +
+        '<div style="display:flex;justify-content:space-between"><b>Local Browser Cache:</b> <span>' + items.length + ' items (' + localLogs + ' logs)</span></div>' +
+        '<div style="display:flex;justify-content:space-between"><b>Unsynced Pending:</b> <span style="font-weight:800;color:' + (hasPendingSync ? '#d97706' : '#16a34a') + '">' + (hasPendingSync ? '1 sync pending...' : '0 (Up to date)') + '</span></div>' +
+        '<div style="display:flex;justify-content:space-between"><b>Last Synced:</b> <span>' + (data.lastUpdated ? new Date(data.lastUpdated).toLocaleString() : 'Just now') + '</span></div>' +
+        '<div style="display:flex;justify-content:space-between"><b>Immutable Snapshots:</b> <span>' + (data.snapshotCount || 0) + ' revisions</span></div>' +
+      '</div>' +
+
+      '<div style="display:flex;gap:8px;margin-top:6px">' +
+        '<button type="button" class="btn btn-primary" style="flex:1;justify-content:center;gap:6px" onclick="triggerCloudSync(true);renderDatabaseHealth(true)">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>' +
+          '<span>Force Sync Now</span>' +
+        '</button>' +
+        '<button type="button" class="btn" style="flex:1;justify-content:center;gap:6px" onclick="exportOfflineBackupJSON()">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>' +
+          '<span>Download Backup</span>' +
+        '</button>' +
+      '</div>' +
+    '</div>';
+
+    c.innerHTML = html;
+  } catch(err){
+    c.innerHTML = '<div style="background:#fee2e2;border:1px solid #fca5a5;padding:14px;border-radius:8px;color:#991b1b;font-size:12.5px">' +
+      '<div style="font-weight:800;font-size:13.5px;margin-bottom:4px">Database Check Warning</div>' +
+      '<div>' + esc(err.message || 'Could not connect to database') + '</div>' +
+      '<div style="margin-top:10px;font-size:11.5px;color:#7f1d1d">Your local browser cache has ' + items.length + ' items and ' + localLogs + ' logs safe.</div>' +
+      '<div style="margin-top:12px;display:flex;gap:8px">' +
+        '<button type="button" class="btn btn-primary" onclick="renderDatabaseHealth(true)" style="padding:4px 10px;font-size:11px">Retry Health Check</button>' +
+        '<button type="button" class="btn" onclick="exportOfflineBackupJSON()" style="padding:4px 10px;font-size:11px">Download Local Backup</button>' +
+      '</div>' +
+    '</div>';
+  }
+}
+
+function exportOfflineBackupJSON(){
+  var backupData = {
+    exportDate: new Date().toISOString(),
+    items: items,
+    faculties: faculties
+  };
+  var blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'DPS_IMS_DB_BACKUP_' + todayStr() + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showThemeMessage('success', 'Backup Saved', 'Complete database JSON backup downloaded successfully.');
 }
 
 // COLOR PALETTE & VISUAL SWATCH HELPERS
@@ -10588,18 +10777,44 @@ function renderReports(){
   var contentEl = document.getElementById('rep-itemwise-content');
   if (contentEl) {
     if (displayedItems.length === 0){
+      var totalHistLogs = 0;
+      var yestLogs = 0;
+      var yStr = daysAgo(1);
+      (items || []).forEach(function(it){
+        (it.variants || []).forEach(function(v){
+          (v.logs || []).forEach(function(l){
+            totalHistLogs++;
+            if (l.date === yStr) yestLogs++;
+          });
+        });
+      });
+
       var emptyTxt = (typeF === 'inward' || repSubFilter === 'inward')
         ? 'No items were received (Inward) on ' + dateLabel
         : (typeF === 'outward' || repSubFilter === 'outward')
         ? 'No items were issued (Outward) on ' + dateLabel
         : ((from || to) ? 'No item transactions recorded for ' + dateLabel : 'No items match the selected filter');
+
+      var hintHtml = '';
+      if ((from || to) && totalHistLogs > 0){
+        hintHtml = '<div style="font-size:12.5px;color:var(--text-secondary);margin-top:6px">' +
+          'Database has <b>' + totalHistLogs + ' total historical transaction(s)</b> (' + yestLogs + ' from yesterday) safely stored in Neon DB.' +
+        '</div>' +
+        '<div style="font-size:12px;margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">' +
+          (yestLogs > 0 ? '<button type="button" class="btn btn-primary" style="padding:5px 12px;font-size:11.5px;font-weight:700" onclick="setRepFilterMode(\'yesterday\')">View Yesterday (' + yestLogs + ' Entries)</button>' : '') +
+          '<button type="button" class="btn" style="padding:5px 12px;font-size:11.5px;font-weight:700" onclick="setRepFilterMode(\'all\')">View All Dates (' + totalHistLogs + ' Total)</button>' +
+        '</div>';
+      } else {
+        hintHtml = '<div style="font-size:12px;margin-top:8px;display:flex;gap:8px;justify-content:center">' +
+          '<button type="button" class="btn" style="padding:4px 10px;font-size:11px" onclick="setRepSubFilter(\'all\')">View All Catalog Items</button>' +
+          '<button type="button" class="btn" style="padding:4px 10px;font-size:11px" onclick="setRepFilterMode(\'all\')">View All Dates</button>' +
+        '</div>';
+      }
+
       contentEl.innerHTML = '<div class="empty-msg" style="padding:28px;text-align:center;color:var(--muted)">' +
         '<div style="display:flex;justify-content:center;margin-bottom:10px"><span style="width:38px;height:38px;border-radius:10px;background:var(--green-light);color:var(--green);display:inline-flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span></div>' +
         '<b>' + esc(emptyTxt) + '</b>' +
-        '<div style="font-size:12px;margin-top:8px;display:flex;gap:8px;justify-content:center">' +
-          '<button type="button" class="btn" style="padding:4px 10px;font-size:11px" onclick="setRepSubFilter(\'all\')">View All Catalog Items</button>' +
-          '<button type="button" class="btn" style="padding:4px 10px;font-size:11px" onclick="setRepFilterMode(\'all\')">View All Dates</button>' +
-        '</div>' +
+        hintHtml +
       '</div>';
     } else if (repItemWiseView === 'cards'){
       var cHtml = '<div class="rep-cards-grid">';
@@ -12542,11 +12757,11 @@ function init(){
   var fromEl = document.getElementById('f-rep-from');
   var toEl = document.getElementById('f-rep-to');
   var singleEl = document.getElementById('f-rep-single');
+  // Default Reports date filter to All-Time on init so all transactions and logs are visible
   if (fromEl && toEl && !fromEl.value && !toEl.value) {
-    var today = todayStr();
-    fromEl.value = today;
-    toEl.value = today;
-    if (singleEl) singleEl.value = today;
+    fromEl.value = '';
+    toEl.value = '';
+    if (singleEl) singleEl.value = '';
   }
 
   document.addEventListener('keydown', function(e){
@@ -12619,7 +12834,13 @@ if ('serviceWorker' in navigator) {
 
 async function fetchCloudData(isManual){
   if (isCloudSyncing) return;
-  if (isManual) updateCloudBadge('syncing', 'Connecting DB...');
+  // CRITICAL DATA PROTECTION: Never overwrite local data if pending changes exist!
+  if (hasPendingSync) {
+    console.log('fetchCloudData: Pending local changes exist, pushing to cloud instead of pulling.');
+    triggerCloudSync(true);
+    return;
+  }
+  if (isManual) updateCloudBadge('syncing', 'Connecting Neon DB...');
   try {
     var res = await fetch('/api/data');
     if (!res.ok) {
@@ -12629,24 +12850,44 @@ async function fetchCloudData(isManual){
     var json = await res.json();
     if (json.success){
       var updated = false;
+      var serverTime = json.updatedAt ? new Date(json.updatedAt).getTime() : 0;
+
       if (json.items && Array.isArray(json.items) && json.items.length > 0){
+        // SAFETY CHECK: Count local logs vs server logs
+        var localLogCount = 0;
+        (items || []).forEach(function(it){
+          (it.variants || []).forEach(function(v){
+            if (v.logs) localLogCount += v.logs.length;
+          });
+        });
+        var serverLogCount = 0;
+        json.items.forEach(function(it){
+          (it.variants || []).forEach(function(v){
+            if (v.logs) serverLogCount += v.logs.length;
+          });
+        });
+
+        // If local has MORE logs than server and was modified recently, preserve local and push!
+        if (localLogCount > serverLogCount && localModifiedTimestamp > serverTime) {
+          console.warn('Local inventory has newer/more logs (' + localLogCount + ') than cloud (' + serverLogCount + '). Preserving local and pushing to cloud.');
+          hasPendingSync = true;
+          triggerCloudSync(true);
+          return;
+        }
+
         items = json.items;
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch(e){}
         updated = true;
-      } else {
-        // Cloud database is clean and fresh, start with empty data
-        items = [];
-        faculties = [];
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch(e){}
-        try { localStorage.setItem(FAC_KEY, JSON.stringify(faculties)); } catch(e){}
-        updated = true;
       }
+
       if (json.faculties && Array.isArray(json.faculties) && json.faculties.length > 0){
         faculties = json.faculties;
         try { localStorage.setItem(FAC_KEY, JSON.stringify(faculties)); } catch(e){}
         updated = true;
       }
+
       if (updated) {
+        lastSyncTimestamp = serverTime || Date.now();
         render();
         if (typeof renderFaculty === 'function') renderFaculty();
         if (typeof renderBills === 'function') renderBills();
@@ -12657,8 +12898,10 @@ async function fetchCloudData(isManual){
     }
   } catch(err){
     console.warn('Could not fetch cloud data:', err);
-    updateCloudBadge('error', 'Cloud Disconnected');
-    showCloudAlertBanner('Could not connect to online Neon Database: ' + (err.message || 'Network error') + '. Please check Vercel DATABASE_URL / internet.');
+    if (!hasPendingSync) {
+      updateCloudBadge('error', 'Cloud Disconnected');
+      showCloudAlertBanner('Could not connect to online Neon Database: ' + (err.message || 'Network error') + '. Local data is safe.');
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dpsims-pwa-v11';
+const CACHE_NAME = 'dpsims-pwa-v12';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -37,27 +37,9 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
-  // For API calls: Network-First with cache fallback
-  if (url.pathname.startsWith('/api/data')) {
-    if (event.request.method === 'GET') {
-      event.respondWith(
-        fetch(event.request)
-          .then((networkResponse) => {
-            if (networkResponse && networkResponse.status === 200) {
-              const resClone = networkResponse.clone();
-              caches.open(CACHE_NAME).then((cache) => {
-                cache.put(event.request, resClone);
-              });
-            }
-            return networkResponse;
-          })
-          .catch(() => {
-            return caches.match(event.request);
-          })
-      );
-      return;
-    }
-    // Let POST requests pass directly
+  // Live Database APIs: NEVER cache in service worker, always go directly to network
+  if (url.pathname.startsWith('/api/')) {
+    event.respondWith(fetch(event.request));
     return;
   }
 
