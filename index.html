@@ -282,24 +282,27 @@ body {
   opacity: 0;
 }
 
-/* HEADER                                        */
-/* ============================================= */
+/* ============================================================ */
+/* FLOATING DYNAMIC CAPSULE NAVBAR (DESKTOP MODE)               */
+/* Matches screenshot: Centered Obsidian Island Pill with white */
+/* circular logo, animated glider tabs & prominent white pill   */
+/* ============================================================ */
+
+/* Base Header Setup (Mobile / Default Fallback) */
 header {
   position: sticky;
   top: 0;
-  z-index: 100;
-  background: var(--glass-header);
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
-  padding: 0 20px;
-  height: 64px;
+  padding: 0 16px;
+  height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  box-shadow: 0 1px 4px rgba(18, 79, 50, 0.04);
-  max-width: 100vw;
+  gap: 10px;
   box-sizing: border-box;
 }
 header * {
@@ -309,530 +312,596 @@ header * {
 .h-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   min-width: 0;
-  flex: 0 0 auto;
   cursor: pointer;
-  transition: transform 0.15s ease, opacity 0.15s ease;
   user-select: none;
 }
-.h-left:hover {
-  transform: translateY(-1px);
-  opacity: 0.94;
-}
-.h-left:active {
-  transform: scale(0.98);
-}
 .h-logo-img {
-  width: 42px;
-  height: 42px;
-  object-fit: contain;
-  flex-shrink: 0;
-  filter: drop-shadow(0 2px 6px rgba(18, 79, 50, 0.15));
-  transition: transform 0.2s ease;
-}
-.h-logo-fallback {
   width: 40px;
   height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.h-logo-fallback {
+  width: 38px;
+  height: 38px;
   background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
-  border-radius: 11px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ffffff;
   font-weight: 800;
-  font-size: 17px;
+  font-size: 16px;
   flex-shrink: 0;
-  box-shadow: 0 2px 6px rgba(18, 79, 50, 0.2);
 }
 .h-title {
   font-weight: 900;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.25;
   white-space: nowrap;
   color: var(--green);
-  letter-spacing: 0.35px;
 }
 .h-title span {
   display: block;
   font-weight: 600;
-  font-size: 11px;
+  font-size: 10px;
   color: var(--muted);
-  letter-spacing: 0.45px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
 }
 
-/* DESKTOP INTEGRATED NAVIGATION TABS */
 .nav-tabs {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 5px;
-  background: #ffffff;
-  padding: 5px;
-  border-radius: 9999px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.07), 0 4px 10px -2px rgba(0, 0, 0, 0.03);
-  flex: 0 1 auto;
-  min-width: 0;
+  gap: 3px;
+  isolation: isolate;
+}
+.nav-glider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              opacity 0.2s ease;
+  will-change: transform, width;
 }
 .nav-tab {
-  padding: 8px 18px;
+  position: relative;
+  z-index: 2;
+  padding: 7px 14px;
   font-weight: 700;
   font-size: 13px;
-  color: #64748b;
-  border-radius: 9999px;
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
   user-select: none;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
   border: none;
   background: transparent;
   flex-shrink: 0;
 }
 .nav-tab svg {
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   stroke: currentColor;
   stroke-width: 2.2;
-  flex-shrink: 0;
-  transition: transform 0.2s ease;
-}
-.nav-tab:hover {
-  color: #0f172a;
-  background: #f1f3f5;
-}
-.nav-tab.active {
-  color: #ffffff;
-  background: linear-gradient(180deg, #2d2e33 0%, #131316 100%);
-  font-weight: 800;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
-    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6),
-    0 8px 18px -2px rgba(0, 0, 0, 0.42),
-    0 3px 6px -1px rgba(0, 0, 0, 0.25);
-  transform: translateY(-1px);
-}
-.nav-tab.active svg {
-  stroke: #ffffff;
 }
 
-/* HEADER RIGHT ACTIONS */
 .h-right {
   display: flex;
   align-items: center;
-  gap: 7px;
-  flex: 0 0 auto;
-  flex-wrap: nowrap;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.header-search-label,
+.header-search-kbd,
+.cloud-badge .badge-txt,
+.admin-badge .badge-txt,
+.readonly-badge .badge-txt,
+.header-export-btn .btn-text,
+.btn-pwa-install .btn-text,
+.btn-add-header .btn-text {
+  display: none !important;
 }
 
-/* QUICK SEARCH PILL BUTTON */
-.header-search-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0 14px;
-  height: 38px;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: 9999px;
-  color: #475569;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.02);
-  flex-shrink: 0;
-}
-.header-search-btn:hover {
-  border-color: rgba(0, 0, 0, 0.12);
-  color: #0f172a;
-  background: #f8fafc;
-  transform: translateY(-1.5px);
-  box-shadow: 0 8px 18px -2px rgba(0, 0, 0, 0.08);
-}
-.header-search-btn svg {
-  width: 15px;
-  height: 15px;
-  stroke: currentColor;
-  flex-shrink: 0;
-}
-.header-search-kbd {
-  font-family: inherit;
-  font-size: 10.5px;
-  font-weight: 700;
-  background: var(--bg-subtle);
-  color: var(--text-secondary);
-  padding: 2px 6px;
-  border-radius: 5px;
-  border: 1px solid var(--border);
-  line-height: 1;
-}
+/* ============================================================ */
+/* DESKTOP MODE (>= 861px): FLOATING DYNAMIC ISLAND CAPSULE    */
+/* Exact layout from screenshot:                                */
+/* [ White Logo Circle ] [ Tabs ] [ Actions ] [ White Right Pill ]*/
+/* ============================================================ */
+@media (min-width: 861px) {
+  header {
+    position: fixed !important;
+    top: 16px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+    max-width: calc(100vw - 36px) !important;
+    height: 58px !important;
+    background: #141518 !important;
+    background: linear-gradient(180deg, #1d1e24 0%, #111215 100%) !important;
+    backdrop-filter: blur(28px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 9999px !important;
+    padding: 6px 8px 6px 8px !important;
+    box-shadow: 
+      0 24px 54px -8px rgba(0, 0, 0, 0.48), 
+      0 12px 24px -6px rgba(0, 0, 0, 0.28),
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.2) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 16px !important;
+    transition: all 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  }
 
-/* UNIFIED HEADER ACTION BUTTONS */
-.header-btn {
-  height: 38px;
-  padding: 0 16px;
-  border-radius: 9999px;
-  font-size: 12.5px;
-  font-weight: 700;
-  letter-spacing: 0.15px;
-  white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  cursor: pointer;
-  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.02);
-  flex-shrink: 0;
-}
-.header-btn svg {
-  width: 15px;
-  height: 15px;
-  display: block;
-  flex-shrink: 0;
-  stroke: currentColor;
-}
+  header.scrolled {
+    top: 12px !important;
+    background: linear-gradient(180deg, #18191f 0%, #0d0e11 100%) !important;
+    border-color: rgba(255, 255, 255, 0.16) !important;
+    box-shadow: 
+      0 28px 64px -10px rgba(0, 0, 0, 0.6), 
+      0 14px 28px -6px rgba(0, 0, 0, 0.35),
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.25) !important;
+  }
 
-/* CLOUD STATUS BADGE (Floating Pill Style) */
-.cloud-badge {
-  height: 38px;
-  padding: 0 14px;
-  border-radius: 9999px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.15px;
-  white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  user-select: none;
-  flex-shrink: 0;
-}
-.cloud-badge:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-}
-.cloud-badge svg {
-  width: 15px;
-  height: 15px;
-  display: block;
-  flex-shrink: 0;
-  stroke: currentColor;
-}
-.cloud-badge .badge-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  display: inline-block;
-  flex-shrink: 0;
-}
-.cloud-badge.synced {
-  background: #ffffff;
-  color: #166534;
-  border: 1px solid rgba(22, 101, 52, 0.2);
-}
-.cloud-badge.synced .badge-dot {
-  background: #16a34a;
-  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.25);
-}
-.cloud-badge.syncing {
-  background: #ffffff;
-  color: #1d4ed8;
-  border: 1px solid rgba(29, 78, 216, 0.2);
-}
-.cloud-badge.syncing .badge-dot {
-  background: #2563eb;
-  animation: pulseDot 1s infinite alternate;
-}
-.cloud-badge.offline {
-  background: #ffffff;
-  color: #b45309;
-  border: 1px solid rgba(180, 83, 9, 0.2);
-}
-.cloud-badge.offline .badge-dot {
-  background: #d97706;
-}
-.cloud-badge.error {
-  background: #ffffff;
-  color: #b91c1c;
-  border: 1px solid rgba(185, 28, 28, 0.2);
-}
-.cloud-badge.error .badge-dot {
-  background: #dc2626;
-}
-@keyframes pulseDot { 0% { opacity: 0.4; } 100% { opacity: 1; } }
+  .container {
+    padding-top: 96px !important;
+  }
 
-/* ROLE & AUTH BADGES */
-.admin-badge, .readonly-badge {
-  height: 38px;
-  padding: 0 14px;
-  border-radius: 9999px;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.2px;
-  white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-  flex-shrink: 0;
-}
-.admin-badge svg, .readonly-badge svg {
-  width: 15px;
-  height: 15px;
-  display: block;
-  flex-shrink: 0;
-  stroke: currentColor;
-  stroke-width: 2.2;
-}
-.admin-badge {
-  background: var(--green-light);
-  color: var(--green);
-  border: 1px solid var(--green-border);
-}
-.readonly-badge {
-  background: var(--bg-subtle);
-  color: var(--muted);
-  border: 1px solid var(--border);
-}
+  /* LEFT: White Circular Emblem Logo (Exact match to screenshot left button) */
+  .h-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    flex-shrink: 0 !important;
+    cursor: pointer !important;
+    user-select: none !important;
+    padding-left: 2px !important;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  }
+  .h-left:hover {
+    transform: translateY(-1px) scale(1.02) !important;
+  }
+  .h-logo-img {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    padding: 6px !important;
+    object-fit: contain !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    flex-shrink: 0 !important;
+  }
+  .h-left:hover .h-logo-img {
+    transform: rotate(10deg) scale(1.1) !important;
+  }
+  .h-title {
+    color: #ffffff !important;
+    font-size: 13.5px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.35px !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    padding-right: 2px !important;
+  }
+  .h-title span {
+    display: block !important;
+    color: #94a3b8 !important;
+    font-size: 9.5px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
+  }
 
-/* PRIMARY ADD BUTTON - 3D FLOATING OBSIDIAN PILL */
-.btn-add-header {
-  background: linear-gradient(180deg, #2d2e33 0%, #131316 100%);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 9999px;
-  box-shadow: 
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
-    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6),
-    0 8px 18px -2px rgba(0, 0, 0, 0.42),
-    0 3px 6px -1px rgba(0, 0, 0, 0.25);
-  flex-shrink: 0;
-  padding: 8px 18px;
-  font-weight: 700;
-  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.btn-add-header:hover {
-  background: linear-gradient(180deg, #37383e 0%, #191a1e 100%);
-  color: #ffffff;
-  box-shadow: 
-    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.38),
-    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6),
-    0 12px 24px -3px rgba(0, 0, 0, 0.48),
-    0 5px 10px -1px rgba(0, 0, 0, 0.28);
-  transform: translateY(-2px);
-}
-.btn-add-header svg {
-  stroke: #ffffff;
-  stroke-width: 2.5;
-}
+  /* CENTER: Navigation Tabs Container inside Capsule */
+  .nav-tabs {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 3.5px !important;
+    border-radius: 9999px !important;
+    isolation: isolate !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25) !important;
+    flex-shrink: 0 !important;
+  }
 
-/* EXPORT BUTTON & ACTION BUTTONS */
-.header-export-btn,
-.btn-pwa-install,
-.btn-login-action,
-.btn-logout-action {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 9999px;
-  color: #475569;
-  font-weight: 700;
-  padding: 8px 16px;
-  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.02);
-  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-  flex-shrink: 0;
-}
-.header-export-btn:hover,
-.btn-pwa-install:hover,
-.btn-login-action:hover,
-.btn-logout-action:hover {
-  background: #f8fafc;
-  color: #0f172a;
-  border-color: rgba(0, 0, 0, 0.12);
-  transform: translateY(-1.5px);
-  box-shadow: 0 8px 18px -2px rgba(0, 0, 0, 0.08);
-}
-.btn-logout-action:hover {
-  background: #fee2e2;
-  border-color: #fecaca;
-  color: #dc2626;
-  transform: translateY(-1.5px);
+  /* Active Sliding Glider Pill (DPS Emerald Theme Gradient with 3D Depth) */
+  .nav-glider {
+    position: absolute !important;
+    top: 3.5px !important;
+    left: 0 !important;
+    height: calc(100% - 7px) !important;
+    background: linear-gradient(135deg, #124f32 0%, #093721 100%) !important;
+    border-radius: 9999px !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    box-shadow: 
+      0 4px 14px rgba(18, 79, 50, 0.5), 
+      inset 0 1px 1.5px rgba(255, 255, 255, 0.4) !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                opacity 0.2s ease !important;
+    will-change: transform, width !important;
+  }
+
+  .nav-tab {
+    position: relative !important;
+    z-index: 2 !important;
+    padding: 7px 16px !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    color: #cbd5e1 !important;
+    border-radius: 9999px !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    transition: color 0.22s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    user-select: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    border: none !important;
+    background: transparent !important;
+    flex-shrink: 0 !important;
+  }
+  .nav-tab svg {
+    width: 15px !important;
+    height: 15px !important;
+    stroke: currentColor !important;
+    stroke-width: 2.2 !important;
+    flex-shrink: 0 !important;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), stroke 0.22s ease !important;
+  }
+  .nav-tab:hover {
+    color: #ffffff !important;
+  }
+  .nav-tab:hover svg {
+    transform: translateY(-1.5px) scale(1.12) !important;
+  }
+  .nav-tab:active {
+    transform: scale(0.95) !important;
+  }
+  .nav-tab.active {
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  .nav-tab.active svg {
+    stroke: #ffffff !important;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5)) !important;
+  }
+
+  /* RIGHT CONTROLS: Action Buttons + Prominent White Pill */
+  .h-right {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Utility Round Icon Buttons */
+  .header-search-btn,
+  .cloud-badge,
+  .header-export-btn,
+  .btn-pwa-install {
+    height: 38px !important;
+    width: 38px !important;
+    min-width: 38px !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    color: #e2e8f0 !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.24s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    position: relative !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+  }
+  .header-search-btn:hover,
+  .cloud-badge:hover,
+  .header-export-btn:hover,
+  .btn-pwa-install:hover {
+    background: rgba(255, 255, 255, 0.18) !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.28) !important;
+    transform: translateY(-2px) scale(1.08) !important;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35) !important;
+  }
+  .header-search-btn:active,
+  .cloud-badge:active,
+  .header-export-btn:active,
+  .btn-pwa-install:active {
+    transform: scale(0.92) !important;
+  }
+
+  .header-search-btn svg,
+  .header-export-btn svg,
+  .btn-pwa-install svg {
+    width: 15px !important;
+    height: 15px !important;
+    stroke: currentColor !important;
+    display: block !important;
+    flex-shrink: 0 !important;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  }
+  .header-search-btn:hover svg {
+    transform: scale(1.15) rotate(5deg) !important;
+  }
+  .header-export-btn:hover svg {
+    transform: translateY(2px) scale(1.12) !important;
+  }
+
+  /* Cloud Badge Live Dot */
+  .cloud-badge svg {
+    width: 15px !important;
+    height: 15px !important;
+    stroke: currentColor !important;
+    display: block !important;
+    flex-shrink: 0 !important;
+  }
+  .cloud-badge .badge-dot {
+    position: absolute !important;
+    top: 6px !important;
+    right: 6px !important;
+    width: 7px !important;
+    height: 7px !important;
+    border-radius: 50% !important;
+    box-shadow: 0 0 0 2px #141518 !important;
+  }
+  .cloud-badge.synced {
+    border-color: rgba(34, 197, 94, 0.35) !important;
+    color: #4ade80 !important;
+  }
+  .cloud-badge.synced .badge-dot {
+    background: #22c55e !important;
+    box-shadow: 0 0 0 2px #141518, 0 0 8px #22c55e !important;
+  }
+  .cloud-badge.syncing {
+    border-color: rgba(59, 130, 246, 0.35) !important;
+    color: #60a5fa !important;
+  }
+  .cloud-badge.syncing .badge-dot {
+    background: #3b82f6 !important;
+    box-shadow: 0 0 0 2px #141518, 0 0 8px #3b82f6 !important;
+  }
+  .cloud-badge.offline {
+    border-color: rgba(245, 158, 11, 0.35) !important;
+    color: #fbbf24 !important;
+  }
+  .cloud-badge.offline .badge-dot {
+    background: #f59e0b !important;
+  }
+  .cloud-badge.error {
+    border-color: rgba(239, 68, 68, 0.35) !important;
+    color: #f87171 !important;
+  }
+  .cloud-badge.error .badge-dot {
+    background: #ef4444 !important;
+  }
+
+  /* PWA Install Button respect style="display:none" */
+  #pwaInstallBtn[style*="display: none"],
+  #pwaInstallBtn[style*="display:none"],
+  .btn-pwa-install[style*="display: none"],
+  .btn-pwa-install[style*="display:none"] {
+    display: none !important;
+  }
+
+  /* Auth & Role Badges */
+  #authBadge {
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+  #authBadge:empty,
+  .readonly-badge {
+    display: none !important; /* In compact capsule, avoid redundant 2nd lock next to Admin Login */
+  }
+  .admin-badge {
+    height: 38px !important;
+    width: 38px !important;
+    min-width: 38px !important;
+    border-radius: 50% !important;
+    background: rgba(34, 197, 94, 0.16) !important;
+    color: #4ade80 !important;
+    border: 1px solid rgba(34, 197, 94, 0.35) !important;
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.24s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+  }
+  .admin-badge:hover {
+    background: rgba(34, 197, 94, 0.25) !important;
+    border-color: rgba(34, 197, 94, 0.5) !important;
+    transform: translateY(-2px) scale(1.08) !important;
+    box-shadow: 0 8px 18px rgba(34, 197, 94, 0.35) !important;
+  }
+  .admin-badge svg,
+  .readonly-badge svg {
+    width: 15px !important;
+    height: 15px !important;
+    stroke: currentColor !important;
+    stroke-width: 2.2 !important;
+    display: block !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Add Button (+) in vibrant DPS Emerald Gradient */
+  .btn-add-header,
+  .h-right .btn-add-header {
+    height: 38px !important;
+    width: 38px !important;
+    min-width: 38px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, #124f32 0%, #0a3521 100%) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.35) !important;
+    color: #ffffff !important;
+    box-shadow: 0 6px 16px rgba(18, 79, 50, 0.45), inset 0 1px 1.5px rgba(255, 255, 255, 0.4) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+  }
+  .btn-add-header svg {
+    width: 16px !important;
+    height: 16px !important;
+    stroke: #ffffff !important;
+    stroke-width: 2.8 !important;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    display: block !important;
+  }
+  .btn-add-header:hover {
+    background: linear-gradient(135deg, #166534 0%, #124f32 100%) !important;
+    transform: translateY(-2px) scale(1.1) !important;
+    box-shadow: 0 10px 24px rgba(18, 79, 50, 0.55), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+  }
+  .btn-add-header:hover svg {
+    transform: rotate(90deg) scale(1.15) !important;
+  }
+  .btn-add-header:active {
+    transform: scale(0.92) !important;
+  }
+
+  /* Text labels hidden on icon-only round buttons in desktop capsule */
+  .header-export-btn .btn-text,
+  .btn-pwa-install .btn-text,
+  .btn-add-header .btn-text,
+  .cloud-badge .badge-txt,
+  .admin-badge .badge-txt,
+  .readonly-badge .badge-txt {
+    display: none !important;
+  }
+
+  /* THE PROMINENT RIGHT WHITE CAPSULE PILL (#adminBtn) - Exact match to screenshot */
+  #adminBtn {
+    height: 38px !important;
+    width: auto !important;
+    padding: 0 18px !important;
+    border-radius: 9999px !important;
+    background: #ffffff !important;
+    color: #09090b !important;
+    font-weight: 800 !important;
+    font-size: 13px !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 7px !important;
+    transition: all 0.24s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    margin-left: 3px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    cursor: pointer !important;
+  }
+  #adminBtn .btn-text {
+    display: inline-block !important;
+    font-family: inherit !important;
+    font-weight: 800 !important;
+    color: #09090b !important;
+  }
+  #adminBtn svg {
+    width: 15px !important;
+    height: 15px !important;
+    stroke: #09090b !important;
+    stroke-width: 2.2 !important;
+    display: block !important;
+    flex-shrink: 0 !important;
+  }
+  #adminBtn:hover {
+    background: #f4f4f5 !important;
+    transform: translateY(-2px) scale(1.04) !important;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4) !important;
+  }
+  #adminBtn.btn-logout-action {
+    background: #ffffff !important;
+    color: #b91c1c !important;
+  }
+  #adminBtn.btn-logout-action .btn-text {
+    color: #b91c1c !important;
+  }
+  #adminBtn.btn-logout-action svg {
+    stroke: #b91c1c !important;
+  }
+  #adminBtn.btn-logout-action:hover {
+    background: #fee2e2 !important;
+    color: #991b1b !important;
+  }
 }
 
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
 /* ============================================================ */
-/* RESPONSIVE AUTO-ADJUSTING NAVBAR BREAKPOINTS                 */
-/* Prevents horizontal overflow & beautifully scales on laptops */
+/* RESPONSIVE AUTO-ADJUSTING FLOATING CAPSULE BREAKPOINTS       */
+/* Beautifully scales on wide laptops, standard laptops & iPads */
 /* ============================================================ */
 
-/* Breakpoint 1: Large Desktops & Wide Laptops (<= 1480px) */
-@media (max-width: 1480px) {
+/* Wide Laptops & Standard Desktops (1181px - 1440px) */
+@media (min-width: 1181px) and (max-width: 1440px) {
   header {
-    padding: 0 16px;
-    gap: 10px;
-  }
-  .header-search-kbd {
-    display: none !important;
+    gap: 12px !important;
+    padding: 5px 8px !important;
   }
   .nav-tab {
-    padding: 7px 12px;
-    font-size: 12.5px;
-    gap: 6px;
-  }
-  .header-export-btn .btn-text {
-    display: none !important;
-  }
-  .header-export-btn {
-    width: 38px;
-    min-width: 38px;
-    padding: 0;
-    justify-content: center;
+    padding: 7px 14px !important;
+    font-size: 12.5px !important;
   }
 }
 
-/* Breakpoint 2: Standard Laptops (<= 1380px) - Covers 1366px, 1360px & 1280px */
-@media (max-width: 1380px) {
+/* Compact Laptops & Large Tablets (861px - 1180px) */
+@media (min-width: 861px) and (max-width: 1180px) {
   header {
-    padding: 0 14px;
-    gap: 8px;
-  }
-  .h-left {
-    gap: 10px;
-  }
-  .h-title {
-    font-size: 14px;
+    gap: 8px !important;
+    padding: 5px 6px !important;
   }
   .h-title span {
-    font-size: 10px;
-  }
-  .cloud-badge .badge-txt {
     display: none !important;
   }
-  .cloud-badge {
-    padding: 0 10px;
-    gap: 6px;
-  }
-  .admin-badge .badge-txt,
-  .readonly-badge .badge-txt {
-    display: none !important;
-  }
-  .admin-badge,
-  .readonly-badge {
-    width: 38px;
-    min-width: 38px;
-    padding: 0;
-    justify-content: center;
-  }
-  .btn-login-action .btn-text,
-  .btn-logout-action .btn-text {
-    display: none !important;
+  .nav-tab {
+    padding: 7px 11px !important;
+    font-size: 12px !important;
+    gap: 5px !important;
   }
   #adminBtn {
-    width: 38px;
-    min-width: 38px;
-    padding: 0;
-    justify-content: center;
+    padding: 0 13px !important;
+    font-size: 12px !important;
   }
+}
+
+/* Mobile Screens (<= 860px) */
+@media (max-width: 860px) {
   .nav-tabs {
-    gap: 3px;
-    padding: 3px;
-  }
-  .nav-tab {
-    padding: 6px 11px;
-    font-size: 12px;
-    gap: 5px;
-  }
-}
-
-/* Breakpoint 3: Compact Laptops & Large Tablets (<= 1220px) */
-@media (max-width: 1220px) {
-  .header-search-label {
     display: none !important;
   }
-  .header-search-btn {
-    width: 38px;
-    min-width: 38px;
-    padding: 0;
-    justify-content: center;
-  }
-  .btn-pwa-install .btn-text {
-    display: none !important;
-  }
-  .btn-pwa-install {
-    width: 38px;
-    min-width: 38px;
-    padding: 0;
-    justify-content: center;
-  }
-  .cloud-badge {
-    width: 38px;
-    min-width: 38px;
-    padding: 0;
-    justify-content: center;
-  }
-  .cloud-badge .badge-dot {
-    margin-left: 2px;
-  }
+  .header-search-label,
+  .header-search-kbd,
+  .header-export-btn,
   .btn-add-header {
-    padding: 0 11px;
-    font-size: 12px;
-  }
-}
-
-/* Breakpoint 4: Tablets & Split-Screen Windows (<= 980px) */
-@media (max-width: 980px) {
-  header {
-    padding: 0 10px;
-    gap: 6px;
-  }
-  .h-title span {
     display: none !important;
-  }
-  .h-logo-img {
-    width: 36px;
-    height: 36px;
-  }
-  .btn-add-header .btn-text {
-    display: none !important;
-  }
-  .btn-add-header {
-    width: 38px;
-    min-width: 38px;
-    padding: 0;
-    justify-content: center;
-  }
-  .nav-tabs {
-    gap: 2px;
-  }
-  .nav-tab {
-    padding: 6px 8px;
-    font-size: 11.5px;
-  }
-}
-
-/* Breakpoint 5: Small Tablets (<= 840px) */
-@media (max-width: 840px) {
-  .nav-tab span {
-    display: none !important;
-  }
-  .nav-tab {
-    padding: 8px 10px;
-  }
-  .nav-tab svg {
-    width: 17px;
-    height: 17px;
-  }
-  .h-right {
-    gap: 5px;
   }
 }
 
@@ -4992,58 +5061,133 @@ body {
     align-items: center;
   }
   /* On mobile, Add tab is in bottom nav bar, so hide redundant top header add button */
-  .btn-add-header {
-    display: none !important;
-  }
+  .btn-add-header,
   .header-export-btn {
     display: none !important;
   }
-  .header-search-btn {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    padding: 0;
-    justify-content: center;
-    border-radius: 50%;
-  }
   .header-search-label,
-  .header-search-kbd {
-    display: none !important;
-  }
-  /* Compact status badges for mobile header - match 36x36px icon size */
-  .cloud-badge, .admin-badge, .readonly-badge, #adminBtn, .btn-pwa-install, .header-btn {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    min-height: 36px;
-    padding: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    box-sizing: border-box;
-  }
+  .header-search-kbd,
   .cloud-badge .badge-txt,
-  .cloud-badge .badge-dot,
   .admin-badge .badge-txt,
   .readonly-badge .badge-txt,
   .btn-pwa-install .btn-text,
   .btn-admin-action .btn-text,
   .btn-login-action .btn-text,
-  .btn-logout-action .btn-text {
+  .btn-logout-action .btn-text,
+  #adminBtn .btn-text {
     display: none !important;
   }
+
+  /* PWA Install Button respect style="display:none" on mobile */
+  #pwaInstallBtn[style*="display: none"],
+  #pwaInstallBtn[style*="display:none"],
+  .btn-pwa-install[style*="display: none"],
+  .btn-pwa-install[style*="display:none"] {
+    display: none !important;
+  }
+
+  /* Never show redundant 2nd lock next to #adminBtn */
+  .readonly-badge,
+  #authBadge:empty {
+    display: none !important;
+  }
+  #authBadge {
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  /* All mobile header utility buttons: 36x36 white tactile round buttons */
+  .header-search-btn,
+  .cloud-badge,
+  .admin-badge,
+  #adminBtn,
+  .btn-pwa-install {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.07), 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #334155 !important;
+    cursor: pointer !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+    flex-shrink: 0 !important;
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+    transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease !important;
+  }
+  .header-search-btn:active,
+  .cloud-badge:active,
+  .admin-badge:active,
+  #adminBtn:active,
+  .btn-pwa-install:active {
+    transform: scale(0.92) !important;
+    background: #f1f5f9 !important;
+  }
+
+  /* All SVG icons centered and perfectly sized */
+  .header-search-btn svg,
   .cloud-badge svg,
   .admin-badge svg,
-  .readonly-badge svg,
   #adminBtn svg,
-  .btn-pwa-install svg,
-  .header-search-btn svg {
-    width: 16px;
-    height: 16px;
-    display: block;
-    margin: 0;
-    stroke: currentColor;
+  .btn-pwa-install svg {
+    width: 16px !important;
+    height: 16px !important;
+    stroke: currentColor !important;
+    stroke-width: 2.2 !important;
+    display: block !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Cloud Badge Live Dot restored on mobile */
+  .cloud-badge .badge-dot {
+    position: absolute !important;
+    top: 5px !important;
+    right: 5px !important;
+    width: 7px !important;
+    height: 7px !important;
+    border-radius: 50% !important;
+    display: block !important;
+    box-shadow: 0 0 0 1.5px #ffffff !important;
+  }
+  .cloud-badge.synced .badge-dot {
+    background: #22c55e !important;
+    box-shadow: 0 0 0 1.5px #ffffff, 0 0 6px #22c55e !important;
+  }
+  .cloud-badge.syncing .badge-dot {
+    background: #3b82f6 !important;
+    box-shadow: 0 0 0 1.5px #ffffff, 0 0 6px #3b82f6 !important;
+  }
+  .cloud-badge.offline .badge-dot {
+    background: #f59e0b !important;
+  }
+  .cloud-badge.error .badge-dot {
+    background: #ef4444 !important;
+  }
+
+  /* Role Badges */
+  .admin-badge {
+    background: rgba(34, 197, 94, 0.12) !important;
+    color: #166534 !important;
+    border-color: rgba(34, 197, 94, 0.3) !important;
+  }
+
+  /* Admin Logout state */
+  #adminBtn.btn-logout-action {
+    color: #b91c1c !important;
+  }
+  #adminBtn.btn-logout-action svg {
+    stroke: #b91c1c !important;
   }
 
   /* WATERMARK ON MOBILE */
@@ -5811,12 +5955,28 @@ body {
   .h-title span { display: none !important; }
   .h-left { gap: 6px; }
   .h-logo-img { width: 30px; height: 30px; }
-  .h-right { gap: 3px; }
-  .cloud-badge, .admin-badge, .readonly-badge, #adminBtn, .h-right .btn-icon, .btn-pwa-install {
-    width: 34px;
-    height: 34px;
-    min-width: 34px;
-    min-height: 34px;
+  .h-right { gap: 4px !important; }
+  .header-search-btn,
+  .cloud-badge,
+  .admin-badge,
+  .readonly-badge,
+  #adminBtn,
+  .h-right .btn-icon,
+  .btn-pwa-install {
+    width: 33px !important;
+    height: 33px !important;
+    min-width: 33px !important;
+    min-height: 33px !important;
+    max-width: 33px !important;
+    max-height: 33px !important;
+  }
+  .header-search-btn svg,
+  .cloud-badge svg,
+  .admin-badge svg,
+  #adminBtn svg,
+  .btn-pwa-install svg {
+    width: 14px !important;
+    height: 14px !important;
   }
   .stat-value { font-size: 19px; }
   .stat-label { font-size: 8.5px; }
@@ -5914,6 +6074,7 @@ body {
   </div>
 
   <div class="nav-tabs" id="navTabs">
+    <div class="nav-glider" id="navGlider" aria-hidden="true"></div>
     <div class="nav-tab active" onclick="switchMainTab('stock')" data-tab="stock" title="Inventory Stock">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
       <span>Stock</span>
@@ -5926,20 +6087,20 @@ body {
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       <span>Faculty</span>
     </div>
-    <div class="nav-tab" onclick="switchMainTab('report')" data-tab="report" title="Inventory & Audit Reports">
+    <div class="nav-tab" onclick="switchMainTab('report')" data-tab="report" title="Inventory & Audit Reports (Admin Only)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
-      <span>Reports</span>
+      <span>Reports <span id="repTabLock" class="tab-lock-badge" style="font-size:11px;opacity:0.85;margin-left:2px">🔒</span></span>
     </div>
   </div>
 
   <div class="h-right">
-    <button class="header-search-btn" onclick="openGlobalSearch()" title="Global Search (Ctrl + K)">
+    <button class="header-search-btn" onclick="openGlobalSearch()" title="Global Search (Ctrl + K)" aria-label="Global Search">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
       <span class="header-search-label">Quick Search...</span>
       <kbd class="header-search-kbd">Ctrl K</kbd>
     </button>
 
-    <span id="cloudSyncBadge" class="cloud-badge syncing" onclick="openDatabaseHealthModal()" title="Neon Cloud DB: Click for Health & Diagnostics" style="cursor:pointer">
+    <span id="cloudSyncBadge" class="cloud-badge syncing" onclick="handleCloudSyncBadgeClick()" title="Neon Cloud DB: Click for Health & Diagnostics (Admin Only)" style="cursor:pointer" aria-label="Neon Cloud Database Sync">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
       <span class="badge-dot"></span>
       <span class="badge-txt">Connecting...</span>
@@ -5947,22 +6108,22 @@ body {
 
     <span id="authBadge"></span>
 
-    <button class="btn header-btn header-export-btn" onclick="exportCSV()" title="Export CSV Data">
+    <button class="btn header-btn header-export-btn" onclick="exportCSV()" title="Export CSV Stock Report (Admin Only)" aria-label="Export Stock CSV">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
       <span class="btn-text">Export</span>
     </button>
 
-    <button id="pwaInstallBtn" class="btn header-btn btn-pwa-install" onclick="installPWA()" style="display:none" title="Install Web App">
+    <button id="pwaInstallBtn" class="btn header-btn btn-pwa-install" onclick="installPWA()" style="display:none" title="Install Web App" aria-label="Install App">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
       <span class="btn-text">Install</span>
     </button>
 
-    <button class="btn header-btn btn-add-header" onclick="openAddChoice()" title="Add New Item, Bill, or Faculty">
+    <button class="btn header-btn btn-add-header" onclick="openAddChoice()" title="Add New Item, Bill, or Faculty (Admin Only)" aria-label="Add New">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       <span class="btn-text">Add New</span>
     </button>
 
-    <button id="adminBtn" class="btn header-btn btn-login-action" onclick="handleAdminClick()" title="Login as Admin">
+    <button id="adminBtn" class="btn header-btn btn-login-action" onclick="handleAdminClick()" title="Login as Admin" aria-label="Admin Login">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
       <span class="btn-text">Admin Login</span>
     </button>
@@ -6006,7 +6167,7 @@ body {
   </div>
 </div>
 
-<div id="cloudAlertBanner" style="display:none;background:#fef2f2;border-bottom:1px solid #fecaca;padding:9px 16px;color:#991b1b;font-size:12.5px;font-weight:600;align-items:center;justify-content:space-between;z-index:999;position:sticky;top:64px;box-shadow:0 2px 8px rgba(220,38,38,0.1)">
+<div id="cloudAlertBanner" style="display:none;background:#fef2f2;border-bottom:1px solid #fecaca;padding:9px 16px;color:#991b1b;font-size:12.5px;font-weight:600;align-items:center;justify-content:space-between;z-index:999;position:sticky;top:68px;box-shadow:0 2px 8px rgba(220,38,38,0.1)">
   <div style="display:flex;align-items:center;gap:8px">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
     <span id="cloudAlertText">Neon Cloud Database Offline</span>
@@ -6049,7 +6210,7 @@ body {
       </span>
       <span class="mlabel">Faculty</span>
     </button>
-    <button class="mob-tab" onclick="switchMainTab('report')" data-tab="report" title="Reports">
+    <button class="mob-tab" onclick="switchMainTab('report')" data-tab="report" title="Reports (Admin Only)">
       <span class="micon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="20" x2="18" y2="10"/>
@@ -6058,7 +6219,7 @@ body {
           <line x1="2" y1="20" x2="22" y2="20"/>
         </svg>
       </span>
-      <span class="mlabel">Reports</span>
+      <span class="mlabel">Reports <span id="mobRepTabLock" style="font-size:9.5px;opacity:0.85">🔒</span></span>
     </button>
     <button class="mob-tab mob-tab-add" onclick="openAddChoice()" title="Add New Item / Bill">
       <span class="micon">
@@ -7012,6 +7173,10 @@ body {
         <span style="font-weight:800;font-size:14px">Bill Details</span>
       </div>
       <div style="display:flex;align-items:center;gap:6px">
+        <button id="btn-delete-bill" class="btn" onclick="deleteCurrentBill()" title="Delete / Remove this Bill" style="padding:5px 11px;font-size:11.5px;display:none;align-items:center;gap:5px;font-weight:700;border-radius:8px;color:#dc2626;border-color:rgba(220,38,38,0.25);background:#fef2f2">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          <span>Delete Bill</span>
+        </button>
         <button class="btn" onclick="printBillDoc()" title="Print Bill / Save PDF" style="padding:5px 11px;font-size:11.5px;display:inline-flex;align-items:center;gap:5px;font-weight:700;border-radius:8px">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
           <span>Print</span>
@@ -7356,13 +7521,14 @@ body {
           </div>
         </div>
         <div class="form-grid">
-          <div class="form-group"><label>Bill No.</label><input id="in-bill" placeholder="347"></div>
+          <div class="form-group"><label>Bill No. <span style="font-size:11px;color:var(--muted);font-weight:400">(Optional)</span></label><input id="in-bill" placeholder="e.g. 347 (Leave blank for no bill)"></div>
           <div class="form-group"><label>Year</label><input id="in-year" placeholder="2026"></div>
-          <div class="form-group"><label>In-Pass No.</label><input id="in-pass" placeholder="INP-812"></div>
-          <div class="form-group"><label>Quantity</label><input id="in-qty" type="number" placeholder="50"></div>
+          <div class="form-group"><label>In-Pass No. <span style="font-size:11px;color:var(--muted);font-weight:400">(Optional)</span></label><input id="in-pass" placeholder="e.g. INP-812 (Leave blank for no bill)"></div>
+          <div class="form-group"><label>Quantity <span style="color:#dc2626">*</span></label><input id="in-qty" type="number" placeholder="50"></div>
           <div class="form-group"><label>Date</label><input id="in-date" type="date"></div>
-          <div class="form-group"><label>Vendor</label><input id="in-remark" placeholder="Vendor name"></div>
+          <div class="form-group"><label>Vendor / Source</label><input id="in-remark" placeholder="Vendor or source remark"></div>
         </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px;margin-bottom:6px">Leave Bill No. & In-Pass blank to add stock directly without generating a bill.</div>
         <button class="btn btn-primary" id="in-submit-btn" style="margin-top:12px;width:100%;padding:13px;font-size:14px;display:flex;align-items:center;justify-content:center;gap:6px" onclick="addInward()">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           <span>Add to Stock</span>
@@ -7519,6 +7685,33 @@ function loadData(){
       if (Array.isArray(pf)) faculties = pf;
     }
   } catch(e){}
+  sanitizeNonBillLogs();
+}
+
+function sanitizeNonBillLogs(){
+  var cleaned = false;
+  if (!items || !Array.isArray(items)) return;
+  for (var i = 0; i < items.length; i++){
+    var it = items[i];
+    if (!it.variants) continue;
+    for (var j = 0; j < it.variants.length; j++){
+      var v = it.variants[j];
+      if (!v.logs) continue;
+      for (var k = 0; k < v.logs.length; k++){
+        var l = v.logs[k];
+        if (l.type === 'INWARD' && l.ref){
+          var r = String(l.ref).trim();
+          if (r.toUpperCase().indexOf('INIT') !== -1 || (r.indexOf('NEW') !== -1 && r.indexOf('2026') !== -1 && r.indexOf('/') !== -1)) {
+            l.ref = 'Opening Stock';
+            cleaned = true;
+          }
+        }
+      }
+    }
+  }
+  if (cleaned) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch(e){}
+  }
 }
 
 function ensureTodayTransactions(){
@@ -8102,6 +8295,7 @@ function updateCloudBadge(status, label){
   var el = document.getElementById('cloudSyncBadge');
   if (!el) return;
   el.className = 'cloud-badge ' + status;
+  el.title = (label || 'Neon Cloud DB') + (isAdmin ? ' (Click for Diagnostics)' : ' (Admin Only)');
   if (status === 'syncing'){
     el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg><span class="badge-dot"></span><span class="badge-txt">' + esc(label || 'Saving to Neon DB...') + '</span>';
   } else if (status === 'synced'){
@@ -8201,7 +8395,19 @@ function saveFaculties(immediateCloud){
   triggerCloudSync(immediateCloud !== false);
 }
 
+function handleCloudSyncBadgeClick(){
+  if (!isAdmin){
+    requireAdmin(function(){ openDatabaseHealthModal(); });
+    return;
+  }
+  openDatabaseHealthModal();
+}
+
 function openDatabaseHealthModal(){
+  if (!isAdmin){
+    requireAdmin(function(){ openDatabaseHealthModal(); });
+    return;
+  }
   var m = document.getElementById('modal-db-health');
   if (!m) return;
   m.classList.add('open');
@@ -8299,6 +8505,10 @@ async function renderDatabaseHealth(runPing){
 }
 
 function exportOfflineBackupJSON(){
+  if (!isAdmin){
+    requireAdmin(function(){ exportOfflineBackupJSON(); });
+    return;
+  }
   var backupData = {
     exportDate: new Date().toISOString(),
     items: items,
@@ -8506,7 +8716,7 @@ function saveNewVariant(){
       type: 'INWARD',
       qty: stock,
       detail: 'Opening Stock / New Color Added',
-      ref: 'INIT / ' + new Date().getFullYear() + ' / NEW'
+      ref: 'Opening Stock'
     });
   }
 
@@ -8597,6 +8807,10 @@ function handleAdminClick(){
       onConfirm: function(){
         isAdmin = false;
         updateAdminUI();
+        var curNavTab = document.querySelector('.nav-tab.active');
+        if (curNavTab && curNavTab.getAttribute('data-tab') === 'report') {
+          switchMainTab('stock');
+        }
         showThemeMessage('logout', 'Logged Out', 'Switched to Read-Only mode.');
       }
     });
@@ -9366,13 +9580,37 @@ function updateAdminUI(){
   var addFac = document.getElementById('addFacBtn');
   var issueBtn = document.getElementById('issueToFacBtn');
   var passIn = document.getElementById('cloud-pass-input');
+  var repTabLock = document.getElementById('repTabLock');
+  var mobRepTabLock = document.getElementById('mobRepTabLock');
+  var repNavTab = document.querySelector('.nav-tab[data-tab="report"]');
+  var repMobTab = document.querySelector('.mob-tab[data-tab="report"]');
+  var cloudBadge = document.getElementById('cloudSyncBadge');
+
+  if (repTabLock) {
+    repTabLock.style.display = isAdmin ? 'none' : 'inline-block';
+  }
+  if (mobRepTabLock) {
+    mobRepTabLock.style.display = isAdmin ? 'none' : 'inline-block';
+  }
+  if (repNavTab) {
+    repNavTab.title = isAdmin ? 'Inventory & Audit Reports' : 'Inventory & Audit Reports (Admin Only)';
+  }
+  if (repMobTab) {
+    repMobTab.title = isAdmin ? 'Reports' : 'Reports (Admin Only)';
+  }
+  if (cloudBadge) {
+    var curBadgeTxt = cloudBadge.querySelector('.badge-txt');
+    var badgeLabel = curBadgeTxt ? curBadgeTxt.textContent : 'Neon Cloud DB';
+    cloudBadge.title = (badgeLabel || 'Neon Cloud DB') + (isAdmin ? ' (Click for Diagnostics)' : ' (Admin Only)');
+  }
+
   if (passIn){
     passIn.type = isAdmin ? 'text' : 'password';
   }
   if (isAdmin){
     if (badge) {
       var isMobileOrTab = isMobileOrTabletDevice();
-      badge.innerHTML = '<span class="admin-badge" title="' + (isMobileOrTab ? 'Admin Mode Active (Click to manage Biometrics & Security)' : 'Admin Mode Active (PIN Protected)') + '" style="cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg><span class="badge-txt">Admin Mode</span></span>';
+      badge.innerHTML = '<span class="admin-badge" title="' + (isMobileOrTab ? 'Admin Mode Active (Click to manage Biometrics & Security)' : 'Admin Mode Active (PIN Protected)') + '" style="cursor:pointer" aria-label="Admin Mode Active"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg><span class="badge-txt">Admin Mode</span></span>';
       badge.onclick = isMobileOrTab ? openBiometricSettings : function(){
         showThemeMessage('info', 'Admin Security', 'Admin Mode is active on Desktop via PIN security.');
       };
@@ -9380,22 +9618,30 @@ function updateAdminUI(){
     if (btn){
       btn.className = 'btn header-btn btn-logout-action';
       btn.title = 'Logout Admin Mode';
+      btn.setAttribute('aria-label', 'Logout Admin Mode');
       btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg><span class="btn-text">Logout</span>';
     }
     if (addFac) addFac.style.display = 'inline-flex';
     if (issueBtn) issueBtn.style.display = 'inline-flex';
   } else {
     if (badge) {
-      badge.innerHTML = '<span class="readonly-badge" title="Read Only Mode (Admin Login Required for changes)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span class="badge-txt">Read Only</span></span>';
+      badge.innerHTML = '<span class="readonly-badge" title="Read Only Mode (Admin Login Required for changes)" aria-label="Read Only Mode"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span class="badge-txt">Read Only</span></span>';
       badge.onclick = null;
     }
     if (btn){
       btn.className = 'btn header-btn btn-login-action';
       btn.title = 'Login as Admin';
+      btn.setAttribute('aria-label', 'Login as Admin');
       btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg><span class="btn-text">Admin Login</span>';
     }
     if (addFac) addFac.style.display = 'none';
     if (issueBtn) issueBtn.style.display = 'none';
+
+    // If active tab is reports, kick user back to stock view
+    var curNavTab = document.querySelector('.nav-tab.active');
+    if (curNavTab && curNavTab.getAttribute('data-tab') === 'report') {
+      switchMainTab('stock');
+    }
   }
   if (typeof updateModalReadonlyState === 'function') updateModalReadonlyState();
 }
@@ -9509,8 +9755,41 @@ function verifyPin(){
   }
 }
 
+function updateNavGlider(){
+  var tabsContainer = document.getElementById('navTabs');
+  var glider = document.getElementById('navGlider');
+  if (!tabsContainer || !glider) return;
+  if (tabsContainer.offsetParent === null) return;
+  var activeTab = tabsContainer.querySelector('.nav-tab.active');
+  if (!activeTab){
+    glider.style.opacity = '0';
+    return;
+  }
+  var containerRect = tabsContainer.getBoundingClientRect();
+  var activeRect = activeTab.getBoundingClientRect();
+  var left = activeRect.left - containerRect.left;
+  var width = activeRect.width;
+  glider.style.opacity = '1';
+  glider.style.width = width + 'px';
+  glider.style.transform = 'translateX(' + left + 'px)';
+}
+
+window.addEventListener('scroll', function(){
+  var h = document.querySelector('header');
+  if (h) h.classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+window.addEventListener('resize', function(){
+  updateNavGlider();
+}, { passive: true });
+
 function switchMainTab(tab){
+  if (tab === 'report' && !isAdmin){
+    requireAdmin(function(){ switchMainTab('report'); });
+    return;
+  }
   document.querySelectorAll('.nav-tab').forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-tab') === tab); });
+  updateNavGlider();
   document.querySelectorAll('.mob-tab').forEach(function(t){ var dt = t.getAttribute('data-tab'); if (dt) t.classList.toggle('active', dt === tab); });
   var tabs = ['stock','bills','faculty','report'];
   for(var i=0;i<tabs.length;i++){
@@ -9738,8 +10017,13 @@ function collectAllBills(){
       for (var k = 0; k < v.logs.length; k++){
         var l = v.logs[k];
         if (l.type !== 'INWARD') continue;
-        var parts = (l.ref || '').split('/').map(function(s){ return s.trim(); });
-        var billNo = parts[0] || '?'; var year = parts[1] || '?'; var inPass = parts[2] || '?';
+        var rawRef = (l.ref || '').trim();
+        if (!rawRef || rawRef.indexOf('/') === -1) continue;
+        var parts = rawRef.split('/').map(function(s){ return s.trim(); });
+        if (parts.length < 3) continue;
+        var billNo = parts[0] || ''; var year = parts[1] || ''; var inPass = parts[2] || '';
+        if (!billNo || billNo === '?' || billNo.toUpperCase() === 'INIT' || billNo.toLowerCase().indexOf('opening') !== -1 || billNo.toLowerCase().indexOf('direct') !== -1) continue;
+        if (!inPass || inPass === '?' || inPass.toUpperCase() === 'NEW') continue;
         var key = billNo + '|' + year + '|' + inPass;
         if (!billMap[key]){ billMap[key] = { key: key, billNo: billNo, year: year, inPass: inPass, vendor: (l.detail || '').replace(/^From\s+/, ''), date: l.date, items: [] }; }
         if (l.date && (!billMap[key].date || l.date > billMap[key].date)) billMap[key].date = l.date;
@@ -9862,6 +10146,8 @@ function openBillDetail(key){
   for (var i = 0; i < bills.length; i++) if (bills[i].key === key){ b = bills[i]; break; }
   if (!b) return;
   currentBillKey = key;
+  var delBtn = document.getElementById('btn-delete-bill');
+  if (delBtn) delBtn.style.display = isAdmin ? 'inline-flex' : 'none';
   var totalQty = 0;
   for (var i = 0; i < b.items.length; i++) totalQty += b.items[i].qty;
   var rows = '';
@@ -9934,6 +10220,49 @@ function openBillDetail(key){
   document.getElementById('modal-bill').classList.add('open');
 }
 function closeBillDetail(){ document.getElementById('modal-bill').classList.remove('open'); }
+
+function deleteCurrentBill(){
+  if (!isAdmin){
+    requireAdmin(function(){ deleteCurrentBill(); });
+    return;
+  }
+  if (!currentBillKey) return;
+  var bills = collectAllBills(); var b = null;
+  for (var i = 0; i < bills.length; i++) if (bills[i].key === currentBillKey){ b = bills[i]; break; }
+  if (!b) return alert('Bill not found or already deleted');
+
+  if (!confirm('Are you sure you want to delete Bill #' + b.billNo + ' / ' + b.year + '?\n\nNote: All stock quantities (' + (b.totalQty || 'all') + ' units) will REMAIN SAFE in inventory, only this bill entry will be removed.')) return;
+
+  var modified = false;
+  for (var i = 0; i < items.length; i++){
+    var it = items[i];
+    if (!it.variants) continue;
+    for (var j = 0; j < it.variants.length; j++){
+      var v = it.variants[j];
+      if (!v.logs) continue;
+      for (var k = 0; k < v.logs.length; k++){
+        var l = v.logs[k];
+        if (l.type !== 'INWARD') continue;
+        var rawRef = (l.ref || '').trim();
+        var parts = rawRef.split('/').map(function(s){ return s.trim(); });
+        var logKey = (parts[0] || '') + '|' + (parts[1] || '') + '|' + (parts[2] || '');
+        if (logKey === currentBillKey || (parts[0] === b.billNo && parts[1] === b.year && parts[2] === b.inPass)){
+          l.ref = 'Direct Stock Inward';
+          modified = true;
+        }
+      }
+    }
+  }
+
+  if (modified){
+    saveData();
+    closeBillDetail();
+    render();
+    if (typeof renderBills === 'function') renderBills();
+    if (typeof updateStats === 'function') updateStats();
+    showThemeMessage('delete', 'Bill Removed', 'Bill #' + b.billNo + ' has been removed. Stock remains intact.');
+  }
+}
 
 function printBillDoc(){
   var bills = collectAllBills(); var b = null;
@@ -10324,6 +10653,10 @@ function onRepRangeDateChange(){
 }
 
 function exportItemWiseCSV(){
+  if (!isAdmin){
+    requireAdmin(function(){ exportItemWiseCSV(); });
+    return;
+  }
   var fromEl = document.getElementById('f-rep-from');
   var toEl = document.getElementById('f-rep-to');
   var from = fromEl ? fromEl.value : '';
@@ -10510,6 +10843,10 @@ function exportItemWiseCSV(){
 }
 
 function exportMainReportPDF(){
+  if (!isAdmin){
+    requireAdmin(function(){ exportMainReportPDF(); });
+    return;
+  }
   var printable = document.getElementById('dps-official-printable-area');
   if (!printable) return;
 
@@ -11490,15 +11827,34 @@ function addInward(){
   var remark = document.getElementById('in-remark').value.trim();
   var date = document.getElementById('in-date').value;
   if (!qty || qty <= 0) return alert('Please enter a valid quantity');
-  if (!bill) return alert('Please enter the Bill No.');
-  if (!year) year = String(new Date().getFullYear());
-  if (!pass) pass = 'INP-' + Math.floor(Math.random() * 900 + 100);
+  
   var it = getItem(activeItemId); var v = getVariant(it, activeVariantId);
   if (!it || !v) return;
+
+  var isBillEntry = (bill !== '' && pass !== '');
+  var refStr = '';
+  var detailStr = remark;
+  if (isBillEntry){
+    if (!year) year = String(new Date().getFullYear());
+    refStr = bill + ' / ' + year + ' / ' + pass;
+    if (!detailStr) detailStr = 'Stock added via Bill #' + bill;
+  } else {
+    refStr = 'Direct Stock Inward';
+    if (!detailStr){
+      if (bill) detailStr = 'Direct stock added (Bill: ' + bill + ')';
+      else if (pass) detailStr = 'Direct stock added (Pass: ' + pass + ')';
+      else detailStr = 'Direct stock addition';
+    }
+  }
+
   v.current += qty;
-  v.logs.unshift({ date: date || todayStr(), type: 'INWARD', qty: qty, detail: remark || 'Stock added', ref: bill + ' / ' + year + ' / ' + pass });
+  v.logs.unshift({ date: date || todayStr(), type: 'INWARD', qty: qty, detail: detailStr, ref: refStr });
   saveData(); render(); renderLog(); switchTab('log'); refreshModalHeader();
-  showThemeMessage('add', 'Stock Added', '+' + qty + ' units added to ' + it.name + ' (' + v.name + ').');
+  if (isBillEntry){
+    showThemeMessage('add', 'Stock & Bill Added', '+' + qty + ' units added with Bill #' + bill + ' / ' + year + '.');
+  } else {
+    showThemeMessage('add', 'Stock Added (Direct)', '+' + qty + ' units added directly to ' + it.name + ' (' + v.name + '). No bill created.');
+  }
   document.getElementById('in-bill').value = ''; document.getElementById('in-qty').value = '';
   document.getElementById('in-pass').value = ''; document.getElementById('in-remark').value = '';
 }
@@ -12566,6 +12922,10 @@ function renderGlobalSearchResults(){
 }
 
 function exportCSV(){
+  if (!isAdmin){
+    requireAdmin(function(){ exportCSV(); });
+    return;
+  }
   var rows = [['Item','Sub-Category','Current','Date','Type','Qty','Detail','Ref']];
   for (var i = 0; i < items.length; i++){
     var it = items[i];
@@ -13012,6 +13372,8 @@ function init(){
   render();
   fetchCloudData(true);
   initModalHistoryManagement();
+  setTimeout(updateNavGlider, 80);
+  setTimeout(updateNavGlider, 350);
 
   // Background auto-sync every 25 seconds for multi-user collaboration
   setInterval(function(){
@@ -13097,6 +13459,7 @@ async function fetchCloudData(isManual){
         }
 
         items = json.items;
+        sanitizeNonBillLogs();
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch(e){}
         updated = true;
       }
