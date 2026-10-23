@@ -440,6 +440,8 @@ header * {
     align-items: center !important;
     justify-content: space-between !important;
     gap: 16px !important;
+    /* Keep navbar below modal overlays (z-index: 1100) */
+    z-index: 1000 !important;
     transition: all 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
   }
 
@@ -2529,7 +2531,8 @@ header * {
   background: rgba(14, 30, 21, 0.52);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  z-index: 500;
+  /* Raised above the floating desktop navbar (z-index: 1000) */
+  z-index: 1100;
   display: none;
   align-items: center;
   justify-content: center;
