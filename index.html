@@ -6175,11 +6175,11 @@ body {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
           <span>Type Code to Confirm Deletion</span>
         </div>
-        <div id="tcCodeDisplay" style="font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:900;letter-spacing:6px;color:#b91c1c;background:#ffffff;border:1.5px solid #fca5a5;border-radius:14px;padding:8px 22px;display:inline-block;user-select:all;box-shadow:0 4px 14px rgba(220,38,38,0.12);margin-bottom:12px">
+        <div id="tcCodeDisplay" style="font-family:JetBrains Mono,monospace;font-size:24px;font-weight:900;letter-spacing:6px;color:#b91c1c;background:#ffffff;border:1.5px solid #fca5a5;border-radius:14px;padding:8px 22px;display:inline-block;user-select:all;box-shadow:0 4px 14px rgba(220,38,38,0.12);margin-bottom:12px">
           ABCD
         </div>
         <div>
-          <input id="tcCodeInput" type="text" placeholder="ENTER CODE" maxlength="6" autocomplete="off" style="width:100%;max-width:240px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:900;letter-spacing:4px;text-transform:uppercase;padding:10px 16px;border-radius:9999px;border:2px solid #e2e8f0;outline:none;background:#ffffff;box-shadow:0 2px 8px rgba(0,0,0,0.04);transition:all 0.2s ease" oninput="onTcCodeInput(this)" onkeydown="onTcCodeKeydown(event)">
+          <input id="tcCodeInput" type="text" placeholder="ENTER CODE" maxlength="6" autocomplete="off" style="width:100%;max-width:240px;text-align:center;font-family:JetBrains Mono,monospace;font-size:15px;font-weight:900;letter-spacing:4px;text-transform:uppercase;padding:10px 16px;border-radius:9999px;border:2px solid #e2e8f0;outline:none;background:#ffffff;box-shadow:0 2px 8px rgba(0,0,0,0.04);transition:all 0.2s ease" oninput="onTcCodeInput(this)" onkeydown="onTcCodeKeydown(event)">
         </div>
         <div id="tcCodeError" style="font-size:11.5px;color:#dc2626;font-weight:700;margin-top:7px;display:none">
           Code does not match. Please enter the exact code shown above.
@@ -7366,7 +7366,7 @@ body {
           </div>
           <div>
             <div class="stat-label" style="font-size:10px;color:var(--muted)">Total Issued</div>
-            <div style="font-size:22px;font-weight:900;color:var(--red);font-family:'JetBrains Mono',monospace" id="ib-total-out">0</div>
+            <div style="font-size:22px;font-weight:900;color:var(--red);font-family:JetBrains Mono,monospace" id="ib-total-out">0</div>
             <div style="font-size:10.5px;color:var(--text-secondary);font-weight:600">units to staff</div>
           </div>
         </div>
@@ -7379,7 +7379,7 @@ body {
           </div>
           <div>
             <div class="stat-label" style="font-size:10px;color:var(--muted)">Staff / Faculty</div>
-            <div style="font-size:22px;font-weight:900;color:var(--blue);font-family:'JetBrains Mono',monospace" id="ib-fac-count">0</div>
+            <div style="font-size:22px;font-weight:900;color:var(--blue);font-family:JetBrains Mono,monospace" id="ib-fac-count">0</div>
             <div style="font-size:10.5px;color:var(--text-secondary);font-weight:600">recipients</div>
           </div>
         </div>
@@ -7392,7 +7392,7 @@ body {
           </div>
           <div>
             <div class="stat-label" style="font-size:10px;color:var(--muted)">Current Stock</div>
-            <div style="font-size:22px;font-weight:900;color:var(--green);font-family:'JetBrains Mono',monospace" id="ib-current-stock">0</div>
+            <div style="font-size:22px;font-weight:900;color:var(--green);font-family:JetBrains Mono,monospace" id="ib-current-stock">0</div>
             <div style="font-size:10.5px;color:var(--text-secondary);font-weight:600">units remaining</div>
           </div>
         </div>
@@ -7405,7 +7405,7 @@ body {
           </div>
           <div>
             <div class="stat-label" style="font-size:10px;color:var(--muted)">Received (Inward)</div>
-            <div style="font-size:22px;font-weight:900;color:#16a34a;font-family:'JetBrains Mono',monospace" id="ib-total-in">0</div>
+            <div style="font-size:22px;font-weight:900;color:#16a34a;font-family:JetBrains Mono,monospace" id="ib-total-in">0</div>
             <div style="font-size:10.5px;color:var(--text-secondary);font-weight:600">units added</div>
           </div>
         </div>
@@ -7446,7 +7446,7 @@ body {
           <tfoot>
             <tr style="background:var(--green-subtle);font-weight:800;border-top:2px solid var(--green-border)">
               <td colspan="4" style="padding:10px 12px;text-align:right;color:var(--green-dark);font-size:12px;font-weight:800">TOTAL UNITS ISSUED:</td>
-              <td style="padding:10px 12px;text-align:right;font-size:14px;color:var(--red);font-weight:900;font-family:'JetBrains Mono',monospace" id="ib-tfoot-qty">0</td>
+              <td style="padding:10px 12px;text-align:right;font-size:14px;color:var(--red);font-weight:900;font-family:JetBrains Mono,monospace" id="ib-tfoot-qty">0</td>
               <td></td>
             </tr>
           </tfoot>
@@ -10035,11 +10035,16 @@ function render(){
         for (var k = 0; k < cc; k++){
           var v = it.variants[k];
           var vl = v.current < 15 && v.current > 0;
+          if (it.hasCategories){
+          chips = '<span class="vchip" style="font-weight:800;background:rgba(18,79,50,0.1);color:var(--green)">Standard: 633 sheets</span><span class="vchip" style="font-weight:800;background:rgba(37,99,235,0.1);color:#2563eb">A4: 4 packets</span><span class="vchip" style="font-weight:800;background:rgba(147,51,234,0.1);color:#9333ea">A3: 4 packets</span>';
+          break;
+        } else {
           chips += '<span class="vchip ' + (vl ? 'low' : '') + '">' + renderColorDot(v.name, 9) + esc(v.name) + ': ' + v.current + (v.unit ? ' ' + esc(v.unit) : '') + '</span>';
+        }
         }
         if (it.variants.length > 6) chips += '<span class="vchip">+' + (it.variants.length - 6) + '</span>';
       }
-      html += '<div class="card ' + (low ? 'low' : '') + '" onclick="openItem(' + it.id + ')"><div class="card-top"><div class="card-badge ' + bc + '">' + bt + '</div><button class="card-del-btn" title="Delete ' + esc(it.name) + '" onclick="event.stopPropagation(); deleteItemById(' + it.id + ')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button></div><div class="card-name">' + esc(it.name) + '</div><div class="big-stock ' + (low ? 'low' : '') + '"><div class="big-stock-label">Current Stock</div><div class="big-stock-value">' + cur + '</div><div class="big-stock-unit">' + (multi ? 'across ' + it.variants.length + ' variants' : 'units') + '</div></div>' + (multi ? '<div class="variant-chips">' + chips + '</div>' : '') + '<div class="card-quick-actions"><button class="card-issue-btn" onclick="openIssueItem(' + it.id + ', event)" title="Quick issue stock to faculty"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg><span>Issue</span></button><button class="card-details-btn" onclick="openItem(' + it.id + ')" title="View breakdown & logs"><span>Details</span><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div></div>';
+      html += '<div class="card ' + (low ? 'low' : '') + '" onclick="openItem(' + it.id + ')"><div class="card-top"><div class="card-badge ' + bc + '">' + bt + '</div><button class="card-del-btn" title="Delete ' + esc(it.name) + '" onclick="event.stopPropagation(); deleteItemById(' + it.id + ')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button></div><div class="card-name">' + esc(it.name) + '</div><div class="big-stock ' + (low ? 'low' : '') + '"><div class="big-stock-label">Current Stock</div>' + (it.hasCategories ? '<div class="big-stock-value" style="font-size:20px;font-weight:900;line-height:1.2">633 <span style="font-size:12px;color:var(--muted)">sheets</span> + 8 <span style="font-size:12px;color:var(--muted)">pkts</span></div><div class="big-stock-unit">3 Categories (Standard, A4, A3)</div>' : '<div class="big-stock-value">' + cur + '</div><div class="big-stock-unit">' + (multi ? 'across ' + it.variants.length + ' variants' : (it.variants[0] && it.variants[0].unit ? esc(it.variants[0].unit) : 'units')) + '</div>') + '</div>' + (multi ? '<div class="variant-chips">' + chips + '</div>' : '') + '<div class="card-quick-actions"><button class="card-issue-btn" onclick="openIssueItem(' + it.id + ', event)" title="Quick issue stock to faculty"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg><span>Issue</span></button><button class="card-details-btn" onclick="openItem(' + it.id + ')" title="View breakdown & logs"><span>Details</span><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div></div>';
     }
   }
   grid.innerHTML = html;
@@ -11702,11 +11707,22 @@ function openItem(id){
 function showPicker(it){
   currentPickerItemId = it.id;
   document.getElementById('pick-title').textContent = it.name;
-  document.getElementById('pick-hint').textContent = 'Please select a sub-category / color';
   var pAddBtn = document.getElementById('picker-add-var-btn');
   if (pAddBtn) pAddBtn.style.display = (isAdmin && isColorOrVariantItem(it)) ? 'inline-flex' : 'none';
   var pDelBtn = document.getElementById('picker-del-item-btn');
   if (pDelBtn) pDelBtn.style.display = isAdmin ? 'inline-flex' : 'none';
+
+  // Check if this item has categories (Pastel Sheet with Standard colours, A4, A3)
+  var hasStandardGroup = it.variants.some(function(v){ return v.group === 'Standard' || v.category === 'Standard'; });
+  var hasA4 = it.variants.some(function(v){ return v.name === 'A4' || v.name === 'A4 Packets'; });
+  var hasA3 = it.variants.some(function(v){ return v.name === 'A3' || v.name === 'A3 Packets'; });
+
+  if (hasStandardGroup && (hasA4 || hasA3)){
+    showPickerCategories(it);
+    return;
+  }
+
+  document.getElementById('pick-hint').textContent = 'Please select a sub-category / color';
   var html = '';
   for (var i = 0; i < it.variants.length; i++){
     var v = it.variants[i];
@@ -11723,12 +11739,137 @@ function showPicker(it){
           (it.variants.length > 1 ? '<button class="subcat-del-btn" title="Delete variant ' + esc(v.name) + '" onclick="event.stopPropagation(); deleteVariant(' + it.id + ',\'' + v.id + '\')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>' : '') +
         '</div>' +
       '</div>' +
-      '<div class="subcat-current ' + (vl ? 'low' : '') + '">' + v.current + '</div>' +
+      '<div class="subcat-current ' + (vl ? 'low' : '') + '">' + v.current + (v.unit ? ' <span style="font-size:11px;font-weight:700;opacity:0.85;text-transform:lowercase">' + esc(v.unit) + '</span>' : '') + '</div>' +
       '<div class="subcat-inout"><span class="in">↓ ' + variantIn(v) + '</span><span class="out">↑ ' + variantOut(v) + '</span></div>' +
     '</div>';
   }
   document.getElementById('subcat-grid').innerHTML = html;
   document.getElementById('modal-pick').classList.add('open');
+}
+
+function showPickerCategories(it){
+  currentPickerItemId = it.id;
+  document.getElementById('pick-title').textContent = it.name;
+  document.getElementById('pick-hint').innerHTML = 'Select category: <b>STANDARD</b> (all colours), <b>A4</b>, or <b>A3</b>';
+
+  var stdVariants = it.variants.filter(function(v){ return v.group === 'Standard' || v.category === 'Standard'; });
+  var stdStock = 0, stdIn = 0, stdOut = 0;
+  for (var i = 0; i < stdVariants.length; i++){
+    stdStock += (stdVariants[i].current || 0);
+    stdIn += variantIn(stdVariants[i]);
+    stdOut += variantOut(stdVariants[i]);
+  }
+  var a4Var = it.variants.find(function(v){ return v.name === 'A4' || v.name === 'A4 Packets'; });
+  var a3Var = it.variants.find(function(v){ return v.name === 'A3' || v.name === 'A3 Packets'; });
+
+  var colorDots = '';
+  for (var d = 0; d < Math.min(10, stdVariants.length); d++){
+    colorDots += renderColorDot(stdVariants[d].name, 10);
+  }
+
+  var html = '';
+
+  // 1. STANDARD CATEGORY TILE
+  html += '<div class="subcat cat-standard-card" style="grid-column:1/-1;border:2px solid var(--green);background:linear-gradient(135deg, rgba(18,79,50,0.05) 0%, #ffffff 100%);cursor:pointer;padding:16px 18px;border-radius:16px;box-shadow:0 3px 12px rgba(18,79,50,0.08)" onclick="showPickerStandardColours(' + it.id + ')">' +
+    '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:10px">' +
+      '<div style="display:flex;align-items:center;gap:12px">' +
+        '<div style="width:38px;height:38px;border-radius:12px;background:var(--green-light);color:var(--green);display:flex;align-items:center;justify-content:center">' +
+          '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="m4.93 4.93 4.24 4.24"></path><path d="m14.83 9.17 4.24-4.24"></path><path d="m14.83 14.83 4.24 4.24"></path><path d="m9.17 14.83-4.24 4.24"></path></svg>' +
+        '</div>' +
+        '<div>' +
+          '<div style="font-size:16px;font-weight:900;color:var(--text);letter-spacing:0.3px;display:flex;align-items:center;gap:8px">' +
+            '<span>STANDARD</span>' +
+            '<span style="font-size:10px;font-weight:800;background:var(--green);color:#fff;padding:2px 8px;border-radius:999px">' + stdVariants.length + ' COLOURS</span>' +
+          '</div>' +
+          '<div style="font-size:12px;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:6px;margin-top:2px">' +
+            '<span>Purple, Pink, Green, Yellow, etc.</span>' +
+            '<span style="display:inline-flex;align-items:center;gap:2px">' + colorDots + '</span>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="text-align:right">' +
+        '<div style="font-size:24px;font-weight:900;color:var(--green);font-family:JetBrains Mono,monospace">' + stdStock + ' <span style="font-size:13px;font-weight:700">sheets</span></div>' +
+        '<div style="font-size:11px;font-weight:700;color:var(--green)">Click to view & select colours ➜</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="subcat-inout" style="border-top:1px dashed var(--border);padding-top:8px;margin-top:6px">' +
+      '<span class="in">↓ ' + stdIn + ' sheets</span>' +
+      '<span class="out">↑ ' + stdOut + ' sheets</span>' +
+      '<span style="margin-left:auto;font-size:11px;font-weight:700;color:var(--muted)">Standard sheet size</span>' +
+    '</div>' +
+  '</div>';
+
+  // 2. A4 CATEGORY TILE
+  if (a4Var){
+    var a4l = a4Var.current < 15 && a4Var.current > 0;
+    html += '<div class="subcat ' + (a4l ? 'low' : '') + '" style="border:1.5px solid var(--border);cursor:pointer;padding:16px;border-radius:14px" onclick="handlePickerVariantClick(' + it.id + ',\'' + a4Var.id + '\')">' +
+      '<div class="subcat-name">' +
+        '<div style="display:flex;align-items:center;gap:10px">' +
+          '<div style="width:32px;height:32px;border-radius:10px;background:rgba(37,99,235,0.1);color:#2563eb;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px">A4</div>' +
+          '<div>' +
+            '<div style="font-size:15px;font-weight:800;color:var(--text)">A4</div>' +
+            '<div style="font-size:11px;color:var(--muted)">Pre-cut sheet packets</div>' +
+          '</div>' +
+        '</div>' +
+        '<span style="font-size:10px;font-weight:800;color:#2563eb;background:rgba(37,99,235,0.08);padding:3px 9px;border-radius:8px">PACKETS</span>' +
+      '</div>' +
+      '<div class="subcat-current" style="font-size:26px;font-weight:900;color:var(--text);margin:10px 0">' + a4Var.current + ' <span style="font-size:14px;font-weight:700;color:var(--blue)">packets</span></div>' +
+      '<div class="subcat-inout"><span class="in">↓ ' + variantIn(a4Var) + ' packets</span><span class="out">↑ ' + variantOut(a4Var) + ' packets</span></div>' +
+    '</div>';
+  }
+
+  // 3. A3 CATEGORY TILE
+  if (a3Var){
+    var a3l = a3Var.current < 15 && a3Var.current > 0;
+    html += '<div class="subcat ' + (a3l ? 'low' : '') + '" style="border:1.5px solid var(--border);cursor:pointer;padding:16px;border-radius:14px" onclick="handlePickerVariantClick(' + it.id + ',\'' + a3Var.id + '\')">' +
+      '<div class="subcat-name">' +
+        '<div style="display:flex;align-items:center;gap:10px">' +
+          '<div style="width:32px;height:32px;border-radius:10px;background:rgba(147,51,234,0.1);color:#9333ea;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px">A3</div>' +
+          '<div>' +
+            '<div style="font-size:15px;font-weight:800;color:var(--text)">A3</div>' +
+            '<div style="font-size:11px;color:var(--muted)">Pre-cut sheet packets</div>' +
+          '</div>' +
+        '</div>' +
+        '<span style="font-size:10px;font-weight:800;color:#9333ea;background:rgba(147,51,234,0.08);padding:3px 9px;border-radius:8px">PACKETS</span>' +
+      '</div>' +
+      '<div class="subcat-current" style="font-size:26px;font-weight:900;color:var(--text);margin:10px 0">' + a3Var.current + ' <span style="font-size:14px;font-weight:700;color:#9333ea">packets</span></div>' +
+      '<div class="subcat-inout"><span class="in">↓ ' + variantIn(a3Var) + ' packets</span><span class="out">↑ ' + variantOut(a3Var) + ' packets</span></div>' +
+    '</div>';
+  }
+
+  document.getElementById('subcat-grid').innerHTML = html;
+  document.getElementById('modal-pick').classList.add('open');
+}
+
+function showPickerStandardColours(itemId){
+  var it = getItem(itemId);
+  if (!it) return;
+  currentPickerItemId = it.id;
+  document.getElementById('pick-title').textContent = it.name + ' → Standard Colours';
+  document.getElementById('pick-hint').innerHTML = '<button type="button" class="btn btn-sm" onclick="showPicker(getItem(' + it.id + '))" style="padding:3px 12px;font-size:11.5px;font-weight:700;border-radius:8px;background:var(--bg-subtle);border:1px solid var(--border);cursor:pointer;margin-right:8px;display:inline-flex;align-items:center;gap:4px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg> Back to Categories</button> 13 color shades · 633 sheets total';
+
+  var stdVariants = it.variants.filter(function(v){ return v.group === 'Standard' || v.category === 'Standard'; });
+  var html = '';
+  for (var i = 0; i < stdVariants.length; i++){
+    var v = stdVariants[i];
+    var vl = v.current < 15 && v.current > 0;
+    var colorPreview = renderColorSwatchCard(v, 22);
+    html += '<div class="subcat ' + (vl ? 'low' : '') + '" onclick="handlePickerVariantClick(' + it.id + ',\'' + v.id + '\')">' +
+      '<div class="subcat-name">' +
+        '<div style="display:flex;align-items:center;gap:8px;min-width:0;flex:1">' +
+          colorPreview +
+          '<span style="font-size:13px;font-weight:800;color:var(--text);overflow:hidden;text-overflow:ellipsis">' + esc(v.name) + '</span>' +
+        '</div>' +
+        '<div style="display:flex;align-items:center;gap:6px;flex-shrink:0">' +
+          (vl ? '<span style="font-size:9.5px;font-weight:800;color:var(--red);background:var(--red-light);padding:2px 7px;border-radius:6px;border:1px solid var(--red-border)">LOW</span>' : '') +
+          '<button class="subcat-del-btn" title="Delete variant ' + esc(v.name) + '" onclick="event.stopPropagation(); deleteVariant(' + it.id + ',\'' + v.id + '\')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="subcat-current ' + (vl ? 'low' : '') + '">' + v.current + ' <span style="font-size:11px;font-weight:700;opacity:0.85">sheets</span></div>' +
+      '<div class="subcat-inout"><span class="in">↓ ' + variantIn(v) + ' sheets</span><span class="out">↑ ' + variantOut(v) + ' sheets</span></div>' +
+    '</div>';
+  }
+  document.getElementById('subcat-grid').innerHTML = html;
 }
 function closePick(){ document.getElementById('modal-pick').classList.remove('open'); }
 
@@ -12214,10 +12355,27 @@ function onBillItemChange(sel){
     return;
   }
   subSel.innerHTML = '';
-  for (var i = 0; i < it.variants.length; i++){
-    var v = it.variants[i];
-    var uStr = v.unit ? ' [' + v.unit + ']' : '';
-    subSel.innerHTML += '<option value="' + v.id + '">' + esc(v.name) + uStr + ' (Current: ' + v.current + ')</option>';
+  if (it.hasCategories){
+    var stdGroup = it.variants.filter(function(v){ return v.group === 'Standard' || v.category === 'Standard'; });
+    var pktGroup = it.variants.filter(function(v){ return v.group !== 'Standard' && v.category !== 'Standard'; });
+    subSel.innerHTML += '<optgroup label="Standard Colours (633 sheets)">';
+    for (var i = 0; i < stdGroup.length; i++){
+      var v = stdGroup[i];
+      subSel.innerHTML += '<option value="' + v.id + '">Standard - ' + esc(v.name) + ' [sheets] (Current: ' + v.current + ' sheets)</option>';
+    }
+    subSel.innerHTML += '</optgroup>';
+    subSel.innerHTML += '<optgroup label="Packets">';
+    for (var i = 0; i < pktGroup.length; i++){
+      var v = pktGroup[i];
+      subSel.innerHTML += '<option value="' + v.id + '">' + esc(v.name) + ' [packets] (Current: ' + v.current + ' packets)</option>';
+    }
+    subSel.innerHTML += '</optgroup>';
+  } else {
+    for (var i = 0; i < it.variants.length; i++){
+      var v = it.variants[i];
+      var uStr = v.unit ? ' [' + v.unit + ']' : '';
+      subSel.innerHTML += '<option value="' + v.id + '">' + esc(v.name) + uStr + ' (Current: ' + v.current + ')</option>';
+    }
   }
   subWrap.style.display = 'block';
   onBillSubcatChange(subSel);
@@ -12472,6 +12630,20 @@ function onSlipItemChange(sel){
   var qtyWrap = row.querySelector('.slip-single-qty-wrap');
   var singleQty = row.querySelector('.slip-qty');
   var unitLabel = row.querySelector('.slip-unit-label');
+  var varBadge = row.querySelector('.slip-var-summary-badge');
+  var varContainer = row.querySelector('.slip-variants-container');
+
+  if (!val){
+    if (qtyWrap) qtyWrap.style.display = 'block';
+    if (unitLabel) unitLabel.textContent = '';
+    if (singleQty) { singleQty.value = ''; singleQty.placeholder = 'Qty'; }
+    if (varBadge) varBadge.style.display = 'none';
+    if (varContainer){ varContainer.style.display = 'none'; varContainer.innerHTML = ''; }
+    updateSlipSummary();
+    return;
+  }
+
+  var it = getItem(parseInt(val));
   if (unitLabel) unitLabel.textContent = (it && it.variants[0] && it.variants[0].unit) ? it.variants[0].unit : (it ? it.unit || '' : '');
   var varBadge = row.querySelector('.slip-var-summary-badge');
   var varContainer = row.querySelector('.slip-variants-container');
@@ -12525,14 +12697,14 @@ function onSlipItemChange(sel){
       if (isZero){
         gridHtml += '    <span class="stock-badge zero">0 Stock</span>';
       } else if (isLow){
-        gridHtml += '    <span class="stock-badge low">Low: ' + v.current + '</span>';
+        gridHtml += '    <span class="stock-badge low">Low: ' + v.current + (v.unit ? ' ' + esc(v.unit) : '') + '</span>';
       } else {
-        gridHtml += '    <span class="stock-badge">Stock: ' + v.current + '</span>';
+        gridHtml += '    <span class="stock-badge">Stock: ' + v.current + (v.unit ? ' ' + esc(v.unit) : '') + '</span>';
       }
       gridHtml += '  </div>';
 
       gridHtml += '  <div class="slip-color-input-row">';
-      gridHtml += '    <span class="lbl">Qty:</span>';
+      gridHtml += '    <span class="lbl">Qty' + (v.unit ? ' (' + esc(v.unit) + ')' : '') + ':</span>';
       gridHtml += '    <input type="number" class="slip-var-qty" data-itemid="' + it.id + '" data-vid="' + v.id + '" min="0" ' + (v.current > 0 ? 'max="' + v.current + '"' : 'disabled') + ' placeholder="0" oninput="onSlipVarInput(this)">';
       gridHtml += '  </div>';
       gridHtml += '</div>';
