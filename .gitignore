@@ -4,3 +4,5 @@ node_modules/
 test_*.js
 scratch/
 test_folder.png
+
+.vercel

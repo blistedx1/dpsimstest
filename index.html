@@ -2715,6 +2715,29 @@ header * {
 .summary-box.low .summary-value {
   color: #dc2626;
 }
+.unit-chip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg-subtle, #f3f4f6);
+  border: 1px solid var(--border, #e5e7eb);
+  padding: 2px 7px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary, #475569);
+  cursor: pointer;
+  margin-left: 6px;
+  vertical-align: middle;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+.unit-chip-btn:hover {
+  background: #ffffff;
+  border-color: var(--green, #124f32);
+  color: var(--green, #124f32);
+  box-shadow: 0 1px 4px rgba(18,79,50,0.15);
+}
 
 .tabs {
   display: inline-flex;
@@ -6967,7 +6990,9 @@ body {
         </div>
       </div>
       <div id="single-mode" style="margin-top:12px">
-        <div class="form-grid"><div class="form-group"><label>Opening Stock</label><input id="new-stock" type="number" placeholder="0"></div></div>
+        <div class="form-grid"><div class="form-group"><label>Opening Stock</label><input id="new-stock" type="number" placeholder="0"></div>
+          <div class="form-group"><label>Unit of Measurement</label><input id="new-unit" list="unit-suggestions" placeholder="e.g. packets, pieces, sheets"></div>
+        </div>
       </div>
       <div id="variant-mode" style="display:none;margin-top:12px">
         <label style="font-size:10px;font-weight:700;letter-spacing:0.3px;text-transform:uppercase;color:#6b7280;display:block;margin-bottom:6px">Sub-Categories</label>
@@ -6997,7 +7022,19 @@ body {
       <div class="form-grid">
         <div class="form-group full"><label>Faculty Name</label><input id="fm-name" placeholder="e.g. R. Sharma"></div>
         <div class="form-group full"><label>Department / Class</label><input id="fm-dept" placeholder="e.g. Science Dept / Class 10A" list="fm-dept-list">
-          <datalist id="fm-dept-list">
+          <datalist id="unit-suggestions">
+          <option value="packets">
+          <option value="pieces">
+          <option value="sheets">
+          <option value="box">
+          <option value="roll">
+          <option value="rim">
+          <option value="nos">
+          <option value="bottles">
+          <option value="sets">
+          <option value="units">
+        </datalist>
+        <datalist id="fm-dept-list">
             <option value="Science Dept"><option value="Maths Dept"><option value="English Dept">
             <option value="Hindi Dept"><option value="Sports Dept"><option value="Library">
             <option value="Accounts"><option value="Admin Office"><option value="Examination Cell">
@@ -7281,9 +7318,15 @@ body {
         </div>
       </div>
 
-      <div style="margin-bottom:18px">
-        <label style="display:block;font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px">Opening / Initial Stock Quantity</label>
-        <input type="number" id="new-var-initial-stock" placeholder="0" min="0" value="0" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;font-size:13.5px;font-weight:600">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px">
+        <div>
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px">Opening Stock</label>
+          <input type="number" id="new-var-initial-stock" placeholder="0" min="0" value="0" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;font-size:13.5px;font-weight:600">
+        </div>
+        <div>
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px">Unit (packets, sheets...)</label>
+          <input type="text" id="new-var-unit" list="unit-suggestions" placeholder="e.g. packets, sheets" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;font-size:13.5px;font-weight:600">
+        </div>
       </div>
 
       <button class="btn btn-primary" style="width:100%;padding:13px;font-size:14px;font-weight:800;border-radius:9999px;display:flex;align-items:center;justify-content:center;gap:6px" onclick="saveNewVariant()">
@@ -7527,7 +7570,7 @@ body {
           <div class="form-group"><label>Bill No. <span style="font-size:11px;color:var(--muted);font-weight:400">(Optional)</span></label><input id="in-bill" placeholder="e.g. 347 (Leave blank for no bill)"></div>
           <div class="form-group"><label>Year</label><input id="in-year" placeholder="2026"></div>
           <div class="form-group"><label>In-Pass No. <span style="font-size:11px;color:var(--muted);font-weight:400">(Optional)</span></label><input id="in-pass" placeholder="e.g. INP-812 (Leave blank for no bill)"></div>
-          <div class="form-group"><label>Quantity <span style="color:#dc2626">*</span></label><input id="in-qty" type="number" placeholder="50"></div>
+          <div class="form-group"><label>Quantity <span style="color:#dc2626">*</span> <span style="font-size:11px;font-weight:600;color:var(--muted)">(in <span id="in-unit-badge">units</span>)</span></label><input id="in-qty" type="number" placeholder="50"></div>
           <div class="form-group"><label>Date</label><input id="in-date" type="date"></div>
           <div class="form-group"><label>Vendor / Source</label><input id="in-remark" placeholder="Vendor or source remark"></div>
         </div>
@@ -7555,7 +7598,7 @@ body {
           <div class="form-group full"><label>Faculty</label>
             <select id="out-faculty-select"><option value="">-- Choose faculty --</option></select>
           </div>
-          <div class="form-group"><label>Quantity</label><input id="out-qty" type="number" placeholder="5"></div>
+          <div class="form-group"><label>Quantity <span style="color:#dc2626">*</span> <span style="font-size:11px;font-weight:600;color:var(--muted)">(in <span id="out-unit-badge">units</span>)</span></label><input id="out-qty" type="number" placeholder="5"></div>
           <div class="form-group"><label>Date</label><input id="out-date" type="date"></div>
           <div class="form-group full"><label>Purpose / Remark</label><input id="out-remark" placeholder="For exams"></div>
         </div>
@@ -8656,6 +8699,8 @@ function openAddVariantModal(itemId){
   document.getElementById('add-var-item-name').textContent = it.name;
   document.getElementById('new-var-name').value = '';
   document.getElementById('new-var-initial-stock').value = '0';
+  var uField = document.getElementById('new-var-unit');
+  if (uField) uField.value = (it.variants[0] && it.variants[0].unit) ? it.variants[0].unit : (it.unit || '');
   document.getElementById('new-var-color-picker').value = '#9333ea';
   updateNewVarPreview();
   document.getElementById('modal-add-variant').classList.add('open');
@@ -8728,6 +8773,7 @@ function saveNewVariant(){
     name: name,
     color: customHex,
     current: stock,
+    unit: (document.getElementById('new-var-unit') ? document.getElementById('new-var-unit').value.trim().toLowerCase() : '') || ((it.variants[0] && it.variants[0].unit) ? it.variants[0].unit : (it.unit || 'units')),
     logs: logs
   };
 
@@ -9989,7 +10035,7 @@ function render(){
         for (var k = 0; k < cc; k++){
           var v = it.variants[k];
           var vl = v.current < 15 && v.current > 0;
-          chips += '<span class="vchip ' + (vl ? 'low' : '') + '">' + renderColorDot(v.name, 9) + esc(v.name) + ': ' + v.current + '</span>';
+          chips += '<span class="vchip ' + (vl ? 'low' : '') + '">' + renderColorDot(v.name, 9) + esc(v.name) + ': ' + v.current + (v.unit ? ' ' + esc(v.unit) : '') + '</span>';
         }
         if (it.variants.length > 6) chips += '<span class="vchip">+' + (it.variants.length - 6) + '</span>';
       }
@@ -10030,7 +10076,7 @@ function collectAllBills(){
         var key = billNo + '|' + year + '|' + inPass;
         if (!billMap[key]){ billMap[key] = { key: key, billNo: billNo, year: year, inPass: inPass, vendor: (l.detail || '').replace(/^From\s+/, ''), date: l.date, items: [] }; }
         if (l.date && (!billMap[key].date || l.date > billMap[key].date)) billMap[key].date = l.date;
-        billMap[key].items.push({ itemName: it.name, subcat: v.name, qty: l.qty, date: l.date });
+        billMap[key].items.push({ itemName: it.name, subcat: v.name, qty: l.qty, unit: (v.unit || (it.unit || '')), date: l.date });
       }
     }
   }
@@ -10121,7 +10167,7 @@ function renderBills(){
     var b = filtered[i]; var preview = '';
     var pc = Math.min(3, b.items.length);
     for (var k = 0; k < pc; k++){
-      preview += '<div class="bill-item-row"><span class="bill-item-name">' + esc(b.items[k].itemName) + (b.items[k].subcat !== 'Standard' ? ' → ' + esc(b.items[k].subcat) : '') + '</span><span class="bill-item-qty">' + b.items[k].qty + '</span></div>';
+      preview += '<div class="bill-item-row"><span class="bill-item-name">' + esc(b.items[k].itemName) + (b.items[k].subcat !== 'Standard' ? ' → ' + esc(b.items[k].subcat) : '') + '</span><span class="bill-item-qty">' + b.items[k].qty + (b.items[k].unit ? ' ' + esc(b.items[k].unit) : '') + '</span></div>';
     }
     if (b.items.length > pc) preview += '<div style="font-size:10px;color:#6b7280;padding-top:5px;font-weight:700">+ ' + (b.items.length - pc) + ' more</div>';
     var keyEsc = b.key.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
@@ -10162,7 +10208,7 @@ function openBillDetail(key){
         '<div class="bill-item-title">' + esc(it.itemName) + '</div>' +
         (it.subcat !== 'Standard' ? '<div class="bill-item-subcat">→ ' + esc(it.subcat) + '</div>' : '') +
       '</td>' +
-      '<td class="bill-col-qty"><span class="bill-qty-pill">' + it.qty + '</span></td>' +
+      '<td class="bill-col-qty"><span class="bill-qty-pill">' + it.qty + (it.unit ? ' ' + esc(it.unit) : '') + '</span></td>' +
     '</tr>';
   }
 
@@ -11774,9 +11820,14 @@ function refreshModalHeader(){
   var colorDot = renderColorDot(v.name, 12);
   var vNameLabel = v.name !== 'Standard' ? ' <span style="display:inline-flex;align-items:center;background:var(--bg-subtle);border:1px solid var(--border);padding:3px 10px;border-radius:12px;font-size:13px;color:var(--text-secondary);font-weight:700;margin-left:8px">' + colorDot + esc(v.name) + '</span>' : '';
   document.getElementById('m-title').innerHTML = esc(it.name) + vNameLabel;
-  document.getElementById('ms-current').textContent = v.current;
-  document.getElementById('ms-in').textContent = variantIn(v);
-  document.getElementById('ms-out').textContent = variantOut(v);
+  var unitStr = v.unit || (it.unit || 'units');
+  document.getElementById('ms-current').innerHTML = v.current + ' <button type="button" class="unit-chip-btn" onclick="editCurrentVariantUnit()" title="Change unit (e.g. packets, pieces, sheets)"><span style="font-size:12px;font-weight:700;text-transform:lowercase">' + esc(unitStr) + '</span>' + (isAdmin ? ' <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>' : '') + '</button>';
+  document.getElementById('ms-in').innerHTML = variantIn(v) + ' <span style="font-size:11px;font-weight:600;color:var(--muted);text-transform:lowercase">' + esc(unitStr) + '</span>';
+  document.getElementById('ms-out').innerHTML = variantOut(v) + ' <span style="font-size:11px;font-weight:600;color:var(--muted);text-transform:lowercase">' + esc(unitStr) + '</span>';
+  var inUnitBadge = document.getElementById('in-unit-badge');
+  if (inUnitBadge) inUnitBadge.textContent = unitStr;
+  var outUnitBadge = document.getElementById('out-unit-badge');
+  if (outUnitBadge) outUnitBadge.textContent = unitStr;
   var cb = document.getElementById('ms-current').closest('.summary-box') || document.getElementById('ms-current').parentNode;
   if (v.current < 15 && v.current > 0) cb.classList.add('low'); else cb.classList.remove('low');
 
@@ -11798,6 +11849,25 @@ function refreshModalHeader(){
     }
   }
 }
+function editCurrentVariantUnit(){
+  if (!isAdmin){
+    requireAdmin(function(){ editCurrentVariantUnit(); });
+    return;
+  }
+  var it = getItem(activeItemId); var v = getVariant(it, activeVariantId);
+  if (!it || !v) return;
+  var currentUnit = v.unit || it.unit || 'units';
+  var newUnit = prompt('Change unit for "' + it.name + (v.name !== 'Standard' ? ' - ' + v.name : '') + '"\n(e.g. packets, pieces, sheets, box, roll, rim):', currentUnit);
+  if (newUnit === null) return;
+  newUnit = newUnit.trim().toLowerCase();
+  if (!newUnit) newUnit = 'units';
+  v.unit = newUnit;
+  saveData();
+  refreshModalHeader();
+  render();
+  showThemeMessage('success', 'Unit Updated', 'Updated unit to "' + newUnit + '" for ' + it.name + ' (' + v.name + ').');
+}
+
 function closeModal(){ document.getElementById('modal').classList.remove('open'); }
 function switchTab(t){
   document.querySelectorAll('#modal .tab').forEach(function(x){ x.classList.remove('active'); });
@@ -11903,7 +11973,7 @@ function renderLog(){
   var html = '';
   for (var i = 0; i < filtered.length; i++){
     var l = filtered[i];
-    html += '<tr><td>' + l.date + '</td><td><span class="tag ' + (l.type === 'INWARD' ? 'tag-in' : 'tag-out') + '">' + l.type + '</span></td><td><b>' + l.qty + '</b></td><td>' + esc(l.detail) + '</td><td>' + esc(l.ref) + '</td></tr>';
+    html += '<tr><td>' + l.date + '</td><td><span class="tag ' + (l.type === 'INWARD' ? 'tag-in' : 'tag-out') + '">' + l.type + '</span></td><td><b>' + l.qty + (v.unit ? ' ' + esc(v.unit) : '') + '</b></td><td>' + esc(l.detail) + '</td><td>' + esc(l.ref) + '</td></tr>';
   }
   document.getElementById('log-body').innerHTML = html;
 }
@@ -11934,7 +12004,7 @@ function toggleVariantMode(){
 function addVariantRow(){
   var list = document.getElementById('variant-list');
   var row = document.createElement('div'); row.className = 'variant-row';
-  row.innerHTML = '<input type="text" placeholder="Name" class="v-name"><input type="number" placeholder="Stock" class="v-stock"><input type="number" placeholder="Total" class="v-total"><button class="icon-btn" type="button" onclick="this.parentNode.remove()" title="Remove variant"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>';
+  row.innerHTML = '<input type="text" placeholder="Name (e.g. A4, Red)" class="v-name" style="flex:1.2"><input type="number" placeholder="Stock" class="v-stock" style="width:75px"><input type="text" placeholder="Unit (packets, sheets...)" class="v-unit" list="unit-suggestions" style="width:115px"><button class="icon-btn" type="button" onclick="this.parentNode.remove()" title="Remove variant"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>';
   list.appendChild(row);
 }
 function saveItem(){
@@ -11945,13 +12015,15 @@ function saveItem(){
   var variants = [];
   if (type === 'single'){
     var stock = parseInt(document.getElementById('new-stock').value) || 0;
-    variants.push({ id: 'v' + Date.now(), name: 'Standard', current: stock, opening: stock, logs: [] });
+    var unit = (document.getElementById('new-unit') ? document.getElementById('new-unit').value.trim().toLowerCase() : '') || 'units';
+    variants.push({ id: 'v' + Date.now(), name: 'Standard', current: stock, opening: stock, unit: unit, logs: [] });
   } else {
     var rows = document.querySelectorAll('#variant-list .variant-row');
     for (var i = 0; i < rows.length; i++){
       var vn = rows[i].querySelector('.v-name').value.trim();
       var vs = parseInt(rows[i].querySelector('.v-stock').value) || 0;
-      if (vn) variants.push({ id: 'v' + Date.now() + '_' + i, name: vn, current: vs, opening: vs, logs: [] });
+      var vu = (rows[i].querySelector('.v-unit') ? rows[i].querySelector('.v-unit').value.trim().toLowerCase() : '') || 'units';
+      if (vn) variants.push({ id: 'v' + Date.now() + '_' + i, name: vn, current: vs, opening: vs, unit: vu, logs: [] });
     }
     if (variants.length === 0) return showThemeMessage('warning', 'Input Required', 'Please add at least one variant');
   }
@@ -12114,7 +12186,7 @@ function addBillItemRow(autoOpen){
   if (autoOpen === undefined) autoOpen = true;
   var container = document.getElementById('bill-items-list');
   var div = document.createElement('div'); div.className = 'bill-item-block';
-  div.innerHTML = '<div class="bill-item-row-edit"><select class="bi-item" onchange="onBillItemChange(this)">' + getItemOptionsHtml(0) + '</select><input type="number" class="bi-qty" placeholder="Qty" min="1" oninput="updateBillSummary()" onkeydown="if(event.key===\'Enter\'){event.preventDefault();addBillItemRow(true);}"><button class="icon-btn" type="button" onclick="this.closest(\'.bill-item-block\').remove();updateBillSummary()" title="Remove item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div><div class="bill-subcat-row" style="display:none"><select class="bi-subcat"></select></div>';
+  div.innerHTML = '<div class="bill-item-row-edit"><select class="bi-item" onchange="onBillItemChange(this)">' + getItemOptionsHtml(0) + '</select><div style="display:flex;align-items:center;gap:4px;flex-shrink:0"><input type="number" class="bi-qty" placeholder="Qty" min="1" oninput="updateBillSummary()" onkeydown="if(event.key===\'Enter\'){event.preventDefault();addBillItemRow(true);}"><span class="bi-unit-label" style="font-size:11px;font-weight:700;color:var(--text-secondary);min-width:32px;text-transform:lowercase"></span></div><button class="icon-btn" type="button" onclick="this.closest(\'.bill-item-block\').remove();updateBillSummary()" title="Remove item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div><div class="bill-subcat-row" style="display:none"><select class="bi-subcat" onchange="onBillSubcatChange(this)"></select></div>';
   container.appendChild(div);
   var sel = div.querySelector('.bi-item');
   if (autoOpen && sel){
@@ -12123,16 +12195,18 @@ function addBillItemRow(autoOpen){
 }
 function onBillItemChange(sel){
   var val = sel.value; var block = sel.closest('.bill-item-block');
+  var unitLabel = block.querySelector('.bi-unit-label');
   if (val === '__NEW__'){
     sel.value = '';
     inlineItemCallback = function(newItem){ sel.innerHTML = getItemOptionsHtml(newItem.id); sel.value = newItem.id; onBillItemChange(sel); };
     openInlineItem(); return;
   }
   var subWrap = block.querySelector('.bill-subcat-row'); var subSel = block.querySelector('.bi-subcat');
-  if (!val){ subWrap.style.display = 'none'; return; }
+  if (!val){ subWrap.style.display = 'none'; if(unitLabel) unitLabel.textContent = ''; return; }
   var it = getItem(parseInt(val));
   if (!it || it.variants.length <= 1){
     subWrap.style.display = 'none';
+    if (unitLabel) unitLabel.textContent = (it && it.variants[0] && it.variants[0].unit) ? it.variants[0].unit : (it ? it.unit || '' : '');
     var qtyInput = block.querySelector('.bi-qty');
     if (qtyInput){
       setTimeout(function(){ qtyInput.focus(); qtyInput.select(); }, 60);
@@ -12142,9 +12216,21 @@ function onBillItemChange(sel){
   subSel.innerHTML = '';
   for (var i = 0; i < it.variants.length; i++){
     var v = it.variants[i];
-    subSel.innerHTML += '<option value="' + v.id + '">' + esc(v.name) + ' (Current: ' + v.current + ')</option>';
+    var uStr = v.unit ? ' [' + v.unit + ']' : '';
+    subSel.innerHTML += '<option value="' + v.id + '">' + esc(v.name) + uStr + ' (Current: ' + v.current + ')</option>';
   }
   subWrap.style.display = 'block';
+  onBillSubcatChange(subSel);
+}
+function onBillSubcatChange(subSel){
+  var block = subSel.closest('.bill-item-block');
+  var itemSel = block.querySelector('.bi-item');
+  var unitLabel = block.querySelector('.bi-unit-label');
+  if (!itemSel || !itemSel.value) return;
+  var it = getItem(parseInt(itemSel.value));
+  if (!it) return;
+  var v = getVariant(it, subSel.value);
+  if (unitLabel) unitLabel.textContent = (v && v.unit) ? v.unit : (it.unit || '');
 }
 function updateBillSummary(){
   var rows = document.querySelectorAll('#bill-items-list .bill-item-block');
@@ -12340,8 +12426,9 @@ function addSlipRow(autoOpen){
     '</div>' +
     '<div class="slip-row-main-inputs">' +
       '<select class="slip-item" onchange="onSlipItemChange(this)">' + getSlipItemOptionsHtml(0) + '</select>' +
-      '<div class="slip-single-qty-wrap">' +
+      '<div class="slip-single-qty-wrap" style="display:flex;align-items:center;gap:4px">' +
         '<input type="number" class="slip-qty" placeholder="Qty" min="1" oninput="updateSlipSummary()" onkeydown="handleSlipQtyKeydown(event, this)">' +
+        '<span class="slip-unit-label" style="font-size:11px;font-weight:700;color:var(--text-secondary);min-width:32px;text-transform:lowercase"></span>' +
       '</div>' +
       '<button class="icon-btn" type="button" onclick="this.closest(\'.slip-item-row\').remove();updateSlipSummary()" title="Remove item">' +
         '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
@@ -12384,6 +12471,8 @@ function onSlipItemChange(sel){
 
   var qtyWrap = row.querySelector('.slip-single-qty-wrap');
   var singleQty = row.querySelector('.slip-qty');
+  var unitLabel = row.querySelector('.slip-unit-label');
+  if (unitLabel) unitLabel.textContent = (it && it.variants[0] && it.variants[0].unit) ? it.variants[0].unit : (it ? it.unit || '' : '');
   var varBadge = row.querySelector('.slip-var-summary-badge');
   var varContainer = row.querySelector('.slip-variants-container');
 
