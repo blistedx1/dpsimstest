@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dpsims-pwa-v12';
+const CACHE_NAME = 'dpsims-pwa-v19';
 const CORE_ASSETS = [
   '/',
   '/index.html',

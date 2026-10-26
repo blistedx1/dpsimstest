@@ -10,7 +10,7 @@
 <title>DPS AMRAPALI - INVENTORY SYSTEM</title>
 <link rel="icon" type="image/png" href="logo-192.png">
 <link rel="apple-touch-icon" href="logo-192.png">
-<link rel="manifest" href="manifest.json?v=11">
+<link rel="manifest" href="manifest.json?v=18">
 <meta name="application-name" content="DPS AMRAPALI">
 <meta name="apple-mobile-web-app-title" content="DPS AMRAPALI">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -67,6 +67,481 @@
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 22px;
+}
+
+/* ========================================================================= */
+/* DESKTOP SIDEBAR PANEL (>= 900px)                                         */
+/* ========================================================================= */
+.desktop-sidebar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 260px;
+  background: linear-gradient(180deg, #ffffff 0%, #f6faf7 100%);
+  border-right: 1px solid var(--border);
+  flex-direction: column;
+  z-index: 1000;
+  padding: 20px 14px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 4px 0 20px rgba(18, 79, 50, 0.04);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+/* Sidebar Brand */
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 8px 16px 8px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.sidebar-brand:hover {
+  transform: translateY(-1px);
+}
+.sidebar-logo-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  object-fit: contain;
+  flex-shrink: 0;
+  padding: 2px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.18)) !important;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.sidebar-brand:hover .sidebar-logo-img {
+  transform: rotate(5deg) scale(1.06);
+}
+.sidebar-brand-text {
+  min-width: 0;
+  flex: 1;
+}
+.sidebar-school-title {
+  font-size: 13.5px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  line-height: 1.2;
+  color: var(--green-dark);
+  white-space: nowrap;
+}
+.sidebar-sub-title {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* System Live Status Pill */
+.sidebar-status-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 6px 10px 6px;
+}
+.sidebar-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--green-subtle);
+  border: 1px solid var(--green-border);
+  border-radius: 999px;
+  padding: 3px 9px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--green);
+  text-transform: uppercase;
+}
+.sidebar-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #16a34a;
+  box-shadow: 0 0 8px rgba(22, 163, 74, 0.4);
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+/* Quick Action Button: Create Inward/Slip */
+.sidebar-create-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-weight: 700;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(18, 79, 50, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s ease;
+  margin: 4px 0 14px 0;
+}
+.sidebar-create-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(18, 79, 50, 0.35);
+}
+.sidebar-create-btn:active {
+  transform: scale(0.97);
+}
+
+/* Section Header */
+.sidebar-section-label {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #94a3b8;
+  padding: 6px 8px;
+  margin-top: 4px;
+}
+
+/* Navigation List */
+.sidebar-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+.sidebar-nav-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+.sidebar-nav-item:hover {
+  background: var(--green-subtle);
+  color: var(--green);
+  transform: translateX(2px);
+}
+.sidebar-nav-item.active {
+  background: var(--green-light);
+  border: 1px solid var(--green-border);
+  color: var(--green-dark);
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(18, 79, 50, 0.08);
+}
+.sidebar-nav-item svg {
+  width: 17px;
+  height: 17px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+.sidebar-nav-item:hover svg,
+.sidebar-nav-item.active svg {
+  stroke: var(--green);
+}
+.sidebar-nav-item .sb-tab-title {
+  flex: 1;
+  white-space: nowrap;
+}
+.sidebar-nav-item .sb-tab-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  font-family: 'JetBrains Mono', monospace;
+}
+.sidebar-nav-item.active .sb-tab-badge {
+  background: var(--green-subtle);
+  color: var(--green);
+  border-color: var(--green-border);
+}
+
+/* Secondary Tools List */
+.sidebar-tools-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: auto;
+}
+.sidebar-tool-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #64748b;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.sidebar-tool-btn:hover {
+  background: #f8fafc;
+  color: #0f172a;
+}
+.sidebar-tool-btn svg {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+}
+.sidebar-tool-btn .sb-tool-kbd {
+  margin-left: auto;
+  font-size: 10px;
+  font-family: monospace;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+}
+
+/* Sidebar Sync Indicator */
+.sidebar-sync-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: transparent;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.sidebar-sync-row:hover {
+  background: #f8fafc;
+  color: #0f172a;
+}
+.sidebar-sync-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3b82f6;
+  box-shadow: 0 0 6px #3b82f6;
+  flex-shrink: 0;
+}
+.sidebar-sync-indicator.synced {
+  background: #16a34a;
+  box-shadow: 0 0 8px rgba(22, 163, 74, 0.4);
+}
+.sidebar-sync-indicator.syncing {
+  background: #3b82f6;
+  box-shadow: 0 0 8px #3b82f6;
+  animation: pulseDot 1s infinite ease-in-out;
+}
+.sidebar-sync-indicator.offline {
+  background: #f59e0b;
+  box-shadow: 0 0 8px #f59e0b;
+}
+.sidebar-sync-indicator.error {
+  background: #ef4444;
+  box-shadow: 0 0 8px #ef4444;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* User Card / Admin Login Status */
+.sidebar-user-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+.sb-user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--green-light);
+  border: 1px solid var(--green-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--green);
+  flex-shrink: 0;
+}
+.sb-user-info {
+  flex: 1;
+  min-width: 0;
+}
+.sb-user-name {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sb-user-role {
+  font-size: 10px;
+  color: #64748b;
+  margin-top: 1px;
+}
+.sb-user-action-btn {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+}
+.sb-user-action-btn:hover {
+  background: var(--green-subtle);
+  border-color: var(--green-border);
+  color: var(--green);
+  transform: scale(1.05);
+}
+
+/* ========================================================================= */
+/* SUBCAT / VARIANT PICKER MODAL STYLING                                     */
+/* ========================================================================= */
+.subcat {
+  background: #ffffff;
+  border: 1.5px solid var(--border);
+  color: var(--text);
+}
+.subcat .subcat-name span {
+  color: #0e1e15 !important;
+}
+.subcat .subcat-current {
+  color: #0e1e15 !important;
+}
+
+/* ========================================================================= */
+/* FIX FOR LOGO TRANSPARENCY (ZERO BACKGROUND RECTANGLES)                     */
+/* ========================================================================= */
+.sidebar-logo-img,
+.h-logo-img,
+.splash-logo-img {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.18)) !important;
+}
+
+/* ========================================================================= */
+/* MOBILE HEADER ICONS THEME & REMOVE SEARCH IN MOBILE VIEW                  */
+/* ========================================================================= */
+@media (max-width: 899px) {
+  /* Remove search icon in mobile view as requested */
+  .header-search-btn {
+    display: none !important;
+  }
+}
+
+/* Light Theme Mobile Header Buttons */
+.cloud-badge,
+.admin-badge,
+#adminBtn,
+.btn-pwa-install {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  color: var(--green) !important;
+  box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.07) !important;
+}
+.cloud-badge svg,
+.admin-badge svg,
+#adminBtn svg,
+.btn-pwa-install svg {
+  stroke: var(--green) !important;
+}
+#adminBtn.btn-logout-action svg {
+  stroke: #b91c1c !important;
+}
+
+/* ========================================================================= */
+/* ITEM DETAILS & SUBCATEGORY BREAKDOWN MODAL (#modal)                       */
+/* ========================================================================= */
+#modal .modal {
+  background: #ffffff !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+#modal .modal-head {
+  background: #ffffff !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+#modal .modal-head h3 {
+  color: var(--green) !important;
+}
+#modal .summary-strip {
+  background: linear-gradient(180deg, #f7faf8 0%, #ffffff 100%) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+#modal .summary-box {
+  background: #ffffff !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+#modal .tabs {
+  background: #f1f5f9 !important;
+  border: 1px solid var(--border) !important;
+}
+#modal .tab {
+  color: #64748b !important;
+}
+#modal .tab.active {
+  background: linear-gradient(180deg, var(--green) 0%, var(--green-dark) 100%) !important;
+  color: #ffffff !important;
+}
+#modal .tab-content {
+  background: #ffffff !important;
+  color: var(--text) !important;
+}
+#modal input {
+  background: #ffffff !important;
+  border: 1.5px solid var(--border) !important;
+  color: #0e1e15 !important;
+}
+#modal .form-group label {
+  color: var(--text-secondary) !important;
+}
+#modal #in-submit-btn,
+#modal #out-submit-btn {
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%) !important;
+  color: #ffffff !important;
 }
 
 body {
@@ -366,10 +841,11 @@ header * {
   height: 100%;
   pointer-events: none;
   z-index: 1;
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), 
-              width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), 
-              opacity 0.2s ease;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              width 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              opacity 0.18s ease;
   will-change: transform, width;
+  backface-visibility: hidden;
 }
 .nav-tab {
   position: relative;
@@ -412,485 +888,45 @@ header * {
 }
 
 /* ============================================================ */
-/* DESKTOP MODE (>= 861px): FLOATING DYNAMIC ISLAND CAPSULE    */
-/* Exact layout from screenshot:                                */
-/* [ White Logo Circle ] [ Tabs ] [ Actions ] [ White Right Pill ]*/
+/* DESKTOP (>= 900px): SIDEBAR PANEL LAYOUT                     */
+/* Mobile & Tablet (< 900px): TOP HEADER & BOTTOM NAV          */
 /* ============================================================ */
-@media (min-width: 861px) {
+@media (min-width: 900px) {
   header {
-    position: fixed !important;
-    top: 16px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    width: auto !important;
-    max-width: calc(100vw - 36px) !important;
-    height: 58px !important;
-    background: #141518 !important;
-    background: linear-gradient(180deg, #1d1e24 0%, #111215 100%) !important;
-    backdrop-filter: blur(28px) saturate(190%) !important;
-    -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    border-radius: 9999px !important;
-    padding: 6px 8px 6px 8px !important;
-    box-shadow: 
-      0 24px 54px -8px rgba(0, 0, 0, 0.48), 
-      0 12px 24px -6px rgba(0, 0, 0, 0.28),
-      inset 0 1px 1px 0 rgba(255, 255, 255, 0.2) !important;
+    display: none !important;
+  }
+  .desktop-sidebar {
     display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    gap: 16px !important;
-    /* Keep navbar below modal overlays (z-index: 1100) */
-    z-index: 1000 !important;
-    transition: all 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
   }
-
-  header.scrolled {
-    top: 12px !important;
-    background: linear-gradient(180deg, #18191f 0%, #0d0e11 100%) !important;
-    border-color: rgba(255, 255, 255, 0.16) !important;
-    box-shadow: 
-      0 28px 64px -10px rgba(0, 0, 0, 0.6), 
-      0 14px 28px -6px rgba(0, 0, 0, 0.35),
-      inset 0 1px 1px 0 rgba(255, 255, 255, 0.25) !important;
+  .mobile-nav {
+    display: none !important;
   }
-
   .container {
-    padding-top: 96px !important;
-  }
-
-  /* LEFT: White Circular Emblem Logo (Exact match to screenshot left button) */
-  .h-left {
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-    flex-shrink: 0 !important;
-    cursor: pointer !important;
-    user-select: none !important;
-    padding-left: 2px !important;
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-  }
-  .h-left:hover {
-    transform: translateY(-1px) scale(1.02) !important;
-  }
-  .h-logo-img {
-    width: 44px !important;
-    height: 44px !important;
-    border-radius: 50% !important;
-    background: #ffffff !important;
-    padding: 6px !important;
-    object-fit: contain !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-    flex-shrink: 0 !important;
-  }
-  .h-left:hover .h-logo-img {
-    transform: rotate(10deg) scale(1.1) !important;
-  }
-  .h-title {
-    color: #ffffff !important;
-    font-size: 13.5px !important;
-    font-weight: 800 !important;
-    letter-spacing: 0.35px !important;
-    line-height: 1.2 !important;
-    white-space: nowrap !important;
-    padding-right: 2px !important;
-  }
-  .h-title span {
-    display: block !important;
-    color: #94a3b8 !important;
-    font-size: 9.5px !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.5px !important;
-    text-transform: uppercase !important;
-  }
-
-  /* CENTER: Navigation Tabs Container inside Capsule */
-  .nav-tabs {
-    position: relative !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 3px !important;
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    padding: 3.5px !important;
-    border-radius: 9999px !important;
-    isolation: isolate !important;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25) !important;
-    flex-shrink: 0 !important;
-  }
-
-  /* Active Sliding Glider Pill (DPS Emerald Theme Gradient with 3D Depth) */
-  .nav-glider {
-    position: absolute !important;
-    top: 3.5px !important;
-    left: 0 !important;
-    height: calc(100% - 7px) !important;
-    background: linear-gradient(135deg, #124f32 0%, #093721 100%) !important;
-    border-radius: 9999px !important;
-    border: 1px solid rgba(255, 255, 255, 0.25) !important;
-    box-shadow: 
-      0 4px 14px rgba(18, 79, 50, 0.5), 
-      inset 0 1px 1.5px rgba(255, 255, 255, 0.4) !important;
-    pointer-events: none !important;
-    z-index: 1 !important;
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                opacity 0.2s ease !important;
-    will-change: transform, width !important;
-  }
-
-  .nav-tab {
-    position: relative !important;
-    z-index: 2 !important;
-    padding: 7px 16px !important;
-    font-weight: 600 !important;
-    font-size: 13px !important;
-    color: #cbd5e1 !important;
-    border-radius: 9999px !important;
-    cursor: pointer !important;
-    white-space: nowrap !important;
-    transition: color 0.22s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-    user-select: none !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 7px !important;
-    border: none !important;
-    background: transparent !important;
-    flex-shrink: 0 !important;
-  }
-  .nav-tab svg {
-    width: 15px !important;
-    height: 15px !important;
-    stroke: currentColor !important;
-    stroke-width: 2.2 !important;
-    flex-shrink: 0 !important;
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), stroke 0.22s ease !important;
-  }
-  .nav-tab:hover {
-    color: #ffffff !important;
-  }
-  .nav-tab:hover svg {
-    transform: translateY(-1.5px) scale(1.12) !important;
-  }
-  .nav-tab:active {
-    transform: scale(0.95) !important;
-  }
-  .nav-tab.active {
-    color: #ffffff !important;
-    font-weight: 800 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-  }
-  .nav-tab.active svg {
-    stroke: #ffffff !important;
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5)) !important;
-  }
-
-  /* RIGHT CONTROLS: Action Buttons + Prominent White Pill */
-  .h-right {
-    display: flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-    flex-shrink: 0 !important;
-  }
-
-  /* Utility Round Icon Buttons */
-  .header-search-btn,
-  .cloud-badge,
-  .header-export-btn,
-  .btn-pwa-install {
-    height: 38px !important;
-    width: 38px !important;
-    min-width: 38px !important;
-    border-radius: 50% !important;
-    background: rgba(255, 255, 255, 0.08) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    color: #e2e8f0 !important;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25) !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    cursor: pointer !important;
-    transition: all 0.24s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-    position: relative !important;
-    padding: 0 !important;
-    flex-shrink: 0 !important;
-  }
-  .header-search-btn:hover,
-  .cloud-badge:hover,
-  .header-export-btn:hover,
-  .btn-pwa-install:hover {
-    background: rgba(255, 255, 255, 0.18) !important;
-    color: #ffffff !important;
-    border-color: rgba(255, 255, 255, 0.28) !important;
-    transform: translateY(-2px) scale(1.08) !important;
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35) !important;
-  }
-  .header-search-btn:active,
-  .cloud-badge:active,
-  .header-export-btn:active,
-  .btn-pwa-install:active {
-    transform: scale(0.92) !important;
-  }
-
-  .header-search-btn svg,
-  .header-export-btn svg,
-  .btn-pwa-install svg {
-    width: 15px !important;
-    height: 15px !important;
-    stroke: currentColor !important;
-    display: block !important;
-    flex-shrink: 0 !important;
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-  }
-  .header-search-btn:hover svg {
-    transform: scale(1.15) rotate(5deg) !important;
-  }
-  .header-export-btn:hover svg {
-    transform: translateY(2px) scale(1.12) !important;
-  }
-
-  /* Cloud Badge Live Dot */
-  .cloud-badge svg {
-    width: 15px !important;
-    height: 15px !important;
-    stroke: currentColor !important;
-    display: block !important;
-    flex-shrink: 0 !important;
-  }
-  .cloud-badge .badge-dot {
-    position: absolute !important;
-    top: 6px !important;
-    right: 6px !important;
-    width: 7px !important;
-    height: 7px !important;
-    border-radius: 50% !important;
-    box-shadow: 0 0 0 2px #141518 !important;
-  }
-  .cloud-badge.synced {
-    border-color: rgba(34, 197, 94, 0.35) !important;
-    color: #4ade80 !important;
-  }
-  .cloud-badge.synced .badge-dot {
-    background: #22c55e !important;
-    box-shadow: 0 0 0 2px #141518, 0 0 8px #22c55e !important;
-  }
-  .cloud-badge.syncing {
-    border-color: rgba(59, 130, 246, 0.35) !important;
-    color: #60a5fa !important;
-  }
-  .cloud-badge.syncing .badge-dot {
-    background: #3b82f6 !important;
-    box-shadow: 0 0 0 2px #141518, 0 0 8px #3b82f6 !important;
-  }
-  .cloud-badge.offline {
-    border-color: rgba(245, 158, 11, 0.35) !important;
-    color: #fbbf24 !important;
-  }
-  .cloud-badge.offline .badge-dot {
-    background: #f59e0b !important;
-  }
-  .cloud-badge.error {
-    border-color: rgba(239, 68, 68, 0.35) !important;
-    color: #f87171 !important;
-  }
-  .cloud-badge.error .badge-dot {
-    background: #ef4444 !important;
-  }
-
-  /* PWA Install Button respect style="display:none" */
-  #pwaInstallBtn[style*="display: none"],
-  #pwaInstallBtn[style*="display:none"],
-  .btn-pwa-install[style*="display: none"],
-  .btn-pwa-install[style*="display:none"] {
-    display: none !important;
-  }
-
-  /* Auth & Role Badges */
-  #authBadge {
-    display: inline-flex !important;
-    align-items: center !important;
-  }
-  #authBadge:empty,
-  .readonly-badge {
-    display: none !important; /* In compact capsule, avoid redundant 2nd lock next to Admin Login */
-  }
-  .admin-badge {
-    height: 38px !important;
-    width: 38px !important;
-    min-width: 38px !important;
-    border-radius: 50% !important;
-    background: rgba(34, 197, 94, 0.16) !important;
-    color: #4ade80 !important;
-    border: 1px solid rgba(34, 197, 94, 0.35) !important;
-    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25) !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    cursor: pointer !important;
-    transition: all 0.24s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-    padding: 0 !important;
-    flex-shrink: 0 !important;
-  }
-  .admin-badge:hover {
-    background: rgba(34, 197, 94, 0.25) !important;
-    border-color: rgba(34, 197, 94, 0.5) !important;
-    transform: translateY(-2px) scale(1.08) !important;
-    box-shadow: 0 8px 18px rgba(34, 197, 94, 0.35) !important;
-  }
-  .admin-badge svg,
-  .readonly-badge svg {
-    width: 15px !important;
-    height: 15px !important;
-    stroke: currentColor !important;
-    stroke-width: 2.2 !important;
-    display: block !important;
-    flex-shrink: 0 !important;
-  }
-
-  /* Add Button (+) in vibrant DPS Emerald Gradient */
-  .btn-add-header,
-  .h-right .btn-add-header {
-    height: 38px !important;
-    width: 38px !important;
-    min-width: 38px !important;
-    border-radius: 50% !important;
-    background: linear-gradient(135deg, #124f32 0%, #0a3521 100%) !important;
-    border: 1.5px solid rgba(255, 255, 255, 0.35) !important;
-    color: #ffffff !important;
-    box-shadow: 0 6px 16px rgba(18, 79, 50, 0.45), inset 0 1px 1.5px rgba(255, 255, 255, 0.4) !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-    padding: 0 !important;
-    flex-shrink: 0 !important;
-  }
-  .btn-add-header svg {
-    width: 16px !important;
-    height: 16px !important;
-    stroke: #ffffff !important;
-    stroke-width: 2.8 !important;
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-    display: block !important;
-  }
-  .btn-add-header:hover {
-    background: linear-gradient(135deg, #166534 0%, #124f32 100%) !important;
-    transform: translateY(-2px) scale(1.1) !important;
-    box-shadow: 0 10px 24px rgba(18, 79, 50, 0.55), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
-  }
-  .btn-add-header:hover svg {
-    transform: rotate(90deg) scale(1.15) !important;
-  }
-  .btn-add-header:active {
-    transform: scale(0.92) !important;
-  }
-
-  /* Text labels hidden on icon-only round buttons in desktop capsule */
-  .header-export-btn .btn-text,
-  .btn-pwa-install .btn-text,
-  .btn-add-header .btn-text,
-  .cloud-badge .badge-txt,
-  .admin-badge .badge-txt,
-  .readonly-badge .badge-txt {
-    display: none !important;
-  }
-
-  /* THE PROMINENT RIGHT WHITE CAPSULE PILL (#adminBtn) - Exact match to screenshot */
-  #adminBtn {
-    height: 38px !important;
-    width: auto !important;
-    padding: 0 18px !important;
-    border-radius: 9999px !important;
-    background: #ffffff !important;
-    color: #09090b !important;
-    font-weight: 800 !important;
-    font-size: 13px !important;
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 7px !important;
-    transition: all 0.24s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-    margin-left: 3px !important;
-    white-space: nowrap !important;
-    flex-shrink: 0 !important;
-    cursor: pointer !important;
-  }
-  #adminBtn .btn-text {
-    display: inline-block !important;
-    font-family: inherit !important;
-    font-weight: 800 !important;
-    color: #09090b !important;
-  }
-  #adminBtn svg {
-    width: 15px !important;
-    height: 15px !important;
-    stroke: #09090b !important;
-    stroke-width: 2.2 !important;
-    display: block !important;
-    flex-shrink: 0 !important;
-  }
-  #adminBtn:hover {
-    background: #f4f4f5 !important;
-    transform: translateY(-2px) scale(1.04) !important;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4) !important;
-  }
-  #adminBtn.btn-logout-action {
-    background: #ffffff !important;
-    color: #b91c1c !important;
-  }
-  #adminBtn.btn-logout-action .btn-text {
-    color: #b91c1c !important;
-  }
-  #adminBtn.btn-logout-action svg {
-    stroke: #b91c1c !important;
-  }
-  #adminBtn.btn-logout-action:hover {
-    background: #fee2e2 !important;
-    color: #991b1b !important;
+    margin-left: 260px !important;
+    width: calc(100% - 260px) !important;
+    max-width: 1480px !important;
+    padding: 24px 32px 60px 32px !important;
+    box-sizing: border-box !important;
   }
 }
 
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-/* ============================================================ */
-/* RESPONSIVE AUTO-ADJUSTING FLOATING CAPSULE BREAKPOINTS       */
-/* Beautifully scales on wide laptops, standard laptops & iPads */
-/* ============================================================ */
-
-/* Wide Laptops & Standard Desktops (1181px - 1440px) */
-@media (min-width: 1181px) and (max-width: 1440px) {
-  header {
-    gap: 12px !important;
-    padding: 5px 8px !important;
-  }
-  .nav-tab {
-    padding: 7px 14px !important;
-    font-size: 12.5px !important;
-  }
-}
-
-/* Compact Laptops & Large Tablets (861px - 1180px) */
-@media (min-width: 861px) and (max-width: 1180px) {
-  header {
-    gap: 8px !important;
-    padding: 5px 6px !important;
-  }
-  .h-title span {
+@media (max-width: 899px) {
+  .desktop-sidebar {
     display: none !important;
   }
-  .nav-tab {
-    padding: 7px 11px !important;
-    font-size: 12px !important;
-    gap: 5px !important;
+  header {
+    display: flex !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000 !important;
   }
-  #adminBtn {
-    padding: 0 13px !important;
-    font-size: 12px !important;
+  .container {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 12px 12px calc(80px + env(safe-area-inset-bottom, 0px)) 12px !important;
+  }
+  .mobile-nav {
+    display: block !important;
   }
 }
 
@@ -1627,17 +1663,19 @@ header * {
   border-radius: 20px;
   padding: 16px 18px;
   box-shadow: 0 4px 18px rgba(18, 79, 50, 0.05);
-  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.18s ease, border-color 0.18s ease;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 .stat:hover {
   border-color: var(--green-border);
   box-shadow: 0 8px 26px rgba(18, 79, 50, 0.1);
-  transform: translateY(-2px);
+  transform: translate3d(0, -2px, 0);
 }
 .stat-watermark {
   position: absolute;
@@ -2304,19 +2342,21 @@ header * {
   border-radius: 20px;
   padding: 16px;
   cursor: pointer;
-  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.18s ease, border-color 0.18s ease;
   box-shadow: 0 4px 18px rgba(18, 79, 50, 0.05);
   display: flex;
   flex-direction: column;
   position: relative;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 .card:hover {
   border-color: var(--green-border);
   box-shadow: 0 10px 28px rgba(18, 79, 50, 0.12);
-  transform: translateY(-3px);
+  transform: translate3d(0, -3px, 0);
 }
 .card:active {
-  transform: scale(0.985);
+  transform: translate3d(0, 0, 0) scale(0.985);
 }
 .card.low {
   border-color: rgba(220, 38, 38, 0.25);
@@ -2553,11 +2593,13 @@ header * {
   flex-direction: column;
   box-shadow: var(--shadow-xl);
   color: var(--text);
-  animation: modalPop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 @keyframes modalPop {
-  from { opacity: 0; transform: scale(0.96) translateY(10px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
+  from { opacity: 0; transform: translate3d(0, 10px, 0) scale(0.97); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 .modal-head {
   padding: 16px 20px;
@@ -3764,7 +3806,9 @@ table.bordered-report-table tfoot td,
   border: 1px solid var(--border);
   border-radius: 16px;
   overflow: hidden;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+  will-change: transform;
+  backface-visibility: hidden;
   cursor: pointer;
   box-shadow: var(--shadow-sm);
   display: flex;
@@ -3772,11 +3816,11 @@ table.bordered-report-table tfoot td,
 }
 .bill-card:hover {
   border-color: var(--green-border);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -4px rgba(18, 79, 50, 0.12);
+  transform: translate3d(0, -3px, 0);
 }
 .bill-card:active {
-  transform: scale(0.99);
+  transform: translate3d(0, 0, 0) scale(0.99);
 }
 .bill-card-head {
   background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
@@ -3935,6 +3979,8 @@ table.bordered-report-table tfoot td,
   box-shadow: 0 20px 60px rgba(18, 79, 50, 0.22);
   height: auto;
   max-height: 92vh;
+  width: 100%;
+  max-width: 840px !important;
 }
 
 #modal-bill .modal-head {
@@ -4135,25 +4181,26 @@ table.bordered-report-table tfoot td,
   height: auto;
   max-height: 52vh;
   overflow-y: auto;
-  overflow-x: hidden !important; /* Never scroll horizontally */
+  overflow-x: auto !important; /* Allow smooth horizontal scroll on narrow viewports */
   box-sizing: border-box !important;
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
+  scrollbar-width: thin;
   border: 1px solid var(--border);
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.95);
+  -webkit-overflow-scrolling: touch;
 }
 .bill-doc-table-wrap::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
+  width: 5px;
+  height: 5px;
+}
+.bill-doc-table-wrap::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
 }
 .bill-doc-table,
 table.bill-doc-table {
   width: 100% !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  table-layout: fixed !important;
+  min-width: 100% !important;
   border-collapse: collapse !important;
   box-sizing: border-box !important;
   font-size: 12.5px;
@@ -4168,7 +4215,7 @@ table.bill-doc-table {
   font-size: 10.5px;
   letter-spacing: 0.4px;
   text-transform: uppercase;
-  padding: 8px 6px;
+  padding: 9px 8px;
   border-bottom: 1.5px solid var(--green-border);
   border-right: 1px solid var(--green-border);
   box-sizing: border-box !important;
@@ -4182,8 +4229,11 @@ table.bill-doc-table {
 .bill-doc-table tbody tr:nth-child(even) td {
   background-color: #ffffff;
 }
+.bill-doc-table tbody tr {
+  transition: background-color 0.15s ease;
+}
 .bill-doc-table td {
-  padding: 7px 6px;
+  padding: 8px 8px;
   border-bottom: 1px solid #edf4ef;
   border-right: 1px solid #edf4ef;
   vertical-align: middle;
@@ -4197,16 +4247,15 @@ table.bill-doc-table {
   font-size: 11px;
   font-weight: 700;
   color: var(--muted);
-  width: 30px !important;
-  max-width: 30px !important;
-  min-width: 30px !important;
-  padding: 6px 2px !important;
+  width: 36px !important;
+  max-width: 36px !important;
+  min-width: 36px !important;
+  padding: 7px 4px !important;
 }
 .bill-col-name {
-  width: calc(100% - 92px) !important;
-  overflow: hidden !important;
+  min-width: 160px !important;
   word-break: break-word !important;
-  padding: 6px 5px !important;
+  padding: 7px 10px !important;
 }
 .bill-item-title {
   font-weight: 700;
@@ -4223,11 +4272,32 @@ table.bill-doc-table {
 }
 .bill-col-qty {
   text-align: right !important;
-  width: 62px !important;
-  max-width: 62px !important;
-  min-width: 62px !important;
+  width: 115px !important;
+  min-width: 95px !important;
   white-space: nowrap !important;
-  padding: 6px 4px !important;
+  padding: 7px 12px 7px 6px !important;
+}
+.bill-col-rate {
+  text-align: right !important;
+  width: 95px !important;
+  min-width: 85px !important;
+  white-space: nowrap !important;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #334155;
+  padding: 7px 10px !important;
+}
+.bill-col-amount {
+  text-align: right !important;
+  width: 110px !important;
+  min-width: 95px !important;
+  white-space: nowrap !important;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--green);
+  padding: 7px 14px 7px 8px !important;
 }
 .bill-qty-pill {
   display: inline-flex !important;
@@ -4237,11 +4307,47 @@ table.bill-doc-table {
   border: 1px solid var(--green-border);
   color: var(--green);
   font-weight: 800;
-  font-size: 12px;
-  padding: 2px 7px;
+  font-size: 11.5px;
+  padding: 3px 8px;
   border-radius: 6px;
   font-family: 'JetBrains Mono', monospace;
   white-space: nowrap;
+  letter-spacing: 0.2px;
+}
+.bill-cost-badge {
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  color: #15803d;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 11.5px;
+  font-weight: 800;
+  font-family: 'JetBrains Mono', monospace;
+  white-space: nowrap;
+}
+.bill-total-right-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.bill-total-cost-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1.5px solid #86efac;
+  padding: 4px 12px;
+  border-radius: 8px;
+  color: #15803d;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.bill-total-cost-badge strong {
+  font-size: 15px;
+  font-weight: 900;
+  font-family: 'JetBrains Mono', monospace;
+  color: #14532d;
 }
 
 .bill-doc-total {
@@ -4955,10 +5061,10 @@ table.bill-doc-table {
 }
 .bill-item-row-edit {
   display: grid;
-  grid-template-columns: 1fr 85px 40px;
+  grid-template-columns: 1fr 95px 95px 36px;
   gap: 8px;
   margin-bottom: 8px;
-  align-items: start;
+  align-items: center;
 }
 .bill-item-row-edit select,
 .bill-item-row-edit input {
@@ -5778,20 +5884,25 @@ body {
     margin-top: 1px !important;
   }
   .bill-col-qty {
-    width: 60px !important;
-    max-width: 60px !important;
-    min-width: 60px !important;
+    width: auto !important;
+    min-width: 75px !important;
     text-align: right !important;
     white-space: nowrap !important;
-    padding: 6px 4px !important;
+    padding: 6px 8px !important;
     box-sizing: border-box !important;
+  }
+  .bill-col-rate,
+  .bill-col-amount {
+    white-space: nowrap !important;
+    text-align: right !important;
+    padding: 6px 8px !important;
   }
   .bill-qty-pill {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     font-size: 11px !important;
-    padding: 2px 6px !important;
+    padding: 2.5px 6px !important;
     min-width: 32px !important;
     text-align: center !important;
     box-sizing: border-box !important;
@@ -5834,7 +5945,7 @@ body {
     flex-shrink: 0 !important;
   }
   .bill-item-row-edit {
-    grid-template-columns: 1fr 65px 36px;
+    grid-template-columns: 1fr 78px 82px 32px;
     gap: 6px;
   }
   .slip-item-row {
@@ -6067,7 +6178,184 @@ body {
     max-height: none !important;
   }
 }
+
+/* ========================================================================= */
+/* DYNAMIC ISSUE STOCK ANIMATIONS & STAMP CELEBRATION SYSTEM                 */
+/* ========================================================================= */
+.issue-success-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100005;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(14, 30, 21, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: auto;
+  opacity: 0;
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.issue-success-overlay.active {
+  opacity: 1;
+}
+.issue-stamp-card {
+  position: relative;
+  width: 90%;
+  max-width: 440px;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 32px 24px 28px;
+  text-align: center;
+  box-shadow: 0 25px 60px rgba(18, 79, 50, 0.28), 0 0 0 1px rgba(18, 79, 50, 0.12);
+  transform: scale(0.65) translateY(30px) rotate(-3deg);
+  opacity: 0;
+  transition: transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+  overflow: hidden;
+}
+.issue-success-overlay.active .issue-stamp-card {
+  transform: scale(1) translateY(0) rotate(0deg);
+  opacity: 1;
+}
+.issue-stamp-seal {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #124f32 0%, #062314 100%);
+  border: 3px dashed #d4af37;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 28px rgba(18, 79, 50, 0.35), inset 0 2px 4px rgba(255, 255, 255, 0.25);
+  animation: sealPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes sealPop {
+  0% { transform: scale(0) rotate(-45deg); }
+  70% { transform: scale(1.15) rotate(5deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+.issue-stamp-seal svg {
+  width: 48px;
+  height: 48px;
+  stroke: #ffffff;
+  stroke-width: 2.6;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+}
+.issue-stamp-pulse {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 2px solid rgba(34, 197, 94, 0.5);
+  animation: stampPulseWave 1.6s infinite ease-out;
+}
+@keyframes stampPulseWave {
+  0% { transform: scale(0.9); opacity: 0.9; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+.issue-stamp-header {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #124f32;
+  background: #e8f5ec;
+  border: 1px solid #b9e0c5;
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+.issue-stamp-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0e1e15;
+  letter-spacing: -0.3px;
+  margin-bottom: 6px;
+}
+.issue-stamp-recipient {
+  font-size: 14px;
+  font-weight: 600;
+  color: #354a3d;
+  margin-bottom: 16px;
+}
+.issue-stamp-recipient b {
+  color: #124f32;
+}
+.issue-stamp-pills {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.issue-stamp-pill {
+  background: #f6faf7;
+  border: 1px solid #dce7e0;
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0e1e15;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.issue-stamp-pill.qty {
+  background: #fee2e2;
+  border-color: #fecaca;
+  color: #991b1b;
+  font-weight: 800;
+}
+.issue-stamp-watermark-text {
+  font-size: 10px;
+  font-weight: 800;
+  color: #80928b;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-top: 1px dashed #dce7e0;
+  padding-top: 12px;
+}
+.confetti-particle {
+  position: absolute;
+  pointer-events: none;
+  z-index: 100006;
+  border-radius: 2px;
+  animation: confettiFall 1.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+@keyframes confettiFall {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(0.4);
+  }
+}
+
+/* Smooth entry animation for newly added issue slip rows */
+.slip-item-row {
+  animation: slipRowPopIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes slipRowPopIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 </style>
+
+<script id="early-theme-script">
+  (function(){
+    try {
+      localStorage.removeItem('dpsims_theme');
+      localStorage.removeItem('dpsims_theme_v2');
+      document.documentElement.removeAttribute('data-theme');
+    } catch(e){}
+  })();
+</script>
 </head>
 <body>
 
@@ -6091,6 +6379,102 @@ body {
     <div class="splash-loading"><span></span><span></span><span></span></div>
   </div>
 </div>
+
+
+<!-- ========================================================================= -->
+<!-- DESKTOP SIDEBAR PANEL (NULOX OBSIDIAN EMERALD AESTHETIC)                   -->
+<!-- ========================================================================= -->
+<aside id="desktopSidebar" class="desktop-sidebar" aria-label="Main Navigation Sidebar">
+  <!-- Brand Header -->
+  <div class="sidebar-brand" onclick="goToDashboard()" title="DPS Amrapali - Click to open Dashboard">
+    <img src="logo.png" alt="DPS" class="sidebar-logo-img">
+    <div class="sidebar-brand-text">
+      <div class="sidebar-school-title">DPS AMRAPALI</div>
+      <div class="sidebar-sub-title">Central Inventory</div>
+    </div>
+  </div>
+
+  <!-- Live Status Pill -->
+  <div class="sidebar-status-wrap">
+    <div class="sidebar-status-pill">
+      <span class="sidebar-status-dot"></span>
+      <span>SYSTEM ACTIVE</span>
+    </div>
+  </div>
+
+  <!-- Quick Action: Create Inward/Slip -->
+  <button class="sidebar-create-btn" onclick="openAddChoice()" title="Create Inward Bill, Issue Slip, or Add Item">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+    <span>+ Inward / Issue</span>
+  </button>
+
+  <!-- Section: Navigation -->
+  <div class="sidebar-section-label">MAIN MENU</div>
+  <div class="sidebar-nav-list">
+    <button class="sidebar-nav-item active" onclick="switchMainTab('stock')" data-tab="stock" title="Inventory Stock">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+      <span class="sb-tab-title">Stock Inventory</span>
+      <span class="sb-tab-badge" id="sb-stock-count">-</span>
+    </button>
+
+    <button class="sidebar-nav-item" onclick="switchMainTab('bills')" data-tab="bills" title="Purchase & Inward Bills">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+      <span class="sb-tab-title">Purchase Bills</span>
+      <span class="sb-tab-badge" id="sb-bills-count">-</span>
+    </button>
+
+    <button class="sidebar-nav-item" onclick="switchMainTab('faculty')" data-tab="faculty" title="Staff & Faculty Issue Slips">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span class="sb-tab-title">Faculty Issues</span>
+      <span class="sb-tab-badge" id="sb-faculty-count">-</span>
+    </button>
+
+    <button class="sidebar-nav-item" onclick="switchMainTab('report')" data-tab="report" title="Audit Reports (Admin Only)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+      <span class="sb-tab-title">Audit Reports</span>
+      <span class="sb-tab-lock" id="sb-rep-lock" style="font-size:11px;opacity:0.85">🔒</span>
+    </button>
+  </div>
+
+  <!-- Section: Quick Tools -->
+  <div class="sidebar-section-label">QUICK TOOLS</div>
+  <div class="sidebar-tools-list">
+    <button class="sidebar-tool-btn" onclick="openGlobalSearch()" title="Global Search (Ctrl + K)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <span>Quick Search</span>
+      <kbd class="sb-tool-kbd">Ctrl K</kbd>
+    </button>
+
+    <button class="sidebar-tool-btn" onclick="exportCSV()" title="Export CSV Stock Report">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      <span>Export CSV</span>
+    </button>
+
+    <div class="sidebar-sync-row" onclick="handleCloudSyncBadgeClick()" title="Neon Cloud Database: Click for Health & Diagnostics">
+      <span class="sidebar-sync-indicator syncing" id="sb-sync-dot"></span>
+      <span id="sb-sync-label">Neon Cloud DB</span>
+    </div>
+  </div>
+
+  <!-- Sidebar Footer: Theme Toggle & Admin User Card -->
+  <div class="sidebar-footer">
+
+
+    <!-- Admin / Read-Only Profile Card -->
+    <div class="sidebar-user-card" id="sb-user-card">
+      <div class="sb-user-avatar" id="sb-user-avatar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      </div>
+      <div class="sb-user-info">
+        <div class="sb-user-name" id="sb-user-name">Read Only</div>
+        <div class="sb-user-role" id="sb-user-role">Staff View</div>
+      </div>
+      <button class="sb-user-action-btn" id="sb-user-action" onclick="handleAdminClick()" title="Login as Admin">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="14" height="14"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      </button>
+    </div>
+  </div>
+</aside>
 
 <header>
   <div class="h-left" onclick="goToDashboard()" title="DPS Amrapali - Click to open Dashboard">
@@ -6120,6 +6504,9 @@ body {
   </div>
 
   <div class="h-right">
+    
+    
+  
     <button class="header-search-btn" onclick="openGlobalSearch()" title="Global Search (Ctrl + K)" aria-label="Global Search">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
       <span class="header-search-label">Quick Search...</span>
@@ -6391,7 +6778,7 @@ body {
 
 <!-- BILLS TAB -->
 <div class="container" id="tab-bills" style="display:none">
-  <div class="top-stats-3 stats-row">
+  <div class="top-stats stats-row">
     <div class="stat">
       <span class="stat-watermark">01</span>
       <div class="stat-icon-badge">
@@ -6420,6 +6807,16 @@ body {
       <div class="stat-body">
         <div class="stat-label">Active Vendors</div>
         <div class="stat-value" id="bill-vendors">0</div>
+      </div>
+    </div>
+    <div class="stat">
+      <span class="stat-watermark">04</span>
+      <div class="stat-icon-badge purple">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      </div>
+      <div class="stat-body">
+        <div class="stat-label">Total Bill Cost</div>
+        <div class="stat-value" id="bill-total-cost" style="font-size:17px;font-family:'JetBrains Mono',monospace;color:#15803d">₹0.00</div>
       </div>
     </div>
   </div>
@@ -7077,13 +7474,14 @@ body {
         <div id="bill-items-list"></div>
         <button class="add-variant-btn" type="button" onclick="addBillItemRow()">+ Add Another Item</button>
       </div>
-      <div id="bill-summary" style="margin-top:12px;background:#f0fdf4;border-radius:10px;padding:12px;display:flex;justify-content:space-between;font-weight:800;font-size:13px">
+      <div id="bill-summary" style="margin-top:12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:13px;flex-wrap:wrap;gap:8px">
         <span>Total Items: <span style="color:#0f7a3d" id="bill-sum-items">0</span></span>
         <span>Total Qty: <span style="color:#0f7a3d" id="bill-sum-qty">0</span></span>
+        <span>Total Cost: <span style="color:#0f7a3d;font-family:'JetBrains Mono',monospace" id="bill-sum-cost">₹0.00</span></span>
       </div>
-      <button class="btn btn-primary" style="margin-top:14px;width:100%;padding:14px;font-size:14px;display:flex;align-items:center;justify-content:center;gap:6px" onclick="saveBill()">
+      <button class="btn btn-primary" id="btn-save-bill" style="margin-top:14px;width:100%;padding:14px;font-size:14px;display:flex;align-items:center;justify-content:center;gap:6px" onclick="saveBill()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-        <span>Save Bill & Update Stock</span>
+        <span id="bill-save-btn-txt">Save Bill & Update Stock</span>
       </button>
     </div>
   </div>
@@ -7206,22 +7604,26 @@ body {
 
 <!-- BILL DETAIL -->
 <div class="modal-overlay" id="modal-bill">
-  <div class="modal" style="max-width:760px">
+  <div class="modal" style="max-width:840px">
     <div class="modal-head">
       <div style="display:flex;align-items:center;gap:8px">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         <span style="font-weight:800;font-size:14px">Bill Details</span>
       </div>
       <div style="display:flex;align-items:center;gap:6px">
-        <button id="btn-delete-bill" class="btn" onclick="deleteCurrentBill()" title="Delete / Remove this Bill" style="padding:5px 11px;font-size:11.5px;display:none;align-items:center;gap:5px;font-weight:700;border-radius:8px;color:#dc2626;border-color:rgba(220,38,38,0.25);background:#fef2f2">
+        <button id="btn-edit-bill" class="btn btn-primary" onclick="editCurrentBill()" title="Edit this Bill (Admin)" style="padding:6px 13px;font-size:12px;display:none;align-items:center;gap:6px;font-weight:700;border-radius:9999px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          <span>Edit Bill</span>
+        </button>
+        <button id="btn-delete-bill" class="btn" onclick="deleteCurrentBill()" title="Delete / Remove this Bill" style="padding:6px 12px;font-size:12px;display:none;align-items:center;gap:6px;font-weight:700;border-radius:9999px;color:#dc2626;border-color:rgba(220,38,38,0.25);background:#fef2f2">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
           <span>Delete Bill</span>
         </button>
-        <button class="btn" onclick="printBillDoc()" title="Print Bill / Save PDF" style="padding:5px 11px;font-size:11.5px;display:inline-flex;align-items:center;gap:5px;font-weight:700;border-radius:8px">
+        <button class="btn" onclick="printBillDoc()" title="Print Bill / Save PDF" style="padding:6px 12px;font-size:12px;display:inline-flex;align-items:center;gap:6px;font-weight:700;border-radius:9999px">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
           <span>Print</span>
         </button>
-        <button class="btn" onclick="closeBillDetail()" title="Close">
+        <button class="btn" onclick="closeBillDetail()" title="Close" style="width:32px;height:32px;padding:0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
       </div>
@@ -7736,6 +8138,19 @@ function loadData(){
 
 function sanitizeNonBillLogs(){
   var cleaned = false;
+  // Auto-heal Kajal department to full "Academic"
+  if (typeof faculties !== 'undefined' && faculties && Array.isArray(faculties)) {
+    var facCleaned = false;
+    for (var f = 0; f < faculties.length; f++) {
+      if (faculties[f].name && faculties[f].name.toLowerCase() === 'kajal' && faculties[f].dept !== 'Academic') {
+        faculties[f].dept = 'Academic';
+        facCleaned = true;
+      }
+    }
+    if (facCleaned && typeof FAC_KEY !== 'undefined') {
+      try { localStorage.setItem(FAC_KEY, JSON.stringify(faculties)); } catch(e){}
+    }
+  }
   if (!items || !Array.isArray(items)) return;
   for (var i = 0; i < items.length; i++){
     var it = items[i];
@@ -7749,6 +8164,16 @@ function sanitizeNonBillLogs(){
           var r = String(l.ref).trim();
           if (r.toUpperCase().indexOf('INIT') !== -1 || (r.indexOf('NEW') !== -1 && r.indexOf('2026') !== -1 && r.indexOf('/') !== -1)) {
             l.ref = 'Opening Stock';
+            cleaned = true;
+          }
+        }
+        if (l.detail && typeof l.detail === 'string') {
+          if (/not\s+is\s+record/i.test(l.detail)) {
+            l.detail = l.detail.replace(/not\s+is\s+record/gi, 'Not in record');
+            cleaned = true;
+          }
+          if (/kajal\s*\(acade\)/i.test(l.detail)) {
+            l.detail = l.detail.replace(/kajal\s*\(acade\)/gi, 'Kajal (Academic)');
             cleaned = true;
           }
         }
@@ -8342,6 +8767,14 @@ function updateCloudBadge(status, label){
   if (!el) return;
   el.className = 'cloud-badge ' + status;
   el.title = (label || 'Neon Cloud DB') + (isAdmin ? ' (Click for Diagnostics)' : ' (Admin Only)');
+
+  var sbDot = document.getElementById('sb-sync-dot');
+  var sbLbl = document.getElementById('sb-sync-label');
+  if (sbDot && sbLbl){
+    sbDot.className = 'sidebar-sync-indicator ' + status;
+    sbLbl.textContent = label || (status === 'synced' ? 'Neon DB Synced' : (status === 'syncing' ? 'Syncing...' : 'Cloud DB'));
+  }
+
   if (status === 'syncing'){
     el.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg><span class="badge-dot"></span><span class="badge-txt">' + esc(label || 'Saving to Neon DB...') + '</span>';
   } else if (status === 'synced'){
@@ -8665,10 +9098,15 @@ function goToDashboard(){
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+var _searchRenderRaf = null;
 function handleSearchInput(el){
   var btn = document.getElementById('search-clear-btn');
   if (btn) btn.style.display = el.value ? 'flex' : 'none';
-  render();
+  if (_searchRenderRaf) cancelAnimationFrame(_searchRenderRaf);
+  _searchRenderRaf = requestAnimationFrame(function(){
+    render();
+    _searchRenderRaf = null;
+  });
 }
 
 function clearSearchInput(){
@@ -9692,6 +10130,26 @@ function updateAdminUI(){
       switchMainTab('stock');
     }
   }
+  
+  var sbName = document.getElementById('sb-user-name');
+  var sbRole = document.getElementById('sb-user-role');
+  var sbAct = document.getElementById('sb-user-action');
+  var sbLock = document.getElementById('sb-rep-lock');
+  if (sbLock) sbLock.style.display = isAdmin ? 'none' : 'inline-block';
+  if (sbName && sbRole && sbAct){
+    if (isAdmin){
+      sbName.textContent = 'Administrator';
+      sbRole.textContent = 'Full System Access';
+      sbAct.title = 'Logout Admin Mode';
+      sbAct.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.2" width="14" height="14"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>';
+    } else {
+      sbName.textContent = 'Staff / Read Only';
+      sbRole.textContent = 'View-Only Access';
+      sbAct.title = 'Login as Admin';
+      sbAct.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="14" height="14"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>';
+    }
+  }
+
   if (typeof updateModalReadonlyState === 'function') updateModalReadonlyState();
 }
 var pendingAdminCallback = null;
@@ -9820,17 +10278,41 @@ function updateNavGlider(){
   var width = activeRect.width;
   glider.style.opacity = '1';
   glider.style.width = width + 'px';
-  glider.style.transform = 'translateX(' + left + 'px)';
+  glider.style.transform = 'translate3d(' + left + 'px, 0, 0)';
 }
 
+var _scrollTicking = false;
+var _hdrEl = null;
 window.addEventListener('scroll', function(){
-  var h = document.querySelector('header');
-  if (h) h.classList.toggle('scrolled', window.scrollY > 10);
+  if (!_scrollTicking) {
+    window.requestAnimationFrame(function(){
+      if (!_hdrEl) _hdrEl = document.querySelector('header');
+      if (_hdrEl) _hdrEl.classList.toggle('scrolled', window.scrollY > 10);
+      _scrollTicking = false;
+    });
+    _scrollTicking = true;
+  }
 }, { passive: true });
 
 window.addEventListener('resize', function(){
   updateNavGlider();
 }, { passive: true });
+
+
+// =========================================================================
+// THEME CONTROLLER: DARK THEME PERMANENTLY REMOVED (LIGHT MODE ONLY)
+// =========================================================================
+function initTheme(){
+  try {
+    localStorage.removeItem('dpsims_theme');
+    localStorage.removeItem('dpsims_theme_v2');
+    document.documentElement.removeAttribute('data-theme');
+    var metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (metaTheme) metaTheme.setAttribute('content', '#124f32');
+  } catch(e){}
+}
+function applyTheme(){ initTheme(); }
+function toggleTheme(){}
 
 function switchMainTab(tab){
   if (tab === 'report' && !isAdmin){
@@ -9838,6 +10320,7 @@ function switchMainTab(tab){
     return;
   }
   document.querySelectorAll('.nav-tab').forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-tab') === tab); });
+  document.querySelectorAll('.sidebar-nav-item').forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-tab') === tab); });
   updateNavGlider();
   document.querySelectorAll('.mob-tab').forEach(function(t){ var dt = t.getAttribute('data-tab'); if (dt) t.classList.toggle('active', dt === tab); });
   var tabs = ['stock','bills','faculty','report'];
@@ -9846,22 +10329,16 @@ function switchMainTab(tab){
       var el = document.getElementById('tab-'+tabName);
       if(tabName===tab){
         el.style.display='block';
-        el.style.opacity='0';
-        el.style.transform='translateY(8px)';
-        requestAnimationFrame(function(){
-          requestAnimationFrame(function(){
-            el.style.transition='opacity 0.25s ease, transform 0.25s ease';
-            el.style.opacity='1';
-            el.style.transform='translateY(0)';
-            setTimeout(function(){el.style.transition='';},300);
-          });
-        });
+        el.style.opacity='1';
+        el.style.transform='translate3d(0, 0, 0)';
       } else {
         el.style.display='none';
       }
     })(tabs[i]);
   }
-  window.scrollTo({top:0,behavior:'smooth'});
+  if (window.scrollY > 150) {
+    window.scrollTo(0, 0);
+  }
   if (tab === 'bills') renderBills();
   if (tab === 'faculty') renderFaculty();
   if (tab === 'report') {
@@ -10060,6 +10537,11 @@ function updateStats(){
   var stStock = document.getElementById('st-stock'); if (stStock) stStock.textContent = grand;
   var stLow = document.getElementById('st-low'); if (stLow) stLow.textContent = lowV;
   var stBills = document.getElementById('st-bills'); if (stBills) stBills.textContent = bills.length;
+
+  var sbStock = document.getElementById('sb-stock-count'); if (sbStock) sbStock.textContent = items.length;
+  var sbBills = document.getElementById('sb-bills-count'); if (sbBills) sbBills.textContent = bills.length;
+  var sbFac = document.getElementById('sb-faculty-count'); if (sbFac) sbFac.textContent = (faculties || []).length;
+
 }
 
 function collectAllBills(){
@@ -10079,9 +10561,35 @@ function collectAllBills(){
         if (!billNo || billNo === '?' || billNo.toUpperCase() === 'INIT' || billNo.toLowerCase().indexOf('opening') !== -1 || billNo.toLowerCase().indexOf('direct') !== -1) continue;
         if (!inPass || inPass === '?' || inPass.toUpperCase() === 'NEW') continue;
         var key = billNo + '|' + year + '|' + inPass;
-        if (!billMap[key]){ billMap[key] = { key: key, billNo: billNo, year: year, inPass: inPass, vendor: (l.detail || '').replace(/^From\s+/, ''), date: l.date, items: [] }; }
+        if (!billMap[key]){
+          billMap[key] = {
+            key: key,
+            billNo: billNo,
+            year: year,
+            inPass: inPass,
+            vendor: (l.detail || '').replace(/^From\s+/, ''),
+            date: l.date,
+            items: [],
+            totalQty: 0,
+            totalCost: 0,
+            hasPrice: false
+          };
+        }
         if (l.date && (!billMap[key].date || l.date > billMap[key].date)) billMap[key].date = l.date;
-        billMap[key].items.push({ itemName: it.name, subcat: v.name, qty: l.qty, unit: (v.unit || (it.unit || '')), date: l.date });
+        var itPrice = (typeof l.price === 'number') ? l.price : ((typeof l.rate === 'number') ? l.rate * l.qty : 0);
+        var itRate = (typeof l.rate === 'number') ? l.rate : ((itPrice && l.qty) ? (itPrice / l.qty) : 0);
+        if (itPrice > 0 || itRate > 0) billMap[key].hasPrice = true;
+        billMap[key].totalQty += (l.qty || 0);
+        billMap[key].totalCost += itPrice;
+        billMap[key].items.push({
+          itemName: it.name,
+          subcat: v.name,
+          qty: l.qty,
+          price: itPrice,
+          rate: itRate,
+          unit: (v.unit || (it.unit || '')),
+          date: l.date
+        });
       }
     }
   }
@@ -10161,9 +10669,14 @@ function renderBills(){
   updateFilterCount('bill', activeCount);
   setFilterInfo('bill', filtered.length + ' of ' + bills.length + ' bills shown (Date-wise)');
 
+  var totalBillsCost = 0;
+  for (var i = 0; i < bills.length; i++) totalBillsCost += (bills[i].totalCost || 0);
+
   document.getElementById('bill-count').textContent = bills.length;
   document.getElementById('bill-qty').textContent = totalQty;
   document.getElementById('bill-vendors').textContent = Object.keys(vendorsMap).length;
+  var totalCostEl = document.getElementById('bill-total-cost');
+  if (totalCostEl) totalCostEl.textContent = '₹' + totalBillsCost.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   var el = document.getElementById('bill-list');
   if (filtered.length === 0){ el.innerHTML = '<div class="empty-msg">No bills found</div>'; return; }
@@ -10189,7 +10702,11 @@ function renderBills(){
         '<div><div class="bill-meta-label">Bill Date</div><div class="bill-meta-value" style="color:var(--green);font-weight:800">' + b.date + '</div></div>' +
       '</div>' +
       '<div class="bill-card-items"><div class="bill-items-title">Items in this bill (' + b.items.length + ')</div><div class="bill-items-list">' + preview + '</div></div>' +
-      '<div class="bill-card-foot"><span>Items: <span class="total">' + b.items.length + '</span></span><span>Qty: <span class="total">' + b.totalQty + '</span></span></div>' +
+      '<div class="bill-card-foot">' +
+        '<span>Items: <span class="total">' + b.items.length + '</span></span>' +
+        '<span>Qty: <span class="total">' + b.totalQty + '</span></span>' +
+        (b.totalCost > 0 ? '<span style="color:#15803d;font-weight:800">Cost: <span class="total" style="color:#15803d">₹' + b.totalCost.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '</span></span>' : '') +
+      '</div>' +
     '</div>';
   }
   el.innerHTML = html;
@@ -10200,13 +10717,29 @@ function openBillDetail(key){
   for (var i = 0; i < bills.length; i++) if (bills[i].key === key){ b = bills[i]; break; }
   if (!b) return;
   currentBillKey = key;
+
+  var editBtn = document.getElementById('btn-edit-bill');
+  if (editBtn) editBtn.style.display = isAdmin ? 'inline-flex' : 'none';
   var delBtn = document.getElementById('btn-delete-bill');
   if (delBtn) delBtn.style.display = isAdmin ? 'inline-flex' : 'none';
+
   var totalQty = 0;
-  for (var i = 0; i < b.items.length; i++) totalQty += b.items[i].qty;
+  var totalCost = 0;
+  var hasPrice = false;
+  for (var i = 0; i < b.items.length; i++){
+    totalQty += b.items[i].qty;
+    var itPrice = (typeof b.items[i].price === 'number') ? b.items[i].price : ((typeof b.items[i].rate === 'number') ? b.items[i].rate * b.items[i].qty : 0);
+    var itRate = (typeof b.items[i].rate === 'number') ? b.items[i].rate : (itPrice && b.items[i].qty ? itPrice / b.items[i].qty : 0);
+    if (itPrice > 0 || itRate > 0) hasPrice = true;
+    totalCost += itPrice;
+  }
+
   var rows = '';
   for (var i = 0; i < b.items.length; i++){
     var it = b.items[i];
+    var itPrice = (typeof it.price === 'number') ? it.price : ((typeof it.rate === 'number') ? it.rate * it.qty : 0);
+    var itRate = (typeof it.rate === 'number') ? it.rate : (itPrice && it.qty ? itPrice / it.qty : 0);
+
     rows += '<tr>' +
       '<td class="bill-col-num">' + (i+1) + '</td>' +
       '<td class="bill-col-name">' +
@@ -10214,6 +10747,10 @@ function openBillDetail(key){
         (it.subcat !== 'Standard' ? '<div class="bill-item-subcat">→ ' + esc(it.subcat) + '</div>' : '') +
       '</td>' +
       '<td class="bill-col-qty"><span class="bill-qty-pill">' + it.qty + (it.unit ? ' ' + esc(it.unit) : '') + '</span></td>' +
+      (hasPrice ?
+        ('<td class="bill-col-rate">' + (itRate > 0 ? '₹' + itRate.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : '—') + '</td>' +
+         '<td class="bill-col-amount">' + (itPrice > 0 ? '₹' + itPrice.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : '—') + '</td>')
+        : '') +
     '</tr>';
   }
 
@@ -10244,12 +10781,20 @@ function openBillDetail(key){
         '</div>' +
         '<div class="bill-items-header-bar">' +
           '<span>Items Received (' + b.items.length + ')</span>' +
-          '<span class="bill-items-count-badge">' + totalQty + ' total pcs</span>' +
+          '<div style="display:flex;align-items:center;gap:8px">' +
+            '<span class="bill-items-count-badge">' + totalQty + ' total pcs</span>' +
+            (totalCost > 0 ? '<span class="bill-cost-badge">₹' + totalCost.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '</span>' : '') +
+          '</div>' +
         '</div>' +
         '<div class="bill-doc-table-wrap">' +
           '<table class="bill-doc-table">' +
             '<thead>' +
-              '<tr><th class="bill-col-num">#</th><th class="bill-col-name">Item Name &amp; Variant</th><th class="bill-col-qty">Qty</th></tr>' +
+              '<tr>' +
+                '<th class="bill-col-num">#</th>' +
+                '<th class="bill-col-name">Item Name &amp; Variant</th>' +
+                '<th class="bill-col-qty">Qty</th>' +
+                (hasPrice ? '<th class="bill-col-rate">Rate</th><th class="bill-col-amount">Amount</th>' : '') +
+              '</tr>' +
             '</thead>' +
             '<tbody>' + rows + '</tbody>' +
           '</table>' +
@@ -10259,7 +10804,10 @@ function openBillDetail(key){
             '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>' +
             '<span>Total Units Received</span>' +
           '</div>' +
-          '<div class="bill-total-value">' + totalQty + ' <small>pcs</small></div>' +
+          '<div class="bill-total-right-wrap">' +
+            '<div class="bill-total-value">' + totalQty + ' <small>pcs</small></div>' +
+            (totalCost > 0 ? '<div class="bill-total-cost-badge"><span>Total Cost:</span> <strong>₹' + totalCost.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '</strong></div>' : '') +
+          '</div>' +
         '</div>' +
         '<div class="bill-doc-foot-official">' +
           '<span>Central Inventory Verified</span>' +
@@ -10274,6 +10822,15 @@ function openBillDetail(key){
   document.getElementById('modal-bill').classList.add('open');
 }
 function closeBillDetail(){ document.getElementById('modal-bill').classList.remove('open'); }
+
+function editCurrentBill(){
+  if (!isAdmin){
+    requireAdmin(function(){ editCurrentBill(); });
+    return;
+  }
+  if (!currentBillKey) return;
+  openEditBill(currentBillKey);
+}
 
 function deleteCurrentBill(){
   if (!isAdmin){
@@ -10326,18 +10883,34 @@ function printBillDoc(){
   if (!printable) return;
 
   var totalQty = 0;
-  for (var i = 0; i < b.items.length; i++) totalQty += b.items[i].qty;
+  var totalCost = 0;
+  var hasPrice = false;
+  for (var i = 0; i < b.items.length; i++){
+    totalQty += b.items[i].qty;
+    var itPrice = (typeof b.items[i].price === 'number') ? b.items[i].price : ((typeof b.items[i].rate === 'number') ? b.items[i].rate * b.items[i].qty : 0);
+    var itRate = (typeof b.items[i].rate === 'number') ? b.items[i].rate : (itPrice && b.items[i].qty ? itPrice / b.items[i].qty : 0);
+    if (itPrice > 0 || itRate > 0) hasPrice = true;
+    totalCost += itPrice;
+  }
+
   var rows = '';
   for (var i = 0; i < b.items.length; i++){
     var it = b.items[i];
+    var itPrice = (typeof it.price === 'number') ? it.price : ((typeof it.rate === 'number') ? it.rate * it.qty : 0);
+    var itRate = (typeof it.rate === 'number') ? it.rate : (itPrice && it.qty ? itPrice / it.qty : 0);
     var bg = (i % 2 === 0) ? '#f0f7f2' : '#ffffff';
     rows += '<tr style="background:' + bg + ';">' +
       '<td style="padding:7px 10px;text-align:center;font-size:11px;border:1px solid #333">' + (i+1) + '</td>' +
       '<td style="padding:7px 10px;font-weight:700;font-size:12px;border:1px solid #333">' + esc(it.itemName) + (it.subcat !== 'Standard' ? ' <span style="color:#555;font-size:11px">→ ' + esc(it.subcat) + '</span>' : '') + '</td>' +
-      '<td style="padding:7px 10px;text-align:right;font-weight:900;font-size:13px;color:#124f32;border:1px solid #333">' + it.qty + '</td>' +
+      '<td style="padding:7px 10px;text-align:right;font-weight:900;font-size:13px;color:#124f32;border:1px solid #333">' + it.qty + (it.unit ? ' ' + esc(it.unit) : '') + '</td>' +
+      (hasPrice ?
+        ('<td style="padding:7px 10px;text-align:right;font-size:12px;font-family:monospace;border:1px solid #333">' + (itRate > 0 ? '₹' + itRate.toFixed(2) : '—') + '</td>' +
+         '<td style="padding:7px 10px;text-align:right;font-weight:800;font-size:12px;font-family:monospace;border:1px solid #333;color:#124f32">' + (itPrice > 0 ? '₹' + itPrice.toFixed(2) : '—') + '</td>')
+        : '') +
     '</tr>';
   }
 
+  var metaGridCols = hasPrice ? 'repeat(4, 1fr)' : 'repeat(3, 1fr)';
   printable.innerHTML = '<div style="position:relative;overflow:hidden;font-family:Arial,sans-serif;color:#111;padding:10px">' +
     '<!-- Official DPS Faded Watermark in background -->' +
     '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:280px;height:280px;opacity:0.07;pointer-events:none;z-index:0;text-align:center">' +
@@ -10352,7 +10925,7 @@ function printBillDoc(){
         '<div style="font-size:11.5px;font-weight:700;color:#444;letter-spacing:1px;text-transform:uppercase">CENTRAL INVENTORY · GOODS INWARD BILL VOUCHER</div>' +
         '<div style="margin-top:6px;font-size:14px;font-weight:800;color:#124f32">Bill #' + esc(b.billNo) + ' / ' + esc(b.year) + ' &nbsp;·&nbsp; In-Pass No: ' + esc(b.inPass) + '</div>' +
       '</div>' +
-      '<div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:10px;margin-bottom:14px;font-size:12px">' +
+      '<div style="display:grid;grid-template-columns:' + metaGridCols + ';gap:10px;margin-bottom:14px;font-size:12px">' +
         '<div style="border:1.5px solid #94a3b8;border-radius:8px;padding:8px 10px;background:#f6faf7">' +
           '<div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Vendor / Supplier</div>' +
           '<div style="font-size:13px;font-weight:800;color:#124f32;margin-top:2px">' + esc(b.vendor) + '</div>' +
@@ -10365,6 +10938,12 @@ function printBillDoc(){
           '<div style="font-size:10px;font-weight:700;color:#567061;text-transform:uppercase">Total Quantity</div>' +
           '<div style="font-size:13px;font-weight:800;color:#124f32;margin-top:2px">' + totalQty + ' pcs (' + b.items.length + ' items)</div>' +
         '</div>' +
+        (hasPrice ?
+          '<div style="border:1.5px solid #86efac;border-radius:8px;padding:8px 10px;background:#f0fdf4">' +
+            '<div style="font-size:10px;font-weight:700;color:#15803d;text-transform:uppercase">Total Bill Cost</div>' +
+            '<div style="font-size:14px;font-weight:900;color:#14532d;margin-top:2px;font-family:monospace">₹' + totalCost.toFixed(2) + '</div>' +
+          '</div>'
+          : '') +
       '</div>' +
       '<table style="width:100%;border-collapse:collapse;border:1.5px solid #333;font-size:12px">' +
         '<thead>' +
@@ -10372,13 +10951,15 @@ function printBillDoc(){
             '<th style="padding:8px;border:1px solid #333;width:35px;text-align:center">#</th>' +
             '<th style="padding:8px;border:1px solid #333;text-align:left">Item & Variant / Shade</th>' +
             '<th style="padding:8px;border:1px solid #333;width:90px;text-align:right">Quantity</th>' +
+            (hasPrice ? '<th style="padding:8px;border:1px solid #333;width:95px;text-align:right">Rate (₹)</th><th style="padding:8px;border:1px solid #333;width:110px;text-align:right">Amount (₹)</th>' : '') +
           '</tr>' +
         '</thead>' +
         '<tbody>' + rows + '</tbody>' +
         '<tfoot>' +
           '<tr style="background:#e8f5ec;font-weight:800;border-top:2px solid #124f32">' +
-            '<td colspan="2" style="padding:9px 10px;border:1px solid #333;text-align:right;color:#124f32">TOTAL QUANTITY RECEIVED:</td>' +
+            '<td colspan="2" style="padding:9px 10px;border:1px solid #333;text-align:right;color:#124f32">TOTAL' + (hasPrice ? ' RECEIVED &amp; COST:' : ' QUANTITY RECEIVED:') + '</td>' +
             '<td style="padding:9px 10px;border:1px solid #333;text-align:right;color:#124f32;font-weight:900">' + totalQty + ' pcs</td>' +
+            (hasPrice ? '<td style="border:1px solid #333"></td><td style="padding:9px 10px;border:1px solid #333;text-align:right;color:#124f32;font-weight:900;font-family:monospace">₹' + totalCost.toFixed(2) + '</td>' : '') +
           '</tr>' +
         '</tfoot>' +
       '</table>' +
@@ -12072,6 +12653,116 @@ function addInward(){
   document.getElementById('in-bill').value = ''; document.getElementById('in-qty').value = '';
   document.getElementById('in-pass').value = ''; document.getElementById('in-remark').value = '';
 }
+
+function playIssueSound(){
+  try {
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    var ctx = new AudioContext();
+    var notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 (positive chime chord)
+    notes.forEach(function(freq, idx){
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.08);
+      gain.gain.setValueAtTime(0, ctx.currentTime + idx * 0.08);
+      gain.gain.linearRampToValueAtTime(0.08, ctx.currentTime + idx * 0.08 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.08 + 0.35);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime + idx * 0.08);
+      osc.stop(ctx.currentTime + idx * 0.08 + 0.36);
+    });
+  } catch(e){}
+}
+
+function playIssueSuccessAnimation(opts){
+  opts = opts || {};
+  playIssueSound();
+  if (navigator.vibrate) {
+    try { navigator.vibrate([35, 25, 45]); } catch(e){}
+  }
+
+  var old = document.getElementById('issueSuccessOverlay');
+  if (old) old.remove();
+
+  var overlay = document.createElement('div');
+  overlay.id = 'issueSuccessOverlay';
+  overlay.className = 'issue-success-overlay';
+  overlay.onclick = function(){ dismiss(); };
+
+  var recipient = opts.recipient || 'Faculty Member';
+  var qtyText = opts.qtyText || 'Stock Issued';
+  var itemName = opts.itemName || 'Inventory Items';
+
+  overlay.innerHTML =
+    '<div class="issue-stamp-card" onclick="event.stopPropagation()">' +
+      '<div class="issue-stamp-seal">' +
+        '<div class="issue-stamp-pulse"></div>' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"></polyline></svg>' +
+      '</div>' +
+      '<div class="issue-stamp-header">DELHI PUBLIC SCHOOL · CENTRAL INVENTORY</div>' +
+      '<div class="issue-stamp-title">Stock Issued Successfully!</div>' +
+      '<div class="issue-stamp-recipient">Handed over to: <b>' + esc(recipient) + '</b></div>' +
+      '<div class="issue-stamp-pills">' +
+        '<div class="issue-stamp-pill qty">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line></svg>' +
+          '<span>' + esc(qtyText) + '</span>' +
+        '</div>' +
+        '<div class="issue-stamp-pill">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 21 16Z"/></svg>' +
+          '<span>' + esc(itemName) + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="issue-stamp-watermark-text">✓ Stock Balance Updated & Transaction Ledger Registered</div>' +
+    '</div>';
+
+  document.body.appendChild(overlay);
+
+  // Confetti particles
+  var colors = ['#124f32', '#22c55e', '#d4af37', '#f59e0b', '#3b82f6', '#10b981'];
+  for (var i = 0; i < 32; i++){
+    var p = document.createElement('div');
+    p.className = 'confetti-particle';
+    var bg = colors[Math.floor(Math.random() * colors.length)];
+    var sizeW = Math.floor(Math.random() * 8) + 6;
+    var sizeH = Math.floor(Math.random() * 8) + 6;
+    p.style.background = bg;
+    p.style.width = sizeW + 'px';
+    p.style.height = sizeH + 'px';
+    p.style.borderRadius = (Math.random() > 0.5 ? '50%' : '2px');
+
+    var angle = Math.random() * Math.PI * 2;
+    var dist = Math.random() * 260 + 100;
+    var dx = Math.cos(angle) * dist;
+    var dy = Math.sin(angle) * dist + 120;
+    var rot = (Math.random() * 720 - 360) + 'deg';
+    p.style.setProperty('--dx', dx + 'px');
+    p.style.setProperty('--dy', dy + 'px');
+    p.style.setProperty('--rot', rot);
+    p.style.left = '50%';
+    p.style.top = '45%';
+    overlay.appendChild(p);
+  }
+
+  requestAnimationFrame(function(){
+    overlay.classList.add('active');
+  });
+
+  var dismissed = false;
+  function dismiss(){
+    if (dismissed) return;
+    dismissed = true;
+    overlay.classList.remove('active');
+    setTimeout(function(){
+      if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+      if (typeof opts.onComplete === 'function') opts.onComplete();
+    }, 280);
+  }
+
+  setTimeout(dismiss, 2100);
+}
+
 function addOutward(){
   if (!isAdmin){
     requireAdmin(function(){
@@ -12096,6 +12787,11 @@ function addOutward(){
   v.current -= qty;
   v.logs.unshift({ date: date || todayStr(), type: 'OUTWARD', qty: qty, detail: fac.name + ' (' + fac.dept + ') - ' + (remark || ''), ref: fac.name });
   saveData(); render(); renderLog(); switchTab('log'); refreshModalHeader();
+  playIssueSuccessAnimation({
+    recipient: fac.name + ' (' + fac.dept + ')',
+    qtyText: '-' + qty + (v.unit ? ' ' + v.unit : ' pcs'),
+    itemName: it.name + (it.variants.length > 1 ? ' · ' + v.name : '')
+  });
   showThemeMessage('success', 'Stock Issued', '-' + qty + ' units of ' + it.name + ' issued to ' + fac.name + '.');
   document.getElementById('out-qty').value = ''; document.getElementById('out-remark').value = '';
 }
@@ -12297,11 +12993,19 @@ function saveFacultyMaster(){
   saveFaculties(); renderFaculty(); closeAddFacultyMaster();
   showThemeMessage('add', 'Faculty Added', 'Faculty member "' + name + '" (' + dept + ') added successfully.');
 }
+var editingBillKey = null;
+
 function openAddBill(){
   if (!isAdmin){
     requireAdmin(function(){ openAddBill(); });
     return;
   }
+  editingBillKey = null;
+  var titleEl = document.querySelector('#modal-addbill .modal-head h3 span');
+  if (titleEl) titleEl.textContent = 'Add New Bill';
+  var btnTxt = document.getElementById('bill-save-btn-txt');
+  if (btnTxt) btnTxt.textContent = 'Save Bill & Update Stock';
+
   document.getElementById('bill-no-input').value = '';
   document.getElementById('bill-year-input').value = new Date().getFullYear();
   document.getElementById('bill-inpass-input').value = '';
@@ -12311,9 +13015,93 @@ function openAddBill(){
   addBillItemRow(false);
   var vl = document.getElementById('vendor-list'); vl.innerHTML = '';
   for (var i = 0; i < VENDORS.length; i++) vl.innerHTML += '<option value="' + VENDORS[i] + '">';
+  updateBillSummary();
   document.getElementById('modal-addbill').classList.add('open');
 }
-function closeAddBill(){ document.getElementById('modal-addbill').classList.remove('open'); }
+
+function openEditBill(key){
+  if (!isAdmin){
+    requireAdmin(function(){ openEditBill(key); });
+    return;
+  }
+  var bills = collectAllBills();
+  var b = null;
+  for (var i = 0; i < bills.length; i++) if (bills[i].key === key){ b = bills[i]; break; }
+  if (!b) return alert('Bill not found or already deleted');
+
+  editingBillKey = key;
+  closeBillDetail();
+
+  var titleEl = document.querySelector('#modal-addbill .modal-head h3 span');
+  if (titleEl) titleEl.textContent = 'Edit Bill #' + b.billNo + ' / ' + b.year;
+  var btnTxt = document.getElementById('bill-save-btn-txt');
+  if (btnTxt) btnTxt.textContent = 'Update Bill & Reconcile Stock';
+
+  document.getElementById('bill-no-input').value = b.billNo;
+  document.getElementById('bill-year-input').value = b.year || new Date().getFullYear();
+  document.getElementById('bill-inpass-input').value = b.inPass || '';
+  document.getElementById('bill-date-input').value = b.date || todayStr();
+  document.getElementById('bill-vendor-input').value = b.vendor || '';
+
+  var vl = document.getElementById('vendor-list'); vl.innerHTML = '';
+  for (var i = 0; i < VENDORS.length; i++) vl.innerHTML += '<option value="' + VENDORS[i] + '">';
+
+  var container = document.getElementById('bill-items-list');
+  container.innerHTML = '';
+
+  if (b.items && b.items.length > 0){
+    for (var i = 0; i < b.items.length; i++){
+      var itData = b.items[i];
+      var itObj = null;
+      for (var j = 0; j < items.length; j++){
+        if (items[j].name === itData.itemName){ itObj = items[j]; break; }
+      }
+      var itemId = itObj ? itObj.id : 0;
+      var rateVal = (typeof itData.rate === 'number' && itData.rate > 0) ? itData.rate : ((itData.price && itData.qty) ? (itData.price / itData.qty) : '');
+
+      var div = document.createElement('div');
+      div.className = 'bill-item-block';
+      div.innerHTML = '<div class="bill-item-row-edit">' +
+        '<select class="bi-item" onchange="onBillItemChange(this)">' + getItemOptionsHtml(itemId) + '</select>' +
+        '<div style="display:flex;align-items:center;gap:3px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:3px 6px">' +
+          '<input type="number" class="bi-qty" placeholder="Qty" min="1" value="' + itData.qty + '" style="width:100%;border:none;background:transparent;outline:none;font-weight:700;font-size:13px;color:var(--text);font-family:\'JetBrains Mono\',monospace" oninput="updateBillSummary()" onkeydown="if(event.key===\'Enter\'){event.preventDefault();addBillItemRow(true);}">' +
+          '<span class="bi-unit-label" style="font-size:10.5px;font-weight:800;color:var(--text-secondary);text-transform:lowercase">' + (itData.unit || '') + '</span>' +
+        '</div>' +
+        '<div style="display:flex;align-items:center;gap:3px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:3px 6px">' +
+          '<span style="font-size:11.5px;font-weight:800;color:var(--muted)">₹</span>' +
+          '<input type="number" class="bi-price" placeholder="Price" min="0" step="any" value="' + rateVal + '" style="width:100%;border:none;background:transparent;outline:none;font-weight:700;font-size:13px;color:var(--text);font-family:\'JetBrains Mono\',monospace" oninput="updateBillSummary()">' +
+        '</div>' +
+        '<button class="icon-btn" type="button" onclick="this.closest(\'.bill-item-block\').remove();updateBillSummary()" title="Remove item" style="width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:#fee2e2;color:#b91c1c;border:1px solid #fecaca;cursor:pointer">' +
+          '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
+        '</button>' +
+      '</div>' +
+      '<div class="bill-subcat-row" style="display:none"><select class="bi-subcat" onchange="onBillSubcatChange(this)"></select></div>';
+      container.appendChild(div);
+
+      var sel = div.querySelector('.bi-item');
+      onBillItemChange(sel);
+      if (itObj && itObj.variants && itObj.variants.length > 1){
+        var subSel = div.querySelector('.bi-subcat');
+        var targetVar = itObj.variants.find(function(v){ return v.name === itData.subcat; });
+        if (targetVar && subSel){
+          subSel.value = targetVar.id;
+          onBillSubcatChange(subSel);
+        }
+      }
+    }
+  } else {
+    addBillItemRow(false);
+  }
+
+  updateBillSummary();
+  document.getElementById('modal-addbill').classList.add('open');
+}
+
+function closeAddBill(){
+  editingBillKey = null;
+  document.getElementById('modal-addbill').classList.remove('open');
+}
+
 function getItemOptionsHtml(selectedId){
   var html = '<option value="">-- Select Item --</option>';
   for (var i = 0; i < items.length; i++){
@@ -12323,17 +13111,33 @@ function getItemOptionsHtml(selectedId){
   html += '<option value="__NEW__" style="color:#0f7a3d;font-weight:700">+ Add New Item...</option>';
   return html;
 }
+
 function addBillItemRow(autoOpen){
   if (autoOpen === undefined) autoOpen = true;
   var container = document.getElementById('bill-items-list');
   var div = document.createElement('div'); div.className = 'bill-item-block';
-  div.innerHTML = '<div class="bill-item-row-edit"><select class="bi-item" onchange="onBillItemChange(this)">' + getItemOptionsHtml(0) + '</select><div style="display:flex;align-items:center;gap:4px;flex-shrink:0"><input type="number" class="bi-qty" placeholder="Qty" min="1" oninput="updateBillSummary()" onkeydown="if(event.key===\'Enter\'){event.preventDefault();addBillItemRow(true);}"><span class="bi-unit-label" style="font-size:11px;font-weight:700;color:var(--text-secondary);min-width:32px;text-transform:lowercase"></span></div><button class="icon-btn" type="button" onclick="this.closest(\'.bill-item-block\').remove();updateBillSummary()" title="Remove item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div><div class="bill-subcat-row" style="display:none"><select class="bi-subcat" onchange="onBillSubcatChange(this)"></select></div>';
+  div.innerHTML = '<div class="bill-item-row-edit">' +
+    '<select class="bi-item" onchange="onBillItemChange(this)">' + getItemOptionsHtml(0) + '</select>' +
+    '<div style="display:flex;align-items:center;gap:3px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:3px 6px">' +
+      '<input type="number" class="bi-qty" placeholder="Qty" min="1" style="width:100%;border:none;background:transparent;outline:none;font-weight:700;font-size:13px;color:var(--text);font-family:\'JetBrains Mono\',monospace" oninput="updateBillSummary()" onkeydown="if(event.key===\'Enter\'){event.preventDefault();addBillItemRow(true);}">' +
+      '<span class="bi-unit-label" style="font-size:10.5px;font-weight:800;color:var(--text-secondary);text-transform:lowercase"></span>' +
+    '</div>' +
+    '<div style="display:flex;align-items:center;gap:3px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:3px 6px">' +
+      '<span style="font-size:11.5px;font-weight:800;color:var(--muted)">₹</span>' +
+      '<input type="number" class="bi-price" placeholder="Price" min="0" step="any" style="width:100%;border:none;background:transparent;outline:none;font-weight:700;font-size:13px;color:var(--text);font-family:\'JetBrains Mono\',monospace" oninput="updateBillSummary()">' +
+    '</div>' +
+    '<button class="icon-btn" type="button" onclick="this.closest(\'.bill-item-block\').remove();updateBillSummary()" title="Remove item" style="width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:#fee2e2;color:#b91c1c;border:1px solid #fecaca;cursor:pointer">' +
+      '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
+    '</button>' +
+  '</div>' +
+  '<div class="bill-subcat-row" style="display:none"><select class="bi-subcat" onchange="onBillSubcatChange(this)"></select></div>';
   container.appendChild(div);
   var sel = div.querySelector('.bi-item');
   if (autoOpen && sel){
     openSlipItemPicker(sel);
   }
 }
+
 function onBillItemChange(sel){
   var val = sel.value; var block = sel.closest('.bill-item-block');
   var unitLabel = block.querySelector('.bi-unit-label');
@@ -12380,6 +13184,7 @@ function onBillItemChange(sel){
   subWrap.style.display = 'block';
   onBillSubcatChange(subSel);
 }
+
 function onBillSubcatChange(subSel){
   var block = subSel.closest('.bill-item-block');
   var itemSel = block.querySelector('.bi-item');
@@ -12390,17 +13195,29 @@ function onBillSubcatChange(subSel){
   var v = getVariant(it, subSel.value);
   if (unitLabel) unitLabel.textContent = (v && v.unit) ? v.unit : (it.unit || '');
 }
+
 function updateBillSummary(){
   var rows = document.querySelectorAll('#bill-items-list .bill-item-block');
-  var count = 0, qty = 0;
+  var count = 0, qty = 0, cost = 0;
   for (var i = 0; i < rows.length; i++){
     var sel = rows[i].querySelector('.bi-item');
     var q = parseInt(rows[i].querySelector('.bi-qty').value) || 0;
-    if (sel.value && q > 0){ count++; qty += q; }
+    var priceInput = rows[i].querySelector('.bi-price');
+    var p = priceInput ? (parseFloat(priceInput.value) || 0) : 0;
+    if (sel.value && q > 0){
+      count++;
+      qty += q;
+      cost += (q * p);
+    }
   }
-  document.getElementById('bill-sum-items').textContent = count;
-  document.getElementById('bill-sum-qty').textContent = qty;
+  var itemsEl = document.getElementById('bill-sum-items');
+  if (itemsEl) itemsEl.textContent = count;
+  var qtyEl = document.getElementById('bill-sum-qty');
+  if (qtyEl) qtyEl.textContent = qty;
+  var costEl = document.getElementById('bill-sum-cost');
+  if (costEl) costEl.textContent = '₹' + cost.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
+
 function saveBill(){
   if (!requireAdmin()) return;
   var billNo = document.getElementById('bill-no-input').value.trim();
@@ -12412,29 +13229,95 @@ function saveBill(){
   if (!year) year = String(new Date().getFullYear());
   if (!inPass) inPass = 'INP-' + Math.floor(Math.random() * 900 + 100);
   if (!vendor) return alert('Please enter a vendor name');
+
   var blocks = document.querySelectorAll('#bill-items-list .bill-item-block');
   var toAdd = [];
   for (var i = 0; i < blocks.length; i++){
     var itemId = parseInt(blocks[i].querySelector('.bi-item').value);
     var qty = parseInt(blocks[i].querySelector('.bi-qty').value);
+    var priceInput = blocks[i].querySelector('.bi-price');
+    var rate = priceInput ? (parseFloat(priceInput.value) || 0) : 0;
     if (!itemId || !qty || qty <= 0) continue;
     var it = getItem(itemId);
     if (!it) continue;
     var vid = it.variants.length === 1 ? it.variants[0].id : blocks[i].querySelector('.bi-subcat').value;
     if (!vid) continue;
-    toAdd.push({ itemId: itemId, variantId: vid, qty: qty });
+    toAdd.push({ itemId: itemId, variantId: vid, qty: qty, rate: rate, price: rate * qty });
   }
   if (toAdd.length === 0) return alert('Please add at least one item with quantity');
+
+  var newRef = billNo + ' / ' + year + ' / ' + inPass;
+  var newKey = billNo + '|' + year + '|' + inPass;
+
+  // IF IN EDIT MODE: Reconcile original items & remove old logs
+  if (editingBillKey){
+    var bills = collectAllBills();
+    var origBill = null;
+    for (var bIdx = 0; bIdx < bills.length; bIdx++){
+      if (bills[bIdx].key === editingBillKey){ origBill = bills[bIdx]; break; }
+    }
+    if (origBill){
+      for (var i = 0; i < items.length; i++){
+        var it = items[i];
+        if (!it.variants) continue;
+        for (var j = 0; j < it.variants.length; j++){
+          var v = it.variants[j];
+          if (!v.logs) continue;
+          for (var k = v.logs.length - 1; k >= 0; k--){
+            var l = v.logs[k];
+            if (l.type === 'INWARD' && l.ref){
+              var parts = String(l.ref).split('/').map(function(s){ return s.trim(); });
+              var logKey = (parts[0] || '') + '|' + (parts[1] || '') + '|' + (parts[2] || '');
+              if (logKey === editingBillKey || (parts[0] === origBill.billNo && parts[1] === origBill.year && parts[2] === origBill.inPass)){
+                v.current = Math.max(0, (v.current || 0) - (l.qty || 0));
+                v.logs.splice(k, 1);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Apply new/updated items
   for (var i = 0; i < toAdd.length; i++){
     var t = toAdd[i];
     var it = getItem(t.itemId);
     var v = getVariant(it, t.variantId);
     if (!v) continue;
-    v.current += t.qty;
-    v.logs.unshift({ date: date || todayStr(), type: 'INWARD', qty: t.qty, detail: 'From ' + vendor, ref: billNo + ' / ' + year + ' / ' + inPass });
+    v.current = (v.current || 0) + t.qty;
+    var newLog = {
+      date: date || todayStr(),
+      type: 'INWARD',
+      qty: t.qty,
+      detail: 'From ' + vendor,
+      ref: newRef
+    };
+    if (t.rate > 0){
+      newLog.rate = t.rate;
+      newLog.price = t.price;
+    }
+    v.logs.unshift(newLog);
   }
-  saveData(); render(); closeAddBill();
-  showThemeMessage('add', 'Bill Saved', 'Bill #' + billNo + ' saved with ' + toAdd.length + ' item(s). Stock updated.');
+
+  var wasEdit = !!editingBillKey;
+  editingBillKey = null;
+
+  saveData();
+  render();
+  if (typeof renderBills === 'function') renderBills();
+  if (typeof updateStats === 'function') updateStats();
+  closeAddBill();
+
+  showThemeMessage(
+    wasEdit ? 'update' : 'add',
+    wasEdit ? 'Bill Updated' : 'Bill Saved',
+    'Bill #' + billNo + ' ' + (wasEdit ? 'updated' : 'saved') + ' with ' + toAdd.length + ' item(s). Stock reconciled.'
+  );
+
+  if (wasEdit){
+    openBillDetail(newKey);
+  }
 }
 function openInlineItem(){
   if (!isAdmin){ requireAdmin(); return; }
@@ -12923,6 +13806,11 @@ function saveIssueSlip(){
 
   saveData(); render(); renderFaculty();
   closeIssueSlip();
+  playIssueSuccessAnimation({
+    recipient: fac.name + ' (' + fac.dept + ')',
+    qtyText: '-' + totalPieces + ' pcs',
+    itemName: toIssue.length + ' Item' + (toIssue.length > 1 ? 's' : '') + ' in Slip'
+  });
   showThemeMessage('success', 'Issue Slip Completed', 'Issued ' + toIssue.length + ' item(s) to ' + fac.name + ' (' + totalPieces + ' pcs total). Stock updated!');
 }
 
@@ -13631,6 +14519,7 @@ function init(){
     showThemeMessage('warning', 'Notice', String(msg));
   };
 
+  initTheme();
   checkBiometricSupport();
   updateAdminUI();
   render();
