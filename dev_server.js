@@ -78,9 +78,25 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/`);
-  console.log(`Connected to Neon PostgreSQL database via /api/data`);
+server.listen(PORT, '0.0.0.0', () => {
+  const os = require('os');
+  const ifaces = os.networkInterfaces();
+  let lanIp = 'localhost';
+  for (const dev in ifaces) {
+    ifaces[dev].forEach(details => {
+      if (details.family === 'IPv4' && !details.internal) {
+        lanIp = details.address;
+      }
+    });
+  }
+
+  console.log('\n======================================================');
+  console.log('  🚀 DPS CENTRAL INVENTORY SYSTEM - LOCAL SERVER');
+  console.log('======================================================');
+  console.log(`  ➜ Local URL:   http://localhost:${PORT}/`);
+  console.log(`  ➜ Network URL: http://${lanIp}:${PORT}/`);
+  console.log(`  ➜ Database:    Connected to Neon PostgreSQL (/api/data)`);
+  console.log('======================================================\n');
 });
 
 process.on('uncaughtException', (err) => {

@@ -1,0 +1,7 @@
+node_modules
+scratch/
+test_*.js
+.env
+.env.*
+*.log
+start_server.bat
